@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "axis=z": { "model": "aether_portal_ew" },
+        "axis=x": { "model": "aether_portal_ns" }
+    }
+}

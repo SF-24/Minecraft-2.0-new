@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "normal": { "model": "compressed_cobblestone" },
+		"type=mossy_compressed_cobblestone": { "model": "mossy_compressed_cobblestone" },
+        "type=compressed_cobblestone": { "model": "compressed_cobblestone" }
+    }
+}

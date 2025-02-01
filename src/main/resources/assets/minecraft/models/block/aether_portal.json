@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "particle": "blocks/aether_portal",
+        "aether_portal": "blocks/aether_portal"
+    },
+    "elements": [
+        {   "from": [ 6, 0, 0 ],
+            "to": [ 10, 16, 16 ],
+            "faces": {
+                "east": { "uv": [ 0, 0, 16, 16 ], "texture": "#aether_portal" },
+                "west": { "uv": [ 0, 0, 16, 16 ], "texture": "#aether_portal" }
+            }
+        }
+    ]
+}
