@@ -126,6 +126,10 @@ public class GenLayerHills extends GenLayer
                     {
                         i1 = BiomeGenBase.archipelagoHills.biomeID;
                     }
+                    else if (k == BiomeGenBase.autumnalForest.biomeID)
+                    {
+                        i1 = BiomeGenBase.autumnalForestHills.biomeID;
+                    }
                     else if (k == BiomeGenBase.deepOcean.biomeID && this.nextInt(3) == 0)
                     {
                         int j1 = this.nextInt(2);

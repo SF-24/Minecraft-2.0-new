@@ -44,7 +44,7 @@ public abstract class BiomeGenBase
     protected static final BiomeGenBase.Height height_RockyWaters = new BiomeGenBase.Height(0.1F, 0.8F);
     protected static final BiomeGenBase.Height height_LowIslands = new BiomeGenBase.Height(0.2F, 0.3F);
     protected static final BiomeGenBase.Height height_PartiallySubmerged = new BiomeGenBase.Height(-0.3F, 0.15F);
-    protected static final BiomeGenBase.Height height_Archipelago = new BiomeGenBase.Height(-0.5F, 0.45F);
+    protected static final BiomeGenBase.Height height_Archipelago = new BiomeGenBase.Height(-0.6F, 0.55F);
     protected static final BiomeGenBase.Height height_ArchipelagoHills = new BiomeGenBase.Height(-0.6F, 0.9F);
 
     protected static final BiomeGenBase.Height height_Desert = new BiomeGenBase.Height(0.2F, 0.4F);
@@ -127,6 +127,9 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase rainforest = (new BiomeGenJungleRainforest(44, false)).setColor(5470985).setBiomeName("Jungle Rainforest").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F);
 
     public static final BiomeGenBase autumnalForest = (new BiomeGenForestAutumnal(45, 0)).setColor(86776960).setBiomeName("Autumnal Forest");
+
+    public static final BiomeGenBase autumnalForestHills = (new BiomeGenForestAutumnal(50, 0)).setBiomeName("Autumnal Forest Hills").setColor(86776960).setHeight(height_LowHills);
+
 
     public static final BiomeGenBase roofedSwamp = (new BiomeGenSwampDark(46)).setColor(3236668).setBiomeName("Roofed Swamp").setHeight(height_PartiallySubmerged);
 

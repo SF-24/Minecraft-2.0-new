@@ -1753,6 +1753,15 @@
       {
         "name": "music/game/piano3",
         "stream": true
+      },
+	  {
+        "name": "music/game/excuse"
+      },
+	  {
+        "name": "music/game/key"
+      },
+	  {
+        "name": "music/game/alpha"
       }
     ]
   },
@@ -1827,7 +1836,7 @@
         "name": "music/game/nether/nether2",
         "stream": true
       },
-      {
+      {	
         "name": "music/game/nether/nether3",
         "stream": true
       },
@@ -1840,6 +1849,16 @@
   "records.magnetic_circuit": {
 	"sounds": [
 	  "record/magnetic_circuit"
+    ]
+  },
+    "records.alpha": {
+	"sounds": [
+	  "record/alpha"
+    ]
+  },
+  "records.key": {
+	"sounds": [
+	  "record/key"
     ]
   }
 }

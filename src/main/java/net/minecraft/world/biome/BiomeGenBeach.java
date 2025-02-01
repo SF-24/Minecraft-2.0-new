@@ -1,6 +1,5 @@
 package net.minecraft.world.biome;
 
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 
 public class BiomeGenBeach extends BiomeGenBase
