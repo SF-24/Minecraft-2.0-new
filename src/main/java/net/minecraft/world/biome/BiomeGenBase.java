@@ -44,8 +44,8 @@ public abstract class BiomeGenBase
     protected static final BiomeGenBase.Height height_RockyWaters = new BiomeGenBase.Height(0.1F, 0.8F);
     protected static final BiomeGenBase.Height height_LowIslands = new BiomeGenBase.Height(0.2F, 0.3F);
     protected static final BiomeGenBase.Height height_PartiallySubmerged = new BiomeGenBase.Height(-0.3F, 0.15F);
-    protected static final BiomeGenBase.Height height_Archipelago = new BiomeGenBase.Height(-0.4F, 0.45F);
-    protected static final BiomeGenBase.Height height_ArchipelagoHills = new BiomeGenBase.Height(-0.4F, 0.8F);
+    protected static final BiomeGenBase.Height height_Archipelago = new BiomeGenBase.Height(-0.5F, 0.45F);
+    protected static final BiomeGenBase.Height height_ArchipelagoHills = new BiomeGenBase.Height(-0.6F, 0.9F);
 
     protected static final BiomeGenBase.Height height_Desert = new BiomeGenBase.Height(0.2F, 0.4F);
 

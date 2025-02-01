@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -14,8 +15,7 @@ import java.util.Random;
 public class BiomeGenArchipelago extends BiomeGenBase
 {
     private boolean field_150614_aC;
-    private static final IBlockState JUNGLE_LOG = Blocks.log.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
-    private static final IBlockState JUNGLE_LEAVES = Blocks.leaves.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+    private static final IBlockState OAK_LOG = Blocks.log.getDefaultState();
     private static final IBlockState OAK_LEAVES = Blocks.leaves.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
 
     public BiomeGenArchipelago(int id)
@@ -31,7 +31,7 @@ public class BiomeGenArchipelago extends BiomeGenBase
     public WorldGenAbstractTree genBigTreeChance(Random rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? this.worldGeneratorBigTree :
-                new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, OAK_LEAVES, true));
+                new WorldGenTrees(false, 4 + rand.nextInt(7), OAK_LOG, OAK_LEAVES, true));
     }
 
     /**
@@ -48,7 +48,7 @@ public class BiomeGenArchipelago extends BiomeGenBase
         int i = rand.nextInt(16) + 8;
         int j = rand.nextInt(16) + 8;
         int k = rand.nextInt(worldIn.getHeight(pos.add(i, 0, j)).getY() * 2);
-        (new WorldGenMelon()).generate(worldIn, rand, pos.add(i, k, j));
+        (new WorldGenPumpkin()).generate(worldIn, rand, pos.add(i, k, j));
 
     }
 }
