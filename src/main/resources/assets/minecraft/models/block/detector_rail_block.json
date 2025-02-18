@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "blocks/rail_block_detector_end",
+        "down": "blocks/rail_block_detector_top",
+        "up": "blocks/rail_block_detector_top",
+        "north": "blocks/rail_block_detector_end",
+        "east": "blocks/rail_block_side_1",
+        "south": "blocks/rail_block_detector_end",
+        "west": "blocks/rail_block_side_0"
+    }
+}

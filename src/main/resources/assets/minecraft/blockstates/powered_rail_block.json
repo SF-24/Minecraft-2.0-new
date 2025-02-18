@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "powered_rail_block" }
+    }
+}

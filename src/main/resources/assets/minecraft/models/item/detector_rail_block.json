@@ -1,0 +1,19 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "blocks/rail_block_detector_end",
+        "down": "blocks/rail_block_detector_top",
+        "up": "blocks/rail_block_detector_top",
+        "north": "blocks/rail_block_detector_end",
+        "east": "blocks/rail_block_side_1",
+        "south": "blocks/rail_block_detector_end",
+        "west": "blocks/rail_block_side_0"
+    },
+	"display": {
+        "thirdperson": {
+            "rotation": [ 10, -45, 170 ],
+            "translation": [ 0, 1.5, -2.75 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    }
+}
