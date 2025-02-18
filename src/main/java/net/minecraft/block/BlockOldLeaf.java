@@ -67,7 +67,7 @@ public class BlockOldLeaf extends BlockLeaves
                 }
                 return ColorizerFoliage.getFoliageColorBirch();
             }
-            if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills)) && blockplanks$enumtype == BlockPlanks.EnumType.OAK) {
+            if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) && blockplanks$enumtype == BlockPlanks.EnumType.OAK) {
                 return 14973467;
             }
 
