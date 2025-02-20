@@ -15,6 +15,7 @@ import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraft.world.biome.BiomeGenBase;
 
 public class BlockGrass extends Block implements IGrowable
 {
@@ -50,6 +51,11 @@ public class BlockGrass extends Block implements IGrowable
 
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
     {
+        if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills))) {
+            return 16243232;
+        } else if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills)) {
+            return 16246801;
+        }
         return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
     }
 

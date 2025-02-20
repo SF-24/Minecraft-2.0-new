@@ -53,10 +53,9 @@ public class BlockNewLeaf extends BlockLeaves
             if (blockplanks$enumtype == BlockPlanks.EnumType.ACACIA)
             {
                 if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills))) {
-                    return 15511832;
+                    return 16235547;
                 }
-            }
-            if (blockplanks$enumtype == BlockPlanks.EnumType.DARK_OAK)
+            } else if (blockplanks$enumtype == BlockPlanks.EnumType.DARK_OAK)
             {
                 if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills))) {
                     return 14973467;
