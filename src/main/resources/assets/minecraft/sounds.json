@@ -1851,10 +1851,10 @@
   },
   "records.magnetic_circuit": {
     "sounds": [
-		  {
+	{
         "name": "record/magnetic_circuit",
         "stream": true
-		  }
+	}
     ]
   },
   "records.alpha": {

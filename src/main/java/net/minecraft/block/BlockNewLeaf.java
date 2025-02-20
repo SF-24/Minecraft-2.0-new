@@ -14,7 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.world.ColorizerFoliage;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 
 public class BlockNewLeaf extends BlockLeaves
 {
@@ -37,6 +40,31 @@ public class BlockNewLeaf extends BlockLeaves
         {
             spawnAsEntity(worldIn, pos, new ItemStack(Items.apple, 1, 0));
         }
+    }
+
+    public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+
+        if (iblockstate.getBlock() == this)
+        {
+            BlockPlanks.EnumType blockplanks$enumtype = (BlockPlanks.EnumType)iblockstate.getValue(VARIANT);
+
+            if (blockplanks$enumtype == BlockPlanks.EnumType.ACACIA)
+            {
+                if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills))) {
+                    return 15511832;
+                }
+            }
+            if (blockplanks$enumtype == BlockPlanks.EnumType.DARK_OAK)
+            {
+                if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills))) {
+                    return 14973467;
+                }
+            }
+        }
+
+        return super.colorMultiplier(worldIn, pos, renderPass);
     }
 
     /**

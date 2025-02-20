@@ -59,7 +59,9 @@ public abstract class GenLayer
 
         if (p_180781_2_ == WorldType.RANDOM_BIOMES)
         {
+            // biome size:
             i = 5;
+
         }
 
         if (p_180781_2_ == WorldType.LARGE_BIOMES)

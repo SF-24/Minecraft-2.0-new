@@ -62,12 +62,12 @@ public class BlockOldLeaf extends BlockLeaves
 
             if (blockplanks$enumtype == BlockPlanks.EnumType.BIRCH)
             {
-                if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills)) {
+                if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills))) {
                     return 13850924;
                 }
                 return ColorizerFoliage.getFoliageColorBirch();
             }
-            if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) && blockplanks$enumtype == BlockPlanks.EnumType.OAK) {
+            if((worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.autumnalForestHills) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills)) && blockplanks$enumtype == BlockPlanks.EnumType.OAK) {
                 return 14973467;
             }
 
