@@ -25,7 +25,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
     {
         Calendar calendar = Calendar.getInstance();
 
-        if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26)
+        if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 /*&& calendar.get(5) <= 26*/)
         {
             this.isChristmas = true;
         }

@@ -1707,6 +1707,10 @@
     "category": "music",
     "sounds": [
       {
+        "type": "event",
+        "name": "music.menu"
+      },
+      {
         "name": "music/game/calm1",
         "stream": true
       },
@@ -1765,6 +1769,10 @@
       {
         "name": "music/game/alpha",
         "stream": true
+      },
+      {
+        "name": "music/game/creative/creative6",
+        "stream": true
       }
     ]
   },
@@ -1793,10 +1801,6 @@
       },
       {
         "name": "music/game/creative/creative5",
-        "stream": true
-      },
-      {
-        "name": "music/game/creative/creative6",
         "stream": true
       }
     ]

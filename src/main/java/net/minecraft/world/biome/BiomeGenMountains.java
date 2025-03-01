@@ -72,10 +72,10 @@ public class BiomeGenMountains extends BiomeGenBase
         this.topBlock = Blocks.grass.getDefaultState();
         this.fillerBlock = Blocks.dirt.getDefaultState();
 
-        if(worldIn.canSnowAt(new BlockPos(x,100,z),false)) {
+        /*if(worldIn.canSnowAt(new BlockPos(x,100,z),false)) {
             this.topBlock=Blocks.snow.getDefaultState();
             this.fillerBlock=Blocks.snow.getDefaultState();
-        } else
+        } else*/
         if ((noiseVal < -1.0D || noiseVal > 2.0D) && this.field_150638_aH == this.field_150637_aG)
         {
             this.topBlock = Blocks.gravel.getDefaultState();

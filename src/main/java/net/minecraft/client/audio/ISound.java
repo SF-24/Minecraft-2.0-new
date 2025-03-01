@@ -6,6 +6,8 @@ public interface ISound
 {
     ResourceLocation getSoundLocation();
 
+    boolean isMusic();
+
     boolean canRepeat();
 
     int getRepeatDelay();

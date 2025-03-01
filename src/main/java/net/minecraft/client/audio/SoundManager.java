@@ -436,8 +436,10 @@ public class SoundManager
     {
         for (String s : this.playingSounds.keySet())
         {
-            logger.debug(LOG_MARKER, "Pausing channel {}", new Object[] {s});
-            this.sndSystem.pause(s);
+            logger.debug(LOG_MARKER, "Pausing channel {}", s);
+            if(playingSounds.get(s) != null && !playingSounds.get(s).isMusic()) {
+                this.sndSystem.pause(s);
+            }
         }
     }
 

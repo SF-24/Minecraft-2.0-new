@@ -45,4 +45,9 @@ public class MovingSoundMinecart extends MovingSound
             }
         }
     }
+
+    @Override
+    public boolean isMusic() {
+        return false;
+    }
 }

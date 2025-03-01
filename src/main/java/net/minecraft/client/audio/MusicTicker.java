@@ -29,7 +29,8 @@ public class MusicTicker implements ITickable
         {
             if (!musicticker$musictype.getMusicLocation().equals(this.currentMusic.getSoundLocation()))
             {
-                this.mc.getSoundHandler().stopSound(this.currentMusic);
+                // stop music abruptly stopping
+                //this.mc.getSoundHandler().stopSound(this.currentMusic);
                 this.timeUntilNextMusic = MathHelper.getRandomIntegerInRange(this.rand, 0, musicticker$musictype.getMinDelay() / 2);
             }
 
@@ -40,15 +41,14 @@ public class MusicTicker implements ITickable
             }
         }
 
-        if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
-        {
+        if (this.currentMusic == null && (this.timeUntilNextMusic-- <= 0 || musicticker$musictype.equals(MusicType.MENU))) {
             this.func_181558_a(musicticker$musictype);
         }
     }
 
     public void func_181558_a(MusicTicker.MusicType p_181558_1_)
     {
-        this.currentMusic = PositionedSoundRecord.create(p_181558_1_.getMusicLocation());
+        this.currentMusic = PositionedSoundRecord.create(p_181558_1_.getMusicLocation(), true);
         this.mc.getSoundHandler().playSound(this.currentMusic);
         this.timeUntilNextMusic = Integer.MAX_VALUE;
     }

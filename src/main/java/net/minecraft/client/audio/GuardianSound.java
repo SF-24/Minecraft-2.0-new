@@ -35,4 +35,9 @@ public class GuardianSound extends MovingSound
             this.donePlaying = true;
         }
     }
+
+    @Override
+    public boolean isMusic() {
+        return false;
+    }
 }

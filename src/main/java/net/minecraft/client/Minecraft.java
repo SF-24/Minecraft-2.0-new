@@ -2380,7 +2380,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.integratedServerIsRunning = false;
         }
 
-        this.mcSoundHandler.stopSounds();
+        // stops music stopping
+        //this.mcSoundHandler.stopSounds();
         this.theWorld = worldClientIn;
 
         if (worldClientIn != null)
