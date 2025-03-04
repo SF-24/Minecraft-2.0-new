@@ -2276,7 +2276,7 @@ tile.flower2.blueOrchid.name=Blue Orchid
 tile.flower2.houstonia.name=Azure Bluet
 tile.flower2.name=Flower
 tile.flower2.oxeyeDaisy.name=Oxeye Daisy
-tile.flower2.poppy.name=Poppy
+tile.flower2.poppy.name=Rose
 tile.flower2.tulipOrange.name=Orange Tulip
 tile.flower2.tulipPink.name=Pink Tulip
 tile.flower2.tulipRed.name=Red Tulip
@@ -2504,7 +2504,7 @@ tile.woolCarpet.red.name=Red Carpet
 tile.woolCarpet.silver.name=Light Grey Carpet
 tile.woolCarpet.white.name=Carpet
 tile.woolCarpet.yellow.name=Yellow Carpet
-tile.workbench.name=Crafting Table
+tile.workbench.name=Workbench
 title.oldgl1=Old graphics card found; this may prevent you from
 title.oldgl2=playing in the far future as OpenGL 2.0 will be necessary.
 translation.test.args=%s %s
@@ -2571,8 +2571,6 @@ item.pouchEnder.name=Ender Pouch
 item.breadGlowing.name=Glowing Bread
 
 item.grenadeHoly.name=Holy Hand Grenade
-
-item.grenadeHoly.name=Holy Hand Grenade
 grenade.holy.description.1=Once the number three, being the third number, be reached, 
 grenade.holy.description.2=then lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, 
 grenade.holy.description.3=who, being naughty in My sight, shall snuff it
@@ -2586,3 +2584,9 @@ tile.observer.name=Observer
 achievement.portalAether=Hostile Paradise
 achievement.portalAether.desc=Build and Aether Portal
 generator.randomBiomes=Random Biomes
+
+tile.bed.bloodMoon=You may not rest during a blood moon
+title.bloodMoon.rise=A blood moon rises in the sky...
+title.bloodMoon.risen=A blood moon has risen above the horizon.
+title.bloodMoon.fade=As dawn rises, the blood moon fades...
+

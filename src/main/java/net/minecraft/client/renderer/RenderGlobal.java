@@ -20,6 +20,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.block.*;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.*;
 import net.optifine.CustomColors;
 import net.optifine.CustomSky;
 import net.optifine.DynamicLights;
@@ -44,11 +47,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockEnderChest;
-import net.minecraft.block.BlockSign;
-import net.minecraft.block.BlockSkull;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -98,20 +96,6 @@ import net.minecraft.item.ItemRecord;
 import net.minecraft.src.Config;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ClassInheritanceMultiMap;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.LongHashMap;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Matrix4f;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
-import net.minecraft.util.Vector3d;
 import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.border.WorldBorder;
@@ -122,6 +106,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 {
     private static final Logger logger = LogManager.getLogger();
     private static final ResourceLocation locationMoonPhasesPng = new ResourceLocation("textures/environment/moon_phases.png");
+    private static final ResourceLocation locationMoonRedPng = new ResourceLocation("textures/environment/moon_red.png");
     private static final ResourceLocation locationSunPng = new ResourceLocation("textures/environment/sun.png");
     private static final ResourceLocation locationCloudsPng = new ResourceLocation("textures/environment/clouds.png");
     private static final ResourceLocation locationEndSkyPng = new ResourceLocation("textures/environment/end_sky.png");
@@ -979,6 +964,18 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     if (flag6)
                     {
                         Shaders.nextBlockEntity(tileentity2);
+                    }
+
+                    if(block instanceof BlockWallSign) {
+                        if (tileentity2 != null && Reflector.callBoolean(tileentity2, Reflector.ForgeTileEntity_shouldRenderInPass, new Object[] {Integer.valueOf(i)}) && Reflector.callBoolean(tileentity2, Reflector.ForgeTileEntity_canRenderBreaking, new Object[0]))
+                        {
+                            AxisAlignedBB axisalignedbb = (AxisAlignedBB)Reflector.call(tileentity2, Reflector.ForgeTileEntity_getRenderBoundingBox, new Object[0]);
+
+                            if (axisalignedbb != null)
+                            {
+                                flag9 = camera.isBoundingBoxInFrustum(axisalignedbb);
+                            }
+                        }
                     }
 
                     TileEntityRendererDispatcher.instance.renderTileEntity(tileentity2, partialTicks, destroyblockprogress.getPartialBlockDamage());
@@ -1848,20 +1845,31 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             if (Config.isMoonTexture())
             {
-                this.renderEngine.bindTexture(locationMoonPhasesPng);
-                int i = this.theWorld.getMoonPhase();
-                int k = i % 4;
-                int i1 = i / 4 % 2;
-                float f19 = (float)(k + 0) / 4.0F;
-                float f21 = (float)(i1 + 0) / 2.0F;
-                float f23 = (float)(k + 1) / 4.0F;
-                float f14 = (float)(i1 + 1) / 2.0F;
-                worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-                worldrenderer.pos((double)(-f16), -100.0D, (double)f16).tex((double)f23, (double)f14).endVertex();
-                worldrenderer.pos((double)f16, -100.0D, (double)f16).tex((double)f19, (double)f14).endVertex();
-                worldrenderer.pos((double)f16, -100.0D, (double)(-f16)).tex((double)f19, (double)f21).endVertex();
-                worldrenderer.pos((double)(-f16), -100.0D, (double)(-f16)).tex((double)f23, (double)f21).endVertex();
-                tessellator.draw();
+                if(this.theWorld.isBloodMoon()) {
+                    this.renderEngine.bindTexture(locationMoonRedPng);
+                    worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+                    worldrenderer.pos((double)(-f16), -100.0D, (double)f16).tex(0.0D, 0.0D).endVertex();
+                    worldrenderer.pos((double)f16, -100.0D, (double)f16).tex(1.0D, 0.0D).endVertex();
+                    worldrenderer.pos((double)f16, -100.0D, (double)(-f16)).tex(1.0D, 1.0D).endVertex();
+                    worldrenderer.pos((double)(-f16), -100.0D, (double)(-f16)).tex(0.0D, 1.0D).endVertex();
+                    tessellator.draw();
+                } else {
+                    this.renderEngine.bindTexture(locationMoonPhasesPng);
+                    int i = this.theWorld.getMoonPhase();
+                    int k = i % 4;
+                    int i1 = i / 4 % 2;
+                    float f19 = (float)(k + 0) / 4.0F;
+                    float f21 = (float)(i1 + 0) / 2.0F;
+                    float f23 = (float)(k + 1) / 4.0F;
+                    float f14 = (float)(i1 + 1) / 2.0F;
+                    worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+                    worldrenderer.pos((double)(-f16), -100.0D, (double)f16).tex((double)f23, (double)f14).endVertex();
+                    worldrenderer.pos((double)f16, -100.0D, (double)f16).tex((double)f19, (double)f14).endVertex();
+                    worldrenderer.pos((double)f16, -100.0D, (double)(-f16)).tex((double)f19, (double)f21).endVertex();
+                    worldrenderer.pos((double)(-f16), -100.0D, (double)(-f16)).tex((double)f23, (double)f21).endVertex();
+                    tessellator.draw();
+                }
+
             }
 
             GlStateManager.disableTexture2D();

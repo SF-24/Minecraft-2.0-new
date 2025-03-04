@@ -18,6 +18,11 @@ public class BlockWallSign extends BlockSign
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 
+    /*public int getRenderType()
+    {
+        return 3;
+    }*/
+
     @SuppressWarnings("incomplete-switch")
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)
     {

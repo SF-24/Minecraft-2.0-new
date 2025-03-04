@@ -1,0 +1,91 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 01/03/25 10:52
+Description: Tesselating block in world
+
+java.lang.ClassCastException: net.minecraft.block.BlockWallSign cannot be cast to net.minecraft.block.BlockLiquid
+	at net.minecraft.client.renderer.BlockFluidRenderer.renderFluid(BlockFluidRenderer.java:49)
+	at net.minecraft.client.renderer.BlockRendererDispatcher.renderBlock(BlockRendererDispatcher.java:77)
+	at net.minecraft.client.renderer.chunk.RenderChunk.rebuildChunk(RenderChunk.java:275)
+	at net.minecraft.client.renderer.chunk.ChunkRenderWorker.processTask(ChunkRenderWorker.java:96)
+	at net.minecraft.client.renderer.chunk.ChunkRenderWorker.run(ChunkRenderWorker.java:41)
+	at java.lang.Thread.run(Thread.java:750)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.renderer.BlockFluidRenderer.renderFluid(BlockFluidRenderer.java:49)
+
+-- Block being tesselated --
+Details:
+	Block type: ID #68 (tile.sign // net.minecraft.block.BlockWallSign)
+	Block data value: 2 / 0x2 / 0b0010
+	Block location: World: (-85,76,2141), Chunk: (at 11,4,13 in -6,133; contains blocks -96,0,2128 to -81,255,2143), Region: (-1,4; contains chunks -32,128 to -1,159, blocks -512,0,2048 to -1,255,2559)
+Stacktrace:
+	at net.minecraft.client.renderer.BlockRendererDispatcher.renderBlock(BlockRendererDispatcher.java:77)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['XpKitty'/20, l='MpServer', x=-85.09, y=78.11, z=2141.36]]
+	Chunk stats: MultiplayerChunkCache: 20, 20
+	Level seed: 0
+	Level generator: ID 15 - randomBiomes, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: 117.00,64.00,209.00 - World: (117,64,209), Chunk: (at 5,4,1 in 7,13; contains blocks 112,0,208 to 127,255,223), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 70968 game time, 6765 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 16 total; [EntityCreeper['Creeper'/98, l='MpServer', x=-101.38, y=35.00, z=2156.06], EntityZombie['Zombie'/99, l='MpServer', x=-110.22, y=20.00, z=2172.25], EntityCreeper['Creeper'/164, l='MpServer', x=-55.03, y=54.00, z=2134.66], EntityZombie['Zombie'/165, l='MpServer', x=-57.06, y=47.00, z=2146.50], EntityCreeper['Creeper'/166, l='MpServer', x=-56.41, y=47.00, z=2144.97], EntitySkeleton['Skeleton'/139, l='MpServer', x=-75.81, y=35.00, z=2113.91], EntitySkeleton['Skeleton'/140, l='MpServer', x=-73.84, y=31.00, z=2130.50], EntityZombie['Zombie'/76, l='MpServer', x=-125.50, y=57.00, z=2130.28], EntitySkeleton['Skeleton'/141, l='MpServer', x=-67.97, y=64.00, z=2132.28], EntityBat['Bat'/77, l='MpServer', x=-113.25, y=20.09, z=2173.47], EntitySkeleton['Skeleton'/142, l='MpServer', x=-68.72, y=64.00, z=2133.13], EntitySkeleton['Skeleton'/143, l='MpServer', x=-70.50, y=65.00, z=2147.06], EntityCreeper['Creeper'/144, l='MpServer', x=-76.00, y=10.00, z=2175.34], EntityPlayerSP['XpKitty'/20, l='MpServer', x=-85.09, y=78.11, z=2141.36], EntitySkeleton['Skeleton'/120, l='MpServer', x=-88.19, y=53.00, z=2118.31], EntityCreeper['Creeper'/121, l='MpServer', x=-88.16, y=12.00, z=2172.19]]
+	Retry entities: 0 total; []
+	Server brand: vanilla
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:403)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2764)
+	at net.minecraft.client.renderer.chunk.ChunkRenderWorker.run(ChunkRenderWorker.java:51)
+	at java.lang.Thread.run(Thread.java:750)
+
+-- System Details --
+Details:
+	Minecraft Version: 2.0
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_442, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 471369552 bytes (449 MB) / 787480576 bytes (751 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 105
+	Launched Version: MavenMCP
+	LWJGL: 2.9.4
+	OpenGL: ~~ERROR~~ RuntimeException: No OpenGL context found in the current thread.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 8x Intel(R) Core(TM) i7-8665U CPU @ 1.90GHz
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 8
+	Mipmaps: 0
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 - Build 31.0.101.2130
+	OpenGlRenderer: Intel(R) UHD Graphics 620
+	OpenGlVendor: Intel
+	CpuCount: 8

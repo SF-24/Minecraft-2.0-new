@@ -216,7 +216,7 @@ public class EntitySpider extends EntityMob
         {
             livingdata = new EntitySpider.GroupData();
 
-            if (this.worldObj.getDifficulty() == EnumDifficulty.HARD && this.worldObj.rand.nextFloat() < 0.1F * difficulty.getClampedAdditionalDifficulty())
+            if (this.worldObj.getDifficulty() == EnumDifficulty.HARD && this.worldObj.rand.nextFloat() < (this.worldObj.isBloodMoon() ? 2.5F : 1.0F) * 0.1F * difficulty.getClampedAdditionalDifficulty())
             {
                 ((EntitySpider.GroupData)livingdata).func_111104_a(this.worldObj.rand);
             }

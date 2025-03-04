@@ -1,0 +1,98 @@
+---- Minecraft Crash Report ----
+// Uh... Did I do that?
+
+Time: 20/02/25 13:34
+Description: Ticking entity
+
+java.lang.NullPointerException: Ticking entity
+	at net.minecraft.item.ItemStack.getAttributeModifiers(ItemStack.java:989)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1834)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:293)
+	at net.minecraft.entity.monster.EntityMob.onUpdate(EntityMob.java:45)
+	at net.minecraft.entity.monster.EntityZombie.onUpdate(EntityZombie.java:323)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:2016)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:702)
+	at net.minecraft.world.World.updateEntity(World.java:1985)
+	at net.minecraft.world.World.updateEntities(World.java:1837)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:540)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:788)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:698)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:222)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:577)
+	at java.lang.Thread.run(Thread.java:750)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.item.ItemStack.getAttributeModifiers(ItemStack.java:989)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1834)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:293)
+	at net.minecraft.entity.monster.EntityMob.onUpdate(EntityMob.java:45)
+	at net.minecraft.entity.monster.EntityZombie.onUpdate(EntityZombie.java:323)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:2016)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:702)
+	at net.minecraft.world.World.updateEntity(World.java:1985)
+
+-- Entity being ticked --
+Details:
+	Entity Type: Zombie (net.minecraft.entity.monster.EntityZombie)
+	Entity ID: 178
+	Entity Name: Zombie
+	Entity's Exact location: 64.50, 70.00, 5843.50
+	Entity's Block location: 64.00,70.00,5843.00 - World: (64,70,5843), Chunk: (at 0,4,3 in 4,365; contains blocks 64,0,5840 to 79,255,5855), Region: (0,11; contains chunks 0,352 to 31,383, blocks 0,0,5632 to 511,255,6143)
+	Entity's Momentum: 0.00, 0.00, 0.00
+	Entity's Rider: ~~ERROR~~ NullPointerException: null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.world.World.updateEntities(World.java:1837)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:540)
+
+-- Affected level --
+Details:
+	Level name: Biome Test v1
+	All players: 1 total; [EntityPlayerMP['XpKitty'/132, l='Biome Test v1', x=66.78, y=74.00, z=5845.78]]
+	Chunk stats: ServerChunkCache: 914 Drop: 0
+	Level seed: -611458127673296785
+	Level generator: ID 15 - randomBiomes, ver 0. Features enabled: true
+	Level generator options: 
+	Level spawn location: 117.00,64.00,209.00 - World: (117,64,209), Chunk: (at 5,4,1 in 7,13; contains blocks 112,0,208 to 127,255,223), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 40366 game time, 1439 day time
+	Level dimension: 0
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 85058 (now: false), thunder time: 77541 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:788)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:698)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:222)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:577)
+	at java.lang.Thread.run(Thread.java:750)
+
+-- System Details --
+Details:
+	Minecraft Version: 2.0
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_442, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 194772184 bytes (185 MB) / 793247744 bytes (756 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 105
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 8; [EntityPlayerMP['XpKitty'/132, l='Biome Test v1', x=66.78, y=74.00, z=5845.78]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Very likely; Jar signature invalidated
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 - Build 31.0.101.2130
+	OpenGlRenderer: Intel(R) UHD Graphics 620
+	OpenGlVendor: Intel
+	CpuCount: 8

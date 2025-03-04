@@ -21,10 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.src.Config;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -83,6 +80,13 @@ public class WorldClient extends World
 
         if (this.getGameRules().getBoolean("doDaylightCycle"))
         {
+            if(this.worldInfo.getWorldTime() % 24000L == 13350) {
+                this.playerEntities.forEach((player)->player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.rise")));
+            } else if(this.worldInfo.getWorldTime() % 24000L == 14450) {
+                this.playerEntities.forEach((player)->player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.risen")));
+            } else if(this.worldInfo.getWorldTime() % 24000L == 22350) {
+                this.playerEntities.forEach((player)->player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.fade")));
+            }
             this.setWorldTime(this.getWorldTime() + 1L);
         }
 

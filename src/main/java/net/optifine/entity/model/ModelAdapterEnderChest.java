@@ -19,7 +19,7 @@ public class ModelAdapterEnderChest extends ModelAdapter
 
     public ModelBase makeModel()
     {
-        return new ModelChest();
+        return new ModelChest(true);
     }
 
     public ModelRenderer getModelRenderer(ModelBase model, String modelPart)

@@ -177,7 +177,7 @@ public class ItemFood extends Item
     }
 
     protected void setFoodStackCount(int value, EnumFoodStackType foodStackType) {
-        System.out.println(this + " | " + value + " | " + foodStackType);
+        //System.out.println(this + " | " + value + " | " + foodStackType);
         if(!foodStackType.equals(EnumFoodStackType.NORMAL)) {
             if(foodStackType.getItemList().contains(this)) {
                 this.setMaxStackSize(value);

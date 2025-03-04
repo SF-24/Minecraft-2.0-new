@@ -56,6 +56,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.src.Config;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -374,6 +376,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
      */
     public void updateRenderer()
     {
+
         if (OpenGlHelper.shadersSupported && ShaderLinkHelper.getStaticShaderLinkHelper() == null)
         {
             ShaderLinkHelper.setNewStaticShaderLinkHelper();
@@ -408,6 +411,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
 
         Entity entity = this.mc.getRenderViewEntity();
+
+        // fix tile entity lag ????
+        if(entity instanceof EntityItemFrame) return;
+
         double d2 = entity.posX;
         double d0 = entity.posY + (double)entity.getEyeHeight();
         double d1 = entity.posZ;

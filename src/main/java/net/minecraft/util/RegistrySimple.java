@@ -37,7 +37,7 @@ public class RegistrySimple<K, V> implements IRegistry<K, V>
             logger.debug("Adding duplicate key \'" + key + "\' to registry");
         }
 
-        System.out.println("putting in txtr " + key + " | " + value);
+//        System.out.println("putting in txtr " + key + " | " + value);
         this.registryObjects.put(key, value);
     }
 

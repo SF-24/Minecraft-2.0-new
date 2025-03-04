@@ -626,7 +626,7 @@ tile.cloth.name=Wool
 tile.flower1.name=Flower
 tile.flower1.dandelion.name=Dandelion
 tile.flower2.name=Flower
-tile.flower2.poppy.name=Poppy
+tile.flower2.poppy.name=Rose
 tile.flower2.blueOrchid.name=Blue Orchid
 tile.flower2.allium.name=Allium
 tile.flower2.houstonia.name=Azure Bluet
@@ -2747,4 +2747,9 @@ achievement.portalAether=Hostile Paradise
 achievement.portalAether.desc=Build and Aether Portal
 
 generator.randomBiomes=Random Biomes
+
+tile.bed.bloodMoon=You cannot rest during a blood moon
+title.bloodMoon.rise=A blood moon rises in the sky...
+title.bloodMoon.risen=A blood moon has risen above the horizon.
+title.bloodMoon.fade=As dawn rises, the blood moon fades...
 

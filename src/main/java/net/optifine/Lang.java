@@ -26,7 +26,7 @@ public class Lang
         Map map = I18n.getLocaleProperties();
         List<String> list = new ArrayList();
         String s = "optifine/lang/";
-        String s1 = "en_US";
+        String s1 = "en_UK";
         String s2 = ".lang";
         list.add(s + s1 + s2);
 

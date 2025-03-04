@@ -17,8 +17,17 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
     private static final ResourceLocation textureTrapped = new ResourceLocation("textures/entity/chest/trapped.png");
     private static final ResourceLocation textureChristmas = new ResourceLocation("textures/entity/chest/christmas.png");
     private static final ResourceLocation textureNormal = new ResourceLocation("textures/entity/chest/normal.png");
-    private ModelChest simpleChest = new ModelChest();
-    private ModelChest largeChest = new ModelLargeChest();
+
+    private static final ResourceLocation textureTrappedDoubleClosed = new ResourceLocation("textures/entity/chest_closed/trapped_double.png");
+    private static final ResourceLocation textureChristmasDoubleClosed = new ResourceLocation("textures/entity/chest_closed/christmas_double.png");
+    private static final ResourceLocation textureNormalDoubleClosed = new ResourceLocation("textures/entity/chest_closed/normal_double.png");
+    private static final ResourceLocation textureTrappedClosed = new ResourceLocation("textures/entity/chest_closed/trapped.png");
+    private static final ResourceLocation textureChristmasClosed = new ResourceLocation("textures/entity/chest_closed/christmas.png");
+    private static final ResourceLocation textureNormalClosed = new ResourceLocation("textures/entity/chest_closed/normal.png");
+
+
+    private static ModelChest simpleChest = new ModelChest(false);
+    private static ModelChest largeChest = new ModelLargeChest(false);
     private boolean isChristmas;
 
     public TileEntityChestRenderer()
@@ -62,7 +71,11 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
 
             if (te.adjacentChestXPos == null && te.adjacentChestZPos == null)
             {
-                modelchest = this.simpleChest;
+                if(te.lidAngle==0) {
+                    modelchest = this.simpleChest;
+                } else {
+                    modelchest = new ModelChest(true);
+                }
 
                 if (destroyStage >= 0)
                 {
@@ -88,7 +101,11 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
             }
             else
             {
-                modelchest = this.largeChest;
+                if(te.lidAngle==0) {
+                    modelchest = this.largeChest;
+                } else {
+                    modelchest = new ModelChest(true);
+                }
 
                 if (destroyStage >= 0)
                 {

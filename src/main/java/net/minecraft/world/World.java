@@ -1624,6 +1624,11 @@ public abstract class World implements IBlockAccess
         return this.provider.calculateCelestialAngle(this.worldInfo.getWorldTime(), partialTicks);
     }
 
+    public boolean isBloodMoon()
+    {
+        return this.provider.isBloodMoon(this.worldInfo.getWorldTime());
+    }
+
     public int getMoonPhase()
     {
         return this.provider.getMoonPhase(this.worldInfo.getWorldTime());
@@ -1634,6 +1639,7 @@ public abstract class World implements IBlockAccess
      */
     public float getCurrentMoonPhaseFactor()
     {
+        if(isBloodMoon()) return 1.25F;
         return WorldProvider.moonPhaseFactors[this.provider.getMoonPhase(this.worldInfo.getWorldTime())];
     }
 

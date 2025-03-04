@@ -47,6 +47,8 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
             IBakedModel ibakedmodel = this.blockModelShapes.getModelForState(state);
             IBakedModel ibakedmodel1 = (new SimpleBakedModel.Builder(ibakedmodel, texture)).makeBakedModel();
             this.blockModelRenderer.renderModel(blockAccess, ibakedmodel1, state, pos, Tessellator.getInstance().getWorldRenderer());
+        } else if(i==4) {
+            // TODO:
         }
     }
 
@@ -73,7 +75,6 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
                     case 3:
                         IBakedModel ibakedmodel = this.getModelFromBlockState(state, blockAccess, pos);
                         return this.blockModelRenderer.renderModel(blockAccess, ibakedmodel, state, pos, worldRendererIn);
-
                     default:
                         return false;
                 }

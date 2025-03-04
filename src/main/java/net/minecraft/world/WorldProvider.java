@@ -132,8 +132,18 @@ public abstract class WorldProvider
         return f;
     }
 
+    public boolean isBloodMoon(long worldTime)
+    {
+        return (int) (worldTime / 24000L) % 9 == 0;
+    }
+
     public int getMoonPhase(long worldTime)
     {
+        // worldTime / 24000 => integer day
+        // worldTime %8 => from 0 to 7
+        // +8 from 8 to 15
+        // %8 from 0 to 7
+        // if is blood moon => (worldTime / 24000L)
         return (int)(worldTime / 24000L % 8L + 8L) % 8;
     }
 

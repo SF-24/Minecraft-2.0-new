@@ -1700,6 +1700,10 @@
       {
         "name": "music/menu/menu4",
         "stream": true
+      },
+      {
+        "name": "music/menu/danse_morialta",
+        "stream": true
       }
     ]
   },

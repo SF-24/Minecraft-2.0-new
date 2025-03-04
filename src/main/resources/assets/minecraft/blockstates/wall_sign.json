@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=north": { "model": "wall_sign"},
+        "facing=east": { "model": "wall_sign", "y": 90, "uvlock": true },
+        "facing=south": { "model": "wall_sign", "y": 180, "uvlock": true },
+        "facing=west": { "model": "wall_sign", "y": -90, "uvlock": true },
+        
+    }
+}

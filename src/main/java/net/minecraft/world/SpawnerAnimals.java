@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -142,16 +143,15 @@ public final class SpawnerAnimals
                                                 {
                                                     ientitylivingdata = entityliving.onInitialSpawn(worldServerIn.getDifficultyForLocation(new BlockPos(entityliving)), ientitylivingdata);
 
-                                                    if (entityliving.isNotColliding())
-                                                    {
+                                                    if (entityliving.isNotColliding()) {
                                                         ++j2;
                                                         worldServerIn.spawnEntityInWorld(entityliving);
                                                     }
 
-                                                    if (j2 >= entityliving.getMaxSpawnedInChunk())
-                                                    {
+                                                    if (j2 >= entityliving.getMaxSpawnedInChunk()) {
                                                         continue label374;
                                                     }
+
                                                 }
 
                                                 i4 += j2;

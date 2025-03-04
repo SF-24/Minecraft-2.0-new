@@ -409,9 +409,9 @@ public class EntityZombie extends EntityMob
     {
         super.setEquipmentBasedOnDifficulty(difficulty);
 
-        if (this.rand.nextFloat() < (this.worldObj.getDifficulty() == EnumDifficulty.HARD ? 0.15F : 0.05F)) // was 0.05F : 0.01F
+        if (this.rand.nextFloat() < (this.worldObj.isBloodMoon()?3.5F:1.0F)*(this.worldObj.getDifficulty() == EnumDifficulty.HARD ? 0.15F : 0.05F)) // was 0.05F : 0.01F
         {
-            int i = this.rand.nextInt(3);
+            int i = this.rand.nextInt(this.worldObj.isBloodMoon() ? 2 : 3);
 
             if (i == 0)
             {
@@ -538,7 +538,7 @@ public class EntityZombie extends EntityMob
 
         if (livingdata == null)
         {
-            livingdata = new EntityZombie.GroupData(this.worldObj.rand.nextFloat() < 0.05F, this.worldObj.rand.nextFloat() < 0.05F);
+            livingdata = new EntityZombie.GroupData(this.worldObj.rand.nextFloat() < (this.worldObj.isBloodMoon() ? 0.2 : 0.05F), this.worldObj.rand.nextFloat() < 0.05F);
         }
 
         if (livingdata instanceof EntityZombie.GroupData)
@@ -600,7 +600,7 @@ public class EntityZombie extends EntityMob
             this.getEntityAttribute(SharedMonsterAttributes.followRange).applyModifier(new AttributeModifier("Random zombie-spawn bonus", d0, 2));
         }
 
-        if (this.rand.nextFloat() < f * 0.05F)
+        if (this.rand.nextFloat() < (this.worldObj.isBloodMoon() ? 2.0f : 1.0f) * (f * 0.05F))
         {
             this.getEntityAttribute(reinforcementChance).applyModifier(new AttributeModifier("Leader zombie bonus", this.rand.nextDouble() * 0.25D + 0.5D, 0));
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier("Leader zombie bonus", this.rand.nextDouble() * 3.0D + 1.0D, 2));
