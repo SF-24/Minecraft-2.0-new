@@ -2,6 +2,8 @@ package net.minecraft.client.renderer.tileentity;
 
 import java.util.List;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import javafx.geometry.Point3D;
 import net.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -20,6 +22,8 @@ import net.optifine.CustomColors;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
 
+import javax.vecmath.Point3d;
+
 public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntitySign>
 {
     private static final ResourceLocation SIGN_TEXTURE = new ResourceLocation("textures/entity/sign.png");
@@ -34,9 +38,11 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
         Block block = te.getBlockType();
         GlStateManager.pushMatrix();
         float f = 0.6666667F;
-        model = new ModelSign(block == Blocks.standing_sign);
+        Entity entity = Config.getMinecraft().getRenderViewEntity();
+
+        model = new ModelSign(block == Blocks.standing_sign,block==Blocks.standing_sign||new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Constants.signRenderDistanceSquared);
         if (Config.getMinecraft().currentScreen instanceof GuiEditSign) {
-            this.model = new ModelSign(true);
+            this.model = new ModelSign(true, true);
             this.model.signStick.showModel=false;
         }
 
@@ -90,7 +96,7 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
         GlStateManager.enableRescaleNormal();
         GlStateManager.pushMatrix();
         GlStateManager.scale(f, -f, -f);
-        this.model.renderSign(block == Blocks.standing_sign);
+        this.model.renderSign(block == Blocks.standing_sign,block==Blocks.standing_sign||new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Constants.signRenderDistanceSquared);
         GlStateManager.popMatrix();
 
 
@@ -162,6 +168,7 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
                 Entity entity = Config.getMinecraft().getRenderViewEntity();
                 double d0 = p_isRenderText_0_.getDistanceSq(entity.posX, entity.posY, entity.posZ);
 
+
                 if (d0 > Constants.signRenderDistanceSquared)
                 {
                     return false;
@@ -175,8 +182,13 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
     public static void updateTextRenderDistance()
     {
         Minecraft minecraft = Config.getMinecraft();
-        double d0 = (double)Config.limit(minecraft.gameSettings.gammaSetting, 1.0F, 120.0F);
-        double d1 = Math.max(1.5D * (double)minecraft.displayHeight / d0, 16.0D);
-        Constants.signRenderDistanceSquared = d1 * d1;
+        // double d0 = (double)Config.limit(minecraft.gameSettings.gammaSetting, 1.0F, 120.0F);
+        //double d1 = Math.max(1.5D * (double)minecraft.displayHeight / d0, 16.0D);
+        //Constants.signRenderDistanceSquared = d1 * d1;
+        if(!minecraft.gameSettings.fancyGraphics) {
+            Constants.signRenderDistanceSquared=Constants.shortSignDistanceSquared;
+        } else {
+            Constants.signRenderDistanceSquared=Constants.longSignDistanceSquared;
+        }
     }
 }

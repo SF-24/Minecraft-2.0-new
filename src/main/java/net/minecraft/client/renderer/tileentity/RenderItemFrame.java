@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.tileentity;
 
+import net.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -42,7 +43,8 @@ public class RenderItemFrame extends Render<EntityItemFrame>
     private final ModelResourceLocation itemFrameModel = new ModelResourceLocation("item_frame", "normal");
     private final ModelResourceLocation mapModel = new ModelResourceLocation("item_frame", "map");
     private RenderItem itemRenderer;
-    private static double itemRenderDistanceSq = 4096.0D;
+    private static double itemRenderDistanceSq = Constants.signRenderDistanceSquared;
+    // changed to sign render dist. sq.
 
     public RenderItemFrame(RenderManager renderManagerIn, RenderItem itemRendererIn)
     {
@@ -278,8 +280,13 @@ public class RenderItemFrame extends Render<EntityItemFrame>
     public static void updateItemRenderDistance()
     {
         Minecraft minecraft = Config.getMinecraft();
-        double d0 = (double)Config.limit(minecraft.gameSettings.gammaSetting, 1.0F, 120.0F);
-        double d1 = Math.max(6.0D * (double)minecraft.displayHeight / d0, 16.0D);
-        itemRenderDistanceSq = d1 * d1;
+//        double d0 = (double)Config.limit(minecraft.gameSettings.gammaSetting, 1.0F, 120.0F);
+//        double d1 = Math.max(6.0D * (double)minecraft.displayHeight / d0, 16.0D);
+//        itemRenderDistanceSq = d1 * d1;
+        if(!minecraft.gameSettings.fancyGraphics) {
+            Constants.signRenderDistanceSquared=Constants.shortSignDistanceSquared;
+        } else {
+            Constants.signRenderDistanceSquared=Constants.longSignDistanceSquared;
+        }
     }
 }

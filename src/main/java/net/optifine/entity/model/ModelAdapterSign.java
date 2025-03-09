@@ -19,7 +19,7 @@ public class ModelAdapterSign extends ModelAdapter
 
     public ModelBase makeModel()
     {
-        return new ModelSign(true);
+        return new ModelSign(true,true);
     }
 
     public ModelRenderer getModelRenderer(ModelBase model, String modelPart)
