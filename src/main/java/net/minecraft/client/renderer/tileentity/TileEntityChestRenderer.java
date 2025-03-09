@@ -86,17 +86,26 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
                     GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
                     GlStateManager.matrixMode(5888);
                 }
-                else if (this.isChristmas)
-                {
-                    this.bindTexture(textureChristmas);
+                else if (this.isChristmas) {
+                    if (te.lidAngle == 0) {
+                        this.bindTexture(textureChristmasClosed);
+                    } else {
+                        this.bindTexture(textureChristmas);
+                    }
                 }
-                else if (te.getChestType() == 1)
-                {
-                    this.bindTexture(textureTrapped);
+                else if (te.getChestType() == 1) {
+                    if (te.lidAngle == 0) {
+                        this.bindTexture(textureTrappedClosed);
+                    } else {
+                        this.bindTexture(textureTrapped);
+                    }
                 }
-                else
-                {
-                    this.bindTexture(textureNormal);
+                else {
+                    if (te.lidAngle == 0) {
+                        this.bindTexture(textureNormalClosed);
+                    } else {
+                        this.bindTexture(textureNormal);
+                    }
                 }
             }
             else
@@ -104,7 +113,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
                 if(te.lidAngle==0) {
                     modelchest = this.largeChest;
                 } else {
-                    modelchest = new ModelChest(true);
+                    modelchest = new ModelLargeChest(true);
                 }
 
                 if (destroyStage >= 0)
@@ -116,17 +125,26 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
                     GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
                     GlStateManager.matrixMode(5888);
                 }
-                else if (this.isChristmas)
-                {
-                    this.bindTexture(textureChristmasDouble);
+                else if (this.isChristmas) {
+                    if (te.lidAngle == 0) {
+                        this.bindTexture(textureChristmasDoubleClosed);
+                    } else {
+                        this.bindTexture(textureChristmasDouble);
+                    }
                 }
-                else if (te.getChestType() == 1)
-                {
-                    this.bindTexture(textureTrappedDouble);
+                else if (te.getChestType() == 1) {
+                    if (te.lidAngle == 0) {
+                        this.bindTexture(textureTrappedDoubleClosed);
+                    } else {
+                        this.bindTexture(textureTrappedDouble);
+                    }
                 }
-                else
-                {
-                    this.bindTexture(textureNormalDouble);
+                else {
+                    if (te.lidAngle == 0) {
+                        this.bindTexture(textureNormalDoubleClosed);
+                    } else {
+                        this.bindTexture(textureNormalDouble);
+                    }
                 }
             }
 

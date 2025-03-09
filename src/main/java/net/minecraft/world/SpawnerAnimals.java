@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.monster.EntityGiantZombie;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -40,6 +41,7 @@ public final class SpawnerAnimals
 
             for (EntityPlayer entityplayer : worldServerIn.playerEntities)
             {
+
                 if (!entityplayer.isSpectator())
                 {
                     int j = MathHelper.floor_double(entityplayer.posX / 16.0D);
@@ -72,8 +74,10 @@ public final class SpawnerAnimals
 
             for (EnumCreatureType enumcreaturetype : EnumCreatureType.values())
             {
+
                 if ((!enumcreaturetype.getPeacefulCreature() || spawnPeacefulMobs) && (enumcreaturetype.getPeacefulCreature() || spawnHostileMobs) && (!enumcreaturetype.getAnimal() || p_77192_4_))
                 {
+
                     int j4 = worldServerIn.countEntities(enumcreaturetype.getCreatureClass());
                     int k4 = enumcreaturetype.getMaxNumberOfCreature() * i / MOB_COUNT_DIV;
 
@@ -130,6 +134,10 @@ public final class SpawnerAnimals
                                                 try
                                                 {
                                                     entityliving = (EntityLiving)biomegenbase$spawnlistentry.entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {worldServerIn});
+                                                    if(worldServerIn.isBloodMoon() && entityliving instanceof EntityZombie && new Random((int)worldServerIn.getTotalWorldTime()).nextInt(20)==0) {
+                                                        // Giant zombie spawning system during a blood moon
+                                                        entityliving = new EntityGiantZombie(worldServerIn);
+                                                    }
                                                 }
                                                 catch (Exception exception)
                                                 {

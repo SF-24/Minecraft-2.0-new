@@ -1682,7 +1682,7 @@
       "tile/piston/out"
     ]
   },
-  "music.menu": {
+"music.old_menu": {
     "category": "music",
     "sounds": [
       {
@@ -1700,7 +1700,25 @@
       {
         "name": "music/menu/menu4",
         "stream": true
+      }
+    ]
+  },
+  "music.menu": {
+    "category": "music",
+    "sounds": [
+      {
+        "type": "event",
+        "name": "music.old_menu"
       },
+      {
+        "type": "event",
+        "name": "music.intro"
+      }
+    ]
+  },
+  "music.intro": {
+    "category": "music",
+    "sounds": [
       {
         "name": "music/menu/danse_morialta",
         "stream": true
@@ -1712,7 +1730,7 @@
     "sounds": [
       {
         "type": "event",
-        "name": "music.menu"
+        "name": "music.old_menu"
       },
       {
         "name": "music/game/calm1",

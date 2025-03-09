@@ -317,7 +317,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private Framebuffer framebufferMc;
     private TextureMap textureMapBlocks;
     private SoundHandler mcSoundHandler;
-    private MusicTicker mcMusicTicker;
+    public MusicTicker mcMusicTicker;
     private ResourceLocation mojangLogo;
     private final MinecraftSessionService sessionService;
     private SkinManager skinManager;
@@ -2381,7 +2381,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
 
         // stops music stopping
-        this.mcSoundHandler.stopSounds();
+        // this.mcSoundHandler.stopSounds();
         this.theWorld = worldClientIn;
 
         if (worldClientIn != null)

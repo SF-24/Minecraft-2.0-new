@@ -532,6 +532,7 @@ public class EntityZombie extends EntityMob
      */
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata)
     {
+
         livingdata = super.onInitialSpawn(difficulty, livingdata);
         float f = difficulty.getClampedAdditionalDifficulty();
         this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
@@ -766,9 +767,9 @@ public class EntityZombie extends EntityMob
     protected final void setSize(float width, float height)
     {
         boolean flag = this.zombieWidth > 0.0F && this.zombieHeight > 0.0F;
+
         this.zombieWidth = width;
         this.zombieHeight = height;
-
         if (!flag)
         {
             this.multiplySize(1.0F);

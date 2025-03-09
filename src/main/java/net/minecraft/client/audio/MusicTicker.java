@@ -11,7 +11,7 @@ public class MusicTicker implements ITickable
     private final Random rand = new Random();
     private final Minecraft mc;
     private ISound currentMusic;
-    private int timeUntilNextMusic = 100;
+    private int timeUntilNextMusic = 80; // was 100
 
     public MusicTicker(Minecraft mcIn)
     {
@@ -65,6 +65,7 @@ public class MusicTicker implements ITickable
 
     public static enum MusicType
     {
+        INTRO(new ResourceLocation("minecraft:music.intro"), 20, 600),
         MENU(new ResourceLocation("minecraft:music.menu"), 20, 600),
         GAME(new ResourceLocation("minecraft:music.game"), 12000, 24000),
         CREATIVE(new ResourceLocation("minecraft:music.game.creative"), 1200, 3600),

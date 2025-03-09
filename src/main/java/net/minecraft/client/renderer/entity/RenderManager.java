@@ -155,7 +155,7 @@ public class RenderManager
         this.entityRenderMap.put(EntityZombie.class, new RenderZombie(this));
         this.entityRenderMap.put(EntitySlime.class, new RenderSlime(this, new ModelSlime(16), 0.25F));
         this.entityRenderMap.put(EntityMagmaCube.class, new RenderMagmaCube(this));
-        this.entityRenderMap.put(EntityGiantZombie.class, new RenderGiantZombie(this, new ModelZombie(), 0.5F, 6.0F));
+        this.entityRenderMap.put(EntityGiantZombie.class, new RenderGiantZombie(this, new ModelZombie(), 0.5F, 2.5F));
         this.entityRenderMap.put(EntityGhast.class, new RenderGhast(this));
         this.entityRenderMap.put(EntitySquid.class, new RenderSquid(this, new ModelSquid(), 0.7F));
         this.entityRenderMap.put(EntityVillager.class, new RenderVillager(this));
