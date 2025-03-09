@@ -80,12 +80,14 @@ public class WorldClient extends World
 
         if (this.getGameRules().getBoolean("doDaylightCycle"))
         {
-            if(this.worldInfo.getWorldTime() % 24000L == 13350) {
-                this.playerEntities.forEach((player)->player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.rise")));
-            } else if(this.worldInfo.getWorldTime() % 24000L == 14450) {
-                this.playerEntities.forEach((player)->player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.risen")));
-            } else if(this.worldInfo.getWorldTime() % 24000L == 22350) {
-                this.playerEntities.forEach((player)->player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.fade")));
+            if(isBloodMoon() && !isRemote) {
+                if (this.worldInfo.getWorldTime() % 24000L == 13350) {
+                    this.playerEntities.forEach((player) -> player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.rise")));
+                } else if (this.worldInfo.getWorldTime() % 24000L == 14450) {
+                    this.playerEntities.forEach((player) -> player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.risen")));
+                } else if (this.worldInfo.getWorldTime() % 24000L == 22350) {
+                    this.playerEntities.forEach((player) -> player.addChatComponentMessage(new ChatComponentTranslation("title.bloodMoon.fade")));
+                }
             }
             this.setWorldTime(this.getWorldTime() + 1L);
         }
