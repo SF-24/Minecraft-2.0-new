@@ -53,6 +53,8 @@ public abstract class BiomeGenBase
     protected static final BiomeGenBase.Height height_Desert = new BiomeGenBase.Height(0.1F, 0.35F);
     protected static final BiomeGenBase.Height height_Wasteland = new BiomeGenBase.Height(0.45F, 0.6F); // was 0.3
 
+    protected static final BiomeGenBase.Height height_Alpha = new BiomeGenBase.Height(1.0F, 0.6F);
+
     /** An array of all the biomes, indexed by biome id. */
     public static final BiomeGenBase[] biomeList = new BiomeGenBase[256];
     private static BiomeGenBase[] biomeLookupTable = new BiomeGenBase[4096];
@@ -155,6 +157,12 @@ public abstract class BiomeGenBase
             .setTemperatureRainfall(0.8F, 0.9F)
             .setHeight(height_ArchipelagoHills)
             .setOcean();
+
+    public static final BiomeGenBase alpha = new BiomeGenAlpha(99)
+            .setBiomeName("Neon Plains")
+            .setColor(5470985)
+            .setTemperatureRainfall(0.8F, 0.9F)
+            .setHeight(height_Alpha);
 
 
 

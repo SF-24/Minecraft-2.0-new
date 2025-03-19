@@ -54,6 +54,7 @@ import org.lwjgl.opengl.GLContext;
 
 public class TextureUtils
 {
+
     public static final String texGrassTop = "grass_top";
     public static final String texStone = "stone";
     public static final String texDirt = "dirt";
@@ -148,6 +149,7 @@ public class TextureUtils
         if (texturemap != null)
         {
             String s = "minecraft:blocks/";
+
             iconGrassTop = texturemap.getSpriteSafe(s + "grass_top");
             iconGrassSide = texturemap.getSpriteSafe(s + "grass_side");
             iconGrassSideOverlay = texturemap.getSpriteSafe(s + "grass_side_overlay");

@@ -15,10 +15,10 @@ public class GenLayerShore extends GenLayer
         BiomeGenBase.gravelBeach
     };
 
-    public GenLayerShore(long p_i2130_1_, GenLayer p_i2130_3_)
+    public GenLayerShore(long var1, GenLayer var2)
     {
-        super(p_i2130_1_);
-        this.parent = p_i2130_3_;
+        super(var1);
+        this.parent = var2;
     }
 
     /**

@@ -15,6 +15,11 @@ import net.minecraft.client.main.Main;
  */
 
 public class Run {
+
+    public Run(String[] args) {
+        main(args);
+    }
+
     public static void main(String[] args) {
         // Provide natives
         // Currently supported Linux and Windows

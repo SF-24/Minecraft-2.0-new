@@ -1,7 +1,6 @@
 package net.minecraft.client.entity;
 
 import com.mojang.authlib.GameProfile;
-import java.io.File;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;
@@ -13,15 +12,14 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.src.Config;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
-import net.optifine.player.CapeUtils;
-import net.optifine.player.PlayerConfigurations;
+import net.mineshaft.data.ProfileManager;
 import net.optifine.reflect.Reflector;
+
+import java.io.File;
 
 public abstract class AbstractClientPlayer extends EntityPlayer
 {
@@ -73,16 +71,18 @@ public abstract class AbstractClientPlayer extends EntityPlayer
      */
     public ResourceLocation getLocationSkin()
     {
-        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-        return networkplayerinfo == null ? DefaultPlayerSkin.getDefaultSkin(this.getName()) : networkplayerinfo.getLocationSkin();
+        //NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
+        return DefaultPlayerSkin.getDefaultSkin(this.getName());
     }
 
     public ResourceLocation getLocationCape()
     {
-        // updated cape getter
-        //NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-        //return networkplayerinfo == null ? null : networkplayerinfo.getLocationCape();
+        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
+        if(networkplayerinfo.getLocationCape()!=null) {
+            return networkplayerinfo.getLocationCape();
+        }
         return DefaultPlayerSkin.getDefaultCape(this.getName());
+
     }
 
     public static ThreadDownloadImageData getDownloadImageSkin(ResourceLocation resourceLocationIn, String username)

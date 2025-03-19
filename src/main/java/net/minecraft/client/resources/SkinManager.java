@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.mineshaft.data.ProfileManager;
 
 public class SkinManager
 {
@@ -115,6 +116,7 @@ public class SkinManager
                 try
                 {
                     map.putAll(SkinManager.this.sessionService.getTextures(profile, requireSecure));
+
                 }
                 catch (InsecureTextureException var3)
                 {
@@ -139,12 +141,21 @@ public class SkinManager
 
                         if (map.containsKey(Type.CAPE))
                         {
-                            SkinManager.this.loadSkin((MinecraftProfileTexture)map.get(Type.CAPE), Type.CAPE, skinAvailableCallback);
+                            ResourceLocation location = ProfileManager.getPlayerCapeResourceLocation(profile.getName());
+                            //if(!ProfileManager.checkResourceExists(location)) {
+                                ProfileManager.checkDownloadCape(location,ProfileManager.getUserCapeName(profile.getName()));
+                            //}
+//                            SkinManager.this.loadSkin((MinecraftProfileTexture)map.get(Type.CAPE), Type.CAPE, skinAvailableCallback);
                         }
                     }
                 });
             }
         });
+    }
+
+    public void loadCape(String name) {
+        ResourceLocation location = ProfileManager.getPlayerCapeResourceLocation(name);
+        ProfileManager.checkDownloadCape(location,ProfileManager.getUserCapeName(name));
     }
 
     public Map<Type, MinecraftProfileTexture> loadSkinFromCache(GameProfile profile)

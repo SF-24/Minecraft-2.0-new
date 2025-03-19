@@ -5,13 +5,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
-import java.io.File;
-import java.net.SocketAddress;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,21 +14,7 @@ import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraft.network.play.server.S02PacketChat;
-import net.minecraft.network.play.server.S03PacketTimeUpdate;
-import net.minecraft.network.play.server.S05PacketSpawnPosition;
-import net.minecraft.network.play.server.S07PacketRespawn;
-import net.minecraft.network.play.server.S09PacketHeldItemChange;
-import net.minecraft.network.play.server.S1DPacketEntityEffect;
-import net.minecraft.network.play.server.S1FPacketSetExperience;
-import net.minecraft.network.play.server.S2BPacketChangeGameState;
-import net.minecraft.network.play.server.S38PacketPlayerListItem;
-import net.minecraft.network.play.server.S39PacketPlayerAbilities;
-import net.minecraft.network.play.server.S3EPacketTeams;
-import net.minecraft.network.play.server.S3FPacketCustomPayload;
-import net.minecraft.network.play.server.S41PacketServerDifficulty;
-import net.minecraft.network.play.server.S44PacketWorldBorder;
+import net.minecraft.network.play.server.*;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
@@ -44,11 +23,7 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatList;
 import net.minecraft.stats.StatisticsFile;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldSettings;
@@ -57,8 +32,17 @@ import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.demo.DemoWorldManager;
 import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.WorldInfo;
+import net.mineshaft.data.ProfileManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.net.SocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public abstract class ServerConfigurationManager
 {
@@ -152,6 +136,7 @@ public abstract class ServerConfigurationManager
         this.mcServer.refreshStatusNextTick();
         ChatComponentTranslation chatcomponenttranslation;
 
+        ProfileManager.getPlayerCapeResourceLocation(playerIn.getDisplayName().getUnformattedText());
         if (!playerIn.getName().equalsIgnoreCase(s))
         {
             chatcomponenttranslation = new ChatComponentTranslation("multiplayer.player.joined.renamed", new Object[] {playerIn.getDisplayName(), s});

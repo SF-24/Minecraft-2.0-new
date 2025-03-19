@@ -4,6 +4,7 @@ import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,6 +15,7 @@ import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -28,7 +30,6 @@ public class BlockGrass extends Block implements IGrowable
         this.setTickRandomly(true);
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
-
     /**
      * Get the actual Block state of this Block at the given position. This applies properties not visible in the
      * metadata, such as fence connections.
@@ -55,6 +56,8 @@ public class BlockGrass extends Block implements IGrowable
             return 16243232;
         } else if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills)) {
             return 16246801;
+        } else if(worldIn.getWorldType().equals(WorldType.ALPHA)) {
+            return 5701167;
         }
         return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
     }

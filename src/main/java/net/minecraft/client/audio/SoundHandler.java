@@ -130,6 +130,7 @@ public class SoundHandler implements IResourceManagerReloadListener, ITickable
             String s = soundlist$soundentry.getSoundEntryName();
             ResourceLocation resourcelocation = new ResourceLocation(s);
             final String s1 = s.contains(":") ? resourcelocation.getResourceDomain() : location.getResourceDomain();
+//            System.out.println("link: " + s1 + " file: " + "sounds/" + resourcelocation.getResourcePath() + ".ogg");
             ISoundEventAccessor<SoundPoolEntry> isoundeventaccessor;
 
             switch (soundlist$soundentry.getSoundEntryType())

@@ -7,8 +7,11 @@ public class WorldType
     /** List of world types. */
     public static final WorldType[] worldTypes = new WorldType[16];
 
+    /** Random biomes world type */
+    public static final WorldType RANDOM_BIOMES = new WorldType(0, "randomBiomes");
+
     /** Default world type. */
-    public static final WorldType DEFAULT = (new WorldType(0, "default", 1)).setVersioned();
+    public static final WorldType DEFAULT = (new WorldType(6, "old_default", 1)).setVersioned();
 
     /** Flat world type. */
     public static final WorldType FLAT = new WorldType(1, "flat");
@@ -24,8 +27,9 @@ public class WorldType
     /** Default (1.1) world type. */
     public static final WorldType DEFAULT_1_1 = (new WorldType(8, "default_1_1", 0)).setCanBeCreated(false);
 
-    /** Random biomes world type */
-    public static final WorldType RANDOM_BIOMES = new WorldType(15, "randomBiomes");
+    /** Default world type. */
+    public static final WorldType ALPHA = (new WorldType(9, "neon", 1));
+
 
     /** ID for this world type. */
     private final int worldTypeId;

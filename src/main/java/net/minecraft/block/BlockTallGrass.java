@@ -20,6 +20,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BlockTallGrass extends BlockBush implements IGrowable
@@ -71,6 +72,8 @@ public class BlockTallGrass extends BlockBush implements IGrowable
             return 16243232;
         } else if(worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForest) || worldIn.getBiomeGenForCoords(pos).equals(BiomeGenBase.lorienForestHills)) {
             return 16246801;
+        } else if(worldIn.getWorldType().equals(WorldType.ALPHA)) {
+            return 7390530;
         }
         return worldIn.getBiomeGenForCoords(pos).getGrassColorAtPos(pos);
     }

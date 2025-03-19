@@ -1,9 +1,5 @@
 package net.minecraft.client.renderer.tileentity;
 
-import java.util.List;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-import javafx.geometry.Point3D;
 import net.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -23,6 +19,7 @@ import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
 
 import javax.vecmath.Point3d;
+import java.util.List;
 
 public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntitySign>
 {

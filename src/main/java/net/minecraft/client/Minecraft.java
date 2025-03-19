@@ -23,14 +23,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -155,6 +148,7 @@ import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
+import net.mineshaft.data.UserRenderData;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
@@ -175,6 +169,10 @@ import org.lwjgl.util.glu.GLU;
 
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
+    public ArrayList<ResourceLocation> toLoad = new ArrayList<>();
+
+    public UserRenderData userRenderData = new UserRenderData();
+
     private EnumTweakMode currentMode;
 
     private static final Logger logger = LogManager.getLogger();
@@ -182,7 +180,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
 
     /** A 10MiB preallocation to ensure the heap is reasonably sized. */
-    public static byte[] memoryReserve = new byte[10485760];
+    // disabled!!!
+    public static byte[] memoryReserve = new byte[0];//new byte[10485760];
     private static final List<DisplayMode> macDisplayModes = Lists.newArrayList(new DisplayMode[] {new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
     private final File fileResourcepacks;
     private final PropertyMap twitchDetails;
@@ -364,7 +363,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.profileProperties = gameConfig.userInfo.profileProperties;
         this.mcDefaultResourcePack = new DefaultResourcePack((new ResourceIndex(gameConfig.folderInfo.assetsDir, gameConfig.folderInfo.assetIndex)).getResourceMap());
         this.proxy = gameConfig.userInfo.proxy == null ? Proxy.NO_PROXY : gameConfig.userInfo.proxy;
-        this.sessionService = (new YggdrasilAuthenticationService(gameConfig.userInfo.proxy, UUID.randomUUID().toString())).createMinecraftSessionService();
+        String uuid = UUID.randomUUID().toString();
+        //Main.
+        this.sessionService = (new YggdrasilAuthenticationService(gameConfig.userInfo.proxy, uuid)).createMinecraftSessionService();
+
+
         this.session = gameConfig.userInfo.session;
         logger.info("Setting user: " + this.session.getUsername());
         logger.info("(Session ID is " + this.session.getSessionID() + ")");

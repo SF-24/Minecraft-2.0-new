@@ -1,11 +1,13 @@
-package net.minecraft.client.renderer;
+package net;
 
-import java.awt.Graphics;
+import net.minecraft.client.renderer.IImageBuffer;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.image.ImageObserver;
 
-public class ImageBufferDownload implements IImageBuffer
+public class CustomCapeImageBuffer implements IImageBuffer
 {
     private int[] imageData;
     private int imageWidth;
@@ -20,7 +22,7 @@ public class ImageBufferDownload implements IImageBuffer
         else
         {
             this.imageWidth = 64;
-            this.imageHeight = 64;
+            this.imageHeight = 32;
             int i = image.getWidth();
             int j = image.getHeight();
             int k;
@@ -36,33 +38,33 @@ public class ImageBufferDownload implements IImageBuffer
             Graphics graphics = bufferedimage.getGraphics();
             graphics.drawImage(image, 0, 0, (ImageObserver)null);
 
-            if (image.getHeight() == 32 * k)
-            {
-                graphics.drawImage(bufferedimage, 24 * k, 48 * k, 20 * k, 52 * k, 4 * k, 16 * k, 8 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 28 * k, 48 * k, 24 * k, 52 * k, 8 * k, 16 * k, 12 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 20 * k, 52 * k, 16 * k, 64 * k, 8 * k, 20 * k, 12 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 24 * k, 52 * k, 20 * k, 64 * k, 4 * k, 20 * k, 8 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 28 * k, 52 * k, 24 * k, 64 * k, 0 * k, 20 * k, 4 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 32 * k, 52 * k, 28 * k, 64 * k, 12 * k, 20 * k, 16 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 40 * k, 48 * k, 36 * k, 52 * k, 44 * k, 16 * k, 48 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 44 * k, 48 * k, 40 * k, 52 * k, 48 * k, 16 * k, 52 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 36 * k, 52 * k, 32 * k, 64 * k, 48 * k, 20 * k, 52 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 40 * k, 52 * k, 36 * k, 64 * k, 44 * k, 20 * k, 48 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 44 * k, 52 * k, 40 * k, 64 * k, 40 * k, 20 * k, 44 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 48 * k, 52 * k, 44 * k, 64 * k, 52 * k, 20 * k, 56 * k, 32 * k, (ImageObserver)null);
-            }
+//            if (image.getHeight() == 32 * k)
+//            {
+//                graphics.drawImage(bufferedimage, 24 * k, 48 * k, 20 * k, 52 * k, 4 * k, 16 * k, 8 * k, 20 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 28 * k, 48 * k, 24 * k, 52 * k, 8 * k, 16 * k, 12 * k, 20 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 20 * k, 52 * k, 16 * k, 64 * k, 8 * k, 20 * k, 12 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 24 * k, 52 * k, 20 * k, 64 * k, 4 * k, 20 * k, 8 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 28 * k, 52 * k, 24 * k, 64 * k, 0 * k, 20 * k, 4 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 32 * k, 52 * k, 28 * k, 64 * k, 12 * k, 20 * k, 16 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 40 * k, 48 * k, 36 * k, 52 * k, 44 * k, 16 * k, 48 * k, 20 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 44 * k, 48 * k, 40 * k, 52 * k, 48 * k, 16 * k, 52 * k, 20 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 36 * k, 52 * k, 32 * k, 64 * k, 48 * k, 20 * k, 52 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 40 * k, 52 * k, 36 * k, 64 * k, 44 * k, 20 * k, 48 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 44 * k, 52 * k, 40 * k, 64 * k, 40 * k, 20 * k, 44 * k, 32 * k, (ImageObserver)null);
+//                graphics.drawImage(bufferedimage, 48 * k, 52 * k, 44 * k, 64 * k, 52 * k, 20 * k, 56 * k, 32 * k, (ImageObserver)null);
+//            }
 
-            graphics.dispose();
-            this.imageData = ((DataBufferInt)bufferedimage.getRaster().getDataBuffer()).getData();
-            this.setAreaOpaque(0 * k, 0 * k, 32 * k, 16 * k);
-            this.setAreaTransparent(32 * k, 0 * k, 64 * k, 32 * k);
-            this.setAreaOpaque(0 * k, 16 * k, 64 * k, 32 * k);
-            this.setAreaTransparent(0 * k, 32 * k, 16 * k, 48 * k);
-            this.setAreaTransparent(16 * k, 32 * k, 40 * k, 48 * k);
-            this.setAreaTransparent(40 * k, 32 * k, 56 * k, 48 * k);
-            this.setAreaTransparent(0 * k, 48 * k, 16 * k, 64 * k);
-            this.setAreaOpaque(16 * k, 48 * k, 48 * k, 64 * k);
-            this.setAreaTransparent(48 * k, 48 * k, 64 * k, 64 * k);
+//            graphics.dispose();
+//            this.imageData = ((DataBufferInt)bufferedimage.getRaster().getDataBuffer()).getData();
+//            this.setAreaOpaque(0 * k, 0 * k, 32 * k, 16 * k);
+//            this.setAreaTransparent(32 * k, 0 * k, 64 * k, 32 * k);
+//            this.setAreaOpaque(0 * k, 16 * k, 64 * k, 32 * k);
+//            this.setAreaTransparent(0 * k, 32 * k, 16 * k, 48 * k);
+//            this.setAreaTransparent(16 * k, 32 * k, 40 * k, 48 * k);
+//            this.setAreaTransparent(40 * k, 32 * k, 56 * k, 48 * k);
+//            this.setAreaTransparent(0 * k, 48 * k, 16 * k, 64 * k);
+//            this.setAreaOpaque(16 * k, 48 * k, 48 * k, 64 * k);
+//            this.setAreaTransparent(48 * k, 48 * k, 64 * k, 64 * k);
             return bufferedimage;
         }
     }

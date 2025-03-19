@@ -62,6 +62,7 @@ public abstract class WorldProvider
     /**
      * Creates the light to brightness table
      */
+    // Generate brightness
     protected void generateLightBrightnessTable()
     {
         float f = 0.0F;

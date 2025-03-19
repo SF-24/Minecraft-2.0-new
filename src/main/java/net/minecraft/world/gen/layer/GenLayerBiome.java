@@ -108,7 +108,13 @@ public class GenLayerBiome extends GenLayer
                     }
 
                     // End of random biomes
-                } else if (this.chunkProviderSettings != null && this.chunkProviderSettings.fixedBiome >= 0)
+                }  else if(this.worldType.equals(WorldType.ALPHA)) {
+                    if (oceanList[k]) {
+                            aint1[j + i * areaWidth] = k;
+                    } else {
+                        aint1[j + i * areaWidth] = 99;
+                    }
+                }else if (this.chunkProviderSettings != null && this.chunkProviderSettings.fixedBiome >= 0)
                 {
                     aint1[j + i * areaWidth] = this.chunkProviderSettings.fixedBiome;
                 }

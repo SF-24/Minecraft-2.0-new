@@ -2747,6 +2747,7 @@ achievement.portalAether=Hostile Paradise
 achievement.portalAether.desc=Build and Aether Portal
 
 generator.randomBiomes=Random Biomes
+generator.neon=Alpha
 
 tile.bed.bloodMoon=You cannot rest during a blood moon
 title.bloodMoon.rise=A blood moon rises in the sky...

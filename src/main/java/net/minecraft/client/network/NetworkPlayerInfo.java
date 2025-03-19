@@ -12,6 +12,7 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldSettings;
+import net.mineshaft.data.ProfileManager;
 
 public class NetworkPlayerInfo
 {
@@ -104,9 +105,10 @@ public class NetworkPlayerInfo
         if (this.locationCape == null)
         {
             this.loadPlayerTextures();
+            // TODO: load name
+            Minecraft.getMinecraft().getSkinManager().loadCape(gameProfile.getName());
         }
-        return null;
-//        return Objects.firstNonNull(this.locationSkin, DefaultPlayerSkin.getDefaultCape(this.gameProfile.getId()));
+        return Objects.firstNonNull(DefaultPlayerSkin.getDefaultCape(this.gameProfile.getName()),DefaultPlayerSkin.CAPE_EMPTY);
     }
 
     public ScorePlayerTeam getPlayerTeam()
@@ -121,6 +123,8 @@ public class NetworkPlayerInfo
             if (!this.playerTexturesLoaded)
             {
                 this.playerTexturesLoaded = true;
+                // TODO: load cape
+                Minecraft.getMinecraft().getSkinManager().loadCape(this.gameProfile.getName());
                 Minecraft.getMinecraft().getSkinManager().loadProfileTextures(this.gameProfile, new SkinManager.SkinAvailableCallback()
                 {
                     public void skinAvailable(Type p_180521_1_, ResourceLocation location, MinecraftProfileTexture profileTexture)
@@ -139,7 +143,9 @@ public class NetworkPlayerInfo
                                 break;
 
                             case CAPE:
-                                NetworkPlayerInfo.this.locationCape = location;
+//                                NetworkPlayerInfo.this.locationCape = location;
+                                NetworkPlayerInfo.this.locationCape = ProfileManager.getPlayerCapeResourceLocation(gameProfile.getName());
+
                         }
                     }
                 }, true);
