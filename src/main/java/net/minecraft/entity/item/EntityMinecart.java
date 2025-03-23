@@ -632,7 +632,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
             if (d15 > 0.01D)
             {
-                double d16 = 0.06D;
+                double d16 = 0.08D; // was 0.06D
                 this.motionX += this.motionX / d15 * d16;
                 this.motionZ += this.motionZ / d15 * d16;
             }
