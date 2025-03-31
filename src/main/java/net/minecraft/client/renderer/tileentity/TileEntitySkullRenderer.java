@@ -85,8 +85,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
                         }
                         else
                         {
-                            UUID uuid = EntityPlayer.getUUID(p_180543_7_);
-                            resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+                            resourcelocation = DefaultPlayerSkin.getDefaultSkin(p_180543_7_.getName());
                         }
                     }
 

@@ -21,6 +21,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.block.*;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.*;
 import net.optifine.CustomColors;
@@ -3374,6 +3375,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         if (this.firstWorldLoad)
         {
             this.loadRenderers();
+            for(EntityPlayer player : theWorld.playerEntities) {
+                DefaultPlayerSkin.getDefaultCape(player.getName());
+            }
             this.firstWorldLoad = false;
         }
     }

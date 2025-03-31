@@ -1177,6 +1177,16 @@ public class Config
         return gameSettings.ofAfLevel;
     }
 
+    public static int getSignRenderDistanceSquared()
+    {
+        return (gameSettings.ofSignDistance)*(gameSettings.ofSignDistance);
+    }
+
+    public static int getChestRenderDistanceSquared()
+    {
+        return (gameSettings.ofChestDistance)*(gameSettings.ofChestDistance);
+    }
+
     public static boolean isAnisotropicFiltering()
     {
         return getAnisotropicFilterLevel() > 1;

@@ -4,6 +4,8 @@ import com.mojang.authlib.exceptions.InvalidCredentialsException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.util.Random;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -104,9 +106,9 @@ public class GuiScreenCapeOF extends GuiScreenOF
 
                 if (this.mc.thePlayer != null)
                 {
-                    long i = 15000L;
-                    long j = System.currentTimeMillis() + i;
-                    //this.mc.thePlayer.setReloadCapeTimeMs(j);
+//                    long i = 15000L;
+//                    long j = System.currentTimeMillis() + i;
+                    Minecraft.getMinecraft().userRenderData.capeLocation.clear();
                 }
             }
 

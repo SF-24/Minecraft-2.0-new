@@ -6,7 +6,10 @@ import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.src.Config;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 
 public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntityChest>
@@ -26,8 +29,8 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
     private static final ResourceLocation textureNormalClosed = new ResourceLocation("textures/entity/chest_closed/normal.png");
 
 
-    private static ModelChest simpleChest = new ModelChest(false);
-    private static ModelChest largeChest = new ModelLargeChest(false);
+    private static ModelChest simpleChest = new ModelChest(false,true);
+    private static ModelChest largeChest = new ModelLargeChest(false,true);
     private boolean isChristmas;
 
     public TileEntityChestRenderer()
@@ -42,6 +45,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
 
     public void renderTileEntityAt(TileEntityChest te, double x, double y, double z, float partialTicks, int destroyStage)
     {
+
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
@@ -71,10 +75,10 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
 
             if (te.adjacentChestXPos == null && te.adjacentChestZPos == null)
             {
-                if(te.lidAngle==0) {
+                if(te.lidAngle==0&&isChestVisible(te)) {
                     modelchest = this.simpleChest;
                 } else {
-                    modelchest = new ModelChest(true);
+                    modelchest = new ModelChest(true, isChestVisible((te)));
                 }
 
                 if (destroyStage >= 0)
@@ -110,125 +114,126 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
             }
             else
             {
-                if(te.lidAngle==0) {
+                if(te.lidAngle==0&&isChestVisible(te)) {
                     modelchest = this.largeChest;
                 } else {
-                    modelchest = new ModelLargeChest(true);
+                    modelchest = new ModelLargeChest(true,isChestVisible((te)));
                 }
 
-                if (destroyStage >= 0)
-                {
-                    this.bindTexture(DESTROY_STAGES[destroyStage]);
+                if(isChestVisible(te)) {
+
+                    if (destroyStage >= 0)
+                    {
+                        this.bindTexture(DESTROY_STAGES[destroyStage]);
+                        GlStateManager.matrixMode(5890);
+                        GlStateManager.pushMatrix();
+                        GlStateManager.scale(8.0F, 4.0F, 1.0F);
+                        GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
+                        GlStateManager.matrixMode(5888);
+                    }
+                    else if (this.isChristmas) {
+                        if (te.lidAngle == 0) {
+                            this.bindTexture(textureChristmasDoubleClosed);
+                        } else {
+                            this.bindTexture(textureChristmasDouble);
+                        }
+                    }
+                    else if (te.getChestType() == 1) {
+                        if (te.lidAngle == 0) {
+                            this.bindTexture(textureTrappedDoubleClosed);
+                        } else {
+                            this.bindTexture(textureTrappedDouble);
+                        }
+                    }
+                    else {
+                        if (te.lidAngle == 0) {
+                            this.bindTexture(textureNormalDoubleClosed);
+                        } else {
+                            this.bindTexture(textureNormalDouble);
+                        }
+                    }
+                }
+            }
+
+            if(isChestVisible(te)) {
+                GlStateManager.pushMatrix();
+                GlStateManager.enableRescaleNormal();
+
+                if (destroyStage < 0) {
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                }
+
+                GlStateManager.translate((float) x, (float) y + 1.0F, (float) z + 1.0F);
+                GlStateManager.scale(1.0F, -1.0F, -1.0F);
+                GlStateManager.translate(0.5F, 0.5F, 0.5F);
+                int j = 0;
+
+                if (i == 2) {
+                    j = 180;
+                }
+
+                if (i == 3) {
+                    j = 0;
+                }
+
+                if (i == 4) {
+                    j = 90;
+                }
+
+                if (i == 5) {
+                    j = -90;
+                }
+
+                if (i == 2 && te.adjacentChestXPos != null) {
+                    GlStateManager.translate(1.0F, 0.0F, 0.0F);
+                }
+
+                if (i == 5 && te.adjacentChestZPos != null) {
+                    GlStateManager.translate(0.0F, 0.0F, -1.0F);
+                }
+
+                GlStateManager.rotate((float) j, 0.0F, 1.0F, 0.0F);
+                GlStateManager.translate(-0.5F, -0.5F, -0.5F);
+                float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
+
+                if (te.adjacentChestZNeg != null) {
+                    float f1 = te.adjacentChestZNeg.prevLidAngle + (te.adjacentChestZNeg.lidAngle - te.adjacentChestZNeg.prevLidAngle) * partialTicks;
+
+                    if (f1 > f) {
+                        f = f1;
+                    }
+                }
+
+                if (te.adjacentChestXNeg != null) {
+                    float f2 = te.adjacentChestXNeg.prevLidAngle + (te.adjacentChestXNeg.lidAngle - te.adjacentChestXNeg.prevLidAngle) * partialTicks;
+
+                    if (f2 > f) {
+                        f = f2;
+                    }
+                }
+
+                f = 1.0F - f;
+                f = 1.0F - f * f * f;
+                modelchest.chestLid.rotateAngleX = -(f * (float) Math.PI / 2.0F);
+                modelchest.renderAll();
+                GlStateManager.disableRescaleNormal();
+                GlStateManager.popMatrix();
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+                if (destroyStage >= 0) {
                     GlStateManager.matrixMode(5890);
-                    GlStateManager.pushMatrix();
-                    GlStateManager.scale(8.0F, 4.0F, 1.0F);
-                    GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
+                    GlStateManager.popMatrix();
                     GlStateManager.matrixMode(5888);
                 }
-                else if (this.isChristmas) {
-                    if (te.lidAngle == 0) {
-                        this.bindTexture(textureChristmasDoubleClosed);
-                    } else {
-                        this.bindTexture(textureChristmasDouble);
-                    }
-                }
-                else if (te.getChestType() == 1) {
-                    if (te.lidAngle == 0) {
-                        this.bindTexture(textureTrappedDoubleClosed);
-                    } else {
-                        this.bindTexture(textureTrappedDouble);
-                    }
-                }
-                else {
-                    if (te.lidAngle == 0) {
-                        this.bindTexture(textureNormalDoubleClosed);
-                    } else {
-                        this.bindTexture(textureNormalDouble);
-                    }
-                }
-            }
-
-            GlStateManager.pushMatrix();
-            GlStateManager.enableRescaleNormal();
-
-            if (destroyStage < 0)
-            {
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            }
-
-            GlStateManager.translate((float)x, (float)y + 1.0F, (float)z + 1.0F);
-            GlStateManager.scale(1.0F, -1.0F, -1.0F);
-            GlStateManager.translate(0.5F, 0.5F, 0.5F);
-            int j = 0;
-
-            if (i == 2)
-            {
-                j = 180;
-            }
-
-            if (i == 3)
-            {
-                j = 0;
-            }
-
-            if (i == 4)
-            {
-                j = 90;
-            }
-
-            if (i == 5)
-            {
-                j = -90;
-            }
-
-            if (i == 2 && te.adjacentChestXPos != null)
-            {
-                GlStateManager.translate(1.0F, 0.0F, 0.0F);
-            }
-
-            if (i == 5 && te.adjacentChestZPos != null)
-            {
-                GlStateManager.translate(0.0F, 0.0F, -1.0F);
-            }
-
-            GlStateManager.rotate((float)j, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-            float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
-
-            if (te.adjacentChestZNeg != null)
-            {
-                float f1 = te.adjacentChestZNeg.prevLidAngle + (te.adjacentChestZNeg.lidAngle - te.adjacentChestZNeg.prevLidAngle) * partialTicks;
-
-                if (f1 > f)
-                {
-                    f = f1;
-                }
-            }
-
-            if (te.adjacentChestXNeg != null)
-            {
-                float f2 = te.adjacentChestXNeg.prevLidAngle + (te.adjacentChestXNeg.lidAngle - te.adjacentChestXNeg.prevLidAngle) * partialTicks;
-
-                if (f2 > f)
-                {
-                    f = f2;
-                }
-            }
-
-            f = 1.0F - f;
-            f = 1.0F - f * f * f;
-            modelchest.chestLid.rotateAngleX = -(f * (float)Math.PI / 2.0F);
-            modelchest.renderAll();
-            GlStateManager.disableRescaleNormal();
-            GlStateManager.popMatrix();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-            if (destroyStage >= 0)
-            {
-                GlStateManager.matrixMode(5890);
-                GlStateManager.popMatrix();
-                GlStateManager.matrixMode(5888);
             }
         }
+    }
+
+    public boolean isChestVisible(TileEntityChest te) {
+        Entity entity = Config.getMinecraft().getRenderViewEntity();
+        if(te.getPos().equals(new BlockPos(0,0,0))) return true;
+        if(Config.getChestRenderDistanceSquared()==64*64) return true;
+        double d0 = te.getDistanceSq(entity.posX, entity.posY, entity.posZ);
+        return !(d0 > Config.getChestRenderDistanceSquared());
     }
 }

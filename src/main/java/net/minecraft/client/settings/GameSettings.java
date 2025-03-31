@@ -212,6 +212,8 @@ public class GameSettings
     public boolean ofSmartAnimations = false;
     public float ofAoLevel = 1.0F;
     public int ofAaLevel = 0;
+    public int ofSignDistance = 24;
+    public int ofChestDistance = 64;
     public int ofAfLevel = 1;
     public int ofClouds = 0;
     public float ofCloudsHeight = 0.0F;
@@ -283,6 +285,7 @@ public class GameSettings
     public static final String DEFAULT_STR = "Default";
     private static final int[] OF_TREES_VALUES = new int[] {0, 1, 4, 2};
     private static final int[] OF_DYNAMIC_LIGHTS = new int[] {3, 1, 2};
+//    private static final int[] SIGN_DISTANCE_VALUES = new int[] {8,10,12,16,24,32};
     private static final String[] KEYS_DYNAMIC_LIGHTS = new String[] {"options.off", "options.graphics.fast", "options.graphics.fancy"};
     public KeyBinding ofKeyBindZoom;
     private File optionsFileOF;
@@ -1492,6 +1495,16 @@ public class GameSettings
             this.difficulty.renderGlobal.resetClouds();
         }
 
+        if (p_setOptionFloatValueOF_1_ == Options.SIGN_DISTANCE)
+        {
+            this.ofSignDistance = (int) p_setOptionFloatValueOF_2_;
+        }
+
+        if (p_setOptionFloatValueOF_1_ == Options.CHEST_DISTANCE)
+        {
+            this.ofChestDistance = (int) p_setOptionFloatValueOF_2_;
+        }
+
         if (p_setOptionFloatValueOF_1_ == GameSettings.Options.AO_LEVEL)
         {
             this.ofAoLevel = p_setOptionFloatValueOF_2_;
@@ -1573,6 +1586,14 @@ public class GameSettings
         {
             return this.ofAoLevel;
         }
+        else if (p_getOptionFloatValueOF_1_ == Options.SIGN_DISTANCE)
+        {
+            return this.ofSignDistance;
+        }
+        else if (p_getOptionFloatValueOF_1_ == Options.CHEST_DISTANCE)
+        {
+            return this.ofChestDistance;
+        }
         else if (p_getOptionFloatValueOF_1_ == GameSettings.Options.AA_LEVEL)
         {
             return (float)this.ofAaLevel;
@@ -1646,6 +1667,10 @@ public class GameSettings
                 this.ofFogStart = 0.2F;
             }
         }
+//        if (p_setOptionValueOF_1_ == Options.SIGN_DISTANCE)
+//        {
+//            this.ofSignDistance = nextValue(this.ofSignDistance, SIGN_DISTANCE_VALUES);
+//        }
 
         if (p_setOptionValueOF_1_ == GameSettings.Options.SMOOTH_FPS)
         {
@@ -1668,8 +1693,10 @@ public class GameSettings
             }
 
             this.updateRenderClouds();
-            this.difficulty.renderGlobal.resetClouds();
         }
+
+        this.difficulty.renderGlobal.resetClouds();
+
 
         if (p_setOptionValueOF_1_ == GameSettings.Options.TREES)
         {
@@ -2192,6 +2219,7 @@ public class GameSettings
                     return s + Lang.getOff();
             }
         }
+
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.FOG_START)
         {
             return s + this.ofFogStart;
@@ -2516,6 +2544,7 @@ public class GameSettings
         {
             return this.ofShowCapes ? s + Lang.getOn() : s + Lang.getOff();
         }
+
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_ITEMS)
         {
             return this.ofCustomItems ? s + Lang.getOn() : s + Lang.getOff();
@@ -2700,6 +2729,16 @@ public class GameSettings
                     {
                         this.ofTrees = Integer.valueOf(astring[1]).intValue();
                         this.ofTrees = limit(this.ofTrees, OF_TREES_VALUES);
+                    }
+
+                    if (astring[0].equals("ofSignDistance"))
+                    {
+                        this.ofSignDistance = Integer.valueOf(astring[1]).intValue();
+                    }
+
+                    if (astring[0].equals("ofChestDistance"))
+                    {
+                        this.ofChestDistance = Integer.valueOf(astring[1]).intValue();
                     }
 
                     if (astring[0].equals("ofDroppedItems") && astring.length >= 2)
@@ -3051,6 +3090,7 @@ public class GameSettings
     {
         try
         {
+            // Save settings
             PrintWriter printwriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.optionsFileOF), "UTF-8"));
             printwriter.println("ofFogType:" + this.ofFogType);
             printwriter.println("ofFogStart:" + this.ofFogStart);
@@ -3062,6 +3102,8 @@ public class GameSettings
             printwriter.println("ofClouds:" + this.ofClouds);
             printwriter.println("ofCloudsHeight:" + this.ofCloudsHeight);
             printwriter.println("ofTrees:" + this.ofTrees);
+            printwriter.println("ofSignDistance:" + this.ofSignDistance);
+            printwriter.println("ofChestDistance:" + this.ofChestDistance);
             printwriter.println("ofDroppedItems:" + this.ofDroppedItems);
             printwriter.println("ofRain:" + this.ofRain);
             printwriter.println("ofAnimatedWater:" + this.ofAnimatedWater);
@@ -3415,6 +3457,8 @@ public class GameSettings
         CHUNK_UPDATES_DYNAMIC("of.options.CHUNK_UPDATES_DYNAMIC", false, false),
         TIME("of.options.TIME", false, false),
         CLEAR_WATER("of.options.CLEAR_WATER", false, false),
+        SIGN_DISTANCE("of.options.SIGN_DISTANCE", true, false,0.0f,32.0f,4.0f),
+        CHEST_DISTANCE("of.options.CHEST_DISTANCE", true, false,0.0f,64.0f,8.0f),
         SMOOTH_WORLD("of.options.SMOOTH_WORLD", false, false),
         VOID_PARTICLES("of.options.VOID_PARTICLES", false, false),
         WATER_PARTICLES("of.options.WATER_PARTICLES", false, false),

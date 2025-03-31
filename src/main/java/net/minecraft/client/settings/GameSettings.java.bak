@@ -188,7 +188,7 @@ public class GameSettings
         this.lastServer = "";
         this.fovSetting = 70.0F;
         this.language = "en_UK";
-        this.forceUnicodeFont = false;
+        this.forceUnicodeoptFont = false;
         this.mc = mcIn;
         this.optionsFile = new File(optionsFileIn, "options.txt");
 

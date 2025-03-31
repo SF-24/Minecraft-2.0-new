@@ -87,7 +87,7 @@ public class NetworkPlayerInfo
 
     public String getSkinType()
     {
-        return this.skinType == null ? DefaultPlayerSkin.getSkinType(this.gameProfile.getId()) : this.skinType;
+        return this.skinType == null ? DefaultPlayerSkin.getSkinType(this.gameProfile.getName()) : this.skinType;
     }
 
     public ResourceLocation getLocationSkin()
@@ -97,7 +97,7 @@ public class NetworkPlayerInfo
             this.loadPlayerTextures();
         }
 
-        return (ResourceLocation)Objects.firstNonNull(this.locationSkin, DefaultPlayerSkin.getDefaultSkin(this.gameProfile.getId()));
+        return (ResourceLocation)Objects.firstNonNull(this.locationSkin, DefaultPlayerSkin.getDefaultSkin(this.gameProfile.getName()));
     }
 
     public ResourceLocation getLocationCape()

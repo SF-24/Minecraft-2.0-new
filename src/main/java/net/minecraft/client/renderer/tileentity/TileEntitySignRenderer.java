@@ -37,7 +37,7 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
         float f = 0.6666667F;
         Entity entity = Config.getMinecraft().getRenderViewEntity();
 
-        model = new ModelSign(block == Blocks.standing_sign,block==Blocks.standing_sign||new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Constants.signRenderDistanceSquared);
+        model = new ModelSign(block == Blocks.standing_sign,new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Config.getSignRenderDistanceSquared()); //Constants.signRenderDistanceSquared);
         if (Config.getMinecraft().currentScreen instanceof GuiEditSign) {
             this.model = new ModelSign(true, true);
             this.model.signStick.showModel=false;
@@ -93,7 +93,7 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
         GlStateManager.enableRescaleNormal();
         GlStateManager.pushMatrix();
         GlStateManager.scale(f, -f, -f);
-        this.model.renderSign(block == Blocks.standing_sign,block==Blocks.standing_sign||new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Constants.signRenderDistanceSquared);
+        this.model.renderSign(block == Blocks.standing_sign,new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Config.getSignRenderDistanceSquared());//Constants.signRenderDistanceSquared);
         GlStateManager.popMatrix();
 
 
@@ -166,7 +166,7 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
                 double d0 = p_isRenderText_0_.getDistanceSq(entity.posX, entity.posY, entity.posZ);
 
 
-                if (d0 > Constants.signRenderDistanceSquared)
+                if (d0 > Config.getSignRenderDistanceSquared())//Constants.signRenderDistanceSquared)
                 {
                     return false;
                 }

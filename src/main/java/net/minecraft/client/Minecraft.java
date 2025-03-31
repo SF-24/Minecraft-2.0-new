@@ -28,6 +28,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -72,18 +73,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.DefaultResourcePack;
-import net.minecraft.client.resources.FoliageColorReloadListener;
-import net.minecraft.client.resources.GrassColorReloadListener;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.LanguageManager;
-import net.minecraft.client.resources.ResourceIndex;
-import net.minecraft.client.resources.ResourcePackRepository;
-import net.minecraft.client.resources.SimpleReloadableResourceManager;
-import net.minecraft.client.resources.SkinManager;
+import net.minecraft.client.resources.*;
 import net.minecraft.client.resources.data.AnimationMetadataSection;
 import net.minecraft.client.resources.data.AnimationMetadataSectionSerializer;
 import net.minecraft.client.resources.data.FontMetadataSection;
@@ -148,6 +138,7 @@ import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
+import net.mineshaft.data.UserCacheJsonManager;
 import net.mineshaft.data.UserRenderData;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
@@ -320,6 +311,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private ResourceLocation mojangLogo;
     private final MinecraftSessionService sessionService;
     private SkinManager skinManager;
+    private UserCacheJsonManager userCacheJsonManager;
     private final Queue < FutureTask<? >> scheduledTasks = Queues. < FutureTask<? >> newArrayDeque();
     private long field_175615_aJ = 0L;
     private final Thread mcThread = Thread.currentThread();
@@ -493,6 +485,19 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.drawSplashScreen(this.renderEngine);
         this.initStream();
         this.skinManager = new SkinManager(this.renderEngine, new File(this.fileAssets, "skins"), this.sessionService);
+
+
+        // Load default cape
+        DefaultPlayerSkin.getDefaultCape(Minecraft.getMinecraft().getSession().getProfile().getName());
+        DefaultPlayerSkin.getDefaultSkin(Minecraft.getMinecraft().getSession().getProfile().getName());
+
+        this.userCacheJsonManager = new UserCacheJsonManager();
+
+        for(String user : userCacheJsonManager.loadData().getUsers()) {
+            DefaultPlayerSkin.getDefaultCape(user);
+            DefaultPlayerSkin.getDefaultSkin(user);
+        }
+
         this.saveLoader = new AnvilSaveConverter(new File(this.mcDataDir, "saves"));
         this.mcSoundHandler = new SoundHandler(this.mcResourceManager, this.gameSettings);
         this.mcResourceManager.registerReloadListener(this.mcSoundHandler);
@@ -3321,6 +3326,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public void setCurrentMode(EnumTweakMode currentMode) {
         this.currentMode=currentMode;
+    }
+
+    public UserCacheJsonManager getCapeUserCache() {
+        return userCacheJsonManager;
     }
 
 }

@@ -3,9 +3,7 @@ package net.mineshaft.data;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.CustomCapeImageBuffer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -22,24 +20,35 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ProfileManager {
 
     public static ResourceLocation getPlayerCapeResourceLocation(String name) {
         if(Minecraft.getMinecraft().userRenderData.capeResource.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.capeResource.get(name);}
-        ResourceLocation location = new ResourceLocation("skins/capes/"+ProfileManager.getUserCapeName(name)+".png");
+        ResourceLocation location = new ResourceLocation("textures/entity/cape/" + ProfileManager.getUserCapeName(name) + ".png");
         if(ProfileManager.getUserCapeName(name).equals("empty")) {
-            return new ResourceLocation("textures/entity/cape/special/empty.png");
+            return new ResourceLocation("textures/entity/cape/empty.png");
         }
-//        if(!checkResourceExists(location) && checkResourceExists(new ResourceLocation("textures/entity/cape/"+ProfileManager.getUserCapeName(name)+".png"))) {
-//            return new ResourceLocation("textures/entity/cape/" + ProfileManager.getUserCapeName(name) + ".png");
-//        }
+        Minecraft.getMinecraft().userRenderData.capeResource.put(name, location);
         return location;
     }
 
+    public static ResourceLocation getPlayerSkinResourceLocation(String name) {
+        // cache skin slimness data
+        isUserSkinSlim(name);
+        if(Minecraft.getMinecraft().userRenderData.skinResource.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.skinResource.get(name);}
+        ResourceLocation location = new ResourceLocation("textures/entity/player/skins/" + ProfileManager.getUserSkinName(name) + ".png");
+        if(ProfileManager.getUserCapeName(name).equals("empty") || ProfileManager.getUserCapeName(name).equals("classic") || ProfileManager.getUserCapeName(name).equals("default")) {
+            return new ResourceLocation("textures/entity/player/steve.png");
+        }
+        Minecraft.getMinecraft().userRenderData.skinResource.put(name, location);
+        return location;
+    }
+
+
     public static boolean checkResourceExists(ResourceLocation location) {
         return Minecraft.getMinecraft().getTextureManager().getTexture(location)==null&& !Minecraft.getMinecraft().getTextureManager().getTexture(location).toString().isEmpty();
-
     }
 
     public static ITextureObject checkDownloadCape(ResourceLocation location, String capeName) {
@@ -61,8 +70,10 @@ public class ProfileManager {
         // check if registry exists
         if(Minecraft.getMinecraft().userRenderData.capeLocation.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.capeLocation.get(name);}
 
-        if(getUserId(name)==null || getJson("https://mcreawakened.github.io/request/cape/"+ getUserId(name) +".json")==null) return "empty";
-        String cape = Objects.requireNonNull(getJson("https://mcreawakened.github.io/request/cape/" + getUserId(name) + ".json")).getAsJsonObject().get("current_cape").getAsString();
+        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(name);
+
+        if(getUserId(name)==null || getJson(url)==null) return "empty";
+        String cape = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("current_cape").getAsString();
         if(cape==null || cape.equals("none") || cape.equals("null")) return "empty";
 
         Minecraft.getMinecraft().userRenderData.capeLocation.put(name,cape);
@@ -70,10 +81,41 @@ public class ProfileManager {
         return cape;
     }
 
+    public static String getUserSkinName(String name) {
+        // check if registry exists
+        if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.skinLocation.get(name);}
+
+        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(name);
+
+        if(getUserId(name)==null || getJson(url)==null) return "steve";
+        String skin = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("current_skin").getAsString();
+        if(skin==null || skin.equals("none") || skin.equals("null")) {return "steve";}
+        Minecraft.getMinecraft().userRenderData.skinLocation.put(name,skin);
+        System.out.println("skin name: " + skin);
+        return skin;
+    }
+
+    public static boolean isUserSkinSlim(String name) {
+        // check if registry exists
+        if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.slimSkins.contains(name);}
+
+        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(name);
+
+        boolean isSlim = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("is_slim").getAsBoolean();
+        if(isSlim) Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
+        return isSlim;
+    }
+
+
     public static String getUserId(String name) {
         JsonElement json = getJson("https://api.mojang.com/users/profiles/minecraft/" + name);
         if(json != null) {
-            return (json.getAsJsonObject().get("id").getAsString());
+            try {
+                return (json.getAsJsonObject().get("id").getAsString());
+            } catch (Exception e) {
+                System.out.println("Error loading uuid for user: " + name);
+                return null;
+            }
         }
         return "default";
     }

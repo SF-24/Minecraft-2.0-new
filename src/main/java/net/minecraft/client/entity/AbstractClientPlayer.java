@@ -77,10 +77,10 @@ public abstract class AbstractClientPlayer extends EntityPlayer
 
     public ResourceLocation getLocationCape()
     {
-        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-        if(networkplayerinfo.getLocationCape()!=null) {
-            return networkplayerinfo.getLocationCape();
-        }
+//        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
+//        if(networkplayerinfo.getLocationCape()!=null) {
+//            return networkplayerinfo.getLocationCape();
+//        }
         return DefaultPlayerSkin.getDefaultCape(this.getName());
 
     }
@@ -92,7 +92,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
 
         if (itextureobject == null)
         {
-            itextureobject = new ThreadDownloadImageData((File)null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", new Object[] {StringUtils.stripControlCodes(username)}), DefaultPlayerSkin.getDefaultSkin(getOfflineUUID(username)), new ImageBufferDownload());
+            itextureobject = new ThreadDownloadImageData((File)null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", new Object[] {StringUtils.stripControlCodes(username)}), DefaultPlayerSkin.getDefaultSkin(username), new ImageBufferDownload());
             texturemanager.loadTexture(resourceLocationIn, itextureobject);
         }
 
@@ -110,7 +110,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     public String getSkinType()
     {
         NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-        return networkplayerinfo == null ? DefaultPlayerSkin.getSkinType(this.getUniqueID()) : networkplayerinfo.getSkinType();
+        return networkplayerinfo == null ? DefaultPlayerSkin.getSkinType(this.getName()) : networkplayerinfo.getSkinType();
     }
 
     public float getFovModifier()

@@ -20,7 +20,7 @@ public class ModelAdapterChestLarge extends ModelAdapter
 
     public ModelBase makeModel()
     {
-        return new ModelLargeChest(true);
+        return new ModelLargeChest(true, true);
     }
 
     public ModelRenderer getModelRenderer(ModelBase model, String modelPart)
