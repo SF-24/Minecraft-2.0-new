@@ -492,10 +492,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         DefaultPlayerSkin.getDefaultSkin(Minecraft.getMinecraft().getSession().getProfile().getName());
 
         this.userCacheJsonManager = new UserCacheJsonManager();
-
-        for(String user : userCacheJsonManager.loadData().getUsers()) {
-            DefaultPlayerSkin.getDefaultCape(user);
-            DefaultPlayerSkin.getDefaultSkin(user);
+        try {
+            for (String user : userCacheJsonManager.loadData().getUsers()) {
+                DefaultPlayerSkin.getDefaultCape(user);
+                DefaultPlayerSkin.getDefaultSkin(user);
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading user data");
         }
 
         this.saveLoader = new AnvilSaveConverter(new File(this.mcDataDir, "saves"));

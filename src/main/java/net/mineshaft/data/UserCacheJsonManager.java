@@ -17,13 +17,21 @@ public class UserCacheJsonManager {
 
     public void initialiseFile() {
         // TODO: load custom capes
-        File playerNameFile = getFile();
+        try {
+            File playerNameFile = getFile();
+        } catch (NullPointerException e) {
+            System.out.println("Error! Cannot find mineshaft data. Skipping");
+        }
     }
 
     public static File getFile() {
+        if(!Minecraft.getMinecraft().mcDataDir.exists()) {
+            Minecraft.getMinecraft().mcDataDir.mkdirs();
+        }
+
         File userFile = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "mineshaft_data", "user_cache.json");
 
-        if (!userFile.exists()) {
+        if (!userFile.exists() || !userFile.getParentFile().exists()) {
             makeNewFile(userFile);
         }
         return userFile;

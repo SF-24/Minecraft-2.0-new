@@ -25,7 +25,7 @@ public class Run {
         // Currently supported Linux and Windows
         System.setProperty("org.lwjgl.librarypath", new File("../test_natives/" + (System.getProperty("os.name").startsWith("Windows") ? "windows" : "linux")).getAbsolutePath());
 
-        Main.main(concat(new String[]{"--version", "MavenMCP", "--accessToken", "0", "--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}", /*"--username", "XpKitty", "--uuid", "7e8a85ee3bb04158a1075a6886ffe438"*/}, args));
+        Main.main(concat(new String[]{"--version", "MavenMCP", "--accessToken", "0", "--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}"}, args));
     }
 
     public static <T> T[] concat(T[] first, T[] second) {
