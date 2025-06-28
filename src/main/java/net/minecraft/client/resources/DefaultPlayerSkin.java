@@ -2,6 +2,8 @@ package net.minecraft.client.resources;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.mojang.authlib.GameProfile;
 import net.minecraft.util.ResourceLocation;
 import net.mineshaft.data.ProfileManager;
 import org.apache.http.client.HttpClient;
@@ -12,11 +14,6 @@ public class DefaultPlayerSkin
 {
     /** The default skin for the Steve model. */
     private static final ResourceLocation TEXTURE_STEVE = new ResourceLocation("textures/entity/player/steve.png");
-//    private static final ResourceLocation TEXTURE_XPKITTY = new ResourceLocation("textures/entity/player/xpkitty.png");
-//    private static final ResourceLocation TEXTURE_BAT89 = new ResourceLocation("textures/entity/player/bat89.png");
-//    private static final ResourceLocation TEXTURE_DIAMONDCRAFT = new ResourceLocation("textures/entity/player/diamond_craftk.png");
-//    private static final ResourceLocation TEXTURE_MINEBUSTER = new ResourceLocation("textures/entity/player/minebuster_.png");
-//    private static final ResourceLocation TEXTURE_CATZEE = new ResourceLocation("textures/entity/player/catzeemeow.png");
 
     private static final ResourceLocation CAPE_BDAY = new ResourceLocation("textures/entity/cape/special/bday.png");
     private static final ResourceLocation CAPE_APRIL = new ResourceLocation("textures/entity/cape/special/white_eyes.png");
@@ -39,7 +36,7 @@ public class DefaultPlayerSkin
      * Retrieves the default skin for this player. Depending on the model used this will be Alex or Steve.
      */
 
-    public static ResourceLocation getDefaultSkin(String name) {
+    public static ResourceLocation getDefaultSkin(GameProfile name) {
         if(ProfileManager.getPlayerSkinResourceLocation(name)!=null) {
             return ProfileManager.getPlayerSkinResourceLocation(name);
         } else {
@@ -62,11 +59,11 @@ public class DefaultPlayerSkin
         return null;
     }
 
-    public static ResourceLocation getDefaultCape(String name) {
+    public static ResourceLocation getDefaultCape(GameProfile profile) {
         if(getEventCape() != null) {
             return getEventCape();
         }
-        return ProfileManager.getPlayerCapeResourceLocation(name);
+        return ProfileManager.getPlayerCapeResourceLocation(profile);
     }
 
 
@@ -74,16 +71,16 @@ public class DefaultPlayerSkin
     /**
      * Retrieves the type of skin that a player is using. The Alex model is slim while the Steve model is default.
      */
-    public static String getSkinType(String name)
+    public static String getSkinType(GameProfile profile)
     {
-        return isSlimSkin(name) ? "slim" : "default";
+        return isSlimSkin(profile) ? "slim" : "default";
     }
 
     /**
      * Checks if a players skin model is slim or the default. The Alex model is slime while the Steve model is default.
      */
-    private static boolean isSlimSkin(String name)
+    private static boolean isSlimSkin(GameProfile profile)
     {
-        return ProfileManager.isUserSkinSlim(name);
+        return ProfileManager.isUserSkinSlim(profile);
     }
 }

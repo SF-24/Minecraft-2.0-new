@@ -136,7 +136,7 @@ public abstract class ServerConfigurationManager
         this.mcServer.refreshStatusNextTick();
         ChatComponentTranslation chatcomponenttranslation;
 
-        ProfileManager.getPlayerCapeResourceLocation(playerIn.getDisplayName().getUnformattedText());
+        ProfileManager.getPlayerCapeResourceLocation(playerIn.getGameProfile());
         if (!playerIn.getName().equalsIgnoreCase(s))
         {
             chatcomponenttranslation = new ChatComponentTranslation("multiplayer.player.joined.renamed", new Object[] {playerIn.getDisplayName(), s});

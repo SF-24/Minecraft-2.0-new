@@ -488,18 +488,18 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
 
         // Load default cape
-        DefaultPlayerSkin.getDefaultCape(Minecraft.getMinecraft().getSession().getProfile().getName());
-        DefaultPlayerSkin.getDefaultSkin(Minecraft.getMinecraft().getSession().getProfile().getName());
+        DefaultPlayerSkin.getDefaultCape(Minecraft.getMinecraft().getSession().getProfile());
+        DefaultPlayerSkin.getDefaultSkin(Minecraft.getMinecraft().getSession().getProfile());
 
-        this.userCacheJsonManager = new UserCacheJsonManager();
-        try {
-            for (String user : userCacheJsonManager.loadData().getUsers()) {
-                DefaultPlayerSkin.getDefaultCape(user);
-                DefaultPlayerSkin.getDefaultSkin(user);
-            }
-        } catch (Exception e) {
-            System.out.println("Error loading user data");
-        }
+//        this.userCacheJsonManager = new UserCacheJsonManager();
+//        try {
+//            for (String user : userCacheJsonManager.loadData().getUsers()) {
+//                DefaultPlayerSkin.getDefaultCape(user);
+//                DefaultPlayerSkin.getDefaultSkin(user);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error loading user data");
+//        }
 
         this.saveLoader = new AnvilSaveConverter(new File(this.mcDataDir, "saves"));
         this.mcSoundHandler = new SoundHandler(this.mcResourceManager, this.gameSettings);

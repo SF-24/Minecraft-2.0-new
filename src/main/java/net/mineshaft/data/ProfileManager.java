@@ -3,6 +3,7 @@ package net.mineshaft.data;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
@@ -19,30 +20,34 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Objects;
 import java.util.UUID;
 
 public class ProfileManager {
 
-    public static ResourceLocation getPlayerCapeResourceLocation(String name) {
-        if(Minecraft.getMinecraft().userRenderData.capeResource.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.capeResource.get(name);}
-        ResourceLocation location = new ResourceLocation("textures/entity/cape/" + ProfileManager.getUserCapeName(name) + ".png");
-        if(ProfileManager.getUserCapeName(name).equals("empty")) {
+    public static ResourceLocation getPlayerCapeResourceLocation(GameProfile profile) {
+        if(Minecraft.getMinecraft().userRenderData.capeResource.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.capeResource.get(profile.getName());}
+        ResourceLocation location = new ResourceLocation("textures/entity/cape/" + ProfileManager.getUserCapeName(profile) + ".png");
+        Minecraft.getMinecraft().userRenderData.capeResource.put(profile.getName(), location);
+        if(ProfileManager.getUserCapeName(profile).equals("empty")) {
             return new ResourceLocation("textures/entity/cape/empty.png");
         }
-        Minecraft.getMinecraft().userRenderData.capeResource.put(name, location);
         return location;
     }
 
-    public static ResourceLocation getPlayerSkinResourceLocation(String name) {
+    public static ResourceLocation getPlayerSkinResourceLocation(GameProfile profile) {
         // cache skin slimness data
-        isUserSkinSlim(name);
-        if(Minecraft.getMinecraft().userRenderData.skinResource.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.skinResource.get(name);}
-        ResourceLocation location = new ResourceLocation("textures/entity/player/skins/" + ProfileManager.getUserSkinName(name) + ".png");
-        if(ProfileManager.getUserCapeName(name).equals("empty") || ProfileManager.getUserCapeName(name).equals("classic") || ProfileManager.getUserCapeName(name).equals("default")) {
+        isUserSkinSlim(profile);
+        if(Minecraft.getMinecraft().userRenderData.skinResource.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.skinResource.get(profile.getName());}
+        ResourceLocation location = new ResourceLocation("textures/entity/player/skins/" + ProfileManager.getUserSkinName(profile) + ".png");
+        if(ProfileManager.getUserCapeName(profile).equals("empty") || ProfileManager.getUserCapeName(profile).equals("classic") || ProfileManager.getUserCapeName(profile).equals("default")) {
             return new ResourceLocation("textures/entity/player/steve.png");
         }
-        Minecraft.getMinecraft().userRenderData.skinResource.put(name, location);
+        Minecraft.getMinecraft().userRenderData.skinResource.put(profile.getName(), location);
         return location;
     }
 
@@ -66,55 +71,84 @@ public class ProfileManager {
         return /*(ThreadDownloadImageData)*/itextureobject;
     }
 
-    public static String getUserCapeName(String name) {
+    public static String getUserCapeName(GameProfile profile) {
         // check if registry exists
-        if(Minecraft.getMinecraft().userRenderData.capeLocation.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.capeLocation.get(name);}
+        try {
+            if (Minecraft.getMinecraft().userRenderData.capeLocation.containsKey(profile.getName())) {
+                return Minecraft.getMinecraft().userRenderData.capeLocation.get(profile.getName());
+            }
 
-        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(name);
+            String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(profile);
 
-        if(getUserId(name)==null || getJson(url)==null) return "empty";
-        String cape = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("current_cape").getAsString();
-        if(cape==null || cape.equals("none") || cape.equals("null")) return "empty";
+            if (getUserId(profile) == null || getJson(url) == null) {
+                Minecraft.getMinecraft().userRenderData.capeLocation.put(profile.getName(), "empty");
+                return "empty";
+            }
+            String cape = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("current_cape").getAsString();
+            if (cape == null || cape.equals("none") || cape.equals("null")) {
+                Minecraft.getMinecraft().userRenderData.capeLocation.put(profile.getName(), "empty");
+                return "empty";
+            }
+            Minecraft.getMinecraft().userRenderData.capeLocation.put(profile.getName(), cape);
 
-        Minecraft.getMinecraft().userRenderData.capeLocation.put(name,cape);
-        System.out.println("cape name: " + cape);
-        return cape;
+            System.out.println("cape name: " + cape);
+            return cape;
+        } catch (Exception ignored) {
+            return "empty";
+        }
     }
 
-    public static String getUserSkinName(String name) {
+    public static String getUserSkinName(GameProfile profile) {
         // check if registry exists
-        if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.skinLocation.get(name);}
+        if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.skinLocation.get(profile.getName());}
 
-        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(name);
+        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(profile);
 
-        if(getUserId(name)==null || getJson(url)==null) return "steve";
+        if(getUserId(profile)==null || getJson(url)==null) return "steve";
         String skin = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("current_skin").getAsString();
         if(skin==null || skin.equals("none") || skin.equals("null")) {return "steve";}
-        Minecraft.getMinecraft().userRenderData.skinLocation.put(name,skin);
+        Minecraft.getMinecraft().userRenderData.skinLocation.put(profile.getName(),skin);
         System.out.println("skin name: " + skin);
         return skin;
     }
 
-    public static boolean isUserSkinSlim(String name) {
+    public static boolean isUserSkinSlim(GameProfile profile) {
         // check if registry exists
-        if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(name)) {return Minecraft.getMinecraft().userRenderData.slimSkins.contains(name);}
+        if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.slimSkins.contains(profile.getName());}
 
-        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(name);
+        String url = "https://v0-backend-delta-taupe.vercel.app/cape?id=" + getUserId(profile);
 
         boolean isSlim = Objects.requireNonNull(getJson(url)).getAsJsonObject().get("is_slim").getAsBoolean();
-        if(isSlim) Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
+        if(isSlim) Minecraft.getMinecraft().userRenderData.slimSkins.add(profile.getName());
         return isSlim;
     }
 
 
-    public static String getUserId(String name) {
+    public static String getUserId(GameProfile profile) {
+
+        String name = profile.getName();
         JsonElement json = getJson("https://api.mojang.com/users/profiles/minecraft/" + name);
         if(json != null) {
             try {
-                return (json.getAsJsonObject().get("id").getAsString());
+                String id = json.getAsJsonObject().get("id").getAsString();
+                Field field = profile.getClass().getDeclaredField("id");
+                Field modifiersField = Field.class.getDeclaredField("modifiers");
+                modifiersField.setAccessible(true);
+                field.setAccessible(true);
+                modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+                // Convert to UUID
+                field.set(profile,java.util.UUID.fromString(
+                                "5231b533ba17478798a3f2df37de2aD7"
+                                        .replaceFirst(
+                                                "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
+                                        )
+                        )
+                );
+                return (id);
             } catch (Exception e) {
                 System.out.println("Error loading uuid for user: " + name);
-                return null;
+                e.printStackTrace();
+                return UUID.randomUUID().toString();
             }
         }
         return "default";

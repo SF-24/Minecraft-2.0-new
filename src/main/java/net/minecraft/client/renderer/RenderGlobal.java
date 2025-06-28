@@ -3376,7 +3376,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         {
             this.loadRenderers();
             for(EntityPlayer player : theWorld.playerEntities) {
-                DefaultPlayerSkin.getDefaultCape(player.getName());
+                DefaultPlayerSkin.getDefaultCape(player.getGameProfile());
             }
             this.firstWorldLoad = false;
         }

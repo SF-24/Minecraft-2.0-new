@@ -121,7 +121,7 @@ public class RealmsScreen
         if (resourcelocation == null)
         {
             // TODO:
-            resourcelocation = DefaultPlayerSkin.getDefaultSkin(p_bindFace_1_);
+            resourcelocation = DefaultPlayerSkin.getDefaultSkin(null);
         }
 
         AbstractClientPlayer.getDownloadImageSkin(resourcelocation, p_bindFace_1_);

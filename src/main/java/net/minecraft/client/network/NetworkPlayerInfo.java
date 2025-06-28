@@ -12,7 +12,6 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldSettings;
-import net.mineshaft.data.ProfileManager;
 
 public class NetworkPlayerInfo
 {
@@ -87,7 +86,7 @@ public class NetworkPlayerInfo
 
     public String getSkinType()
     {
-        return this.skinType == null ? DefaultPlayerSkin.getSkinType(this.gameProfile.getName()) : this.skinType;
+        return this.skinType == null ? DefaultPlayerSkin.getSkinType(this.gameProfile) : this.skinType;
     }
 
     public ResourceLocation getLocationSkin()
@@ -96,19 +95,19 @@ public class NetworkPlayerInfo
         {
             this.loadPlayerTextures();
         }
-
-        return (ResourceLocation)Objects.firstNonNull(this.locationSkin, DefaultPlayerSkin.getDefaultSkin(this.gameProfile.getName()));
+        return Objects.firstNonNull(this.locationSkin, DefaultPlayerSkin.getDefaultSkin(this.gameProfile));
     }
 
+    // Moving to server-side
     public ResourceLocation getLocationCape()
     {
         if (this.locationCape == null)
         {
             this.loadPlayerTextures();
-            // TODO: load name
-            Minecraft.getMinecraft().getSkinManager().loadCape(gameProfile.getName());
+            Minecraft.getMinecraft().getSkinManager().loadCape(gameProfile);
         }
-        return Objects.firstNonNull(DefaultPlayerSkin.getDefaultCape(this.gameProfile.getName()),DefaultPlayerSkin.CAPE_EMPTY);
+        //return this.locationCape;
+        return Objects.firstNonNull(DefaultPlayerSkin.getDefaultCape(this.gameProfile),DefaultPlayerSkin.CAPE_EMPTY);
     }
 
     public ScorePlayerTeam getPlayerTeam()
@@ -123,30 +122,22 @@ public class NetworkPlayerInfo
             if (!this.playerTexturesLoaded)
             {
                 this.playerTexturesLoaded = true;
-                // TODO: load cape
-                Minecraft.getMinecraft().getSkinManager().loadCape(this.gameProfile.getName());
-                Minecraft.getMinecraft().getSkinManager().loadProfileTextures(this.gameProfile, new SkinManager.SkinAvailableCallback()
-                {
-                    public void skinAvailable(Type p_180521_1_, ResourceLocation location, MinecraftProfileTexture profileTexture)
+                Minecraft.getMinecraft().getSkinManager().loadProfileTextures(this.gameProfile, (p_180521_1_, location, profileTexture) -> {
+                    switch (p_180521_1_)
                     {
-                        switch (p_180521_1_)
-                        {
-                            case SKIN:
-                                NetworkPlayerInfo.this.locationSkin = location;
-                                NetworkPlayerInfo.this.skinType = profileTexture.getMetadata("model");
+                        case SKIN:
+                            NetworkPlayerInfo.this.locationSkin = location;
+                            NetworkPlayerInfo.this.skinType = profileTexture.getMetadata("model");
 
-                                if (NetworkPlayerInfo.this.skinType == null)
-                                {
-                                    NetworkPlayerInfo.this.skinType = "default";
-                                }
+                            if (NetworkPlayerInfo.this.skinType == null)
+                            {
+                                NetworkPlayerInfo.this.skinType = "default";
+                            }
 
-                                break;
+                            break;
 
-                            case CAPE:
-//                                NetworkPlayerInfo.this.locationCape = location;
-                                NetworkPlayerInfo.this.locationCape = ProfileManager.getPlayerCapeResourceLocation(gameProfile.getName());
-
-                        }
+                        case CAPE:
+                            NetworkPlayerInfo.this.locationCape = location;
                     }
                 }, true);
             }
