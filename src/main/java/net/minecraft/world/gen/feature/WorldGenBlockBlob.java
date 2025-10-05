@@ -18,20 +18,20 @@ public class WorldGenBlockBlob extends WorldGenerator
         this.field_150544_b = p_i45450_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         while (true)
         {
             label0:
             {
-                if (position.getY() > 3)
+                if (x.getY() > 3)
                 {
-                    if (worldIn.isAirBlock(position.down()))
+                    if (worldIn.isAirBlock(x.down()))
                     {
                         break label0;
                     }
 
-                    Block block = worldIn.getBlockState(position.down()).getBlock();
+                    Block block = worldIn.getBlockState(x.down()).getBlock();
 
                     if (block != Blocks.grass && block != Blocks.dirt && block != Blocks.stone)
                     {
@@ -39,7 +39,7 @@ public class WorldGenBlockBlob extends WorldGenerator
                     }
                 }
 
-                if (position.getY() <= 3)
+                if (x.getY() <= 3)
                 {
                     return false;
                 }
@@ -53,20 +53,20 @@ public class WorldGenBlockBlob extends WorldGenerator
                     int l = i1 + rand.nextInt(2);
                     float f = (float)(j + k + l) * 0.333F + 0.5F;
 
-                    for (BlockPos blockpos : BlockPos.getAllInBox(position.add(-j, -k, -l), position.add(j, k, l)))
+                    for (BlockPos blockpos : BlockPos.getAllInBox(x.add(-j, -k, -l), x.add(j, k, l)))
                     {
-                        if (blockpos.distanceSq(position) <= (double)(f * f))
+                        if (blockpos.distanceSq(x) <= (double)(f * f))
                         {
                             worldIn.setBlockState(blockpos, this.field_150545_a.getDefaultState(), 4);
                         }
                     }
 
-                    position = position.add(-(i1 + 1) + rand.nextInt(2 + i1 * 2), 0 - rand.nextInt(2), -(i1 + 1) + rand.nextInt(2 + i1 * 2));
+                    x = x.add(-(i1 + 1) + rand.nextInt(2 + i1 * 2), 0 - rand.nextInt(2), -(i1 + 1) + rand.nextInt(2 + i1 * 2));
                 }
 
                 return true;
             }
-            position = position.down();
+            x = x.down();
         }
     }
 }

@@ -1,6 +1,5 @@
 package net.minecraft.world.gen.feature;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -11,7 +10,7 @@ import java.util.Random;
 public class WorldGenEndIsland extends WorldGenerator {
 
     @Override
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos pos)
     {
         float f = (float)(rand.nextInt(3) + 4);
 
@@ -26,7 +25,7 @@ public class WorldGenEndIsland extends WorldGenerator {
                 {
                     if ((float)(j * j + k * k) <= (f + 1.0F) * (f + 1.0F))
                     {
-                        this.setBlockAndNotifyAdequately(worldIn, position.add(j, i, k), Blocks.dirt.getDefaultState());
+                        this.setBlockAndNotifyAdequately(worldIn, pos.add(j, i, k), Blocks.dirt.getDefaultState());
                     }
                 }
             }
@@ -45,7 +44,7 @@ public class WorldGenEndIsland extends WorldGenerator {
             {
                 if ((float)(j * j + k * k) <= (backupF + 1.0F) * (backupF + 1.0F))
                 {
-                    this.setBlockAndNotifyAdequately(worldIn, position.add(j, i, k), Blocks.grass.getDefaultState());
+                    this.setBlockAndNotifyAdequately(worldIn, pos.add(j, i, k), Blocks.grass.getDefaultState());
                 }
             }
         }

@@ -14,28 +14,28 @@ public class WorldGenMegaForest extends WorldGenHugeTrees
         super(p_i46448_1_, p_i46448_2_, p_i46448_3_, p_i46448_4_, p_i46448_5_);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = this.func_150533_a(rand);
 
-        if (!this.func_175929_a(worldIn, rand, position, i))
+        if (!this.func_175929_a(worldIn, rand, x, i))
         {
             return false;
         }
         else
         {
-            this.func_175930_c(worldIn, position.up(i), 2);
+            this.func_175930_c(worldIn, x.up(i), 2);
 
-            for (int j = position.getY() + i - 2 - rand.nextInt(4); j > position.getY() + i / 2; j -= 2 + rand.nextInt(4))
+            for (int j = x.getY() + i - 2 - rand.nextInt(4); j > x.getY() + i / 2; j -= 2 + rand.nextInt(4))
             {
                 float f = rand.nextFloat() * (float)Math.PI * 2.0F;
-                int k = position.getX() + (int)(0.5F + MathHelper.cos(f) * 4.0F);
-                int l = position.getZ() + (int)(0.5F + MathHelper.sin(f) * 4.0F);
+                int k = x.getX() + (int)(0.5F + MathHelper.cos(f) * 4.0F);
+                int l = x.getZ() + (int)(0.5F + MathHelper.sin(f) * 4.0F);
 
                 for (int i1 = 0; i1 < 5; ++i1)
                 {
-                    k = position.getX() + (int)(1.5F + MathHelper.cos(f) * (float)i1);
-                    l = position.getZ() + (int)(1.5F + MathHelper.sin(f) * (float)i1);
+                    k = x.getX() + (int)(1.5F + MathHelper.cos(f) * (float)i1);
+                    l = x.getZ() + (int)(1.5F + MathHelper.sin(f) * (float)i1);
                     this.setBlockAndNotifyAdequately(worldIn, new BlockPos(k, j - 3 + i1 / 2, l), this.woodMetadata);
                 }
 
@@ -51,7 +51,7 @@ public class WorldGenMegaForest extends WorldGenHugeTrees
 
             for (int i2 = 0; i2 < i; ++i2)
             {
-                BlockPos blockpos = position.up(i2);
+                BlockPos blockpos = x.up(i2);
 
                 if (this.func_150523_a(worldIn.getBlockState(blockpos).getBlock()))
                 {

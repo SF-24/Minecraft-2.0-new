@@ -16,17 +16,17 @@ public class WorldGenLiquids extends WorldGenerator
         this.block = p_i45465_1_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
-        if (worldIn.getBlockState(position.up()).getBlock() != Blocks.stone)
+        if (worldIn.getBlockState(x.up()).getBlock() != Blocks.stone)
         {
             return false;
         }
-        else if (worldIn.getBlockState(position.down()).getBlock() != Blocks.stone)
+        else if (worldIn.getBlockState(x.down()).getBlock() != Blocks.stone)
         {
             return false;
         }
-        else if (worldIn.getBlockState(position).getBlock().getMaterial() != Material.air && worldIn.getBlockState(position).getBlock() != Blocks.stone)
+        else if (worldIn.getBlockState(x).getBlock().getMaterial() != Material.air && worldIn.getBlockState(x).getBlock() != Blocks.stone)
         {
             return false;
         }
@@ -34,52 +34,52 @@ public class WorldGenLiquids extends WorldGenerator
         {
             int i = 0;
 
-            if (worldIn.getBlockState(position.west()).getBlock() == Blocks.stone)
+            if (worldIn.getBlockState(x.west()).getBlock() == Blocks.stone)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.east()).getBlock() == Blocks.stone)
+            if (worldIn.getBlockState(x.east()).getBlock() == Blocks.stone)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.north()).getBlock() == Blocks.stone)
+            if (worldIn.getBlockState(x.north()).getBlock() == Blocks.stone)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.south()).getBlock() == Blocks.stone)
+            if (worldIn.getBlockState(x.south()).getBlock() == Blocks.stone)
             {
                 ++i;
             }
 
             int j = 0;
 
-            if (worldIn.isAirBlock(position.west()))
+            if (worldIn.isAirBlock(x.west()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.east()))
+            if (worldIn.isAirBlock(x.east()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.north()))
+            if (worldIn.isAirBlock(x.north()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.south()))
+            if (worldIn.isAirBlock(x.south()))
             {
                 ++j;
             }
 
             if (i == 3 && j == 1)
             {
-                worldIn.setBlockState(position, this.block.getDefaultState(), 2);
-                worldIn.forceBlockUpdateTick(this.block, position, rand);
+                worldIn.setBlockState(x, this.block.getDefaultState(), 2);
+                worldIn.forceBlockUpdateTick(this.block, x, rand);
             }
 
             return true;

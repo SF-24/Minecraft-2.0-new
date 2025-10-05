@@ -143,7 +143,7 @@ public class SkinManager
                         {
                             ResourceLocation location = ProfileManager.getPlayerCapeResourceLocation(profile);
                             //if(!ProfileManager.checkResourceExists(location)) {
-                                ProfileManager.checkDownloadCape(location,ProfileManager.getUserCapeName(profile));
+//                                ProfileManager.checkDownloadCape(location,ProfileManager.getUserCapeName(profile));
                             //}
 //                            SkinManager.this.loadSkin((MinecraftProfileTexture)map.get(Type.CAPE), Type.CAPE, skinAvailableCallback);
                         }
@@ -154,8 +154,8 @@ public class SkinManager
     }
 
     public void loadCape(GameProfile profile) {
-        ResourceLocation location = ProfileManager.getPlayerCapeResourceLocation(profile);
-        ProfileManager.checkDownloadCape(location,ProfileManager.getUserCapeName(profile));
+//        ResourceLocation location = ProfileManager.getPlayerCapeResourceLocation(profile);
+//        ProfileManager.checkDownloadCape(location,ProfileManager.getUserCapeName(profile));
     }
 
     public Map<Type, MinecraftProfileTexture> loadSkinFromCache(GameProfile profile)

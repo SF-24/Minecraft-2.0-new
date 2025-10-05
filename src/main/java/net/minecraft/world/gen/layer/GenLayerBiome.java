@@ -15,7 +15,7 @@ public class GenLayerBiome extends GenLayer
     private final ChunkProviderSettings chunkProviderSettings;
 
     private BiomeGenBase[] randomBiomeList;
-    private BiomeGenBase[] oceanBiomeList = {BiomeGenBase.archipelago };
+    private final BiomeGenBase[] oceanBiomeList = {BiomeGenBase.archipelago};
 
     WorldType worldType;
 
@@ -26,6 +26,7 @@ public class GenLayerBiome extends GenLayer
 
         this.parent = genLayer;
 
+        // Deprecated world type
         if (worldType == WorldType.DEFAULT_1_1)
         {
             this.field_151623_c = new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga};
@@ -38,6 +39,7 @@ public class GenLayerBiome extends GenLayer
         else if (worldType == WorldType.RANDOM_BIOMES)
         {
             // random biomes world generation
+            // biome list
             this.randomBiomeList = new BiomeGenBase[] {
                 BiomeGenBase.volcanic_wasteland, BiomeGenBase.mesaPlateau, BiomeGenBase.mesa,
                 BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.savanna, BiomeGenBase.savanna, BiomeGenBase.plains,
@@ -91,7 +93,7 @@ public class GenLayerBiome extends GenLayer
                 if(this.worldType==WorldType.RANDOM_BIOMES) {
 
                     if (oceanList[k]) {
-                        if(this.nextInt(4)==0) {
+                        if(this.nextInt(6)==0) {
                             aint1[j + i * areaWidth] = (this.oceanBiomeList[this.nextInt(this.oceanBiomeList.length)]).biomeID;
                         } else {
                             aint1[j + i * areaWidth] = k;
@@ -102,6 +104,8 @@ public class GenLayerBiome extends GenLayer
                         // a -> getIntCache? or aint1 or this.nextInt
                         int biome = (this.randomBiomeList[this.nextInt(this.randomBiomeList.length)]).biomeID;
                         if((biome==BiomeGenBase.autumnalForest.biomeID || biome==BiomeGenBase.birchForest.biomeID) && (this.nextInt(4)==0)) biome=BiomeGenBase.lorienForest.biomeID;
+                        if((biome== mesa.biomeID || biome== mesaPlateau.biomeID) && (this.nextInt(5)==0)) biome= mesaPlateau_F.biomeID;
+                        if(((biome== stoneMountains.biomeID) && (this.nextInt(5)==0)) || ((biome== icePlains.biomeID) && (this.nextInt(20)==0))) biome=BiomeGenBase.frozenMesa.biomeID;
                         aint1[j + i * areaWidth] = biome;
                     } else {
                         aint1[j + i * areaWidth] = BiomeGenBase.mushroomIsland.biomeID;

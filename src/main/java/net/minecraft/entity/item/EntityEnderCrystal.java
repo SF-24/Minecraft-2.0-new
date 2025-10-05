@@ -113,16 +113,16 @@ public class EntityEnderCrystal extends Entity
                 {
                     this.worldObj.createExplosion((Entity)null, this.posX, this.posY, this.posZ, 6.0F, true);
                     Random random = new Random();
-                    int val = random.nextInt(3);
-                    EntityItem item = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Items.amethyst, val));
-                    if (val > 0) this.worldObj.spawnEntityInWorld(item);
+//                    int val = random.nextInt(3);
+//                    EntityItem item = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Items.amethyst, val));
+//                    if (val > 0) this.worldObj.spawnEntityInWorld(item);
 
                     int xMultiplier = 1;
                     int zMultiplier = 1;
                     if(random.nextInt(2)==1) xMultiplier=-1;
                     if(random.nextInt(2)==1) zMultiplier=-1;
 
-                    item.setVelocity(1*xMultiplier, 1, 1*zMultiplier);
+//                    item.setVelocity(1*xMultiplier, 1, 1*zMultiplier);
                 }
                 //}
             }

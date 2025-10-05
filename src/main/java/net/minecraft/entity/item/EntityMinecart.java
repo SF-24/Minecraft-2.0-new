@@ -351,7 +351,8 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
                 if (iblockstate.getBlock() == Blocks.activator_rail)
                 {
-                    this.onActivatorRailPass(k, l, i1, ((Boolean)iblockstate.getValue(BlockRailPowered.POWERED)).booleanValue());
+                    // TODO: Add minecart speeds
+                    this.onActivatorRailPass(k, l, i1, (iblockstate.getValue(BlockRailPowered.POWERED)));
                 }
             }
             else
@@ -460,7 +461,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
         if (blockrailbase == Blocks.golden_rail)
         {
-            flag = ((Boolean)p_180460_2_.getValue(BlockRailPowered.POWERED)).booleanValue();
+            flag = p_180460_2_.getValue(BlockRailPowered.POWERED);
             flag1 = !flag;
         }
 

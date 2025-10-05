@@ -41,7 +41,7 @@ public class WorldGenDungeonsNether extends WorldGenerator
             new WeightedRandomChestContent(Items.golden_chestplate, 0, 1, 1, 2),
             new WeightedRandomChestContent(Items.golden_sword, 0, 1, 1, 2)});
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = 3;
         int j = rand.nextInt(2) + 2;
@@ -60,7 +60,7 @@ public class WorldGenDungeonsNether extends WorldGenerator
             {
                 for (int i3 = l1; i3 <= i2; ++i3)
                 {
-                    BlockPos blockpos = position.add(k2, l2, i3);
+                    BlockPos blockpos = x.add(k2, l2, i3);
                     Material material = worldIn.getBlockState(blockpos).getBlock().getMaterial();
                     boolean flag = material.isSolid();
 
@@ -90,7 +90,7 @@ public class WorldGenDungeonsNether extends WorldGenerator
                 {
                     for (int k4 = l1; k4 <= i2; ++k4)
                     {
-                        BlockPos blockpos1 = position.add(k3, i4, k4);
+                        BlockPos blockpos1 = x.add(k3, i4, k4);
 
                         if (k3 != k && i4 != -1 && k4 != l1 && k3 != l && i4 != 4 && k4 != i2)
                         {
@@ -122,9 +122,9 @@ public class WorldGenDungeonsNether extends WorldGenerator
             {
                 for (int j4 = 0; j4 < 3; ++j4)
                 {
-                    int l4 = position.getX() + rand.nextInt(j * 2 + 1) - j;
-                    int i5 = position.getY();
-                    int j5 = position.getZ() + rand.nextInt(k1 * 2 + 1) - k1;
+                    int l4 = x.getX() + rand.nextInt(j * 2 + 1) - j;
+                    int i5 = x.getY();
+                    int j5 = x.getZ() + rand.nextInt(k1 * 2 + 1) - k1;
                     BlockPos blockpos2 = new BlockPos(l4, i5, j5);
 
                     if (worldIn.isAirBlock(blockpos2))
@@ -156,8 +156,8 @@ public class WorldGenDungeonsNether extends WorldGenerator
                 }
             }
 
-            worldIn.setBlockState(position, Blocks.mob_spawner.getDefaultState(), 2);
-            TileEntity tileentity = worldIn.getTileEntity(position);
+            worldIn.setBlockState(x, Blocks.mob_spawner.getDefaultState(), 2);
+            TileEntity tileentity = worldIn.getTileEntity(x);
 
             if (tileentity instanceof TileEntityMobSpawner)
             {
@@ -165,7 +165,7 @@ public class WorldGenDungeonsNether extends WorldGenerator
             }
             else
             {
-                field_175918_a.error("Failed to fetch mob spawner entity at (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+                field_175918_a.error("Failed to fetch mob spawner entity at (" + x.getX() + ", " + x.getY() + ", " + x.getZ() + ")");
             }
 
             return true;

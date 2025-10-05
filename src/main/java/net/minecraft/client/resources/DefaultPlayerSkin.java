@@ -1,28 +1,24 @@
 package net.minecraft.client.resources;
 
-import java.time.LocalDate;
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
 import net.minecraft.util.ResourceLocation;
 import net.mineshaft.data.ProfileManager;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 public class DefaultPlayerSkin
 {
     /** The default skin for the Steve model. */
     private static final ResourceLocation TEXTURE_STEVE = new ResourceLocation("textures/entity/player/steve.png");
+    /** The default skin for the Alex model. */
+    private static final ResourceLocation TEXTURE_ALEX = new ResourceLocation("textures/entity/alex.png");
 
     private static final ResourceLocation CAPE_BDAY = new ResourceLocation("textures/entity/cape/special/bday.png");
     private static final ResourceLocation CAPE_APRIL = new ResourceLocation("textures/entity/cape/special/white_eyes.png");
     private static final ResourceLocation CAPE_CHRISTMAS = new ResourceLocation("textures/entity/cape/special/christmas.png");
     private static final ResourceLocation CAPE_NEW_YEAR = new ResourceLocation("textures/entity/cape/special/new_year.png");
     public static final ResourceLocation CAPE_EMPTY = new ResourceLocation("textures/entity/cape/special/empty.png");
-
-    /** The default skin for the Alex model. */
-    private static final ResourceLocation TEXTURE_ALEX = new ResourceLocation("textures/entity/player/alex.png");
 
     /**
      * Returns the default skind for versions prior to 1.8, which is always the Steve texture.
@@ -36,12 +32,8 @@ public class DefaultPlayerSkin
      * Retrieves the default skin for this player. Depending on the model used this will be Alex or Steve.
      */
 
-    public static ResourceLocation getDefaultSkin(GameProfile name) {
-        if(ProfileManager.getPlayerSkinResourceLocation(name)!=null) {
-            return ProfileManager.getPlayerSkinResourceLocation(name);
-        } else {
+    public static ResourceLocation getDefaultSkin(GameProfile profile) {
             return TEXTURE_STEVE;
-        }
     }
 
     public static ResourceLocation getEventCape() {
@@ -59,11 +51,15 @@ public class DefaultPlayerSkin
         return null;
     }
 
+    // TODO: Clean up
+
     public static ResourceLocation getDefaultCape(GameProfile profile) {
         if(getEventCape() != null) {
             return getEventCape();
         }
-        return ProfileManager.getPlayerCapeResourceLocation(profile);
+        return null;
+//        return new ResourceLocation("textures/entity/cape/empty.png");
+//        return ProfileManager.getPlayerCapeResourceLocation(profile);
     }
 
 
@@ -81,6 +77,7 @@ public class DefaultPlayerSkin
      */
     private static boolean isSlimSkin(GameProfile profile)
     {
-        return ProfileManager.isUserSkinSlim(profile);
+        return false;
+//        return ProfileManager.isUserSkinSlim(profile);
     }
 }

@@ -9,23 +9,23 @@ import net.minecraft.world.World;
 
 public class WorldGenGlowStone2 extends WorldGenerator
 {
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
-        if (!worldIn.isAirBlock(position))
+        if (!worldIn.isAirBlock(x))
         {
             return false;
         }
-        else if (worldIn.getBlockState(position.up()).getBlock() != Blocks.netherrack)
+        else if (worldIn.getBlockState(x.up()).getBlock() != Blocks.netherrack)
         {
             return false;
         }
         else
         {
-            worldIn.setBlockState(position, Blocks.glowstone.getDefaultState(), 2);
+            worldIn.setBlockState(x, Blocks.glowstone.getDefaultState(), 2);
 
             for (int i = 0; i < 1500; ++i)
             {
-                BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), -rand.nextInt(12), rand.nextInt(8) - rand.nextInt(8));
+                BlockPos blockpos = x.add(rand.nextInt(8) - rand.nextInt(8), -rand.nextInt(12), rand.nextInt(8) - rand.nextInt(8));
 
                 if (worldIn.getBlockState(blockpos).getBlock().getMaterial() == Material.air)
                 {

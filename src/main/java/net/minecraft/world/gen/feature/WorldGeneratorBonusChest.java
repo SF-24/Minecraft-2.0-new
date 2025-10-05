@@ -26,26 +26,26 @@ public class WorldGeneratorBonusChest extends WorldGenerator
         this.itemsToGenerateInBonusChest = p_i45634_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         Block block;
 
-        while (((block = worldIn.getBlockState(position).getBlock()).getMaterial() == Material.air || block.getMaterial() == Material.leaves) && position.getY() > 1)
+        while (((block = worldIn.getBlockState(x).getBlock()).getMaterial() == Material.air || block.getMaterial() == Material.leaves) && x.getY() > 1)
         {
-            position = position.down();
+            x = x.down();
         }
 
-        if (position.getY() < 1)
+        if (x.getY() < 1)
         {
             return false;
         }
         else
         {
-            position = position.up();
+            x = x.up();
 
             for (int i = 0; i < 4; ++i)
             {
-                BlockPos blockpos = position.add(rand.nextInt(4) - rand.nextInt(4), rand.nextInt(3) - rand.nextInt(3), rand.nextInt(4) - rand.nextInt(4));
+                BlockPos blockpos = x.add(rand.nextInt(4) - rand.nextInt(4), rand.nextInt(3) - rand.nextInt(3), rand.nextInt(4) - rand.nextInt(4));
 
                 if (worldIn.isAirBlock(blockpos) && World.doesBlockHaveSolidTopSurface(worldIn, blockpos.down()))
                 {

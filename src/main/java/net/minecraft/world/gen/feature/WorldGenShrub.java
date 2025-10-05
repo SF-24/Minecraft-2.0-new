@@ -20,34 +20,34 @@ public class WorldGenShrub extends WorldGenTrees
         this.leavesMetadata = p_i46450_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         Block block;
 
-        while (((block = worldIn.getBlockState(position).getBlock()).getMaterial() == Material.air || block.getMaterial() == Material.leaves) && position.getY() > 0)
+        while (((block = worldIn.getBlockState(x).getBlock()).getMaterial() == Material.air || block.getMaterial() == Material.leaves) && x.getY() > 0)
         {
-            position = position.down();
+            x = x.down();
         }
 
-        Block block1 = worldIn.getBlockState(position).getBlock();
+        Block block1 = worldIn.getBlockState(x).getBlock();
 
         if (block1 == Blocks.dirt || block1 == Blocks.grass)
         {
-            position = position.up();
-            this.setBlockAndNotifyAdequately(worldIn, position, this.woodMetadata);
+            x = x.up();
+            this.setBlockAndNotifyAdequately(worldIn, x, this.woodMetadata);
 
-            for (int i = position.getY(); i <= position.getY() + 2; ++i)
+            for (int i = x.getY(); i <= x.getY() + 2; ++i)
             {
-                int j = i - position.getY();
+                int j = i - x.getY();
                 int k = 2 - j;
 
-                for (int l = position.getX() - k; l <= position.getX() + k; ++l)
+                for (int l = x.getX() - k; l <= x.getX() + k; ++l)
                 {
-                    int i1 = l - position.getX();
+                    int i1 = l - x.getX();
 
-                    for (int j1 = position.getZ() - k; j1 <= position.getZ() + k; ++j1)
+                    for (int j1 = x.getZ() - k; j1 <= x.getZ() + k; ++j1)
                     {
-                        int k1 = j1 - position.getZ();
+                        int k1 = j1 - x.getZ();
 
                         if (Math.abs(i1) != k || Math.abs(k1) != k || rand.nextInt(2) != 0)
                         {

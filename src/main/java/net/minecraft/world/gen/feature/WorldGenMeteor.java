@@ -1,18 +1,11 @@
 package net.minecraft.world.gen.feature;
 
-import com.google.common.base.Predicates;
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class WorldGenMeteor extends WorldGenerator {
@@ -28,12 +21,12 @@ public class WorldGenMeteor extends WorldGenerator {
 
 
 
-    public boolean generate(World worldIn, Random rand, BlockPos position) {
+    public boolean generate(World worldIn, Random rand, BlockPos pos) {
 
 
-        while (worldIn.isAirBlock(position) && position.getY() > 2)
+        while (worldIn.isAirBlock(pos) && pos.getY() > 2)
         {
-            position = position.down();
+            pos = pos.down();
         }
 
         final int type = rand.nextInt(5);
@@ -43,7 +36,7 @@ public class WorldGenMeteor extends WorldGenerator {
         // 2,3: iron
         // 4: obsidian
 
-        if (!stateHelper.apply(worldIn.getBlockState(position)) && !stateHelper1.apply(worldIn.getBlockState(position)) && !stateHelper2.apply(worldIn.getBlockState(position)))
+        if (!stateHelper.apply(worldIn.getBlockState(pos)) && !stateHelper1.apply(worldIn.getBlockState(pos)) && !stateHelper2.apply(worldIn.getBlockState(pos)))
         {
             return false;
         }
@@ -56,27 +49,27 @@ public class WorldGenMeteor extends WorldGenerator {
                             if (rand.nextInt(7) == 0) {
                                 switch (type) {
                                     case 0:
-                                        worldIn.setBlockState(position.add(x, y, z), coal);
+                                        worldIn.setBlockState(pos.add(x, y, z), coal);
                                         break;
                                     case 1:
-                                        worldIn.setBlockState(position.add(x, y, z), gold);
+                                        worldIn.setBlockState(pos.add(x, y, z), gold);
                                         break;
                                     case 2:
-                                        worldIn.setBlockState(position.add(x, y, z), iron);
+                                        worldIn.setBlockState(pos.add(x, y, z), iron);
                                         break;
                                     case 3:
-                                        worldIn.setBlockState(position.add(x, y, z), iron);
+                                        worldIn.setBlockState(pos.add(x, y, z), iron);
                                         break;
                                     case 4:
-                                        worldIn.setBlockState(position.add(x, y, z), obsidian);
+                                        worldIn.setBlockState(pos.add(x, y, z), obsidian);
                                         break;
                                     default:
                                         break;
                                 }
                             } else if (rand.nextInt(2) == 0) {
-                                worldIn.setBlockState(position.add(x, y, z), cobblestone);
+                                worldIn.setBlockState(pos.add(x, y, z), cobblestone);
                             } else {
-                                worldIn.setBlockState(position.add(x, y, z), stone);
+                                worldIn.setBlockState(pos.add(x, y, z), stone);
                             }
                         }
                     }

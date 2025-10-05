@@ -18,13 +18,13 @@ public class WorldGenHellLava extends WorldGenerator
         this.field_94524_b = p_i45453_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
-        if (worldIn.getBlockState(position.up()).getBlock() != Blocks.netherrack)
+        if (worldIn.getBlockState(x.up()).getBlock() != Blocks.netherrack)
         {
             return false;
         }
-        else if (worldIn.getBlockState(position).getBlock().getMaterial() != Material.air && worldIn.getBlockState(position).getBlock() != Blocks.netherrack)
+        else if (worldIn.getBlockState(x).getBlock().getMaterial() != Material.air && worldIn.getBlockState(x).getBlock() != Blocks.netherrack)
         {
             return false;
         }
@@ -32,62 +32,62 @@ public class WorldGenHellLava extends WorldGenerator
         {
             int i = 0;
 
-            if (worldIn.getBlockState(position.west()).getBlock() == Blocks.netherrack)
+            if (worldIn.getBlockState(x.west()).getBlock() == Blocks.netherrack)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.east()).getBlock() == Blocks.netherrack)
+            if (worldIn.getBlockState(x.east()).getBlock() == Blocks.netherrack)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.north()).getBlock() == Blocks.netherrack)
+            if (worldIn.getBlockState(x.north()).getBlock() == Blocks.netherrack)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.south()).getBlock() == Blocks.netherrack)
+            if (worldIn.getBlockState(x.south()).getBlock() == Blocks.netherrack)
             {
                 ++i;
             }
 
-            if (worldIn.getBlockState(position.down()).getBlock() == Blocks.netherrack)
+            if (worldIn.getBlockState(x.down()).getBlock() == Blocks.netherrack)
             {
                 ++i;
             }
 
             int j = 0;
 
-            if (worldIn.isAirBlock(position.west()))
+            if (worldIn.isAirBlock(x.west()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.east()))
+            if (worldIn.isAirBlock(x.east()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.north()))
+            if (worldIn.isAirBlock(x.north()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.south()))
+            if (worldIn.isAirBlock(x.south()))
             {
                 ++j;
             }
 
-            if (worldIn.isAirBlock(position.down()))
+            if (worldIn.isAirBlock(x.down()))
             {
                 ++j;
             }
 
             if (!this.field_94524_b && i == 4 && j == 1 || i == 5)
             {
-                worldIn.setBlockState(position, this.field_150553_a.getDefaultState(), 2);
-                worldIn.forceBlockUpdateTick(this.field_150553_a, position, rand);
+                worldIn.setBlockState(x, this.field_150553_a.getDefaultState(), 2);
+                worldIn.forceBlockUpdateTick(this.field_150553_a, x, rand);
             }
 
             return true;

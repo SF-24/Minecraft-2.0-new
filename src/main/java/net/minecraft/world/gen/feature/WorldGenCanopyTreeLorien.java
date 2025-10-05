@@ -21,24 +21,24 @@ public class WorldGenCanopyTreeLorien extends WorldGenAbstractTree
         super(p_i45461_1_);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         // i = height
         int i = rand.nextInt(3) + rand.nextInt(7) + 7;
-        int j = position.getX();
-        int k = position.getY();
-        int l = position.getZ();
+        int j = x.getX();
+        int k = x.getY();
+        int l = x.getZ();
 
         if (k >= 1 && k + i + 1 < 256)
         {
-            BlockPos blockpos = position.down();
+            BlockPos blockpos = x.down();
             Block block = worldIn.getBlockState(blockpos).getBlock();
 
             if (block != Blocks.grass && block != Blocks.dirt)
             {
                 return false;
             }
-            else if (!this.func_181638_a(worldIn, position, i))
+            else if (!this.func_181638_a(worldIn, x, i))
             {
                 return false;
             }

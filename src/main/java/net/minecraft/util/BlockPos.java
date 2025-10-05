@@ -181,9 +181,14 @@ public class BlockPos extends Vec3i
     /**
      * Offsets this BlockPos n blocks in the given direction
      */
-    public BlockPos offset(EnumFacing facing, int n)
-    {
+    public BlockPos offset(EnumFacing facing, int n) {
         return n == 0 ? this : new BlockPos(this.getX() + facing.getFrontOffsetX() * n, this.getY() + facing.getFrontOffsetY() * n, this.getZ() + facing.getFrontOffsetZ() * n);
+    }
+
+    // Set the coordinates
+    public BlockPos set(int i, int i1, int i2) {
+        setPos(i, i1, i2);
+        return this;
     }
 
     /**
@@ -355,7 +360,7 @@ public class BlockPos extends Vec3i
             return this.z;
         }
 
-        public BlockPos.MutableBlockPos set(int xIn, int yIn, int zIn)
+        public BlockPos set(int xIn, int yIn, int zIn)
         {
             this.x = xIn;
             this.y = yIn;

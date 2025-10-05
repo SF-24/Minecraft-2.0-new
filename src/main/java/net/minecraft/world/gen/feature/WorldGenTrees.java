@@ -47,32 +47,32 @@ public class WorldGenTrees extends WorldGenAbstractTree
         this.vinesGrow = p_i46446_5_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = rand.nextInt(3) + this.minTreeHeight;
         boolean flag = true;
 
-        if (position.getY() >= 1 && position.getY() + i + 1 <= 256)
+        if (x.getY() >= 1 && x.getY() + i + 1 <= 256)
         {
-            for (int j = position.getY(); j <= position.getY() + 1 + i; ++j)
+            for (int j = x.getY(); j <= x.getY() + 1 + i; ++j)
             {
                 int k = 1;
 
-                if (j == position.getY())
+                if (j == x.getY())
                 {
                     k = 0;
                 }
 
-                if (j >= position.getY() + 1 + i - 2)
+                if (j >= x.getY() + 1 + i - 2)
                 {
                     k = 2;
                 }
 
                 BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                for (int l = position.getX() - k; l <= position.getX() + k && flag; ++l)
+                for (int l = x.getX() - k; l <= x.getX() + k && flag; ++l)
                 {
-                    for (int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1)
+                    for (int i1 = x.getZ() - k; i1 <= x.getZ() + k && flag; ++i1)
                     {
                         if (j >= 0 && j < 256)
                         {
@@ -95,26 +95,26 @@ public class WorldGenTrees extends WorldGenAbstractTree
             }
             else
             {
-                Block block1 = worldIn.getBlockState(position.down()).getBlock();
+                Block block1 = worldIn.getBlockState(x.down()).getBlock();
 
-                if ((block1 == Blocks.grass || block1 == Blocks.dirt || block1 == Blocks.farmland) && position.getY() < 256 - i - 1)
+                if ((block1 == Blocks.grass || block1 == Blocks.dirt || block1 == Blocks.farmland) && x.getY() < 256 - i - 1)
                 {
-                    this.func_175921_a(worldIn, position.down());
+                    this.func_175921_a(worldIn, x.down());
                     int k2 = 3;
                     int l2 = 0;
 
-                    for (int i3 = position.getY() - k2 + i; i3 <= position.getY() + i; ++i3)
+                    for (int i3 = x.getY() - k2 + i; i3 <= x.getY() + i; ++i3)
                     {
-                        int i4 = i3 - (position.getY() + i);
+                        int i4 = i3 - (x.getY() + i);
                         int j1 = l2 + 1 - i4 / 2;
 
-                        for (int k1 = position.getX() - j1; k1 <= position.getX() + j1; ++k1)
+                        for (int k1 = x.getX() - j1; k1 <= x.getX() + j1; ++k1)
                         {
-                            int l1 = k1 - position.getX();
+                            int l1 = k1 - x.getX();
 
-                            for (int i2 = position.getZ() - j1; i2 <= position.getZ() + j1; ++i2)
+                            for (int i2 = x.getZ() - j1; i2 <= x.getZ() + j1; ++i2)
                             {
-                                int j2 = i2 - position.getZ();
+                                int j2 = i2 - x.getZ();
 
                                 if (Math.abs(l1) != j1 || Math.abs(j2) != j1 || rand.nextInt(2) != 0 && i4 != 0)
                                 {
@@ -132,32 +132,32 @@ public class WorldGenTrees extends WorldGenAbstractTree
 
                     for (int j3 = 0; j3 < i; ++j3)
                     {
-                        Block block2 = worldIn.getBlockState(position.up(j3)).getBlock();
+                        Block block2 = worldIn.getBlockState(x.up(j3)).getBlock();
 
                         if (block2.getMaterial() == Material.air || block2.getMaterial() == Material.leaves || block2.getMaterial() == Material.vine)
                         {
-                            this.setBlockAndNotifyAdequately(worldIn, position.up(j3), this.metaWood);
+                            this.setBlockAndNotifyAdequately(worldIn, x.up(j3), this.metaWood);
 
                             if (this.vinesGrow && j3 > 0)
                             {
-                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(-1, j3, 0)))
+                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(x.add(-1, j3, 0)))
                                 {
-                                    this.func_181651_a(worldIn, position.add(-1, j3, 0), BlockVine.EAST);
+                                    this.func_181651_a(worldIn, x.add(-1, j3, 0), BlockVine.EAST);
                                 }
 
-                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(1, j3, 0)))
+                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(x.add(1, j3, 0)))
                                 {
-                                    this.func_181651_a(worldIn, position.add(1, j3, 0), BlockVine.WEST);
+                                    this.func_181651_a(worldIn, x.add(1, j3, 0), BlockVine.WEST);
                                 }
 
-                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(0, j3, -1)))
+                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(x.add(0, j3, -1)))
                                 {
-                                    this.func_181651_a(worldIn, position.add(0, j3, -1), BlockVine.SOUTH);
+                                    this.func_181651_a(worldIn, x.add(0, j3, -1), BlockVine.SOUTH);
                                 }
 
-                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(0, j3, 1)))
+                                if (rand.nextInt(3) > 0 && worldIn.isAirBlock(x.add(0, j3, 1)))
                                 {
-                                    this.func_181651_a(worldIn, position.add(0, j3, 1), BlockVine.NORTH);
+                                    this.func_181651_a(worldIn, x.add(0, j3, 1), BlockVine.NORTH);
                                 }
                             }
                         }
@@ -165,15 +165,15 @@ public class WorldGenTrees extends WorldGenAbstractTree
 
                     if (this.vinesGrow)
                     {
-                        for (int k3 = position.getY() - 3 + i; k3 <= position.getY() + i; ++k3)
+                        for (int k3 = x.getY() - 3 + i; k3 <= x.getY() + i; ++k3)
                         {
-                            int j4 = k3 - (position.getY() + i);
+                            int j4 = k3 - (x.getY() + i);
                             int k4 = 2 - j4 / 2;
                             BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
 
-                            for (int l4 = position.getX() - k4; l4 <= position.getX() + k4; ++l4)
+                            for (int l4 = x.getX() - k4; l4 <= x.getX() + k4; ++l4)
                             {
-                                for (int i5 = position.getZ() - k4; i5 <= position.getZ() + k4; ++i5)
+                                for (int i5 = x.getZ() - k4; i5 <= x.getZ() + k4; ++i5)
                                 {
                                     blockpos$mutableblockpos1.set(l4, k3, i5);
 
@@ -217,7 +217,7 @@ public class WorldGenTrees extends WorldGenAbstractTree
                                     if (rand.nextInt(4 - l3) == 0)
                                     {
                                         EnumFacing enumfacing1 = enumfacing.getOpposite();
-                                        this.func_181652_a(worldIn, rand.nextInt(3), position.add(enumfacing1.getFrontOffsetX(), i - 5 + l3, enumfacing1.getFrontOffsetZ()), enumfacing);
+                                        this.func_181652_a(worldIn, rand.nextInt(3), x.add(enumfacing1.getFrontOffsetX(), i - 5 + l3, enumfacing1.getFrontOffsetZ()), enumfacing);
                                     }
                                 }
                             }

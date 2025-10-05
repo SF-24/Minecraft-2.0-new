@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.MineshaftLogger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
@@ -18,25 +19,22 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Objects;
 import java.util.UUID;
 
 public class ProfileManager {
 
     public static ResourceLocation getPlayerCapeResourceLocation(GameProfile profile) {
-        if(Minecraft.getMinecraft().userRenderData.capeResource.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.capeResource.get(profile.getName());}
-        ResourceLocation location = new ResourceLocation("textures/entity/cape/" + ProfileManager.getUserCapeName(profile) + ".png");
-        Minecraft.getMinecraft().userRenderData.capeResource.put(profile.getName(), location);
-        if(ProfileManager.getUserCapeName(profile).equals("empty")) {
-            return new ResourceLocation("textures/entity/cape/empty.png");
-        }
-        return location;
+        return new ResourceLocation("textures/entity/cape/empty.png");
+//        if(Minecraft.getMinecraft().userRenderData.capeResource.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.capeResource.get(profile.getName());}
+//        ResourceLocation location = new ResourceLocation("textures/entity/cape/" + ProfileManager.getUserCapeName(profile) + ".png");
+//        Minecraft.getMinecraft().userRenderData.capeResource.put(profile.getName(), location);
+//        if(ProfileManager.getUserCapeName(profile).equals("empty")) {
+//        }
+//        return location;
     }
 
     public static ResourceLocation getPlayerSkinResourceLocation(GameProfile profile) {
@@ -71,6 +69,7 @@ public class ProfileManager {
         return /*(ThreadDownloadImageData)*/itextureobject;
     }
 
+    @Deprecated
     public static String getUserCapeName(GameProfile profile) {
         // check if registry exists
         try {
@@ -98,6 +97,7 @@ public class ProfileManager {
         }
     }
 
+    @Deprecated
     public static String getUserSkinName(GameProfile profile) {
         // check if registry exists
         if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.skinLocation.get(profile.getName());}
@@ -112,6 +112,7 @@ public class ProfileManager {
         return skin;
     }
 
+    @Deprecated
     public static boolean isUserSkinSlim(GameProfile profile) {
         // check if registry exists
         if(Minecraft.getMinecraft().userRenderData.skinLocation.containsKey(profile.getName())) {return Minecraft.getMinecraft().userRenderData.slimSkins.contains(profile.getName());}
@@ -126,8 +127,16 @@ public class ProfileManager {
 
     public static String getUserId(GameProfile profile) {
 
+        if(profile.getId()!=null) return profile.getId().toString().replace("-","");
         String name = profile.getName();
-        JsonElement json = getJson("https://api.mojang.com/users/profiles/minecraft/" + name);
+        JsonElement json;
+        try {
+            json = getJson("https://api.mojang.com/users/profiles/minecraft/" + name);
+        } catch (NullPointerException ignored) {
+            System.out.println("SEVERE! Currently attempting to fix");
+            System.out.println("Error loading UUID for user " + profile.getName() + ", using fallback.");
+            return profile.getId().toString().replaceAll("-", "");
+        }
         if(json != null) {
             try {
                 String id = json.getAsJsonObject().get("id").getAsString();
@@ -159,6 +168,11 @@ public class ProfileManager {
     }
 
     public static JsonElement getJson(String url) {
+        if(getRequest(url)==null) {
+            MineshaftLogger.logError("ERROR! Null request");
+            return null;
+        }
+        MineshaftLogger.logDebug(getRequest(url));
         return new JsonParser().parse(Objects.requireNonNull(getRequest(url)));
     }
 
@@ -173,29 +187,31 @@ public class ProfileManager {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     // return it as a String
+                    MineshaftLogger.logDebug(entity.toString());
                     return EntityUtils.toString(entity);
                 }
 
             } catch (Exception e) {
-                System.out.println("fetching json failed. URL: " + url);
+                MineshaftLogger.logError("fetching json failed. URL: " + url);
             } finally {
                 try {
                     response.close();
                 } catch (IOException e) {
-                    System.out.println("closing response failed. Error.");
+                    MineshaftLogger.logError("closing response failed. Error.");
                     return "null";
                 }
             }
         } catch (Exception e) {
-            System.out.println("fetching json failed. URL: " + url);
+            MineshaftLogger.logError("fetching json failed. URL: " + url);
         } finally {
             try {
                 httpClient.close();
             } catch (IOException e) {
-                System.out.println("closing http client failed. Error.");
+                MineshaftLogger.logError("closing http client failed. Error.");
                 return "null";
             }
         }
-        return null;
+        MineshaftLogger.logDebug("Got to end of request statement? This should not happen. Please report to github.com/SF-24");
+        return "null";
     }
 }

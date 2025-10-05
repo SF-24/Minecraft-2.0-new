@@ -1218,44 +1218,44 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.red_mushroom_block, BlockHugeMushroom.EnumType.ALL_INSIDE.getMetadata(), "red_mushroom_block");
         this.registerBlock(Blocks.dragon_egg, "dragon_egg");
         // new stuff
-        this.registerItem(Items.steel_sword, "steel_sword");
-        this.registerItem(Items.steel_shovel, "steel_shovel");
-        this.registerItem(Items.steel_pickaxe, "steel_pickaxe");
-        this.registerItem(Items.steel_axe, "steel_axe");
-        this.registerItem(Items.steel_hoe, "steel_hoe");
-        this.registerItem(Items.steel_helmet, "steel_helmet");
-        this.registerItem(Items.steel_chestplate, "steel_chestplate");
-        this.registerItem(Items.steel_leggings, "steel_leggings");
-        this.registerItem(Items.steel_boots, "steel_boots");
-        this.registerItem(Items.steel_ingot, "steel_ingot");
-        this.registerItem(Items.steel_nugget, "steel_nugget");
-        this.registerItem(Items.nether_ash, "nether_ash");
-        this.registerBlock(Blocks.nether_ash_ore, "nether_ash_ore");
-        this.registerBlock(Blocks.steel_block, "steel_block");
+//        this.registerItem(Items.steel_sword, "steel_sword");
+//        this.registerItem(Items.steel_shovel, "steel_shovel");
+//        this.registerItem(Items.steel_pickaxe, "steel_pickaxe");
+//        this.registerItem(Items.steel_axe, "steel_axe");
+//        this.registerItem(Items.steel_hoe, "steel_hoe");
+//        this.registerItem(Items.steel_helmet, "steel_helmet");
+//        this.registerItem(Items.steel_chestplate, "steel_chestplate");
+//        this.registerItem(Items.steel_leggings, "steel_leggings");
+//        this.registerItem(Items.steel_boots, "steel_boots");
+//        this.registerItem(Items.steel_ingot, "steel_ingot");
+//        this.registerItem(Items.steel_nugget, "steel_nugget");
+//        this.registerItem(Items.nether_ash, "nether_ash");
+//        this.registerBlock(Blocks.nether_ash_ore, "nether_ash_ore");
+//        this.registerBlock(Blocks.steel_block, "steel_block");
         this.registerBlock(Blocks.nether_gold_ore, "nether_gold_ore");
 
         this.registerItem(Items.ruby, "ruby");
         this.registerBlock(Blocks.ruby_block, "ruby_block");
         this.registerBlock(Blocks.ruby_ore, "ruby_ore");
 
-        this.registerItem(Items.amethyst_sword, "amethyst_sword");
-        this.registerItem(Items.amethyst_shovel, "amethyst_shovel");
-        this.registerItem(Items.amethyst_pickaxe, "amethyst_pickaxe");
-        this.registerItem(Items.amethyst_axe, "amethyst_axe");
-        this.registerItem(Items.amethyst_hoe, "amethyst_hoe");
-        this.registerItem(Items.amethyst_helmet, "amethyst_helmet");
-        this.registerItem(Items.amethyst_chestplate, "amethyst_chestplate");
-        this.registerItem(Items.amethyst_leggings, "amethyst_leggings");
-        this.registerItem(Items.amethyst_boots, "amethyst_boots");
-        this.registerItem(Items.amethyst, "amethyst");
+//        this.registerItem(Items.amethyst_sword, "amethyst_sword");
+//        this.registerItem(Items.amethyst_shovel, "amethyst_shovel");
+//        this.registerItem(Items.amethyst_pickaxe, "amethyst_pickaxe");
+//        this.registerItem(Items.amethyst_axe, "amethyst_axe");
+//        this.registerItem(Items.amethyst_hoe, "amethyst_hoe");
+//        this.registerItem(Items.amethyst_helmet, "amethyst_helmet");
+//        this.registerItem(Items.amethyst_chestplate, "amethyst_chestplate");
+//        this.registerItem(Items.amethyst_leggings, "amethyst_leggings");
+//        this.registerItem(Items.amethyst_boots, "amethyst_boots");
+//        this.registerItem(Items.amethyst, "amethyst");
 
         this.registerItem(Items.ender_pouch, "ender_pouch");
 
         this.registerItem(Items.holy_grenade, "holy_hand_grenade");
         this.registerItem(Items.glowing_bread, "glowing_bread");
 
-        this.registerBlock(Blocks.amethyst_block, "amethyst_block");
-        this.registerBlock(Blocks.amethyst_crystal, "amethyst_crystal");
+//        this.registerBlock(Blocks.amethyst_block, "amethyst_block");
+//        this.registerBlock(Blocks.amethyst_crystal, "amethyst_crystal");
         this.registerBlock(Blocks.cobweb_block, "cobweb_block");
         this.registerBlock(Blocks.rail_block, "rail_block");
         this.registerBlock(Blocks.gold_rail_block, "powered_rail_block");
@@ -1265,8 +1265,8 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.observer, "observer");
 
         // dungeon block
-        this.registerBlock(Blocks.compressed_cobblestone, 0,"compressed_cobblestone");
-        this.registerBlock(Blocks.compressed_cobblestone, 1,"compressed_cobblestone");
+//        this.registerBlock(Blocks.compressed_cobblestone, 0,"compressed_cobblestone");
+//        this.registerBlock(Blocks.compressed_cobblestone, 1,"compressed_cobblestone");
 
 
         if (Reflector.ModelLoader_onRegisterItems.exists())

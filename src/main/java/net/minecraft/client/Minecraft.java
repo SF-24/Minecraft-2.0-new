@@ -311,7 +311,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private ResourceLocation mojangLogo;
     private final MinecraftSessionService sessionService;
     private SkinManager skinManager;
-    private UserCacheJsonManager userCacheJsonManager;
+//    private UserCacheJsonManager userCacheJsonManager;
     private final Queue < FutureTask<? >> scheduledTasks = Queues. < FutureTask<? >> newArrayDeque();
     private long field_175615_aJ = 0L;
     private final Thread mcThread = Thread.currentThread();
@@ -488,8 +488,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
 
         // Load default cape
-        DefaultPlayerSkin.getDefaultCape(Minecraft.getMinecraft().getSession().getProfile());
-        DefaultPlayerSkin.getDefaultSkin(Minecraft.getMinecraft().getSession().getProfile());
+//        DefaultPlayerSkin.getDefaultCape(Minecraft.getMinecraft().getSession().getProfile());
+//        DefaultPlayerSkin.getDefaultSkin(Minecraft.getMinecraft().getSession().getProfile());
 
 //        this.userCacheJsonManager = new UserCacheJsonManager();
 //        try {
@@ -3331,8 +3331,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.currentMode=currentMode;
     }
 
-    public UserCacheJsonManager getCapeUserCache() {
-        return userCacheJsonManager;
-    }
+//    public UserCacheJsonManager getCapeUserCache() {
+//        return userCacheJsonManager;
+//    }
 
 }

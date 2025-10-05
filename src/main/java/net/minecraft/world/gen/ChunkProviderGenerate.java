@@ -3,7 +3,6 @@ package net.minecraft.world.gen;
 import java.util.*;
 
 import net.minecraft.block.*;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -26,16 +25,15 @@ import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraft.world.gen.structure.StructureOceanMonument;
 
-import static net.minecraft.block.BlockSand.VARIANT;
-
 public class ChunkProviderGenerate implements IChunkProvider
 {
     /** RNG. */
     private Random rand;
-    private NoiseGeneratorOctaves field_147431_j;
-    private NoiseGeneratorOctaves field_147432_k;
-    private NoiseGeneratorOctaves field_147429_l;
-    private NoiseGeneratorPerlin field_147430_m;
+    private NoiseGeneratorOctaves noiseGen2;
+    private NoiseGeneratorOctaves noiseGen3;
+    private NoiseGeneratorOctaves noiseGen4;
+    private NoiseGeneratorPerlin noiseAlt;
+    private NoiseGeneratorOctaves beachNoise;
 
     /** A NoiseGeneratorOctaves used in generating terrain */
     public NoiseGeneratorOctaves noiseGen5;
@@ -86,10 +84,11 @@ public class ChunkProviderGenerate implements IChunkProvider
         this.mapFeaturesEnabled = generateStructures;
         this.field_177475_o = worldIn.getWorldInfo().getTerrainType();
         this.rand = new Random(seed);
-        this.field_147431_j = new NoiseGeneratorOctaves(this.rand, 16);
-        this.field_147432_k = new NoiseGeneratorOctaves(this.rand, 16);
-        this.field_147429_l = new NoiseGeneratorOctaves(this.rand, 8);
-        this.field_147430_m = new NoiseGeneratorPerlin(this.rand, 4);
+        this.noiseGen2 = new NoiseGeneratorOctaves(this.rand, 16);
+        this.noiseGen3 = new NoiseGeneratorOctaves(this.rand, 16);
+        this.noiseGen4 = new NoiseGeneratorOctaves(this.rand, 8);
+        this.beachNoise = new NoiseGeneratorOctaves(this.rand, 4);
+        this.noiseAlt = new NoiseGeneratorPerlin(this.rand, 4);
         this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 10);
         this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
         this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
@@ -338,7 +337,7 @@ public class ChunkProviderGenerate implements IChunkProvider
     public void replaceBlocksForBiome(int x, int z, ChunkPrimer primer, BiomeGenBase[] biomeGens)
     {
         double d0 = 0.03125D;
-        this.stoneNoise = this.field_147430_m.func_151599_a(this.stoneNoise, (double)(x * 16), (double)(z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+        this.stoneNoise = this.noiseAlt.func_151599_a(this.stoneNoise, (double)(x * 16), (double)(z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
         for (int i = 0; i < 16; ++i)
         {
@@ -414,9 +413,9 @@ public class ChunkProviderGenerate implements IChunkProvider
         this.depthNoiseArray = this.noiseGen6.generateNoiseOctaves(this.depthNoiseArray, x, z, 5, 5, (double)this.settings.depthNoiseScaleX, (double)this.settings.depthNoiseScaleZ, (double)this.settings.depthNoiseScaleExponent);
         float f = this.settings.coordinateScale;
         float f1 = this.settings.heightScale;
-        this.mainNoiseArray = this.field_147429_l.generateNoiseOctaves(this.mainNoiseArray, x, y, z, 5, 33, 5, (double)(f / this.settings.mainNoiseScaleX), (double)(f1 / this.settings.mainNoiseScaleY), (double)(f / this.settings.mainNoiseScaleZ));
-        this.lowerLimitNoiseArray = this.field_147431_j.generateNoiseOctaves(this.lowerLimitNoiseArray, x, y, z, 5, 33, 5, (double)f, (double)f1, (double)f);
-        this.upperLimitNoiseArray = this.field_147432_k.generateNoiseOctaves(this.upperLimitNoiseArray, x, y, z, 5, 33, 5, (double)f, (double)f1, (double)f);
+        this.mainNoiseArray = this.noiseGen4.generateNoiseOctaves(this.mainNoiseArray, x, y, z, 5, 33, 5, (double)(f / this.settings.mainNoiseScaleX), (double)(f1 / this.settings.mainNoiseScaleY), (double)(f / this.settings.mainNoiseScaleZ));
+        this.lowerLimitNoiseArray = this.noiseGen2.generateNoiseOctaves(this.lowerLimitNoiseArray, x, y, z, 5, 33, 5, (double)f, (double)f1, (double)f);
+        this.upperLimitNoiseArray = this.noiseGen3.generateNoiseOctaves(this.upperLimitNoiseArray, x, y, z, 5, 33, 5, (double)f, (double)f1, (double)f);
         z = 0;
         x = 0;
         int i = 0;

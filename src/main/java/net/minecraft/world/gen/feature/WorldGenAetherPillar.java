@@ -19,7 +19,7 @@ public class WorldGenAetherPillar extends WorldGenerator {
 
     ArrayList<BlockPos> blockIgnore = new ArrayList<>();
 
-    public boolean generate(World worldIn, Random rand, BlockPos position) {return false;}
+    public boolean generate(World worldIn, Random rand, BlockPos pos) {return false;}
 
     public ArrayList<BlockPos> generateBlocks(World worldIn, Random rand, BlockPos position)
     {

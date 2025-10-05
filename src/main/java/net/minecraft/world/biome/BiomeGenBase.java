@@ -37,10 +37,10 @@ public abstract class BiomeGenBase
     protected static final BiomeGenBase.Height height_LowPlains = new BiomeGenBase.Height(0.125F, 0.075F); // was 0.05
     protected static final BiomeGenBase.Height height_MidPlains = new BiomeGenBase.Height(0.2F, 0.2F);
     protected static final BiomeGenBase.Height height_LowHills = new BiomeGenBase.Height(0.45F, 0.45F); // was 0.3
-    protected static final BiomeGenBase.Height height_HighPlateaus = new BiomeGenBase.Height(1.5F, 0.05F); // was 0.025
+    protected static final BiomeGenBase.Height height_HighPlateaus = new BiomeGenBase.Height(1.5F, 0.15F); // was 0.025 then 0.05
     protected static final BiomeGenBase.Height height_MidHills = new BiomeGenBase.Height(1.0F, 0.6F); // was 0.5
     protected static final BiomeGenBase.Height height_HighHills = new BiomeGenBase.Height(1.5F, 0.85F);
-    protected static final BiomeGenBase.Height height_Shores = new BiomeGenBase.Height(-0.1F, 0.01F); // was 0.025F);
+    protected static final BiomeGenBase.Height height_Shores = new BiomeGenBase.Height(-0.01F , 0.01F); // was -0.1F and 0.025F);
     protected static final BiomeGenBase.Height height_RockyWaters = new BiomeGenBase.Height(0.1F, 0.8F);
     protected static final BiomeGenBase.Height height_LowIslands = new BiomeGenBase.Height(0.2F, 0.4F);
     protected static final BiomeGenBase.Height height_PartiallySubmerged = new BiomeGenBase.Height(-0.3F, 0.15F);
@@ -49,6 +49,8 @@ public abstract class BiomeGenBase
     protected static final BiomeGenBase.Height height_Autumnal = new BiomeGenBase.Height(0.1F, 0.4F);
     protected static final BiomeGenBase.Height height_Jungle = new BiomeGenBase.Height(0.1F, 0.45F);
     protected static final BiomeGenBase.Height height_JungleHills = new BiomeGenBase.Height(0.1F, 0.6F);
+    protected static final BiomeGenBase.Height height_Mesa = new BiomeGenBase.Height(0.2F, 0.55F);
+    protected static final BiomeGenBase.Height height_MesaSnow = new BiomeGenBase.Height(0.4F, 0.55F);
 
     protected static final BiomeGenBase.Height height_Desert = new BiomeGenBase.Height(0.1F, 0.35F);
     protected static final BiomeGenBase.Height height_Wasteland = new BiomeGenBase.Height(0.45F, 0.6F); // was 0.3
@@ -76,32 +78,32 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase sky = (new BiomeGenEnd(9)).setColor(8421631).setBiomeName("The End").setDisableRain();
 
 
-    public static final BiomeGenBase frozenOcean = (new BiomeGenOcean(10)).setColor(9474208).setBiomeName("FrozenOcean").setEnableSnow().setHeight(height_Oceans).setTemperatureRainfall(0.0F, 0.5F).setOcean();
-    public static final BiomeGenBase frozenRiver = (new BiomeGenRiver(11)).setColor(10526975).setBiomeName("FrozenRiver").setEnableSnow().setHeight(height_ShallowWaters).setTemperatureRainfall(0.0F, 0.5F);
+    public static final BiomeGenBase frozenOcean = (new BiomeGenOcean(10)).setColor(9474208).setBiomeName("Frozen Ocean").setEnableSnow().setHeight(height_Oceans).setTemperatureRainfall(0.0F, 0.5F).setOcean();
+    public static final BiomeGenBase frozenRiver = (new BiomeGenRiver(11)).setColor(10526975).setBiomeName("Frozen River").setEnableSnow().setHeight(height_ShallowWaters).setTemperatureRainfall(0.0F, 0.5F);
     public static final BiomeGenBase icePlains = (new BiomeGenSnow(12, false)).setColor(16777215).setBiomeName("Ice Plains").setEnableSnow().setTemperatureRainfall(0.0F, 0.5F).setHeight(height_LowPlains);
     public static final BiomeGenBase iceMountains = (new BiomeGenSnow(13, false)).setColor(10526880).setBiomeName("Ice Mountains").setEnableSnow().setHeight(height_MidHills).setTemperatureRainfall(0.0F, 0.5F);
-    public static final BiomeGenBase mushroomIsland = (new BiomeGenMushroomIsland(14)).setColor(16711935).setBiomeName("MushroomIsland").setTemperatureRainfall(0.9F, 1.0F).setHeight(height_LowIslands);
-    public static final BiomeGenBase mushroomIslandShore = (new BiomeGenMushroomIsland(15)).setColor(10486015).setBiomeName("MushroomIslandShore").setTemperatureRainfall(0.9F, 1.0F).setHeight(height_Shores);
+    public static final BiomeGenBase mushroomIsland = (new BiomeGenMushroomIsland(14)).setColor(16711935).setBiomeName("Mushroom Island").setTemperatureRainfall(0.9F, 1.0F).setHeight(height_LowIslands);
+    public static final BiomeGenBase mushroomIslandShore = (new BiomeGenMushroomIsland(15)).setColor(10486015).setBiomeName("Mushroom Island Shore").setTemperatureRainfall(0.9F, 1.0F).setHeight(height_Shores);
 
     /** Beach biome. */
     public static final BiomeGenBase beach = (new BiomeGenBeach(16, Blocks.sand.getDefaultState())).setColor(16440917).setBiomeName("Beach").setTemperatureRainfall(0.8F, 0.4F).setHeight(height_Shores);
 
     /** Desert Hills biome. */
-    public static final BiomeGenBase desertHills = (new BiomeGenDesert(17)).setColor(13786898).setBiomeName("DesertHills").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setHeight(height_LowHills);
+    public static final BiomeGenBase desertHills = (new BiomeGenDesert(17)).setColor(13786898).setBiomeName("Desert Hills").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setHeight(height_LowHills);
 
     /** Forest Hills biome. */
-    public static final BiomeGenBase forestHills = (new BiomeGenForest(18, 0)).setColor(2250012).setBiomeName("ForestHills").setHeight(height_LowHills);
+    public static final BiomeGenBase forestHills = (new BiomeGenForest(18, 0)).setColor(2250012).setBiomeName("Forest Hills").setHeight(height_LowHills);
 
     /** Taiga Hills biome. */
-    public static final BiomeGenBase taigaHills = (new BiomeGenTaiga(19, 0)).setColor(1456435).setBiomeName("TaigaHills").setFillerBlockMetadata(5159473).setTemperatureRainfall(0.25F, 0.8F).setHeight(height_LowHills);
+    public static final BiomeGenBase taigaHills = (new BiomeGenTaiga(19, 0)).setColor(1456435).setBiomeName("Taiga Hills").setFillerBlockMetadata(5159473).setTemperatureRainfall(0.25F, 0.8F).setHeight(height_LowHills);
 
     /** Extreme Hills Edge biome. */
     public static final BiomeGenBase extremeHillsEdge = (new BiomeGenHills(20, true)).setColor(7501978).setBiomeName("Extreme Hills Edge").setHeight(height_MidHills.attenuate()).setTemperatureRainfall(0.2F, 0.3F);
 
     /** Jungle biome identifier */
     public static final BiomeGenBase jungle = (new BiomeGenJungle(21, false)).setColor(5470985).setBiomeName("Jungle").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_Jungle);
-    public static final BiomeGenBase jungleHills = (new BiomeGenJungle(22, false)).setColor(2900485).setBiomeName("JungleHills").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_JungleHills);
-    public static final BiomeGenBase jungleEdge = (new BiomeGenJungle(23, true)).setColor(6458135).setBiomeName("JungleEdge").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.8F);
+    public static final BiomeGenBase jungleHills = (new BiomeGenJungle(22, false)).setColor(2900485).setBiomeName("Jungle Hills").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_JungleHills);
+    public static final BiomeGenBase jungleEdge = (new BiomeGenJungle(23, true)).setColor(6458135).setBiomeName("Jungle Edge").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.8F);
     public static final BiomeGenBase deepOcean = (new BiomeGenOcean(24)).setColor(48).setBiomeName("Deep Ocean").setHeight(height_DeepOceans).setOcean();
     public static final BiomeGenBase stoneBeach = (new BiomeGenStoneBeach(25)).setColor(10658436).setBiomeName("Stone Beach").setTemperatureRainfall(0.2F, 0.3F).setHeight(height_RockyWaters);
     public static final BiomeGenBase coldBeach = (new BiomeGenBeach(26, Blocks.sand.getDefaultState())).setColor(16445632).setBiomeName("Cold Beach").setTemperatureRainfall(0.05F, 0.3F).setHeight(height_Shores).setEnableSnow();
@@ -115,7 +117,7 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase extremeHillsPlus = (new BiomeGenHills(34, true)).setColor(5271632).setBiomeName("Extreme Hills+").setHeight(height_MidHills).setTemperatureRainfall(0.2F, 0.3F);
     public static final BiomeGenBase savanna = (new BiomeGenSavanna(35)).setColor(12431967).setBiomeName("Savanna").setTemperatureRainfall(1.2F, 0.0F).setDisableRain().setHeight(height_LowPlains);
     public static final BiomeGenBase savannaPlateau = (new BiomeGenSavanna(36)).setColor(10984804).setBiomeName("Savanna Plateau").setTemperatureRainfall(1.0F, 0.0F).setDisableRain().setHeight(height_HighPlateaus);
-    public static final BiomeGenBase mesa = (new BiomeGenMesa(37, false, false)).setColor(14238997).setBiomeName("Mesa").setHeight(height_Desert);
+    public static final BiomeGenBase mesa = (new BiomeGenMesa(37, false, false)).setColor(14238997).setBiomeName("Mesa").setHeight(height_Mesa);
     public static final BiomeGenBase mesaPlateau_F = (new BiomeGenMesa(38, false, true)).setColor(11573093).setBiomeName("Mesa Plateau F").setHeight(height_HighPlateaus);
     public static final BiomeGenBase mesaPlateau = (new BiomeGenMesa(39, false, false)).setColor(13274213).setBiomeName("Mesa Plateau").setHeight(height_HighPlateaus);
 
@@ -124,9 +126,9 @@ public abstract class BiomeGenBase
     /** Biome used for the aether */
     public static final BiomeGenBase aether = (new BiomeGenAether(40)).setColor(9474208).setBiomeName("The Aether").setDisableRain();
 
-    public static final BiomeGenBase tropical_swampland = (new BiomeGenSwampTropical(41)).setColor(5470985).setBiomeName("TropicalSwampland").setFillerBlockMetadata(5470985).setHeight(height_PartiallySubmerged).setTemperatureRainfall(0.95F, 0.9F);
+    public static final BiomeGenBase tropical_swampland = (new BiomeGenSwampTropical(41)).setColor(5470985).setBiomeName("Tropical Swampland").setFillerBlockMetadata(5470985).setHeight(height_PartiallySubmerged).setTemperatureRainfall(0.95F, 0.9F);
 
-    public static final BiomeGenBase volcanic_wasteland = (new BiomeGenWasteland(42)).setColor(12431967).setBiomeName("VolcanicWasteland").setFillerBlockMetadata(12431967).setHeight(height_Wasteland).setTemperatureRainfall(1.0F, 0.0F);
+    public static final BiomeGenBase volcanic_wasteland = (new BiomeGenWasteland(42)).setColor(12431967).setBiomeName("Volcanic Wasteland").setFillerBlockMetadata(12431967).setHeight(height_Wasteland).setTemperatureRainfall(1.0F, 0.0F);
 
     public static final BiomeGenBase stoneMountains = (new BiomeGenMountains(43, false)).setColor(6316128).setBiomeName("Snowy Mountains").setHeight(height_HighHills).setTemperatureRainfall(0.2F, 0.3F);
 
@@ -157,6 +159,8 @@ public abstract class BiomeGenBase
             .setTemperatureRainfall(0.8F, 0.9F)
             .setHeight(height_ArchipelagoHills)
             .setOcean();
+
+    public static final BiomeGenBase frozenMesa = (new BiomeGenMesaSnow(50, false, false)).setColor(747097).setBiomeName("Frozen Hills").setHeight(height_MesaSnow);
 
     public static final BiomeGenBase alpha = new BiomeGenAlpha(99)
             .setBiomeName("Neon Plains")
@@ -714,7 +718,12 @@ public abstract class BiomeGenBase
 
         explorationBiomesList.remove(hell);
         explorationBiomesList.remove(sky);
+        explorationBiomesList.remove(aether);
+        explorationBiomesList.remove(alpha);
         explorationBiomesList.remove(frozenOcean);
+        explorationBiomesList.remove(lorienForestHills);
+        explorationBiomesList.remove(archipelagoHills);
+        explorationBiomesList.remove(autumnalForestHills);
         explorationBiomesList.remove(extremeHillsEdge);
         temperatureNoise = new NoiseGeneratorPerlin(new Random(1234L), 1);
         GRASS_COLOR_NOISE = new NoiseGeneratorPerlin(new Random(2345L), 1);

@@ -9,7 +9,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.init.Blocks;
@@ -41,14 +40,14 @@ public class WorldGenDesertWells extends WorldGenerator
             new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.sand), 0, 3, 24, 4));
 
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
-        while (worldIn.isAirBlock(position) && position.getY() > 2)
+        while (worldIn.isAirBlock(x) && x.getY() > 2)
         {
-            position = position.down();
+            x = x.down();
         }
 
-        if (!stateHelper.apply(worldIn.getBlockState(position)))
+        if (!stateHelper.apply(worldIn.getBlockState(x)))
         {
             return false;
         }
@@ -58,7 +57,7 @@ public class WorldGenDesertWells extends WorldGenerator
             {
                 for (int j = -2; j <= 2; ++j)
                 {
-                    if (worldIn.isAirBlock(position.add(i, -1, j)) && worldIn.isAirBlock(position.add(i, -2, j)))
+                    if (worldIn.isAirBlock(x.add(i, -1, j)) && worldIn.isAirBlock(x.add(i, -2, j)))
                     {
                         return false;
                     }
@@ -74,21 +73,21 @@ public class WorldGenDesertWells extends WorldGenerator
                         //? bottom
                         int probability = rand.nextInt(10000);
                         if(probability>=9900) {
-                            worldIn.setBlockState(position.add(l1, l, k), this.gold, 2);
+                            worldIn.setBlockState(x.add(l1, l, k), this.gold, 2);
                         } else if(probability<5) {
-                            worldIn.setBlockState(position.add(l1, l, k), this.oreDiamond, 2);
+                            worldIn.setBlockState(x.add(l1, l, k), this.oreDiamond, 2);
                         } else {
-                            worldIn.setBlockState(position.add(l1, l, k), this.sandstone, 2);
+                            worldIn.setBlockState(x.add(l1, l, k), this.sandstone, 2);
                         }
                     }
                 }
             }
 
-            worldIn.setBlockState(position, this.flowingWater, 2);
+            worldIn.setBlockState(x, this.flowingWater, 2);
 
             for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
             {
-                worldIn.setBlockState(position.offset(enumfacing), this.flowingWater, 2);
+                worldIn.setBlockState(x.offset(enumfacing), this.flowingWater, 2);
             }
 
             for (int i1 = -2; i1 <= 2; ++i1)
@@ -98,15 +97,15 @@ public class WorldGenDesertWells extends WorldGenerator
                     if (i1 == -2 || i1 == 2 || i2 == -2 || i2 == 2)
                     {
                         // sides of well
-                        worldIn.setBlockState(position.add(i1, 1, i2), this.sandstone, 2);
+                        worldIn.setBlockState(x.add(i1, 1, i2), this.sandstone, 2);
                     }
                 }
             }
 
-            worldIn.setBlockState(position.add(2, 1, 0), this.sandstoneSlab, 2);
-            worldIn.setBlockState(position.add(-2, 1, 0), this.sandstoneSlab, 2);
-            worldIn.setBlockState(position.add(0, 1, 2), this.sandstoneSlab, 2);
-            worldIn.setBlockState(position.add(0, 1, -2), this.sandstoneSlab, 2);
+            worldIn.setBlockState(x.add(2, 1, 0), this.sandstoneSlab, 2);
+            worldIn.setBlockState(x.add(-2, 1, 0), this.sandstoneSlab, 2);
+            worldIn.setBlockState(x.add(0, 1, 2), this.sandstoneSlab, 2);
+            worldIn.setBlockState(x.add(0, 1, -2), this.sandstoneSlab, 2);
 
             for (int j1 = -1; j1 <= 1; ++j1)
             {
@@ -119,16 +118,16 @@ public class WorldGenDesertWells extends WorldGenerator
                             // spawn chest
                             IBlockState chest = Blocks.chest.getDefaultState();
                             int y = -1;
-                            worldIn.setBlockState(position.add(j1,y,j2), chest, 2);
-                            TileEntity tileentity = worldIn.getTileEntity(position.add(j1,y,j2));
+                            worldIn.setBlockState(x.add(j1,y,j2), chest, 2);
+                            TileEntity tileentity = worldIn.getTileEntity(x.add(j1,y,j2));
                             WeightedRandomChestContent.generateChestContents(rand,itemsToGenerate,(TileEntityChest) tileentity, 5);
 
                         }
-                        worldIn.setBlockState(position.add(j1, 4, j2), this.sandstone, 2);
+                        worldIn.setBlockState(x.add(j1, 4, j2), this.sandstone, 2);
                     }
                     else
                     {
-                        worldIn.setBlockState(position.add(j1, 4, j2), this.sandstoneSlab, 2);
+                        worldIn.setBlockState(x.add(j1, 4, j2), this.sandstoneSlab, 2);
                     }
                 }
             }
@@ -136,10 +135,10 @@ public class WorldGenDesertWells extends WorldGenerator
             for (int k1 = 1; k1 <= 3; ++k1)
             {
                 // pillars of well
-                worldIn.setBlockState(position.add(-1, k1, -1), this.sandstone, 2);
-                worldIn.setBlockState(position.add(-1, k1, 1), this.sandstone, 2);
-                worldIn.setBlockState(position.add(1, k1, -1), this.sandstone, 2);
-                worldIn.setBlockState(position.add(1, k1, 1), this.sandstone, 2);
+                worldIn.setBlockState(x.add(-1, k1, -1), this.sandstone, 2);
+                worldIn.setBlockState(x.add(-1, k1, 1), this.sandstone, 2);
+                worldIn.setBlockState(x.add(1, k1, -1), this.sandstone, 2);
+                worldIn.setBlockState(x.add(1, k1, 1), this.sandstone, 2);
             }
 
             return true;

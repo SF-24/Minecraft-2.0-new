@@ -16,14 +16,14 @@ public class WorldGenIcePath extends WorldGenerator
         this.basePathWidth = p_i45454_1_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
-        while (worldIn.isAirBlock(position) && position.getY() > 2)
+        while (worldIn.isAirBlock(x) && x.getY() > 2)
         {
-            position = position.down();
+            x = x.down();
         }
 
-        if (worldIn.getBlockState(position).getBlock() != Blocks.snow)
+        if (worldIn.getBlockState(x).getBlock() != Blocks.snow)
         {
             return false;
         }
@@ -32,16 +32,16 @@ public class WorldGenIcePath extends WorldGenerator
             int i = rand.nextInt(this.basePathWidth - 2) + 2;
             int j = 1;
 
-            for (int k = position.getX() - i; k <= position.getX() + i; ++k)
+            for (int k = x.getX() - i; k <= x.getX() + i; ++k)
             {
-                for (int l = position.getZ() - i; l <= position.getZ() + i; ++l)
+                for (int l = x.getZ() - i; l <= x.getZ() + i; ++l)
                 {
-                    int i1 = k - position.getX();
-                    int j1 = l - position.getZ();
+                    int i1 = k - x.getX();
+                    int j1 = l - x.getZ();
 
                     if (i1 * i1 + j1 * j1 <= i * i)
                     {
-                        for (int k1 = position.getY() - j; k1 <= position.getY() + j; ++k1)
+                        for (int k1 = x.getY() - j; k1 <= x.getY() + j; ++k1)
                         {
                             BlockPos blockpos = new BlockPos(k, k1, l);
                             Block block = worldIn.getBlockState(blockpos).getBlock();

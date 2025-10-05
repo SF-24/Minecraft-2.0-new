@@ -16,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
-import net.mineshaft.data.ProfileManager;
 import net.optifine.reflect.Reflector;
 
 import java.io.File;
@@ -71,17 +70,17 @@ public abstract class AbstractClientPlayer extends EntityPlayer
      */
     public ResourceLocation getLocationSkin()
     {
-        //NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-        return DefaultPlayerSkin.getDefaultSkin(this.getGameProfile());
+        return this.getPlayerInfo() == null ? DefaultPlayerSkin.getDefaultSkin(this.getGameProfile()) : this.getPlayerInfo().getLocationSkin();
+//        return DefaultPlayerSkin.getDefaultSkin(this.getGameProfile());
     }
 
+    // Cape rendering
     public ResourceLocation getLocationCape()
     {
-//        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-//        if(networkplayerinfo.getLocationCape()!=null) {
-//            return networkplayerinfo.getLocationCape();
-//        }
-        return DefaultPlayerSkin.getDefaultCape(this.getGameProfile());
+        if(DefaultPlayerSkin.getDefaultCape(this.getGameProfile())!=null) {
+            return DefaultPlayerSkin.getDefaultCape(this.getGameProfile());
+        }
+        return this.getPlayerInfo().getLocationCape();
 
     }
 

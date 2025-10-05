@@ -21,32 +21,32 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
         super(p_i45463_1_);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = rand.nextInt(3) + rand.nextInt(3) + 5;
         boolean flag = true;
 
-        if (position.getY() >= 1 && position.getY() + i + 1 <= 256)
+        if (x.getY() >= 1 && x.getY() + i + 1 <= 256)
         {
-            for (int j = position.getY(); j <= position.getY() + 1 + i; ++j)
+            for (int j = x.getY(); j <= x.getY() + 1 + i; ++j)
             {
                 int k = 1;
 
-                if (j == position.getY())
+                if (j == x.getY())
                 {
                     k = 0;
                 }
 
-                if (j >= position.getY() + 1 + i - 2)
+                if (j >= x.getY() + 1 + i - 2)
                 {
                     k = 2;
                 }
 
                 BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                for (int l = position.getX() - k; l <= position.getX() + k && flag; ++l)
+                for (int l = x.getX() - k; l <= x.getX() + k && flag; ++l)
                 {
-                    for (int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1)
+                    for (int i1 = x.getZ() - k; i1 <= x.getZ() + k && flag; ++i1)
                     {
                         if (j >= 0 && j < 256)
                         {
@@ -69,21 +69,21 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
             }
             else
             {
-                Block block = worldIn.getBlockState(position.down()).getBlock();
+                Block block = worldIn.getBlockState(x.down()).getBlock();
 
-                if ((block == Blocks.grass || block == Blocks.dirt) && position.getY() < 256 - i - 1)
+                if ((block == Blocks.grass || block == Blocks.dirt) && x.getY() < 256 - i - 1)
                 {
-                    this.func_175921_a(worldIn, position.down());
+                    this.func_175921_a(worldIn, x.down());
                     EnumFacing enumfacing = EnumFacing.Plane.HORIZONTAL.random(rand);
                     int k2 = i - rand.nextInt(4) - 1;
                     int l2 = 3 - rand.nextInt(3);
-                    int i3 = position.getX();
-                    int j1 = position.getZ();
+                    int i3 = x.getX();
+                    int j1 = x.getZ();
                     int k1 = 0;
 
                     for (int l1 = 0; l1 < i; ++l1)
                     {
-                        int i2 = position.getY() + l1;
+                        int i2 = x.getY() + l1;
 
                         if (l1 >= k2 && l2 > 0)
                         {
@@ -129,8 +129,8 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
                     this.func_175924_b(worldIn, blockpos2.west(2));
                     this.func_175924_b(worldIn, blockpos2.south(2));
                     this.func_175924_b(worldIn, blockpos2.north(2));
-                    i3 = position.getX();
-                    j1 = position.getZ();
+                    i3 = x.getX();
+                    j1 = x.getZ();
                     EnumFacing enumfacing1 = EnumFacing.Plane.HORIZONTAL.random(rand);
 
                     if (enumfacing1 != enumfacing)
@@ -143,7 +143,7 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
                         {
                             if (l4 >= 1)
                             {
-                                int j2 = position.getY() + l4;
+                                int j2 = x.getY() + l4;
                                 i3 += enumfacing1.getFrontOffsetX();
                                 j1 += enumfacing1.getFrontOffsetZ();
                                 BlockPos blockpos1 = new BlockPos(i3, j2, j1);

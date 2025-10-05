@@ -23,7 +23,7 @@ public class WorldGenDungeons extends WorldGenerator
 
     private static final List<WeightedRandomChestContent> CHESTCONTENT = Lists.newArrayList(new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 10), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 4, 10), new WeightedRandomChestContent(Items.bread, 0, 1, 1, 10), new WeightedRandomChestContent(Items.wheat, 0, 1, 4, 10), new WeightedRandomChestContent(Items.gunpowder, 0, 1, 4, 10), new WeightedRandomChestContent(Items.string, 0, 1, 4, 10), new WeightedRandomChestContent(Items.bucket, 0, 1, 1, 10), new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1), new WeightedRandomChestContent(Items.redstone, 0, 1, 4, 10), new WeightedRandomChestContent(Items.record_13, 0, 1, 1, 4), new WeightedRandomChestContent(Items.record_cat, 0, 1, 1, 4), new WeightedRandomChestContent(Items.name_tag, 0, 1, 1, 10), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 2), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 5), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)});
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = 3;
         int j = rand.nextInt(2) + 2;
@@ -42,7 +42,7 @@ public class WorldGenDungeons extends WorldGenerator
             {
                 for (int i3 = l1; i3 <= i2; ++i3)
                 {
-                    BlockPos blockpos = position.add(k2, l2, i3);
+                    BlockPos blockpos = x.add(k2, l2, i3);
                     Material material = worldIn.getBlockState(blockpos).getBlock().getMaterial();
                     boolean flag = material.isSolid();
 
@@ -72,7 +72,7 @@ public class WorldGenDungeons extends WorldGenerator
                 {
                     for (int k4 = l1; k4 <= i2; ++k4)
                     {
-                        BlockPos blockpos1 = position.add(k3, i4, k4);
+                        BlockPos blockpos1 = x.add(k3, i4, k4);
 
                         if (k3 != k && i4 != -1 && k4 != l1 && k3 != l && i4 != 4 && k4 != i2)
                         {
@@ -104,9 +104,9 @@ public class WorldGenDungeons extends WorldGenerator
             {
                 for (int j4 = 0; j4 < 3; ++j4)
                 {
-                    int l4 = position.getX() + rand.nextInt(j * 2 + 1) - j;
-                    int i5 = position.getY();
-                    int j5 = position.getZ() + rand.nextInt(k1 * 2 + 1) - k1;
+                    int l4 = x.getX() + rand.nextInt(j * 2 + 1) - j;
+                    int i5 = x.getY();
+                    int j5 = x.getZ() + rand.nextInt(k1 * 2 + 1) - k1;
                     BlockPos blockpos2 = new BlockPos(l4, i5, j5);
 
                     if (worldIn.isAirBlock(blockpos2))
@@ -138,8 +138,8 @@ public class WorldGenDungeons extends WorldGenerator
                 }
             }
 
-            worldIn.setBlockState(position, Blocks.mob_spawner.getDefaultState(), 2);
-            TileEntity tileentity = worldIn.getTileEntity(position);
+            worldIn.setBlockState(x, Blocks.mob_spawner.getDefaultState(), 2);
+            TileEntity tileentity = worldIn.getTileEntity(x);
 
             if (tileentity instanceof TileEntityMobSpawner)
             {
@@ -147,7 +147,7 @@ public class WorldGenDungeons extends WorldGenerator
             }
             else
             {
-                field_175918_a.error("Failed to fetch mob spawner entity at (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+                field_175918_a.error("Failed to fetch mob spawner entity at (" + x.getX() + ", " + x.getY() + ", " + x.getZ() + ")");
             }
 
             return true;

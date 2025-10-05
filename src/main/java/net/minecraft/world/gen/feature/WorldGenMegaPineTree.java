@@ -27,48 +27,48 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
         this.useBaseHeight = p_i45457_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = this.func_150533_a(rand);
 
-        if (!this.func_175929_a(worldIn, rand, position, i))
+        if (!this.func_175929_a(worldIn, rand, x, i))
         {
             return false;
         }
         else
         {
-            this.func_150541_c(worldIn, position.getX(), position.getZ(), position.getY() + i, 0, rand);
+            this.func_150541_c(worldIn, x.getX(), x.getZ(), x.getY() + i, 0, rand);
 
             for (int j = 0; j < i; ++j)
             {
-                Block block = worldIn.getBlockState(position.up(j)).getBlock();
+                Block block = worldIn.getBlockState(x.up(j)).getBlock();
 
                 if (block.getMaterial() == Material.air || block.getMaterial() == Material.leaves)
                 {
-                    this.setBlockAndNotifyAdequately(worldIn, position.up(j), this.woodMetadata);
+                    this.setBlockAndNotifyAdequately(worldIn, x.up(j), this.woodMetadata);
                 }
 
                 if (j < i - 1)
                 {
-                    block = worldIn.getBlockState(position.add(1, j, 0)).getBlock();
+                    block = worldIn.getBlockState(x.add(1, j, 0)).getBlock();
 
                     if (block.getMaterial() == Material.air || block.getMaterial() == Material.leaves)
                     {
-                        this.setBlockAndNotifyAdequately(worldIn, position.add(1, j, 0), this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(worldIn, x.add(1, j, 0), this.woodMetadata);
                     }
 
-                    block = worldIn.getBlockState(position.add(1, j, 1)).getBlock();
+                    block = worldIn.getBlockState(x.add(1, j, 1)).getBlock();
 
                     if (block.getMaterial() == Material.air || block.getMaterial() == Material.leaves)
                     {
-                        this.setBlockAndNotifyAdequately(worldIn, position.add(1, j, 1), this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(worldIn, x.add(1, j, 1), this.woodMetadata);
                     }
 
-                    block = worldIn.getBlockState(position.add(0, j, 1)).getBlock();
+                    block = worldIn.getBlockState(x.add(0, j, 1)).getBlock();
 
                     if (block.getMaterial() == Material.air || block.getMaterial() == Material.leaves)
                     {
-                        this.setBlockAndNotifyAdequately(worldIn, position.add(0, j, 1), this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(worldIn, x.add(0, j, 1), this.woodMetadata);
                     }
                 }
             }

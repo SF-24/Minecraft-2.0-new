@@ -55,7 +55,7 @@ public class BlockDungeon extends Block
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return Blocks.compressed_cobblestone.getDefaultState().withProperty(TYPE, BlockDungeon.EnumType.byMetadata(meta));
+        return Blocks.cobblestone.getDefaultState().withProperty(TYPE, BlockDungeon.EnumType.byMetadata(meta));
     }
 
     /**

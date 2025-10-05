@@ -828,6 +828,55 @@ public abstract class World implements IBlockAccess
         return new BlockPos(pos.getX(), i, pos.getZ());
     }
 
+    public int getHeight(int x, int z)
+    {
+        int i;
+
+        if (x >= -30000000 && z >= -30000000 && x < 30000000 && z < 30000000)
+        {
+            if (this.isChunkLoaded(x >> 4, z >> 4, true))
+            {
+                i = this.getChunkFromChunkCoords(x >> 4, z >> 4).getHeightValue(x & 15, z & 15);
+            }
+            else
+            {
+                i = 0;
+            }
+        }
+        else
+        {
+            i = this.getSeaLevel() + 1;
+        }
+
+        return i;
+    }
+
+    public int getHeight(BlockPos offset, int x, int z)
+    {
+        x+=offset.getX();
+        z+=offset.getZ();
+        int i;
+
+        if (x >= -30000000 && z >= -30000000 && x < 30000000 && z < 30000000)
+        {
+            if (this.isChunkLoaded(x >> 4, z >> 4, true))
+            {
+                i = this.getChunkFromChunkCoords(x >> 4, z >> 4).getHeightValue(x & 15, z & 15);
+            }
+            else
+            {
+                i = 0;
+            }
+        }
+        else
+        {
+            i = this.getSeaLevel() + 1;
+        }
+
+        return i;
+    }
+
+
     /**
      * Gets the lowest height of the chunk where sunlight directly reaches
      */
@@ -1724,6 +1773,28 @@ public abstract class World implements IBlockAccess
 
         return blockpos;
     }
+
+    public int getTopSolidOrLiquidBlock(BlockPos offset, int x, int z)
+    {
+        x+=offset.getX();
+        z+=offset.getZ();
+        Chunk chunk = this.getChunkFromBlockCoords(x,z);
+        int y;
+
+        // Test
+        for (y = (chunk.getTopFilledSegment() + 16); y >= 0; y--)
+        {
+            Material material = chunk.getBlock(x,y,z).getMaterial();
+
+            if (material.blocksMovement() && material != Material.leaves)
+            {
+                break;
+            }
+        }
+
+        return y;
+    }
+
 
     /**
      * How bright are stars in the sky
@@ -3465,7 +3536,13 @@ public abstract class World implements IBlockAccess
 
     public boolean isBlockPowered(BlockPos pos)
     {
-        return this.getRedstonePower(pos.down(), EnumFacing.DOWN) > 0 ? true : (this.getRedstonePower(pos.up(), EnumFacing.UP) > 0 ? true : (this.getRedstonePower(pos.north(), EnumFacing.NORTH) > 0 ? true : (this.getRedstonePower(pos.south(), EnumFacing.SOUTH) > 0 ? true : (this.getRedstonePower(pos.west(), EnumFacing.WEST) > 0 ? true : this.getRedstonePower(pos.east(), EnumFacing.EAST) > 0))));
+        return this.getRedstonePower(pos.down(), EnumFacing.DOWN) > 0 || (this.getRedstonePower(pos.up(), EnumFacing.UP) > 0 ? true : (this.getRedstonePower(pos.north(), EnumFacing.NORTH) > 0 ? true : (this.getRedstonePower(pos.south(), EnumFacing.SOUTH) > 0 ? true : (this.getRedstonePower(pos.west(), EnumFacing.WEST) > 0 ? true : this.getRedstonePower(pos.east(), EnumFacing.EAST) > 0))));
+    }
+
+    public int getBlockMaxRedstonePower(BlockPos pos) {
+        int maxPower = 0;
+        int[] array = {(this.getRedstonePower(pos.down(), EnumFacing.DOWN)),this.getRedstonePower(pos.down(), EnumFacing.UP),this.getRedstonePower(pos.down(), EnumFacing.NORTH),this.getRedstonePower(pos.down(), EnumFacing.SOUTH),this.getRedstonePower(pos.down(), EnumFacing.EAST),this.getRedstonePower(pos.down(), EnumFacing.WEST)};
+        return Arrays.stream(array).max().getAsInt();
     }
 
     /**

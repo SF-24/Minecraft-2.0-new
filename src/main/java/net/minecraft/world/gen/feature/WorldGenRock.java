@@ -1,18 +1,11 @@
 package net.minecraft.world.gen.feature;
 
-import com.google.common.base.Predicates;
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class WorldGenRock extends WorldGenAbstractTree {
@@ -48,15 +41,15 @@ public class WorldGenRock extends WorldGenAbstractTree {
 
 
 
-    public boolean generate(World worldIn, Random rand, BlockPos position) {
+    public boolean generate(World worldIn, Random rand, BlockPos pos) {
 
 
-        while (worldIn.isAirBlock(position) && position.getY() > 2)
+        while (worldIn.isAirBlock(pos) && pos.getY() > 2)
         {
-            position = position.down();
+            pos = pos.down();
         }
 
-        if (!stateHelper.apply(worldIn.getBlockState(position)) && !stateHelper1.apply(worldIn.getBlockState(position)) && !stateHelper2.apply(worldIn.getBlockState(position)))
+        if (!stateHelper.apply(worldIn.getBlockState(pos)) && !stateHelper1.apply(worldIn.getBlockState(pos)) && !stateHelper2.apply(worldIn.getBlockState(pos)))
         {
             return false;
         }
@@ -67,11 +60,11 @@ public class WorldGenRock extends WorldGenAbstractTree {
                     for (int z = -size; z <= size; z++) {
                         if (!(Math.abs(z) == size && Math.abs(x) == size) && !(Math.abs(z) == size && Math.abs(y) == size) && !(Math.abs(x) == 2 && Math.abs(y) == 2)) {
                             if(enableRareBlocks && rand.nextInt(7)==0) {
-                                worldIn.setBlockState(position.add(x, y, z), blockRare);
+                                worldIn.setBlockState(pos.add(x, y, z), blockRare);
                             } else if (rand.nextInt(2) == 0) {
-                                worldIn.setBlockState(position.add(x, y, z), blockAlt);
+                                worldIn.setBlockState(pos.add(x, y, z), blockAlt);
                             } else {
-                                worldIn.setBlockState(position.add(x, y, z), block);
+                                worldIn.setBlockState(pos.add(x, y, z), block);
                             }
                         }
                     }

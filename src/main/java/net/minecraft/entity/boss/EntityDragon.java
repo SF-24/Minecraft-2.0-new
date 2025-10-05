@@ -643,9 +643,9 @@ public class EntityDragon extends EntityLiving implements IBossDisplayData, IEnt
                     int k = EntityXPOrb.getXPSplit(i);
                     i -= k;
                     this.worldObj.spawnEntityInWorld(new EntityXPOrb(this.worldObj, this.posX, this.posY, this.posZ, k));
-                    if (this.deathTicks % 10 == 0) {
-                        this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Items.amethyst)));
-                    }
+//                    if (this.deathTicks % 10 == 0) {
+//                        this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Items.amethyst)));
+//                    }
                 }
             }
 

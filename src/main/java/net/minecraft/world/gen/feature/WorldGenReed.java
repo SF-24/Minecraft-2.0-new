@@ -8,11 +8,11 @@ import net.minecraft.world.World;
 
 public class WorldGenReed extends WorldGenerator
 {
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         for (int i = 0; i < 20; ++i)
         {
-            BlockPos blockpos = position.add(rand.nextInt(4) - rand.nextInt(4), 0, rand.nextInt(4) - rand.nextInt(4));
+            BlockPos blockpos = x.add(rand.nextInt(4) - rand.nextInt(4), 0, rand.nextInt(4) - rand.nextInt(4));
 
             if (worldIn.isAirBlock(blockpos))
             {

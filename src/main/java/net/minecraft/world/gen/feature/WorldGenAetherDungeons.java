@@ -26,10 +26,10 @@ public class WorldGenAetherDungeons extends WorldGenerator
     String type = "";
 
     private static final List<WeightedRandomChestContent> CHESTCONTENT = Lists.newArrayList(
-            new WeightedRandomChestContent(Items.glowing_bread, 0, 1, 1, 3),
+//            new WeightedRandomChestContent(Items.glowing_bread, 0, 1, 1, 3),
             new WeightedRandomChestContent(Items.glowstone_dust, 0, 1, 4, 10),
             new WeightedRandomChestContent(Items.slime_ball, 0, 1, 4, 2),
-            new WeightedRandomChestContent(Items.ruby, 0, 1, 1, 2),
+//            new WeightedRandomChestContent(Items.ruby, 0, 1, 1, 2),
             new WeightedRandomChestContent(Items.apple, 0, 1, 2, 3),
             new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1),
             new WeightedRandomChestContent(Items.record_magnetic_circuit, 0, 1, 1, 2),
@@ -38,7 +38,7 @@ public class WorldGenAetherDungeons extends WorldGenerator
             new WeightedRandomChestContent(Items.gold_nugget, 0, 3, 27, 5),
             new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 2));
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos pos)
     {
         Random random = new Random();
         int maxHeight = 3+random.nextInt(2);
@@ -60,7 +60,7 @@ public class WorldGenAetherDungeons extends WorldGenerator
             {
                 for (int i3 = l1; i3 <= i2; ++i3)
                 {
-                    BlockPos blockpos = position.add(k2, l2, i3);
+                    BlockPos blockpos = pos.add(k2, l2, i3);
                     Material material = worldIn.getBlockState(blockpos).getBlock().getMaterial();
                     boolean flag = material.isSolid();
 
@@ -90,7 +90,7 @@ public class WorldGenAetherDungeons extends WorldGenerator
                 {
                     for (int k4 = l1; k4 <= i2; ++k4)
                     {
-                        BlockPos blockpos1 = position.add(k3, i4, k4);
+                        BlockPos blockpos1 = pos.add(k3, i4, k4);
 
                         if (k3 != k && i4 != -1 && k4 != l1 && k3 != l && i4 != 4 && k4 != i2)
                         {
@@ -122,9 +122,9 @@ public class WorldGenAetherDungeons extends WorldGenerator
             {
                 for (int j4 = 0; j4 < 3; ++j4)
                 {
-                    int l4 = position.getX() + rand.nextInt(j * 2 + 1) - j;
-                    int i5 = position.getY();
-                    int j5 = position.getZ() + rand.nextInt(k1 * 2 + 1) - k1;
+                    int l4 = pos.getX() + rand.nextInt(j * 2 + 1) - j;
+                    int i5 = pos.getY();
+                    int j5 = pos.getZ() + rand.nextInt(k1 * 2 + 1) - k1;
                     BlockPos blockpos2 = new BlockPos(l4, i5, j5);
 
                     if (worldIn.isAirBlock(blockpos2))
@@ -156,8 +156,8 @@ public class WorldGenAetherDungeons extends WorldGenerator
                 }
             }
 
-            worldIn.setBlockState(position, Blocks.mob_spawner.getDefaultState(), 2);
-            TileEntity tileentity = worldIn.getTileEntity(position);
+            worldIn.setBlockState(pos, Blocks.mob_spawner.getDefaultState(), 2);
+            TileEntity tileentity = worldIn.getTileEntity(pos);
 
             if (tileentity instanceof TileEntityMobSpawner)
             {
@@ -165,7 +165,7 @@ public class WorldGenAetherDungeons extends WorldGenerator
             }
             else
             {
-                field_175918_a.error("Failed to fetch mob spawner entity at (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+                field_175918_a.error("Failed to fetch mob spawner entity at (" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + ")");
             }
 
             return true;

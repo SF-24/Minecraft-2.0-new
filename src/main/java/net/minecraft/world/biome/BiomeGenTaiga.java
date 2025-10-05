@@ -69,8 +69,7 @@ public class BiomeGenTaiga extends BiomeGenBase
             {
                 int k = rand.nextInt(16) + 8;
                 int l = rand.nextInt(16) + 8;
-                BlockPos blockpos = worldIn.getHeight(pos.add(k, 0, l));
-                field_150643_aG.generate(worldIn, rand, blockpos);
+                field_150643_aG.generate(worldIn, rand, new BlockPos(k,worldIn.getHeight(pos,k,l),l));
             }
         }
 
@@ -80,8 +79,8 @@ public class BiomeGenTaiga extends BiomeGenBase
         {
             int j1 = rand.nextInt(16) + 8;
             int k1 = rand.nextInt(16) + 8;
-            int l1 = rand.nextInt(worldIn.getHeight(pos.add(j1, 0, k1)).getY() + 32);
-            DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j1, l1, k1));
+            int l1 = rand.nextInt(worldIn.getHeight(pos,j1, k1) + 32);
+            DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, new BlockPos(j1+pos.getX(), l1+pos.getY(), k1+pos.getZ()));
         }
 
         super.decorate(worldIn, rand, pos);

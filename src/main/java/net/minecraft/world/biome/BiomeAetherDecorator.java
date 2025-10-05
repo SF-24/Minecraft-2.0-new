@@ -1,7 +1,6 @@
 package net.minecraft.world.biome;
 
 import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

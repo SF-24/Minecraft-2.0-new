@@ -22,7 +22,7 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
         super(p_i2025_1_);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = rand.nextInt(4) + 6;
         int j = 1 + rand.nextInt(2);
@@ -30,13 +30,13 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
         int l = 2 + rand.nextInt(2);
         boolean flag = true;
 
-        if (position.getY() >= 1 && position.getY() + i + 1 <= 256)
+        if (x.getY() >= 1 && x.getY() + i + 1 <= 256)
         {
-            for (int i1 = position.getY(); i1 <= position.getY() + 1 + i && flag; ++i1)
+            for (int i1 = x.getY(); i1 <= x.getY() + 1 + i && flag; ++i1)
             {
                 int j1 = 1;
 
-                if (i1 - position.getY() < j)
+                if (i1 - x.getY() < j)
                 {
                     j1 = 0;
                 }
@@ -47,9 +47,9 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
 
                 BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                for (int k1 = position.getX() - j1; k1 <= position.getX() + j1 && flag; ++k1)
+                for (int k1 = x.getX() - j1; k1 <= x.getX() + j1 && flag; ++k1)
                 {
-                    for (int l1 = position.getZ() - j1; l1 <= position.getZ() + j1 && flag; ++l1)
+                    for (int l1 = x.getZ() - j1; l1 <= x.getZ() + j1 && flag; ++l1)
                     {
                         if (i1 >= 0 && i1 < 256)
                         {
@@ -74,26 +74,26 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
             }
             else
             {
-                Block block1 = worldIn.getBlockState(position.down()).getBlock();
+                Block block1 = worldIn.getBlockState(x.down()).getBlock();
 
-                if ((block1 == Blocks.grass || block1 == Blocks.dirt || block1 == Blocks.farmland) && position.getY() < 256 - i - 1)
+                if ((block1 == Blocks.grass || block1 == Blocks.dirt || block1 == Blocks.farmland) && x.getY() < 256 - i - 1)
                 {
-                    this.func_175921_a(worldIn, position.down());
+                    this.func_175921_a(worldIn, x.down());
                     int i3 = rand.nextInt(2);
                     int j3 = 1;
                     int k3 = 0;
 
                     for (int l3 = 0; l3 <= k; ++l3)
                     {
-                        int j4 = position.getY() + i - l3;
+                        int j4 = x.getY() + i - l3;
 
-                        for (int i2 = position.getX() - i3; i2 <= position.getX() + i3; ++i2)
+                        for (int i2 = x.getX() - i3; i2 <= x.getX() + i3; ++i2)
                         {
-                            int j2 = i2 - position.getX();
+                            int j2 = i2 - x.getX();
 
-                            for (int k2 = position.getZ() - i3; k2 <= position.getZ() + i3; ++k2)
+                            for (int k2 = x.getZ() - i3; k2 <= x.getZ() + i3; ++k2)
                             {
-                                int l2 = k2 - position.getZ();
+                                int l2 = k2 - x.getZ();
 
                                 if (Math.abs(j2) != i3 || Math.abs(l2) != i3 || i3 <= 0)
                                 {
@@ -128,11 +128,11 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
 
                     for (int k4 = 0; k4 < i - i4; ++k4)
                     {
-                        Block block2 = worldIn.getBlockState(position.up(k4)).getBlock();
+                        Block block2 = worldIn.getBlockState(x.up(k4)).getBlock();
 
                         if (block2.getMaterial() == Material.air || block2.getMaterial() == Material.leaves)
                         {
-                            this.setBlockAndNotifyAdequately(worldIn, position.up(k4), field_181645_a);
+                            this.setBlockAndNotifyAdequately(worldIn, x.up(k4), field_181645_a);
                         }
                     }
 

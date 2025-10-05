@@ -23,7 +23,7 @@ public class WorldGenForest extends WorldGenAbstractTree
         this.useExtraRandomHeight = p_i45449_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = rand.nextInt(3) + 5;
 
@@ -34,27 +34,27 @@ public class WorldGenForest extends WorldGenAbstractTree
 
         boolean flag = true;
 
-        if (position.getY() >= 1 && position.getY() + i + 1 <= 256)
+        if (x.getY() >= 1 && x.getY() + i + 1 <= 256)
         {
-            for (int j = position.getY(); j <= position.getY() + 1 + i; ++j)
+            for (int j = x.getY(); j <= x.getY() + 1 + i; ++j)
             {
                 int k = 1;
 
-                if (j == position.getY())
+                if (j == x.getY())
                 {
                     k = 0;
                 }
 
-                if (j >= position.getY() + 1 + i - 2)
+                if (j >= x.getY() + 1 + i - 2)
                 {
                     k = 2;
                 }
 
                 BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                for (int l = position.getX() - k; l <= position.getX() + k && flag; ++l)
+                for (int l = x.getX() - k; l <= x.getX() + k && flag; ++l)
                 {
-                    for (int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1)
+                    for (int i1 = x.getZ() - k; i1 <= x.getZ() + k && flag; ++i1)
                     {
                         if (j >= 0 && j < 256)
                         {
@@ -77,24 +77,24 @@ public class WorldGenForest extends WorldGenAbstractTree
             }
             else
             {
-                Block block1 = worldIn.getBlockState(position.down()).getBlock();
+                Block block1 = worldIn.getBlockState(x.down()).getBlock();
 
-                if ((block1 == Blocks.grass || block1 == Blocks.dirt || block1 == Blocks.farmland) && position.getY() < 256 - i - 1)
+                if ((block1 == Blocks.grass || block1 == Blocks.dirt || block1 == Blocks.farmland) && x.getY() < 256 - i - 1)
                 {
-                    this.func_175921_a(worldIn, position.down());
+                    this.func_175921_a(worldIn, x.down());
 
-                    for (int i2 = position.getY() - 3 + i; i2 <= position.getY() + i; ++i2)
+                    for (int i2 = x.getY() - 3 + i; i2 <= x.getY() + i; ++i2)
                     {
-                        int k2 = i2 - (position.getY() + i);
+                        int k2 = i2 - (x.getY() + i);
                         int l2 = 1 - k2 / 2;
 
-                        for (int i3 = position.getX() - l2; i3 <= position.getX() + l2; ++i3)
+                        for (int i3 = x.getX() - l2; i3 <= x.getX() + l2; ++i3)
                         {
-                            int j1 = i3 - position.getX();
+                            int j1 = i3 - x.getX();
 
-                            for (int k1 = position.getZ() - l2; k1 <= position.getZ() + l2; ++k1)
+                            for (int k1 = x.getZ() - l2; k1 <= x.getZ() + l2; ++k1)
                             {
-                                int l1 = k1 - position.getZ();
+                                int l1 = k1 - x.getZ();
 
                                 if (Math.abs(j1) != l2 || Math.abs(l1) != l2 || rand.nextInt(2) != 0 && k2 != 0)
                                 {
@@ -112,11 +112,11 @@ public class WorldGenForest extends WorldGenAbstractTree
 
                     for (int j2 = 0; j2 < i; ++j2)
                     {
-                        Block block2 = worldIn.getBlockState(position.up(j2)).getBlock();
+                        Block block2 = worldIn.getBlockState(x.up(j2)).getBlock();
 
                         if (block2.getMaterial() == Material.air || block2.getMaterial() == Material.leaves)
                         {
-                            this.setBlockAndNotifyAdequately(worldIn, position.up(j2), field_181629_a);
+                            this.setBlockAndNotifyAdequately(worldIn, x.up(j2), field_181629_a);
                         }
                     }
 

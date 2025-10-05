@@ -78,7 +78,7 @@ public class BlockPosM extends BlockPos
         return this;
     }
 
-    public BlockPosM set(int xIn, int yIn, int zIn)
+    public BlockPos set(int xIn, int yIn, int zIn)
     {
         this.setXyz(xIn, yIn, zIn);
         return this;

@@ -22,7 +22,7 @@ public class WorldGenTaiga1 extends WorldGenAbstractTree
         super(false);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, Random rand, BlockPos x)
     {
         int i = rand.nextInt(5) + 7;
         int j = i - rand.nextInt(2) - 3;
@@ -30,13 +30,13 @@ public class WorldGenTaiga1 extends WorldGenAbstractTree
         int l = 1 + rand.nextInt(k + 1);
         boolean flag = true;
 
-        if (position.getY() >= 1 && position.getY() + i + 1 <= 256)
+        if (x.getY() >= 1 && x.getY() + i + 1 <= 256)
         {
-            for (int i1 = position.getY(); i1 <= position.getY() + 1 + i && flag; ++i1)
+            for (int i1 = x.getY(); i1 <= x.getY() + 1 + i && flag; ++i1)
             {
                 int j1 = 1;
 
-                if (i1 - position.getY() < j)
+                if (i1 - x.getY() < j)
                 {
                     j1 = 0;
                 }
@@ -47,9 +47,9 @@ public class WorldGenTaiga1 extends WorldGenAbstractTree
 
                 BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                for (int k1 = position.getX() - j1; k1 <= position.getX() + j1 && flag; ++k1)
+                for (int k1 = x.getX() - j1; k1 <= x.getX() + j1 && flag; ++k1)
                 {
-                    for (int l1 = position.getZ() - j1; l1 <= position.getZ() + j1 && flag; ++l1)
+                    for (int l1 = x.getZ() - j1; l1 <= x.getZ() + j1 && flag; ++l1)
                     {
                         if (i1 >= 0 && i1 < 256)
                         {
@@ -72,22 +72,22 @@ public class WorldGenTaiga1 extends WorldGenAbstractTree
             }
             else
             {
-                Block block = worldIn.getBlockState(position.down()).getBlock();
+                Block block = worldIn.getBlockState(x.down()).getBlock();
 
-                if ((block == Blocks.grass || block == Blocks.dirt) && position.getY() < 256 - i - 1)
+                if ((block == Blocks.grass || block == Blocks.dirt) && x.getY() < 256 - i - 1)
                 {
-                    this.func_175921_a(worldIn, position.down());
+                    this.func_175921_a(worldIn, x.down());
                     int k2 = 0;
 
-                    for (int l2 = position.getY() + i; l2 >= position.getY() + j; --l2)
+                    for (int l2 = x.getY() + i; l2 >= x.getY() + j; --l2)
                     {
-                        for (int j3 = position.getX() - k2; j3 <= position.getX() + k2; ++j3)
+                        for (int j3 = x.getX() - k2; j3 <= x.getX() + k2; ++j3)
                         {
-                            int k3 = j3 - position.getX();
+                            int k3 = j3 - x.getX();
 
-                            for (int i2 = position.getZ() - k2; i2 <= position.getZ() + k2; ++i2)
+                            for (int i2 = x.getZ() - k2; i2 <= x.getZ() + k2; ++i2)
                             {
-                                int j2 = i2 - position.getZ();
+                                int j2 = i2 - x.getZ();
 
                                 if (Math.abs(k3) != k2 || Math.abs(j2) != k2 || k2 <= 0)
                                 {
@@ -101,7 +101,7 @@ public class WorldGenTaiga1 extends WorldGenAbstractTree
                             }
                         }
 
-                        if (k2 >= 1 && l2 == position.getY() + j + 1)
+                        if (k2 >= 1 && l2 == x.getY() + j + 1)
                         {
                             --k2;
                         }
@@ -113,11 +113,11 @@ public class WorldGenTaiga1 extends WorldGenAbstractTree
 
                     for (int i3 = 0; i3 < i - 1; ++i3)
                     {
-                        Block block1 = worldIn.getBlockState(position.up(i3)).getBlock();
+                        Block block1 = worldIn.getBlockState(x.up(i3)).getBlock();
 
                         if (block1.getMaterial() == Material.air || block1.getMaterial() == Material.leaves)
                         {
-                            this.setBlockAndNotifyAdequately(worldIn, position.up(i3), field_181636_a);
+                            this.setBlockAndNotifyAdequately(worldIn, x.up(i3), field_181636_a);
                         }
                     }
 

@@ -666,11 +666,11 @@ public class Item {
         })).setUnlocalizedName("redSandStone"));
         registerItemBlock(Blocks.red_sandstone_stairs);
         registerItemBlock(Blocks.stone_slab2, (new ItemSlab(Blocks.stone_slab2, Blocks.stone_slab2, Blocks.double_stone_slab2)).setUnlocalizedName("stoneSlab2"));
-        registerItemBlock(Blocks.nether_ash_ore);
-        registerItemBlock(Blocks.steel_block);
+//        registerItemBlock(Blocks.nether_ash_ore);
+//        registerItemBlock(Blocks.steel_block);
         registerItemBlock(Blocks.nether_gold_ore);
-        registerItemBlock(Blocks.amethyst_block);
-        registerItemBlock(Blocks.amethyst_crystal);
+//        registerItemBlock(Blocks.amethyst_block);
+//        registerItemBlock(Blocks.amethyst_crystal);
         registerItemBlock(Blocks.ruby_block);
         registerItemBlock(Blocks.ruby_ore);
         registerItemBlock(Blocks.cobweb_block);
@@ -681,14 +681,14 @@ public class Item {
 
         registerItemBlock(Blocks.observer);
 
-        registerItem(210, "mossy_compressed_cobblestone", (new Item().setUnlocalizedName("test")));
+//        registerItem(210, "mossy_compressed_cobblestone", (new Item().setUnlocalizedName("test")));
 
         // DUNGEON BLOCK -> new block/item, compressed cobblestone etc.
-        registerItemBlock(Blocks.compressed_cobblestone, (new ItemMultiTexture(Blocks.compressed_cobblestone, Blocks.compressed_cobblestone, new Function<ItemStack, String>() {
-            public String apply(ItemStack p_apply_1_) {
-                return BlockDungeon.EnumType.byMetadata(p_apply_1_.getMetadata()).getUnlocalizedName();
-            }
-        })).setUnlocalizedName("blockCompressed"));
+//        registerItemBlock(Blocks.compressed_cobblestone, (new ItemMultiTexture(Blocks.compressed_cobblestone, Blocks.compressed_cobblestone, new Function<ItemStack, String>() {
+//            public String apply(ItemStack p_apply_1_) {
+//                return BlockDungeon.EnumType.byMetadata(p_apply_1_.getMetadata()).getUnlocalizedName();
+//            }
+//        })).setUnlocalizedName("blockCompressed"));
 
 
         int valueBase = 4096-256;
@@ -1050,7 +1050,8 @@ public class Item {
 
         public Item getRepairItem()
         {
-            return this == WOOD ? Item.getItemFromBlock(Blocks.planks) : (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == EMERALD ? Items.diamond : (this == STEEL ? Items.steel_ingot : (this == AMETHYST ? Items.amethyst : null))))));
+            return this == WOOD ? Item.getItemFromBlock(Blocks.planks) : (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == EMERALD ? Items.diamond :  null))));
         }
+        //(this == STEEL ? Items.steel_ingot : (this == AMETHYST ? Items.amethyst :
     }
 }

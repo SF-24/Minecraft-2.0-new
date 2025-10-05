@@ -2,6 +2,7 @@ package net.minecraft.world.biome;
 
 import java.util.Random;
 
+import net.BlockPosUtil;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
@@ -37,14 +38,14 @@ public class BiomeGenWasteland extends BiomeGenBase
         {
             int i = rand.nextInt(16) + 8;
             int j = rand.nextInt(16) + 8;
-            BlockPos blockpos = worldIn.getHeight(pos.add(i, 2, j)).up();
-            (new WorldGenMeteor()).generate(worldIn, rand, blockpos);
+            int y = worldIn.getHeight(pos,i, j);
+            (new WorldGenMeteor()).generate(worldIn, rand, new BlockPos(BlockPosUtil.addBlockPosX(i,pos),y,BlockPosUtil.addBlockPosZ(j,pos)));
         } else if (rand.nextInt(3) == 0)
         {
             int i = rand.nextInt(16) + 8;
             int j = rand.nextInt(16) + 8;
-            BlockPos blockpos = worldIn.getHeight(pos.add(i, rand.nextInt(4), j)).up();
-            (new WorldGenLakes(Blocks.lava)).generate(worldIn, rand, blockpos);
+            int y = worldIn.getHeight(pos,i, j);
+            (new WorldGenLakes(Blocks.lava)).generate(worldIn, rand, new BlockPos(BlockPosUtil.addBlockPosX(i,pos),y,BlockPosUtil.addBlockPosZ(j,pos)));
         }
     }
 
