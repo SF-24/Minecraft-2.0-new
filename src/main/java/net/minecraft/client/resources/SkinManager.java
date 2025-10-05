@@ -23,7 +23,9 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.mineshaft.MineshaftLogger;
 import net.mineshaft.data.ProfileManager;
+import net.mineshaft.data.SkinRegistry;
 
 public class SkinManager
 {
@@ -115,6 +117,9 @@ public class SkinManager
 
                 try
                 {
+//                    profile.getProperties().removeAll("textures");
+//                    profile.getProperties().put("textures",SkinRegistry.getSkinProperties(profile,SkinRegistry.getUUID(profile)));
+
                     map.putAll(SkinManager.this.sessionService.getTextures(profile, requireSecure));
 
                 }
@@ -123,7 +128,7 @@ public class SkinManager
                     ;
                 }
 
-                if (map.isEmpty() && profile.getId().equals(Minecraft.getMinecraft().getSession().getProfile().getId()))
+                if ((map.isEmpty() && profile.getId().equals(Minecraft.getMinecraft().getSession().getProfile().getId())))
                 {
                     profile.getProperties().clear();
                     profile.getProperties().putAll(Minecraft.getMinecraft().getProfileProperties());

@@ -6,9 +6,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.network.play.server.S38PacketPlayerListItem;
 import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldSettings;
+import net.mineshaft.MineshaftLogger;
+import net.mineshaft.data.SkinRegistry;
 
 public class NetworkPlayerInfo
 {
@@ -88,10 +91,13 @@ public class NetworkPlayerInfo
 
     public ResourceLocation getLocationSkin()
     {
-        if (this.locationSkin == null)
+//        SkinRegistry.setSkin(gameProfile,SkinRegistry.getUUID(gameProfile));
+        if (this.locationSkin == null || !Minecraft.getMinecraft().userRenderData.loadedSkin.get(gameProfile.getName()))
         {
+            Minecraft.getMinecraft().userRenderData.loadedSkin.put(gameProfile.getName(),true);
             this.loadPlayerTextures();
         }
+//        System.out.println("Loading skin 3");
         return Objects.firstNonNull(this.locationSkin, DefaultPlayerSkin.getDefaultSkin(this.gameProfile));
     }
 
@@ -143,7 +149,12 @@ public class NetworkPlayerInfo
 
     public void setDisplayName(IChatComponent displayNameIn)
     {
-        this.displayName = displayNameIn;
+        System.out.println("Setting display name to " + displayNameIn);
+        if(displayNameIn.getUnformattedText().contains("XpKitty")) {
+            this.displayName.appendText("Xp");}
+        else {
+            this.displayName = displayNameIn;
+        }
     }
 
     public IChatComponent getDisplayName()
