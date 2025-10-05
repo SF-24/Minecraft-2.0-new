@@ -1712,15 +1712,11 @@
       },
       {
         "type": "event",
-        "name": "music.game"
-      },
-      {
-        "type": "event",
-        "name": "music.game"
-      },
-      {
-        "type": "event",
         "name": "music.intro"
+      },
+	  {
+        "type": "event",
+        "name": "music.intro_new"
       }
     ]
   },
@@ -1730,9 +1726,18 @@
       {
         "name": "music/menu/danse_morialta",
         "stream": true
-      },
+      }
+    ]
+  },
+  "music.intro_new": {
+    "category": "music",
+    "sounds": [
       {
-        "name": "music/menu/rebirth",
+        "name": "music/menu/newmenu1",
+        "stream": true
+      },
+	  {
+        "name": "music/menu/newmenu2",
         "stream": true
       }
     ]
