@@ -6,6 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.util.ResourceLocation;
 import net.mineshaft.MineshaftLogger;
 
@@ -72,29 +73,39 @@ public class SkinRegistry {
     }
 
     public static void loadSkins(String name, UUID uuid) {
-        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
+        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid).replace("-","")));
+        MineshaftLogger.logInfo("Logging reply for player " + name +  " " + reply + " uuid=" + UUIDTypeAdapter.fromUUID(uuid).replace("-",""));
         String skin = parseJson(reply).getAsJsonObject().get("current_skin").getAsString(); // skin
         boolean isSlim = parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean(); //slim
         String cape = parseJson(reply).getAsJsonObject().get("current_cape").getAsString(); // cape
-        if(skin==null||skin.isEmpty()) skin="steve";
+        if(skin==null||skin.equalsIgnoreCase("steve")||skin.isEmpty()) {
+            Minecraft.getMinecraft().userRenderData.skinResource.put(name, DefaultPlayerSkin.TEXTURE_STEVE);
+            MineshaftLogger.logInfo("Loaded default skin for player " + name);
+        } else {
+            MineshaftLogger.logInfo("Loaded custom skin " + skin + " for player " + name);
+            Minecraft.getMinecraft().userRenderData.skinResource.put(name, new ResourceLocation("textures/entity/player/skins/"+skin+".png"));
+            if(isSlim) {
+                Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
+            }
+        }
         if(cape==null||cape.isEmpty()) cape="empty";
         Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/"+cape+".png"));
-        if(isSlim) {
-            Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
-        }
-        Minecraft.getMinecraft().userRenderData.skinResource.put(name, new ResourceLocation("textures/entity/player/skins/"+skin+".png"));
+
     }
 
+    @Deprecated
     public static String getSkinName(UUID uuid) {
         String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
         return parseJson(reply).getAsJsonObject().get("current_skin").getAsString();
     }
 
+    @Deprecated
     public static boolean isSkinSlim(UUID uuid) {
         String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
         return parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean();
     }
 
+    @Deprecated
     public static String getCapeName(UUID uuid) {
         String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
         return parseJson(reply).getAsJsonObject().get("current_cape").getAsString();

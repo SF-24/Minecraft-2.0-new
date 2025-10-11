@@ -11,13 +11,14 @@ import java.time.LocalDate;
 public class DefaultPlayerSkin
 {
     /** The default skin for the Steve model. */
-    private static final ResourceLocation TEXTURE_STEVE = new ResourceLocation("textures/entity/player/steve.png");
+    public static final ResourceLocation TEXTURE_STEVE = new ResourceLocation("textures/entity/player/steve.png");
     /** The default skin for the Alex model. */
     private static final ResourceLocation TEXTURE_ALEX = new ResourceLocation("textures/entity/alex.png");
 
     private static final ResourceLocation CAPE_B_DAY = new ResourceLocation("textures/entity/cape/special/bday.png");
     private static final ResourceLocation CAPE_APRIL = new ResourceLocation("textures/entity/cape/special/white_eyes.png");
     private static final ResourceLocation CAPE_CHRISTMAS = new ResourceLocation("textures/entity/cape/special/christmas.png");
+    private static final ResourceLocation CAPE_NEW_YEAR_26 = new ResourceLocation("textures/entity/cape/special/new_year_26.png");
     private static final ResourceLocation CAPE_NEW_YEAR = new ResourceLocation("textures/entity/cape/special/new_year.png");
     public static final ResourceLocation CAPE_EMPTY = new ResourceLocation("textures/entity/cape/special/empty.png");
 
@@ -35,21 +36,22 @@ public class DefaultPlayerSkin
      */
 
     public static ResourceLocation getDefaultSkin(GameProfile profile) {
-        if (Minecraft.getMinecraft().userRenderData.skinResource.containsKey(profile.getName())) {
-            return Minecraft.getMinecraft().userRenderData.skinResource.get(profile.getName());
+        if (!Minecraft.getMinecraft().userRenderData.skinResource.containsKey(profile.getName())) {
+            SkinRegistry.loadSkins(profile.getName(),SkinRegistry.getUUID(profile));
         }
-        String name = SkinRegistry.getSkinName(SkinRegistry.getUUID(profile));
-        System.out.println("! Loading default skin " + name);
-        if (name.equals("steve")) {
-            Minecraft.getMinecraft().userRenderData.skinResource.put(profile.getName(), TEXTURE_STEVE);
-            return TEXTURE_STEVE;
-        }
-        // If the skin is slim, add it to the slim skin cache
-        if (SkinRegistry.isSkinSlim(SkinRegistry.getUUID(profile))) {
-            Minecraft.getMinecraft().userRenderData.slimSkins.add(profile.getName());
-        }
-        Minecraft.getMinecraft().userRenderData.skinResource.put(profile.getName(), new ResourceLocation("textures/entity/player/skins/"+name+".png"));
-        return new ResourceLocation("textures/entity/player/skins/"+name+".png");
+        return Minecraft.getMinecraft().userRenderData.skinResource.get(profile.getName());
+//        String name = SkinRegistry.getSkinName(SkinRegistry.getUUID(profile));
+//        System.out.println("! Loading default skin " + name);
+//        if (name.equals("steve")) {
+//            Minecraft.getMinecraft().userRenderData.skinResource.put(profile.getName(), TEXTURE_STEVE);
+//            return TEXTURE_STEVE;
+//        }
+//        // If the skin is slim, add it to the slim skin cache
+//        if (SkinRegistry.isSkinSlim(SkinRegistry.getUUID(profile))) {
+//            Minecraft.getMinecraft().userRenderData.slimSkins.add(profile.getName());
+//        }
+//        Minecraft.getMinecraft().userRenderData.skinResource.put(profile.getName(), new ResourceLocation("textures/entity/player/skins/"+name+".png"));
+//        return new ResourceLocation("textures/entity/player/skins/"+name+".png");
     }
 
     public static ResourceLocation getEventCape() {
@@ -62,6 +64,7 @@ public class DefaultPlayerSkin
             return CAPE_CHRISTMAS;
         }
         if((day>=30&&month==12)||(day<=6&&month==1)) {
+            if(LocalDate.now().getYear()==2026) return CAPE_NEW_YEAR_26;
             return CAPE_NEW_YEAR;
         }
         return null;
@@ -70,17 +73,19 @@ public class DefaultPlayerSkin
     // TODO: Clean up
 
     public static ResourceLocation getDefaultCape(GameProfile profile) {
-        if(Minecraft.getMinecraft().userRenderData.capeResource.containsKey(profile.getName())) {
-            return Minecraft.getMinecraft().userRenderData.capeResource.get(profile.getName());
-        }
         if(getEventCape() != null) {
             return getEventCape();
         }
-        return getPlayerCape(profile);
+        if(!Minecraft.getMinecraft().userRenderData.capeResource.containsKey(profile.getName())) {
+            SkinRegistry.loadSkins(profile.getName(),SkinRegistry.getUUID(profile));
+        }
+        return Minecraft.getMinecraft().userRenderData.capeResource.get(profile.getName());
+//        return getPlayerCape(profile);
 //        return new ResourceLocation("textures/entity/cape/empty.png");
 //        return ProfileManager.getPlayerCapeResourceLocation(profile);
     }
 
+    @Deprecated
     public static ResourceLocation getPlayerCape(GameProfile profile) {
         String name = SkinRegistry.getCapeName(SkinRegistry.getUUID(profile));
         Minecraft.getMinecraft().userRenderData.capeResource.put(profile.getName(), new ResourceLocation("textures/entity/cape/"+name+".png"));
