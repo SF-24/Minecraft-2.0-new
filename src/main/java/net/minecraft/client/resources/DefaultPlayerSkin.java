@@ -15,7 +15,7 @@ public class DefaultPlayerSkin
     /** The default skin for the Alex model. */
     private static final ResourceLocation TEXTURE_ALEX = new ResourceLocation("textures/entity/alex.png");
 
-    private static final ResourceLocation CAPE_BDAY = new ResourceLocation("textures/entity/cape/special/bday.png");
+    private static final ResourceLocation CAPE_B_DAY = new ResourceLocation("textures/entity/cape/special/bday.png");
     private static final ResourceLocation CAPE_APRIL = new ResourceLocation("textures/entity/cape/special/white_eyes.png");
     private static final ResourceLocation CAPE_CHRISTMAS = new ResourceLocation("textures/entity/cape/special/christmas.png");
     private static final ResourceLocation CAPE_NEW_YEAR = new ResourceLocation("textures/entity/cape/special/new_year.png");

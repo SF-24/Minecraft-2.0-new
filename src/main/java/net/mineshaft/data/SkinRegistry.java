@@ -1,23 +1,21 @@
 package net.mineshaft.data;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.util.UUIDTypeAdapter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.mineshaft.MineshaftLogger;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
 import java.util.UUID;
@@ -71,6 +69,20 @@ public class SkinRegistry {
         return UUID.fromString(parseJson(reply).getAsJsonObject().get("id").getAsString().replaceFirst(
                 "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
         ));
+    }
+
+    public static void loadSkins(String name, UUID uuid) {
+        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
+        String skin = parseJson(reply).getAsJsonObject().get("current_skin").getAsString(); // skin
+        boolean isSlim = parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean(); //slim
+        String cape = parseJson(reply).getAsJsonObject().get("current_cape").getAsString(); // cape
+        if(skin==null||skin.isEmpty()) skin="steve";
+        if(cape==null||cape.isEmpty()) cape="empty";
+        Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/"+cape+".png"));
+        if(isSlim) {
+            Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
+        }
+        Minecraft.getMinecraft().userRenderData.skinResource.put(name, new ResourceLocation("textures/entity/player/skins/"+skin+".png"));
     }
 
     public static String getSkinName(UUID uuid) {
