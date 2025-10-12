@@ -146,14 +146,14 @@ public class BlockTrapDoor extends Block
     {
         if (!worldIn.isRemote)
         {
-            BlockPos blockpos = pos.offset(((EnumFacing)state.getValue(FACING)).getOpposite());
+//            BlockPos blockpos = pos.offset(((EnumFacing)state.getValue(FACING)).getOpposite());
 
-            if (!isValidSupportBlock(worldIn.getBlockState(blockpos).getBlock()))
-            {
-                worldIn.setBlockToAir(pos);
-                this.dropBlockAsItem(worldIn, pos, state, 0);
-            }
-            else
+//            if (!isValidSupportBlock(worldIn.getBlockState(blockpos).getBlock()))
+//            {
+//                worldIn.setBlockToAir(pos);
+//                this.dropBlockAsItem(worldIn, pos, state, 0);
+//            }
+//            else
             {
                 boolean flag = worldIn.isBlockPowered(pos);
 
@@ -202,7 +202,8 @@ public class BlockTrapDoor extends Block
      */
     public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side)
     {
-        return !side.getAxis().isVertical() && isValidSupportBlock(worldIn.getBlockState(pos.offset(side.getOpposite())).getBlock());
+        return true;
+        //return !side.getAxis().isVertical();// && isValidSupportBlock(worldIn.getBlockState(pos.offset(side.getOpposite())).getBlock());
     }
 
     protected static EnumFacing getFacing(int meta)
@@ -241,11 +242,6 @@ public class BlockTrapDoor extends Block
             default:
                 return 3;
         }
-    }
-
-    private static boolean isValidSupportBlock(Block blockIn)
-    {
-        return blockIn.blockMaterial.isOpaque() && blockIn.isFullCube() || blockIn == Blocks.glowstone || blockIn instanceof BlockSlab || blockIn instanceof BlockStairs;
     }
 
     public EnumWorldBlockLayer getBlockLayer()
