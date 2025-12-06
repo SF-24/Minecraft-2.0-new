@@ -736,8 +736,17 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     public int getMaxSpawnedInChunk()
     {
-        return 4;
-    }
+        if (this.isEntityUndead())
+        {
+            if (this.worldObj.isBloodMoon())
+            {
+                return 12;
+            }
+
+            return 6;
+        }
+
+        return 4;    }
 
     /**
      * The maximum height from where the entity is alowed to jump (used in pathfinder)

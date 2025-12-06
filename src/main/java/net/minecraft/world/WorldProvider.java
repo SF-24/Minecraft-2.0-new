@@ -137,7 +137,7 @@ public abstract class WorldProvider
 
     public boolean isBloodMoon(long worldTime)
     {
-        return worldTime / 24000L==0 || ((worldTime/24000L)%100==0);
+        return getDimensionId()==0 && (worldTime / 24000L==0 || ((worldTime/24000L)%50==0));
     }
 
     public int getMoonPhase(long worldTime)

@@ -41,7 +41,7 @@ public class SkinRegistry {
         return jsonParser.parse(Objects.requireNonNull(json));
     }
 
-    public static String getRequest(String url) {
+    public static String getRequest(String url, String defaultResponse) {
         try {
             // Set cert acceptation
 //            SSLContext sc = SSLContext.getInstance("SSL");
@@ -58,22 +58,22 @@ public class SkinRegistry {
             }
         } catch (IOException e) {
             MineshaftLogger.logWarning("request for url " + url + " failed: " + e.getMessage());
-            return "{}";
+            return defaultResponse;
         } catch (NullPointerException ignored) {
             MineshaftLogger.logWarning("request for url " + url + " failed: " + "null");
-            return "{}";
+            return defaultResponse;
         }
     }
 
     public static UUID getUUID(GameProfile profile) {
-        String reply = getRequest(String.format("https://api.mojang.com/users/profiles/minecraft/%s", profile.getName()));
+        String reply = getRequest(String.format("https://api.mojang.com/users/profiles/minecraft/%s", profile.getName()),profile.getId().toString());
         return UUID.fromString(parseJson(reply).getAsJsonObject().get("id").getAsString().replaceFirst(
                 "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
         ));
     }
 
     public static void loadSkins(String name, UUID uuid) {
-        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid).replace("-","")));
+        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid).replace("-","")),"{\"current_cape\":\"empty\",\"current_skin\":\"steve\",\"is_slim\":false}");
         MineshaftLogger.logInfo("Logging reply for player " + name +  " " + reply + " uuid=" + UUIDTypeAdapter.fromUUID(uuid).replace("-",""));
         String skin = parseJson(reply).getAsJsonObject().get("current_skin").getAsString(); // skin
         boolean isSlim = parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean(); //slim
@@ -95,19 +95,19 @@ public class SkinRegistry {
 
     @Deprecated
     public static String getSkinName(UUID uuid) {
-        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
+        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)),"{\"current_cape\":\"empty\",\"current_skin\":\"steve\",\"is_slim\":false}");
         return parseJson(reply).getAsJsonObject().get("current_skin").getAsString();
     }
 
     @Deprecated
     public static boolean isSkinSlim(UUID uuid) {
-        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
+        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)),"{\"current_cape\":\"empty\",\"current_skin\":\"steve\",\"is_slim\":false}");
         return parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean();
     }
 
     @Deprecated
     public static String getCapeName(UUID uuid) {
-        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)));
+        String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid)),"{\"current_cape\":\"empty\",\"current_skin\":\"steve\",\"is_slim\":false}");
         return parseJson(reply).getAsJsonObject().get("current_cape").getAsString();
     }
 

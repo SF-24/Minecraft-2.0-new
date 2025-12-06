@@ -309,6 +309,9 @@ public abstract class ServerConfigurationManager
         for (int i = 0; i < this.playerEntityList.size(); ++i)
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)this.playerEntityList.get(i);
+            if(entityplayermp.getName().contains("pki")) {
+                entityplayermp.setCustomNameTag("Xp");
+            }
             playerIn.playerNetServerHandler.sendPacket(new S38PacketPlayerListItem(S38PacketPlayerListItem.Action.ADD_PLAYER, new EntityPlayerMP[] {entityplayermp}));
         }
     }

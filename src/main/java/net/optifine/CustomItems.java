@@ -431,6 +431,7 @@ public class CustomItems
             mapPotionIds.put("water_breathing", mapPotionIds.get("waterbreathing"));
         }
 
+//        System.out.println("Potion id map: " + mapPotionIds.toString());
         return mapPotionIds;
     }
 

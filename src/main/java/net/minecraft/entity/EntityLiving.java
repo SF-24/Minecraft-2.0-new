@@ -767,7 +767,7 @@ public abstract class EntityLiving extends EntityLivingBase
     {
         if(this.isEntityUndead()) {
             if (this.worldObj.isBloodMoon()) {
-                return 10;
+                return 12;
             }
             return 6;
         }
@@ -878,9 +878,9 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
     {
-        if (this.rand.nextFloat() < 0.30F /*was 0.15F*/ * difficulty.getClampedAdditionalDifficulty() * (this.worldObj.isBloodMoon() ? 2.0F : 1.0F))
+        if (this.rand.nextFloat() < 0.40F /*was 0.15F, then 0.30F*/ * difficulty.getClampedAdditionalDifficulty() * (this.worldObj.isBloodMoon() ? 2.0F : 1.0F))
         {
-            int i = this.rand.nextInt(2 + (this.worldObj.isBloodMoon() ? 1 : 0));
+            int i = this.rand.nextInt(2  + (this.worldObj.isBloodMoon() ? this.rand.nextInt(2)+1 : 0));
             float f = this.worldObj.getDifficulty() == EnumDifficulty.HARD ? 0.1F : 0.25F;
 
             if (this.rand.nextFloat() < 0.095F)
