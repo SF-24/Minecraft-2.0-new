@@ -2049,9 +2049,12 @@ public abstract class EntityPlayer extends EntityLivingBase
      * This method returns the cap amount of experience that the experience bar can hold. With each level, the
      * experience cap on the player's experience bar is raised by 10.
      */
+    // Changed for each level to cost 46 xp
     public int xpBarCap()
     {
-        return this.experienceLevel >= 30 ? 112 + (this.experienceLevel - 30) * 9 : (this.experienceLevel >= 15 ? 37 + (this.experienceLevel - 15) * 5 : 7 + this.experienceLevel * 2);
+//        return 46;
+//        return this.experienceLevel >= 30 ? 112 + (this.experienceLevel - 30) * 9 : (this.experienceLevel >= 15 ? 37 + (this.experienceLevel - 15) * 5 : 7 + this.experienceLevel * 2);
+        return 10 /*base*/ + 2*experienceLevel;
     }
 
     /**
@@ -2141,7 +2144,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         else
         {
             int i = this.experienceLevel * 7;
-            return i > 100 ? 100 : i;
+            return Math.min(i, 100);
         }
     }
 

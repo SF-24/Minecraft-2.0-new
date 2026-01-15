@@ -80,7 +80,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
 
             if (this.anvil.maximumCost >= 40 && !this.mc.thePlayer.capabilities.isCreativeMode)
             {
-                s = I18n.format("container.repair.expensive", new Object[0]);
+//                s = I18n.format("container.repair.expensive", new Object[0]);
                 i = 16736352;
             }
             else if (!this.anvil.getSlot(2).getHasStack())
