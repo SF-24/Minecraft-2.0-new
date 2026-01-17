@@ -11,6 +11,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.mineshaft.cavegen.CaveRegistry;
 import net.mineshaft.cavegen.CaveUtil;
 
 public class MapGenCaves extends MapGenBase
@@ -160,20 +161,20 @@ public class MapGenCaves extends MapGenBase
 
                         for (int j3 = k2; j3 < k; ++j3)
                         {
-                            double d1z = ((double)(j3 + originX * 16) + 0.5D - tunnelCentreX) / d2;
+                            double dz = ((double)(j3 + originX * 16) + 0.5D - tunnelCentreX) / d2;
 
                             for (int i2 = i3; i2 < i1; ++i2)
                             {
                                 double dx = ((double)(i2 + originZ * 16) + 0.5D - tunnelCentreZ) / d2;
                                 boolean flag1 = false;
 
-                                if (d1z * d1z + dx * dx < 1.0D)
+                                if (dz * dz + dx * dx < 1.0D)
                                 {
                                     for (int j2 = l; j2 > l2; --j2)
                                     {
                                         double dy = ((double)(j2 - 1) + 0.5D - tunnelCentreY) / d3;
 
-                                        if (dy > -0.7D && d1z * d1z + dy * dy + dx * dx < 1.0D)
+                                        if (dy > -0.7D && dz * dz + dy * dy + dx * dx < 1.0D)
                                         {
                                             IBlockState iblockstate1 = chunkPrimer.getBlockState(j3, j2, i2);
                                             IBlockState iblockstate2 = (IBlockState)Objects.firstNonNull(chunkPrimer.getBlockState(j3, j2 + 1, i2), Blocks.air.getDefaultState());
@@ -199,8 +200,8 @@ public class MapGenCaves extends MapGenBase
                                                     // And function will only be parsed if the block is near a wall
                                                     // 0.0-> centre, 0.3-> near wall, 1.0-> edge of tunnel
                                                     if(dz*dz+dx*dx < 0.4 && dy > 0.3) {  // Near ceiling
-                                                        if (random.nextInt(12) == 0) {
-                                                            CaveUtil.decorateCave(chunkPrimer, localChunkX, localChunkY, localChunkZ, random);
+                                                        if (random.nextInt(24) == 0) {
+                                                            CaveUtil.decorateCave(CaveRegistry.getCaveType(worldObj.getBiomeGenForCoords(blockpos$mutableblockpos), j2), chunkPrimer, j3, j2, i2, random);
                                                         }
                                                     }
 

@@ -1,21 +1,22 @@
 package net.mineshaft.cavegen;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 import java.util.Random;
 
 public class CaveUtil {
 
-    public static void decorateCave(ChunkPrimer chunkPrimer, int localChunkX, int localChunkY, int localChunkZ, Random rand) {
+    public static void decorateCave(CaveType caveType, ChunkPrimer chunkPrimer, int localChunkX, int localChunkY, int localChunkZ, Random rand) {
         // small chance to place cobwebs here
-        switch (rand.nextInt(20)) {
+        switch (rand.nextInt(10)) {
             case 0:
-                CaveDecorator.tryPlaceCobweb(chunkPrimer, localChunkX, localChunkY, localChunkZ, rand);
+                if(rand.nextInt((2))==0) {
+                    CaveDecorator.tryPlaceCobweb(chunkPrimer, localChunkX, localChunkY, localChunkZ, rand);
+                }
                 break;
             case 1:
-            case 2:
-//                CaveDecorator.placeIcePatch(chunkPrimer, localChunkX, localChunkY, localChunkZ, Blocks.packed_ice.getDefaultState(), Blocks.ice.getDefaultState(), Blocks.ice.getDefaultState(), rand);
+                if(caveType==null) return;
+                caveType.decorateMapGenCaves(chunkPrimer,localChunkX,localChunkY,localChunkZ,rand);
                 break;
             default:
                 break;
