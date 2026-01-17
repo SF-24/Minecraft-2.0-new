@@ -16,6 +16,7 @@ public class CaveUtil {
                 break;
             case 1:
                 if(caveType==null) return;
+                System.out.println("Type: " + caveType);
                 caveType.decorateMapGenCaves(chunkPrimer,localChunkX,localChunkY,localChunkZ,rand);
                 break;
             default:
