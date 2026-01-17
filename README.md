@@ -1,5 +1,7 @@
 # MC-2.0 client
 
+All code under src/main/java/net/mineshaft is licenced under LGPL-v3.0
+
 ### About
 A fork of version 1.8.9 implementing changes which I believe would benefit the game. A fork of Maven-MCP-1.8.9
 
