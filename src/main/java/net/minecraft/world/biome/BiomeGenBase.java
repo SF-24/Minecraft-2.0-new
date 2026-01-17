@@ -22,6 +22,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.*;
+import net.mineshaft.cavegen.CaveRegistry;
+import net.mineshaft.cavegen.CaveType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -204,6 +206,7 @@ public abstract class BiomeGenBase
 
     /** The biome decorator. */
     public BiomeDecorator theBiomeDecorator;
+    public CaveType shallowCaveType = CaveRegistry.jungle; //CaveRegistry.getCaveType(this, 64);
     protected List<BiomeGenBase.SpawnListEntry> spawnableMonsterList;
     protected List<BiomeGenBase.SpawnListEntry> spawnableCreatureList;
     protected List<BiomeGenBase.SpawnListEntry> spawnableWaterCreatureList;
@@ -479,6 +482,8 @@ public abstract class BiomeGenBase
     public void decorate(World worldIn, Random rand, BlockPos pos)
     {
         this.theBiomeDecorator.decorate(worldIn, rand, this, pos);
+        // Get the cave biome and decorate it
+//        this.shallowCaveType.decorate(worldIn, rand, this, pos);
     }
 
     public int getGrassColorAtPos(BlockPos pos)
