@@ -1365,12 +1365,12 @@ public class GMatrix implements java.io.Serializable, Cloneable {
 	for (i = 0; i < m.nRow; i++) {
 	    for (j = 0; j < m.nCol; j++) {
 		if (Math.abs(m.values[i][j]) < 0.0000000001) {
-		    System.out.print(" 0.0     ");
+//		    System.out.print(" 0.0     ");
 		} else {
-		    System.out.print(" " + m.values[i][j]);
+//		    System.out.print(" " + m.values[i][j]);
 		}
 	    }
-	    System.out.print("\n");
+//	    System.out.print("\n");
 	}
     }
 

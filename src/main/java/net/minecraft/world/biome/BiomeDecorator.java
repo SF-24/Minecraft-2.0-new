@@ -22,6 +22,7 @@ import net.minecraft.world.gen.feature.WorldGenReed;
 import net.minecraft.world.gen.feature.WorldGenSand;
 import net.minecraft.world.gen.feature.WorldGenWaterlily;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.mineshaft.cavegen.CaveType;
 
 public class BiomeDecorator
 {
@@ -32,6 +33,8 @@ public class BiomeDecorator
     protected Random randomGenerator;
     protected BlockPos pos;
     protected ChunkProviderSettings chunkProviderSettings;
+
+    protected CaveType caveType;
 
     /** The clay generator. */
     protected WorldGenerator clayGen = new WorldGenClay(4);

@@ -540,7 +540,7 @@ public abstract class ServerConfigurationManager
     public void transferEntityToWorld(Entity entityIn, int id, WorldServer oldWorldIn, WorldServer toWorldIn)
     {
         // id = coming from, dim = going to
-        System.out.println("ID: " + id + " | dim: " + entityIn.dimension);
+//        System.out.println("ID: " + id + " | dim: " + entityIn.dimension);
 
         double d0 = entityIn.posX;
         double d1 = entityIn.posZ;

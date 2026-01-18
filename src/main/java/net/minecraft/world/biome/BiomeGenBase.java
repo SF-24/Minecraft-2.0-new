@@ -72,7 +72,7 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase extremeHills = (new BiomeGenHills(3, false)).setColor(6316128).setBiomeName("Extreme Hills").setHeight(height_MidHills).setTemperatureRainfall(0.2F, 0.3F);
     public static final BiomeGenBase forest = (new BiomeGenForest(4, 0)).setColor(353825).setBiomeName("Forest").setHeight(height_Autumnal);
     public static final BiomeGenBase taiga = (new BiomeGenTaiga(5, 0)).setColor(747097).setBiomeName("Taiga").setFillerBlockMetadata(5159473).setTemperatureRainfall(0.25F, 0.8F).setHeight(height_MidPlains);
-    public static final BiomeGenBase swampland = (new BiomeGenSwamp(6)).setColor(522674).setBiomeName("Swampland").setFillerBlockMetadata(9154376).setHeight(height_PartiallySubmerged).setTemperatureRainfall(0.8F, 0.9F);
+    public static final BiomeGenBase swampland = (new BiomeGenSwamp(6)).setColor(522674).setBiomeName("Swampland").setFillerBlockMetadata(9154376).setHeight(height_PartiallySubmerged).setTemperatureRainfall(0.8F, 0.9F).setCaveBiome(CaveRegistry.jungle);
     public static final BiomeGenBase river = (new BiomeGenRiver(7)).setColor(255).setBiomeName("River").setHeight(height_ShallowWaters);
     public static final BiomeGenBase hell = (new BiomeGenHell(8)).setColor(16711680).setBiomeName("Hell").setDisableRain().setTemperatureRainfall(2.0F, 0.0F);
 
@@ -103,9 +103,9 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase extremeHillsEdge = (new BiomeGenHills(20, true)).setColor(7501978).setBiomeName("Extreme Hills Edge").setHeight(height_MidHills.attenuate()).setTemperatureRainfall(0.2F, 0.3F);
 
     /** Jungle biome identifier */
-    public static final BiomeGenBase jungle = (new BiomeGenJungle(21, false)).setColor(5470985).setBiomeName("Jungle").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_Jungle);
-    public static final BiomeGenBase jungleHills = (new BiomeGenJungle(22, false)).setColor(2900485).setBiomeName("Jungle Hills").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_JungleHills);
-    public static final BiomeGenBase jungleEdge = (new BiomeGenJungle(23, true)).setColor(6458135).setBiomeName("Jungle Edge").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.8F);
+    public static final BiomeGenBase jungle = (new BiomeGenJungle(21, false)).setColor(5470985).setBiomeName("Jungle").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_Jungle).setCaveBiome(CaveRegistry.jungle);
+    public static final BiomeGenBase jungleHills = (new BiomeGenJungle(22, false)).setColor(2900485).setBiomeName("Jungle Hills").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_JungleHills).setCaveBiome(CaveRegistry.jungle);
+    public static final BiomeGenBase jungleEdge = (new BiomeGenJungle(23, true)).setColor(6458135).setBiomeName("Jungle Edge").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.8F).setCaveBiome(CaveRegistry.jungle);
     public static final BiomeGenBase deepOcean = (new BiomeGenOcean(24)).setColor(48).setBiomeName("Deep Ocean").setHeight(height_DeepOceans).setOcean();
     public static final BiomeGenBase stoneBeach = (new BiomeGenStoneBeach(25)).setColor(10658436).setBiomeName("Stone Beach").setTemperatureRainfall(0.2F, 0.3F).setHeight(height_RockyWaters);
     public static final BiomeGenBase coldBeach = (new BiomeGenBeach(26, Blocks.sand.getDefaultState())).setColor(16445632).setBiomeName("Cold Beach").setTemperatureRainfall(0.05F, 0.3F).setHeight(height_Shores).setEnableSnow();
@@ -128,13 +128,13 @@ public abstract class BiomeGenBase
     /** Biome used for the aether */
     public static final BiomeGenBase aether = (new BiomeGenAether(40)).setColor(9474208).setBiomeName("The Aether").setDisableRain();
 
-    public static final BiomeGenBase tropical_swampland = (new BiomeGenSwampTropical(41)).setColor(5470985).setBiomeName("Tropical Swampland").setFillerBlockMetadata(5470985).setHeight(height_PartiallySubmerged).setTemperatureRainfall(0.95F, 0.9F);
+    public static final BiomeGenBase tropical_swampland = (new BiomeGenSwampTropical(41)).setColor(5470985).setBiomeName("Tropical Swampland").setFillerBlockMetadata(5470985).setHeight(height_PartiallySubmerged).setTemperatureRainfall(0.95F, 0.9F).setCaveBiome(CaveRegistry.jungle);
 
     public static final BiomeGenBase volcanic_wasteland = (new BiomeGenWasteland(42)).setColor(12431967).setBiomeName("Volcanic Wasteland").setFillerBlockMetadata(12431967).setHeight(height_Wasteland).setTemperatureRainfall(1.0F, 0.0F);
 
     public static final BiomeGenBase stoneMountains = (new BiomeGenMountains(43, false)).setColor(6316128).setBiomeName("Snowy Mountains").setHeight(height_HighHills).setTemperatureRainfall(0.2F, 0.3F);
 
-    public static final BiomeGenBase rainforest = (new BiomeGenJungleRainforest(44, false)).setColor(5470985).setBiomeName("Jungle Rainforest").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_Autumnal);
+    public static final BiomeGenBase rainforest = (new BiomeGenJungleRainforest(44, false)).setColor(5470985).setBiomeName("Jungle Rainforest").setFillerBlockMetadata(5470985).setTemperatureRainfall(0.95F, 0.9F).setHeight(height_Autumnal).setCaveBiome(CaveRegistry.jungle);
 
     public static final BiomeGenBase autumnalForest = (new BiomeGenForestAutumnal(45, 0)).setColor(16243232).setBiomeName("Autumnal Forest").setHeight(height_Autumnal);
 
@@ -144,7 +144,7 @@ public abstract class BiomeGenBase
 
     public static final BiomeGenBase lorienForestHills = (new BiomeGenForestLorien(52, 0)).setBiomeName("Lorien Forest Hills").setColor(16246801).setHeight(height_LowHills);
 
-    public static final BiomeGenBase roofedSwamp = (new BiomeGenSwampDark(46)).setColor(3236668).setBiomeName("Roofed Swamp").setHeight(height_PartiallySubmerged);
+    public static final BiomeGenBase roofedSwamp = (new BiomeGenSwampDark(46)).setColor(3236668).setBiomeName("Roofed Swamp").setHeight(height_PartiallySubmerged).setCaveBiome(CaveRegistry.jungle);
 
     public static final BiomeGenBase gravelBeach = (new BiomeGenBeach(47, Blocks.gravel.getDefaultState())).setColor(16445632).setBiomeName("Gravel Beach").setTemperatureRainfall(0.3F, 0.3F).setHeight(height_Shores);
 
@@ -153,14 +153,16 @@ public abstract class BiomeGenBase
 			.setColor(5470985)
 			.setTemperatureRainfall(0.8F, 0.9F)
 			.setHeight(height_Archipelago)
-			.setOcean();
+			.setOcean()
+            .setCaveBiome(CaveRegistry.jungle);
 
     public static final BiomeGenBase archipelagoHills = new BiomeGenArchipelago(49)
             .setBiomeName("Archipelago Hills")
             .setColor(5470985)
             .setTemperatureRainfall(0.8F, 0.9F)
             .setHeight(height_ArchipelagoHills)
-            .setOcean();
+            .setOcean()
+            .setCaveBiome(CaveRegistry.jungle);
 
     public static final BiomeGenBase frozenMesa = (new BiomeGenMesaSnow(50, false, false)).setColor(747097).setBiomeName("Frozen Hills").setHeight(height_MesaSnow);
 
@@ -214,6 +216,9 @@ public abstract class BiomeGenBase
 
     /** Set to true if snow is enabled for this biome. */
     protected boolean enableSnow;
+
+    /** Set to true if snow is enabled for this biome. */
+    protected CaveType caveType = null;
 
     /**
      * Is true (default) if the biome support rain (desert and nether can't have rain)
@@ -340,6 +345,11 @@ public abstract class BiomeGenBase
     protected BiomeGenBase setBiomeName(String name)
     {
         this.biomeName = name;
+        return this;
+    }
+
+    protected BiomeGenBase setCaveBiome(CaveType caveType) {
+        this.caveType=caveType;
         return this;
     }
 
@@ -482,8 +492,10 @@ public abstract class BiomeGenBase
     public void decorate(World worldIn, Random rand, BlockPos pos)
     {
         this.theBiomeDecorator.decorate(worldIn, rand, this, pos);
-        // Get the cave biome and decorate it
-//        this.shallowCaveType.decorate(worldIn, rand, this, pos);
+//        if(caveType!=null) {
+//            System.out.println("Attempting to decorate cave of type: " + caveType.getName());
+//            this.caveType.decorate(worldIn, rand, this, pos);
+//        }
     }
 
     public int getGrassColorAtPos(BlockPos pos)

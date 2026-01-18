@@ -8,20 +8,21 @@ public class CaveUtil {
 
     public static void decorateCave(CaveType caveType, ChunkPrimer chunkPrimer, int localChunkX, int localChunkY, int localChunkZ, Random rand) {
         // small chance to place cobwebs here
-        switch (rand.nextInt(10)) {
-            case 0:
-                if(rand.nextInt((2))==0) {
-                    CaveDecorator.tryPlaceCobweb(chunkPrimer, localChunkX, localChunkY, localChunkZ, rand);
-                }
-                break;
-            case 1:
-                if(caveType==null) return;
-                System.out.println("Type: " + caveType);
-                caveType.decorateMapGenCaves(chunkPrimer,localChunkX,localChunkY,localChunkZ,rand);
-                break;
-            default:
-                break;
-        }
+            switch (rand.nextInt(2)) {
+                case 0:
+                    if (rand.nextInt((2)) == 0) {
+                        CaveDecorator.tryPlaceCobweb(chunkPrimer, localChunkX, localChunkY, localChunkZ, rand);
+                    }
+                    // TODO: Add other decoration otherwise
+                    break;
+                case 1:
+                    if (caveType == null) return;
+                    caveType.decorateMapGenCaves(chunkPrimer, localChunkX, localChunkY, localChunkZ, rand);
+                    break;
+                default:
+                    break;
+            }
+
     }
 
     public static boolean isSolid(ChunkPrimer primer, int x, int y, int z) {
