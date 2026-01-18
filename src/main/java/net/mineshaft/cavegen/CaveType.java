@@ -8,24 +8,49 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import java.util.Random;
 
 public class CaveType {
-
-
-    String name;
+    protected final boolean useSurfaceRules;
+    protected String name;
     protected CaveHeight height;
+    protected int decorationCount;
+    protected boolean spawnCobwebs;
 
-    public CaveType(CaveHeight height, String name)
+    public CaveType(CaveHeight height, String name, boolean useSurfaceRules)
     {
+        this.decorationCount=1;
         this.name = name;
+        this.spawnCobwebs=true;
         this.height = height;
+        this.useSurfaceRules=useSurfaceRules;
     }
 
+    public CaveType setDecorationCount(int decorationCount) {
+        if(decorationCount>10) {
+            System.out.println("Warning! High decoration count declared in " + this.getClass().getName() + ", aborting!");
+            return this;
+        }
+        this.decorationCount=decorationCount;
+        return this;
+    }
+
+    public CaveType setCobwebs(boolean spawnCobwebs) {
+        this.spawnCobwebs=spawnCobwebs;
+        return this;
+    }
+
+    public int getDecorationCount() {return this.decorationCount;}
     public String getName() {return this.name;}
+    public boolean hasSurfaceRules() {return this.useSurfaceRules;}
+    public boolean hasCobwebs() {return this.spawnCobwebs;}
 
     public void decorateMapGenCaves(ChunkPrimer chunkPrimer, int localChunkX, int localChunkY, int localChunkZ, Random rand) {
 
     }
 
     public void decorate(World worldIn, Random rand, BiomeGenBase biomeGenBase, BlockPos pos) {
+
+    }
+
+    public void surfaceRules(ChunkPrimer chunkPrimer, int localChunkX, int localChunkY, int localChunkZ, Random random) {
 
     }
 

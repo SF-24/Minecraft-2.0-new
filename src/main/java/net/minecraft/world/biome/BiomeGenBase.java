@@ -208,7 +208,6 @@ public abstract class BiomeGenBase
 
     /** The biome decorator. */
     public BiomeDecorator theBiomeDecorator;
-    public CaveType shallowCaveType = CaveRegistry.jungle; //CaveRegistry.getCaveType(this, 64);
     protected List<BiomeGenBase.SpawnListEntry> spawnableMonsterList;
     protected List<BiomeGenBase.SpawnListEntry> spawnableCreatureList;
     protected List<BiomeGenBase.SpawnListEntry> spawnableWaterCreatureList;
