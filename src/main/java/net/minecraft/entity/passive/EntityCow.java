@@ -95,7 +95,8 @@ public class EntityCow extends EntityAnimal
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier)
     {
         // drops 0-5 instead of 0-2
-        int i = this.rand.nextInt(6) + this.rand.nextInt(1 + lootingModifier);
+        // Changed now to 1-4
+        int i = 1 + rand.nextInt(4) + this.rand.nextInt(1 + lootingModifier);
 
         for (int j = 0; j < i; ++j)
         {
@@ -103,7 +104,8 @@ public class EntityCow extends EntityAnimal
         }
 
         // 1 instead of 1->3, reduced looting effect
-        i = this.rand.nextInt(1) + 1 + this.rand.nextInt(1+lootingModifier);
+        // Now reverted.
+        i = this.rand.nextInt(3) + 1 + this.rand.nextInt(1+lootingModifier);
 
         for (int k = 0; k < i; ++k)
         {

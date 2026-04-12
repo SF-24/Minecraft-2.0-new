@@ -222,6 +222,19 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
     }
 
     /**
+     * Get the experience points the entity currently has.
+     */
+    protected int getExperiencePoints(EntityPlayer player)
+    {
+        if (this.getSkeletonType()==1)
+        {
+            this.experienceValue = (int)((float)this.experienceValue * 2.5F);
+        }
+
+        return super.getExperiencePoints(player);
+    }
+
+    /**
      * Drop 0-2 items of this living's type
      *  
      * @param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player

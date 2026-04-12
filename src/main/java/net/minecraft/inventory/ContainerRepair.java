@@ -379,9 +379,9 @@ public class ContainerRepair extends Container
             }
 
 
-            if (j2 == l1 && j2 > 0 && this.maximumCost >= 40)
+            if (j2 == l1 && j2 > 0 && this.maximumCost >= 36)
             {
-                this.maximumCost = 39;
+                this.maximumCost = 35;
             }
 //
 //            if (this.maximumCost >= 40 && !this.thePlayer.capabilities.isCreativeMode)
@@ -411,7 +411,7 @@ public class ContainerRepair extends Container
                             lowEnchantments++;
                         }
                     }
-                    k4 = k4 + 1 + Math.max(0,Math.max(lowEnchantments / 2 + enchantsAboveThirdLevel,2));
+                    k4 = k4 + 1 + Math.max(0,Math.min(lowEnchantments / 2 + enchantsAboveThirdLevel,3));
                 }
                 itemstack1.setRepairCost(k4);
                 EnchantmentHelper.setEnchantments(map, itemstack1);

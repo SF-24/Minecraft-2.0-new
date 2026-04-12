@@ -74,23 +74,36 @@ public class SkinRegistry {
 
     public static void loadSkins(String name, UUID uuid) {
         String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid).replace("-","")),"{\"current_cape\":\"empty\",\"current_skin\":\"steve\",\"is_slim\":false}");
-        MineshaftLogger.logInfo("Logging reply for player " + name +  " " + reply + " uuid=" + UUIDTypeAdapter.fromUUID(uuid).replace("-",""));
-        String skin = parseJson(reply).getAsJsonObject().get("current_skin").getAsString(); // skin
-        boolean isSlim = parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean(); //slim
-        String cape = parseJson(reply).getAsJsonObject().get("current_cape").getAsString(); // cape
-        if(skin==null||skin.equalsIgnoreCase("steve")||skin.isEmpty()) {
+        if(reply==null) {
+            Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/" + "empty" + ".png"));
             Minecraft.getMinecraft().userRenderData.skinResource.put(name, DefaultPlayerSkin.TEXTURE_STEVE);
-            MineshaftLogger.logInfo("Loaded default skin for player " + name);
-        } else {
-            MineshaftLogger.logInfo("Loaded custom skin " + skin + " for player " + name);
-            Minecraft.getMinecraft().userRenderData.skinResource.put(name, new ResourceLocation("textures/entity/player/skins/"+skin+".png"));
-            if(isSlim) {
-                Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
-            }
+            return;
         }
-        if(cape==null||cape.isEmpty()) cape="empty";
-        Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/"+cape+".png"));
-
+        MineshaftLogger.logInfo("Logging reply for player " + name +  " " + reply + " uuid=" + UUIDTypeAdapter.fromUUID(uuid).replace("-",""));
+        try {
+            String skin = parseJson(reply).getAsJsonObject().get("current_skin").getAsString(); // skin
+            boolean isSlim = parseJson(reply).getAsJsonObject().get("is_slim").getAsBoolean(); //slim
+            String cape = parseJson(reply).getAsJsonObject().get("current_cape").getAsString(); // cape
+            if (skin == null || skin.equalsIgnoreCase("steve") || skin.isEmpty()) {
+                Minecraft.getMinecraft().userRenderData.skinResource.put(name, DefaultPlayerSkin.TEXTURE_STEVE);
+                MineshaftLogger.logInfo("Loaded default skin for player " + name);
+            } else {
+                MineshaftLogger.logInfo("Loaded custom skin " + skin + " for player " + name);
+                Minecraft.getMinecraft().userRenderData.skinResource.put(name, new ResourceLocation("textures/entity/player/skins/" + skin + ".png"));
+                if (isSlim) {
+                    Minecraft.getMinecraft().userRenderData.slimSkins.add(name);
+                }
+            }
+            if (cape == null || cape.isEmpty()) cape = "empty";
+            Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/" + cape + ".png"));
+        } catch (Exception e) {
+            Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/" + "empty" + ".png"));
+            Minecraft.getMinecraft().userRenderData.skinResource.put(name, DefaultPlayerSkin.TEXTURE_STEVE);
+            MineshaftLogger.logError("Error! Cannot load skins for player " + name);
+            MineshaftLogger.logError("Json reply: " + reply);
+            MineshaftLogger.logError("Printing exception:");
+            e.printStackTrace();
+        }
     }
 
     @Deprecated

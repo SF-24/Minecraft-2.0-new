@@ -137,4 +137,12 @@ public class EntityGiantZombie extends EntityMob
 
         return i;
     }
+
+    /**
+     * Get the experience points the entity currently has.
+     */
+    protected int getExperiencePoints(EntityPlayer player)
+    {
+        return 50;
+    }
 }
