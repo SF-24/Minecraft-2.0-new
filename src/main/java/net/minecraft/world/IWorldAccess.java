@@ -6,9 +6,15 @@ import net.minecraft.util.BlockPos;
 
 public interface IWorldAccess
 {
+    @Deprecated
     void markBlockForUpdate(BlockPos pos);
 
+    void markBlockForUpdate(int x, int y, int z);
+
+    @Deprecated
     void notifyLightSet(BlockPos pos);
+
+    void notifyLightSet(int x, int y, int z);
 
     /**
      * On the client, re-renders all blocks in this range, inclusive. On the server, does nothing. Args: min x, min y,
@@ -40,11 +46,19 @@ public interface IWorldAccess
      */
     void onEntityRemoved(Entity entityIn);
 
+    @Deprecated
     void playRecord(String recordName, BlockPos blockPosIn);
 
-    void broadcastSound(int soundID, BlockPos pos, int data);
-
+    @Deprecated
     void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data);
 
+    @Deprecated
     void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress);
+
+    void broadcastSound(int soundID, int x, int y, int z, int data);
+
+//    void playAuxSFX(EntityPlayer player, int sfxType, int x, int y, int z, int data);
+
+//    void sendBlockBreakProgress(int breakerId, int x, int y, int z, int progress);
+
 }

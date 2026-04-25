@@ -18,6 +18,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.potion.Potion;
@@ -26,11 +27,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.mineshaft.ClimateZone;
+import net.mineshaft.DifficultyManager;
 
-public class EntitySpider extends EntityMob
-{
-    public EntitySpider(World worldIn)
-    {
+public class EntitySpider extends EntityMob {
+    public EntitySpider(World worldIn) {
         super(worldIn);
         this.setSize(1.4F, 0.9F);
         this.tasks.addTask(1, new EntityAISwimming(this));
@@ -48,34 +49,30 @@ public class EntitySpider extends EntityMob
     /**
      * Returns the Y offset from the entity's position for any entity riding this one.
      */
-    public double getMountedYOffset()
-    {
-        return (double)(this.height * 0.5F);
+    public double getMountedYOffset() {
+        return (double) (this.height * 0.5F);
     }
 
     /**
      * Returns new PathNavigateGround instance
      */
-    protected PathNavigate getNewNavigator(World worldIn)
-    {
+    protected PathNavigate getNewNavigator(World worldIn) {
         return new PathNavigateClimber(this, worldIn);
     }
 
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, new Byte((byte)0));
+        this.dataWatcher.addObject(13, new Byte((byte) 0));
+        this.dataWatcher.addObject(16, new Byte((byte) 0));
     }
 
     /**
      * Called to update the entity's position/logic.
      */
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (!this.worldObj.isRemote)
-        {
+        if (!this.worldObj.isRemote) {
             this.setBesideClimbableBlock(this.isCollidedHorizontally);
         }
     }
@@ -85,6 +82,29 @@ public class EntitySpider extends EntityMob
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(16.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
+    }
+
+    // Deal poison damage if a jungle spider
+    public boolean attackEntityAsMob(Entity entityIn)
+    {
+        if (super.attackEntityAsMob(entityIn))
+        {
+            // If it's a jungle spider
+            if (getSpiderType()==2 && entityIn instanceof EntityLivingBase)
+            {
+                DifficultyManager.applyShortDebuff(worldObj.getDifficulty(), Potion.poison.id, (EntityLivingBase) entityIn);
+                DifficultyManager.applyShortDebuff(worldObj.getDifficulty(), Potion.moveSlowdown.id, this, 1);
+            // If it's a scorpion - rare and deadly.
+            } else if (getSpiderType()==3 && entityIn instanceof EntityLivingBase)
+            {
+                DifficultyManager.applyShortDebuff(worldObj.getDifficulty(), Potion.moveSlowdown.id, (EntityLivingBase) entityIn);
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
@@ -203,7 +223,8 @@ public class EntitySpider extends EntityMob
     {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
 
-        if (this.worldObj.rand.nextInt(100) == 0)
+        // Spider jockey. - was 1 in 100
+        if (this.worldObj.rand.nextInt(75) == 0)
         {
             EntitySkeleton entityskeleton = new EntitySkeleton(this.worldObj);
             entityskeleton.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
@@ -212,7 +233,8 @@ public class EntitySpider extends EntityMob
             entityskeleton.mountEntity(this);
         }
 
-        if (livingdata == null)
+        // Jungle spiders and brown spiders don't get random effects.
+        if (getSpiderType()==0 && livingdata == null)
         {
             livingdata = new EntitySpider.GroupData();
 
@@ -230,6 +252,14 @@ public class EntitySpider extends EntityMob
             {
                 this.addPotionEffect(new PotionEffect(i, Integer.MAX_VALUE));
             }
+        }
+
+        // Set the type
+        if (this.worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.JUNGLE || this.worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.TROPICAL_OCEAN) //&& this.getRNG().nextInt(4) != 0)
+        {
+            this.setSpiderType(2);
+        } else {
+            this.setSpiderType(0);
         }
 
         return livingdata;
@@ -307,5 +337,63 @@ public class EntitySpider extends EntityMob
                 this.potionEffectId = Potion.invisibility.id;
             }
         }
+    }
+
+    // Spider Type
+    // 0 = default
+    // 1 = brown spider
+    // 2 = jungle spider
+    // 3 = scorpion
+    // Cave spider managed separately
+    /**
+     * Return this skeleton's type.
+     */
+    public int getSpiderType()
+    {
+        return this.dataWatcher.getWatchableObjectByte(13);
+    }
+
+    /**
+     * Set this skeleton's type.
+     */
+    public void setSpiderType(int type)
+    {
+        this.dataWatcher.updateObject(13, (byte) type);
+
+        if (type == 1) {
+            // Brown spider
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(12.0D);
+        } else if(type == 2) {
+            // Jungle Spider
+            this.setSize(1.12F, 0.72F);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+            this.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, Integer.MAX_VALUE, 0));
+        } else if(type==3) {
+            // Scorpion
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        }
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
+    {
+        super.readEntityFromNBT(tagCompund);
+
+        if (tagCompund.hasKey("SpiderType", 99))
+        {
+            int i = tagCompund.getByte("SpiderType");
+            this.setSpiderType(i);
+        }
+    }
+
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
+    {
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setByte("SpiderType", (byte)this.getSpiderType());
     }
 }

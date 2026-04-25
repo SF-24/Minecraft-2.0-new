@@ -30,6 +30,7 @@ public class GameRules
         this.addGameRule("logAdminCommands", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("showDeathMessages", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("randomTickSpeed", "3", GameRules.ValueType.NUMERICAL_VALUE);
+        this.addGameRule("bloodMoonInterval", "25", ValueType.NUMERICAL_VALUE);
         this.addGameRule("sendCommandFeedback", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("reducedDebugInfo", "false", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("currentMode", String.valueOf(EnumTweakMode.DEFAULT), ValueType.ENUM_MODE_VALUE);

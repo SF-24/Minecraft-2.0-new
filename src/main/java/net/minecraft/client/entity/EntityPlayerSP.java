@@ -10,14 +10,7 @@ import net.minecraft.client.gui.GuiMerchant;
 import net.minecraft.client.gui.GuiRepair;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenBook;
-import net.minecraft.client.gui.inventory.GuiBeacon;
-import net.minecraft.client.gui.inventory.GuiBrewingStand;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.gui.inventory.GuiCrafting;
-import net.minecraft.client.gui.inventory.GuiDispenser;
-import net.minecraft.client.gui.inventory.GuiEditSign;
-import net.minecraft.client.gui.inventory.GuiFurnace;
-import net.minecraft.client.gui.inventory.GuiScreenHorseInventory;
+import net.minecraft.client.gui.inventory.*;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.entity.Entity;
@@ -663,6 +656,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public void displayVillagerTradeGui(IMerchant villager)
     {
         this.mc.displayGuiScreen(new GuiMerchant(this.inventory, villager, this.worldObj));
+    }
+
+    public void displayResearchGui()
+    {
+        this.mc.displayGuiScreen(new GuiResearch(this.inventory, this.worldObj));
     }
 
     /**

@@ -604,7 +604,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         d22 = MathHelper.clamp_double(d22, -getMaximumSpeed(), getMaximumSpeed());
         d23 = MathHelper.clamp_double(d23, -getMaximumSpeed(), getMaximumSpeed());
 
-        System.out.println(Math.sqrt(getSpeedSquared()));
+//        System.out.println(Math.sqrt(getSpeedSquared()));
 
         if(this.getMaximumSpeedSquared()<(d22*d22+d23*d23)) {
             System.out.println("YAW: " + minecartYaw);

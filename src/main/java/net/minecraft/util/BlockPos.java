@@ -4,6 +4,7 @@ import com.google.common.collect.AbstractIterator;
 import java.util.Iterator;
 import net.minecraft.entity.Entity;
 
+@Deprecated
 public class BlockPos extends Vec3i
 {
     /** The BlockPos with all coordinates 0 */

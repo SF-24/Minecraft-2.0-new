@@ -49,6 +49,7 @@ import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.inventory.GuiResearch;
 import net.minecraft.client.gui.stream.GuiStreamUnavailable;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -2101,6 +2102,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     this.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT));
                     this.displayGuiScreen(new GuiInventory(this.thePlayer));
                 }
+            }
+
+            // Open research gui
+            while (this.gameSettings.keyBindResearch.isPressed())
+            {
+                this.displayGuiScreen(new GuiResearch(this.thePlayer.inventory, this.theWorld));
             }
 
             while (this.gameSettings.keyBindAttack.isPressed())

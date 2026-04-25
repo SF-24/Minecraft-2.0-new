@@ -75,8 +75,19 @@ public class WorldManager implements IWorldAccess
         this.theWorldServer.getPlayerManager().markBlockForUpdate(pos);
     }
 
+    public void markBlockForUpdate(int x, int y, int z)
+    {
+        this.theWorldServer.getPlayerManager().markBlockForUpdate(x,y,z);
+    }
+
+
     public void notifyLightSet(BlockPos pos)
     {
+    }
+
+    @Override
+    public void notifyLightSet(int x, int y, int z) {
+
     }
 
     public void playRecord(String recordName, BlockPos blockPosIn)
@@ -109,5 +120,10 @@ public class WorldManager implements IWorldAccess
                 }
             }
         }
+    }
+
+    @Override
+    public void broadcastSound(int soundID, int x, int y, int z, int data) {
+
     }
 }

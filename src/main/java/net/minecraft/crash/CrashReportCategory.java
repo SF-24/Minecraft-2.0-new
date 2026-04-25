@@ -253,6 +253,7 @@ public class CrashReportCategory
         });
     }
 
+    @Deprecated
     public static void addBlockInfo(CrashReportCategory category, final BlockPos pos, final IBlockState state)
     {
         category.addCrashSectionCallable("Block", new Callable<String>()
@@ -267,6 +268,24 @@ public class CrashReportCategory
             public String call() throws Exception
             {
                 return CrashReportCategory.getCoordinateInfo(pos);
+            }
+        });
+    }
+
+    public static void addBlockInfo(CrashReportCategory category, final int x, final int y, final int z, final IBlockState state)
+    {
+        category.addCrashSectionCallable("Block", new Callable<String>()
+        {
+            public String call() throws Exception
+            {
+                return state.toString();
+            }
+        });
+        category.addCrashSectionCallable("Block location", new Callable<String>()
+        {
+            public String call() throws Exception
+            {
+                return CrashReportCategory.getCoordinateInfo(x,y,z);
             }
         });
     }

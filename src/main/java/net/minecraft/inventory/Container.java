@@ -32,7 +32,7 @@ public abstract class Container
     /**
      * Adds an item slot to this container
      */
-    protected Slot addSlotToContainer(Slot slotIn)
+    public Slot addSlotToContainer(Slot slotIn)
     {
         slotIn.slotNumber = this.inventorySlots.size();
         this.inventorySlots.add(slotIn);

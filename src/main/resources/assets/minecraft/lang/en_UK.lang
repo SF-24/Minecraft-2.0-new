@@ -751,6 +751,7 @@ entity.SmallFireball.name=Small Fireball
 entity.SnowMan.name=Snow Golem
 entity.Snowball.name=Snowball
 entity.Spider.name=Spider
+entity.ScorpionSpider.name=Scorpion
 entity.Squid.name=Squid
 entity.Villager.armor=Armourer
 entity.Villager.butcher=Butcher

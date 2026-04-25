@@ -153,6 +153,7 @@ public class ItemPotion extends Item
 
             worldIn.playSoundAtEntity(playerIn, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
+            // Spawn the potion
             if (!worldIn.isRemote)
             {
                 worldIn.spawnEntityInWorld(new EntityPotion(worldIn, playerIn, itemStackIn));

@@ -38,6 +38,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.mineshaft.ClimateZone;
 import net.optifine.reflect.Reflector;
 
 public abstract class EntityLiving extends EntityLivingBase
@@ -767,9 +769,17 @@ public abstract class EntityLiving extends EntityLivingBase
     {
         if(this.isEntityUndead()) {
             if (this.worldObj.isBloodMoon()) {
-                return 12;
+                return 10;
             }
             return 6;
+        }
+        else if (!this.worldObj.isBloodMoon() && ((worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.JUNGLE) || (worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.TROPICAL_OCEAN))
+        ) {
+            if(this.getCreatureAttribute()==EnumCreatureAttribute.ARTHROPOD) {
+                return 6; // Hopefully this isn't too much.
+            } else if(this.isEntityUndead()) {
+                return 4;
+            }
         }
         return 4;
     }

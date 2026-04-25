@@ -163,6 +163,7 @@ public class PlayerManager
         return playermanager$playerinstance;
     }
 
+    @Deprecated
     public void markBlockForUpdate(BlockPos pos)
     {
         int i = pos.getX() >> 4;
@@ -172,6 +173,18 @@ public class PlayerManager
         if (playermanager$playerinstance != null)
         {
             playermanager$playerinstance.flagChunkForUpdate(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
+        }
+    }
+
+    public void markBlockForUpdate(int x, int y, int z)
+    {
+        int i = x >> 4;
+        int j = z >> 4;
+        PlayerManager.PlayerInstance playermanager$playerinstance = this.getPlayerInstance(i, j, false);
+
+        if (playermanager$playerinstance != null)
+        {
+            playermanager$playerinstance.flagChunkForUpdate(x & 15, y, z & 15);
         }
     }
 

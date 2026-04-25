@@ -1151,11 +1151,11 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.playerEntity.getServerForPlayer());
         this.playerEntity.markPlayerActive();
         WorldServer worldserver = this.serverController.worldServerForDimension(this.playerEntity.dimension);
-        BlockPos blockpos = packetIn.getPosition();
 
-        if (worldserver.isBlockLoaded(blockpos))
+        if (worldserver.isBlockLoaded(packetIn.getPosition()))
         {
-            TileEntity tileentity = worldserver.getTileEntity(blockpos);
+            TileEntity tileentity = worldserver.getTileEntity(packetIn.getPosition());
+
 
             if (!(tileentity instanceof TileEntitySign))
             {
@@ -1178,7 +1178,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
             }
 
             tileentitysign.markDirty();
-            worldserver.markBlockForUpdate(blockpos);
+            worldserver.markBlockForUpdate(packetIn.getPosition());
         }
     }
 

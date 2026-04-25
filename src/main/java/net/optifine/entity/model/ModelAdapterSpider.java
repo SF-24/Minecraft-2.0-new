@@ -3,6 +3,7 @@ package net.optifine.entity.model;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.model.ModelScorpion;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSpider;
@@ -27,7 +28,14 @@ public class ModelAdapterSpider extends ModelAdapter
 
     public ModelRenderer getModelRenderer(ModelBase model, String modelPart)
     {
-        if (!(model instanceof ModelSpider))
+        if(model instanceof ModelScorpion) {
+            ModelScorpion modelspider = (ModelScorpion)model;
+            return modelPart.equals("head") ? modelspider.spiderHead : (modelPart.equals("neck") ? modelspider.spiderNeck : (modelPart.equals("body") ? modelspider.spiderBody : (modelPart.equals("leg1") ? modelspider.spiderLeg1 : (modelPart.equals("leg2") ? modelspider.spiderLeg2 : (modelPart.equals("leg3") ? modelspider.spiderLeg3 : (modelPart.equals("leg4") ? modelspider.spiderLeg4 : (modelPart.equals("leg5") ? modelspider.spiderLeg5 : (modelPart.equals("leg6") ? modelspider.spiderLeg6 : (modelPart.equals("leg7") ? modelspider.spiderLeg7 : (modelPart.equals("leg8") ? modelspider.spiderLeg8 :
+                    modelPart.equals("larm1") ? modelspider.LArm1 : modelPart.equals("larm2") ? modelspider.LArm2 : modelPart.equals("rarm1") ? modelspider.RArm1 : modelPart.equals("rarm2") ? modelspider.RArm2 :
+                            modelPart.equals("larm4") ? modelspider.LArm4 : modelPart.equals("larm3") ? modelspider.LArm3 : modelPart.equals("rarm4") ? modelspider.RArm4 : modelPart.equals("rarm3") ? modelspider.RArm3 :
+                                    modelPart.equals("tail1") ? modelspider.Tail1: modelPart.equals("tail2") ? modelspider.Tail2: modelPart.equals("tail3") ? modelspider.Tail3: modelPart.equals("tail4") ? modelspider.Tail4: modelPart.equals("tail5") ? modelspider.Tail5: modelPart.equals("sting1") ? modelspider.Sting1: modelPart.equals("sting2") ? modelspider.Sting2: null))))))))));
+
+        } else if (!(model instanceof ModelSpider))
         {
             return null;
         }

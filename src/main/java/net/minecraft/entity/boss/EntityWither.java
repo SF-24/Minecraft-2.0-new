@@ -237,7 +237,7 @@ public class EntityWither extends EntityMob implements IBossDisplayData, IRanged
             if (j1 <= 0)
             {
                 this.worldObj.newExplosion(this, this.posX, this.posY + (double)this.getEyeHeight(), this.posZ, 7.0F, false, this.worldObj.getGameRules().getBoolean("mobGriefing"));
-                this.worldObj.playBroadcastSound(1013, new BlockPos(this), 0);
+                this.worldObj.playBroadcastSound(1013, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
             }
 
             this.setInvulTime(j1);

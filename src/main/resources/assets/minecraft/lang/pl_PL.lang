@@ -752,6 +752,7 @@ entity.SmallFireball.name=Mała kula ognia
 entity.SnowMan.name=Śnieżny Golem
 entity.Snowball.name=Śnieżka
 entity.Spider.name=Pająk
+entity.ScorpionSpider.name=Skorpion
 entity.Squid.name=Kałamarnica
 entity.Villager.armor=Płatnerz
 entity.Villager.butcher=Rzeźnik

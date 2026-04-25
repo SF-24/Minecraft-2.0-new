@@ -651,7 +651,7 @@ public class EntityDragon extends EntityLiving implements IBossDisplayData, IEnt
 
             if (this.deathTicks == 1)
             {
-                this.worldObj.playBroadcastSound(1018, new BlockPos(this), 0);
+                this.worldObj.playBroadcastSound(1018, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
             }
         }
 

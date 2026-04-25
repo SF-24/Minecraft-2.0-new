@@ -25,30 +25,40 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
 {
     private static final ResourceLocation SIGN_TEXTURE = new ResourceLocation("textures/entity/sign.png");
 
+    private static final ModelSign standingModel = new ModelSign(true);
+    private static final ModelSign wallModel = new ModelSign(false);
+    private static final float f = 0.6666667F;
+
+
     /** The ModelSign instance for use in this renderer */
-    private ModelSign model;
+//    private ModelSign model = new ModelSign(false);
 //    private static double textRenderDistanceSq = Constants.signRenderDistanceSquared;
+
+    // Distance check: (te.getPos().getX()-entity.posX)*(te.getPos().getX()-entity.posX)+(te.getPos().getY()-entity.posY)*(te.getPos().getY()-entity.posY)+(te.getPos().getZ()-entity.posZ)*(te.getPos().getZ()-entity.posZ)<Config.getSignRenderDistanceSquared()
 
     public void renderTileEntityAt(TileEntitySign te, double x, double y, double z, float partialTicks, int destroyStage)
     {
-
-        Block block = te.getBlockType();
-        GlStateManager.pushMatrix();
-        float f = 0.6666667F;
-        Entity entity = Config.getMinecraft().getRenderViewEntity();
-
-        model = new ModelSign(block == Blocks.standing_sign,new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Config.getSignRenderDistanceSquared()); //Constants.signRenderDistanceSquared);
-        if (Config.getMinecraft().currentScreen instanceof GuiEditSign) {
-            this.model = new ModelSign(true, true);
-            this.model.signStick.showModel=false;
+        if((te.getPos().getX() - Config.getMinecraft().getRenderViewEntity().posX) * (te.getPos().getX() - Config.getMinecraft().getRenderViewEntity().posX) + (te.getPos().getY() - Config.getMinecraft().getRenderViewEntity().posY) * (te.getPos().getY() - Config.getMinecraft().getRenderViewEntity().posY) + (te.getPos().getZ() - Config.getMinecraft().getRenderViewEntity().posZ) * (te.getPos().getZ() - Config.getMinecraft().getRenderViewEntity().posZ) >= Config.getSignRenderDistanceSquared()) {
+            return;
         }
+        GlStateManager.pushMatrix();
 
-        if (block == Blocks.standing_sign)
+//        if(block == Blocks.standing_sign && !(Config.getMinecraft().currentScreen instanceof GuiEditSign)) {
+////            model = new ModelSign(block == Blocks.standing_sign); //Constants.signRenderDistanceSquared);
+//            model.setStanding();
+//        }
+
+//        if (Config.getMinecraft().currentScreen instanceof GuiEditSign) {
+////            this.model = new ModelSign(true, true);
+//            this.model.signStick.showModel=false;
+//        }
+
+        if (te.getBlockType() == Blocks.standing_sign)
         {
             GlStateManager.translate((float)x + 0.5F, (float)y + 0.75F * f, (float)z + 0.5F);
-            float f1 = (float)(te.getBlockMetadata() * 360) / 16.0F;
-            GlStateManager.rotate(-f1, 0.0F, 1.0F, 0.0F);
-            this.model.signStick.showModel = true;
+            // Rotation
+            GlStateManager.rotate(-((float)te.getBlockMetadata() * 360) / 16.0F, 0.0F, 1.0F, 0.0F);
+//            this.model.signStick.showModel = true;
         }
         else
         {
@@ -93,9 +103,13 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
         GlStateManager.enableRescaleNormal();
         GlStateManager.pushMatrix();
         GlStateManager.scale(f, -f, -f);
-        this.model.renderSign(block == Blocks.standing_sign,new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Config.getSignRenderDistanceSquared());//Constants.signRenderDistanceSquared);
-        GlStateManager.popMatrix();
+        if (te.getBlockType() == Blocks.standing_sign) {
+            standingModel.renderSign();//new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Config.getSignRenderDistanceSquared());//Constants.signRenderDistanceSquared);
+        } else {
+            wallModel.renderSign();//new Point3d(te.getPos().getX(),te.getPos().getY(),te.getPos().getZ()).distanceSquared(new Point3d(entity.posX,entity.posY,entity.posZ))<Config.getSignRenderDistanceSquared());//Constants.signRenderDistanceSquared);
+        }
 
+        GlStateManager.popMatrix();
 
         if (isRenderText(te))
         {
@@ -112,25 +126,25 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
                 i = CustomColors.getSignTextColor(i);
             }
 
-            if (destroyStage < 0)
-            {
+            if (destroyStage < 0 && (te.getPos().getX() - Config.getMinecraft().getRenderViewEntity().posX) * (te.getPos().getX() - Config.getMinecraft().getRenderViewEntity().posX) + (te.getPos().getY() - Config.getMinecraft().getRenderViewEntity().posY) * (te.getPos().getY() - Config.getMinecraft().getRenderViewEntity().posY) + (te.getPos().getZ() - Config.getMinecraft().getRenderViewEntity().posZ) * (te.getPos().getZ() - Config.getMinecraft().getRenderViewEntity().posZ)*2 < Config.getSignRenderDistanceSquared() && te.signText.length>0) {
+                // Render text:
                 for (int j = 0; j < te.signText.length; ++j)
                 {
                     if (te.signText[j] != null)
                     {
-                        IChatComponent ichatcomponent = te.signText[j];
-                        List<IChatComponent> list = GuiUtilRenderComponents.splitText(ichatcomponent, 90, fontrenderer, false, true);
-                        String s = list != null && list.size() > 0 ? ((IChatComponent)list.get(0)).getFormattedText() : "";
+//                        IChatComponent ichatcomponent = te.signText[j];
+                        List<IChatComponent> list = GuiUtilRenderComponents.splitText(te.signText[j], 90, fontrenderer, false, true);
+                        String s = !list.isEmpty() ? ((IChatComponent)list.get(0)).getFormattedText() : "";
 
                         if (j == te.lineBeingEdited)
                         {
                             s = "> " + s + " <";
-                            fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - te.signText.length * 5, i);
+//                            fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - te.signText.length * 5, i);
                         }
-                        else
-                        {
-                            fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - te.signText.length * 5, i);
-                        }
+//                        else
+//                        {
+//                        }
+                        fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - te.signText.length * 5, i);
                     }
                 }
             }
@@ -178,14 +192,14 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
 
     public static void updateTextRenderDistance()
     {
-        Minecraft minecraft = Config.getMinecraft();
-        // double d0 = (double)Config.limit(minecraft.gameSettings.gammaSetting, 1.0F, 120.0F);
-        //double d1 = Math.max(1.5D * (double)minecraft.displayHeight / d0, 16.0D);
-        //Constants.signRenderDistanceSquared = d1 * d1;
-        if(!minecraft.gameSettings.fancyGraphics) {
-            Constants.signRenderDistanceSquared=Constants.shortSignDistanceSquared;
-        } else {
-            Constants.signRenderDistanceSquared=Constants.longSignDistanceSquared;
-        }
+//        Minecraft minecraft = Config.getMinecraft();
+//        // double d0 = (double)Config.limit(minecraft.gameSettings.gammaSetting, 1.0F, 120.0F);
+//        //double d1 = Math.max(1.5D * (double)minecraft.displayHeight / d0, 16.0D);
+//        //Constants.signRenderDistanceSquared = d1 * d1;
+//        if(!minecraft.gameSettings.fancyGraphics) {
+//            Constants.signRenderDistanceSquared=Constants.shortSignDistanceSquared;
+//        } else {
+//            Constants.signRenderDistanceSquared=Constants.longSignDistanceSquared;
+//        }
     }
 }

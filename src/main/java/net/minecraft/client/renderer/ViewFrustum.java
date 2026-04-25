@@ -136,46 +136,72 @@ public class ViewFrustum
 
     public void markBlocksForUpdate(int fromX, int fromY, int fromZ, int toX, int toY, int toZ)
     {
-        int i = MathHelper.bucketInt(fromX, 16);
-        int j = MathHelper.bucketInt(fromY, 16);
-        int k = MathHelper.bucketInt(fromZ, 16);
-        int l = MathHelper.bucketInt(toX, 16);
-        int i1 = MathHelper.bucketInt(toY, 16);
-        int j1 = MathHelper.bucketInt(toZ, 16);
+//        int i = MathHelper.bucketInt(fromX, 16);
+//        int j = MathHelper.bucketInt(fromY, 16);
+//        int k = MathHelper.bucketInt(fromZ, 16);
+//        int l = MathHelper.bucketInt(toX, 16);
+//        int i1 = MathHelper.bucketInt(toY, 16);
+//        int j1 = MathHelper.bucketInt(toZ, 16);
+//
+//        for (int k1 = i; k1 <= l; ++k1)
+//        {
+//            int l1 = k1 % this.countChunksX;
+//
+//            if (l1 < 0)
+//            {
+//                l1 += this.countChunksX;
+//            }
+//
+//            for (int i2 = j; i2 <= i1; ++i2)
+//            {
+//                int j2 = i2 % this.countChunksY;
+//
+//                if (j2 < 0)
+//                {
+//                    j2 += this.countChunksY;
+//                }
+//
+//                for (int k2 = k; k2 <= j1; ++k2)
+//                {
+//                    int l2 = k2 % this.countChunksZ;
+//
+//                    if (l2 < 0)
+//                    {
+//                        l2 += this.countChunksZ;
+//                    }
+//
+//                    int i3 = (l2 * this.countChunksY + j2) * this.countChunksX + l1;
+//                    RenderChunk renderchunk = this.renderChunks[i3];
+//                    renderchunk.setNeedsUpdate(true);
+//                }
+//            }
+//        }
+//        int i = MathHelper.bucketInt(fromX, 16);
+//        int j = MathHelper.bucketInt(fromY, 16);
+//        int k = MathHelper.bucketInt(fromZ, 16);
+//        int l = MathHelper.bucketInt(toX, 16);
+//        int i1 = MathHelper.bucketInt(toY, 16);
+//        int j1 = MathHelper.bucketInt(toZ, 16);
 
-        for (int k1 = i; k1 <= l; ++k1)
-        {
-            int l1 = k1 % this.countChunksX;
+        int CX = this.countChunksX;
+        int CY = this.countChunksY;
+        int CZ = this.countChunksZ;
 
-            if (l1 < 0)
-            {
-                l1 += this.countChunksX;
-            }
+        for (int cz = MathHelper.bucketInt(fromZ,16); cz <= MathHelper.bucketInt(toZ,16); ++cz) {
+//            int l2 = ((cz % CZ) + CZ) % CZ;  // Z local
 
-            for (int i2 = j; i2 <= i1; ++i2)
-            {
-                int j2 = i2 % this.countChunksY;
+            for (int cy = MathHelper.bucketInt(fromY,16); cy <= MathHelper.bucketInt(toY,16); ++cy) {
+//                int j2 = ((cy % CY) + CY) % CY;  // Y local
 
-                if (j2 < 0)
-                {
-                    j2 += this.countChunksY;
-                }
-
-                for (int k2 = k; k2 <= j1; ++k2)
-                {
-                    int l2 = k2 % this.countChunksZ;
-
-                    if (l2 < 0)
-                    {
-                        l2 += this.countChunksZ;
-                    }
-
-                    int i3 = (l2 * this.countChunksY + j2) * this.countChunksX + l1;
-                    RenderChunk renderchunk = this.renderChunks[i3];
-                    renderchunk.setNeedsUpdate(true);
+                for (int cx = MathHelper.bucketInt(fromX,16); cx <= MathHelper.bucketInt(toX,16); ++cx) {
+//                    int l1 = ((cx % CX) + CX) % CX;  // X local
+//                    int i3 = (l2 * CY + j2) * CX + l1;  // Exact original formula
+                    int i3 = (((cz % CZ) + CZ) % CZ * CY + ((cy % CY) + CY) % CY) * CX + ((cx % CX) + CX) % CX;  // Exact original formula
+                    this.renderChunks[i3].setNeedsUpdate(true);
                 }
             }
         }
+
     }
 
     public RenderChunk getRenderChunk(BlockPos pos)
@@ -183,6 +209,37 @@ public class ViewFrustum
         int i = pos.getX() >> 4;
         int j = pos.getY() >> 4;
         int k = pos.getZ() >> 4;
+
+        if (j >= 0 && j < this.countChunksY)
+        {
+            i = i % this.countChunksX;
+
+            if (i < 0)
+            {
+                i += this.countChunksX;
+            }
+
+            k = k % this.countChunksZ;
+
+            if (k < 0)
+            {
+                k += this.countChunksZ;
+            }
+
+            int l = (k * this.countChunksY + j) * this.countChunksX + i;
+            return this.renderChunks[l];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public RenderChunk getRenderChunk(int i, int j, int k)
+    {
+        i = i >> 4;
+        j = j >> 4;
+        k = k >> 4;
 
         if (j >= 0 && j < this.countChunksY)
         {

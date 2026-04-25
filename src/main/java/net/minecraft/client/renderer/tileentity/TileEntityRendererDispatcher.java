@@ -2,6 +2,9 @@ package net.minecraft.client.renderer.tileentity;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
+
+import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockSign;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,6 +17,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.src.Config;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.tileentity.TileEntityBeacon;
@@ -113,6 +118,13 @@ public class TileEntityRendererDispatcher
 
     public void renderTileEntity(TileEntity tileentityIn, float partialTicks, int destroyStage)
     {
+        if((tileentityIn.getBlockType() instanceof BlockSign) &&(tileentityIn.getPos().getX() - entityX) * (tileentityIn.getPos().getX() - entityX) + (tileentityIn.getPos().getY() - entityY) * (tileentityIn.getPos().getY() - entityY) + (tileentityIn.getPos().getZ() - entityZ) * (tileentityIn.getPos().getZ() - entityZ) >= Config.getSignRenderDistanceSquared()) {
+            return;
+        }
+        if(tileentityIn.getBlockType() instanceof BlockChest &&(tileentityIn.getPos().getX() - entityX) * (tileentityIn.getPos().getX() - entityX) + (tileentityIn.getPos().getY() - entityY) * (tileentityIn.getPos().getY() - entityY) + (tileentityIn.getPos().getZ() - entityZ) * (tileentityIn.getPos().getZ() - entityZ) >= Config.getChestRenderDistanceSquared()) {
+            return;
+        }
+
         if (tileentityIn.getDistanceSq(this.entityX, this.entityY, this.entityZ) < tileentityIn.getMaxRenderDistanceSquared())
         {
             boolean flag = true;
