@@ -128,7 +128,7 @@ public class DynamicLight
                 renderChunk.setNeedsUpdate(true);
             }
 
-            BlockPos blockpos = renderChunk.getPosition();
+            BlockPos blockpos = new BlockPos(renderChunk.getPosX(),renderChunk.getPosY(),renderChunk.getPosZ());
 
             if (setPrevPos != null)
             {

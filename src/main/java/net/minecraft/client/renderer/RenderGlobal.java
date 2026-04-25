@@ -735,7 +735,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             {
                 RenderGlobal.ContainerLocalRenderInformation renderglobal$containerlocalrenderinformation = (RenderGlobal.ContainerLocalRenderInformation) renderglobal$containerlocalrenderinformation0;
                 Chunk chunk = renderglobal$containerlocalrenderinformation.renderChunk.getChunk();
-                ClassInheritanceMultiMap<Entity> classinheritancemultimap = chunk.getEntityLists()[renderglobal$containerlocalrenderinformation.renderChunk.getPosition().getY() / 16];
+                ClassInheritanceMultiMap<Entity> classinheritancemultimap = chunk.getEntityLists()[renderglobal$containerlocalrenderinformation.renderChunk.getPosY() / 16];
 
                 if (!classinheritancemultimap.isEmpty())
                 {
@@ -1088,7 +1088,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             {
                 this.clearRenderInfos();
 
-                if (renderchunk1 != null && renderchunk1.getPosition().getY() > j)
+                if (renderchunk1 != null && renderchunk1.getPosY() > j)
                 {
                     this.renderInfosEntities.add(renderchunk1.getRenderInfo());
                 }
@@ -1099,7 +1099,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 {
                     RenderChunk renderchunk2 = iterator.next();
 
-                    if (renderchunk2 != null && renderchunk2.getPosition().getY() <= j)
+                    if (renderchunk2 != null && renderchunk2.getPosY() <= j)
                     {
                         RenderGlobal.ContainerLocalRenderInformation renderglobal$containerlocalrenderinformation = renderchunk2.getRenderInfo();
 
@@ -1136,7 +1136,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             Deque deque = this.visibilityDeque;
             boolean flag1 = this.mc.renderChunksMany;
 
-            if (renderchunk != null && renderchunk.getPosition().getY() <= j)
+            if (renderchunk != null && renderchunk.getPosY() <= j)
             {
                 boolean flag2 = false;
                 RenderGlobal.ContainerLocalRenderInformation renderglobal$containerlocalrenderinformation4 = new RenderGlobal.ContainerLocalRenderInformation(renderchunk, null, 0);
@@ -1183,17 +1183,14 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 {
                     for (int dx = -this.renderDistanceChunks; dx <= this.renderDistanceChunks; ++dx)
                     {
-//                        if(dx*dx+dz*dz>renderDistanceChunks*renderDistanceChunks) {
-//                            continue;
-//                        } else {
-                            RenderChunk renderchunk3 = this.viewFrustum.getRenderChunk((dz << 4) + 8, j1, (dx << 4) + 8);
-                            if (renderchunk3 != null && renderchunk3.isBoundingBoxInFrustum(camera, frameCount)) {
-                                renderchunk3.setFrameIndex(frameCount);
-                                RenderGlobal.ContainerLocalRenderInformation renderglobal$containerlocalrenderinformation1 = renderchunk3.getRenderInfo();
-                                renderglobal$containerlocalrenderinformation1.initialize(null, 0);
-                                deque.add(renderglobal$containerlocalrenderinformation1);
-                            }
-//                        }
+//                        System.out.println("Dist: " + String.valueOf(dz) + "^2," + String.valueOf(dx) + "^2 = " + dx*dx+dz*dz + " | " + renderDistanceChunks*renderDistanceChunks);
+                        RenderChunk renderchunk3 = this.viewFrustum.getRenderChunk((dz << 4) + 8, j1, (dx << 4) + 8);
+                        if (renderchunk3 != null && renderchunk3.isBoundingBoxInFrustum(camera, frameCount)) {
+                            renderchunk3.setFrameIndex(frameCount);
+                            RenderGlobal.ContainerLocalRenderInformation renderglobal$containerlocalrenderinformation1 = renderchunk3.getRenderInfo();
+                            renderglobal$containerlocalrenderinformation1.initialize(null, 0);
+                            deque.add(renderglobal$containerlocalrenderinformation1);
+                        }
                     }
                 }
             }
@@ -1275,8 +1272,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 if (renderchunk5.isNeedsUpdate() || set.contains(renderchunk5))
                 {
                     this.displayListEntitiesDirty = true;
-                    BlockPos blockpos1 = renderchunk5.getPosition();
-                    boolean flag4 = blockpos.distanceSq(blockpos1.getX() + 8, blockpos1.getY() + 8, blockpos1.getZ() + 8) < 768.0D;
+//                    BlockPos blockpos1 = renderchunk5.getPosition();
+                    boolean flag4 = blockpos.distanceSq(renderchunk5.getPosX() + 8, renderchunk5.getPosY() + 8, renderchunk5.getPosZ() + 8) < 768.0D;
 
                     if (!flag4)
                     {
@@ -1304,8 +1301,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
     private boolean isPositionInRenderChunk(BlockPos pos, RenderChunk renderChunkIn)
     {
-        BlockPos blockpos = renderChunkIn.getPosition();
-        return MathHelper.abs_int(pos.getX() - blockpos.getX()) > 16 ? false : (MathHelper.abs_int(pos.getY() - blockpos.getY()) > 16 ? false : MathHelper.abs_int(pos.getZ() - blockpos.getZ()) <= 16);
+//        BlockPos blockpos = renderChunkIn.getPosition();
+        return MathHelper.abs_int(pos.getX() - renderChunkIn.getPosX()) > 16 ? false : (MathHelper.abs_int(pos.getY() - renderChunkIn.getPosY()) > 16 ? false : MathHelper.abs_int(pos.getZ() - renderChunkIn.getPosZ()) <= 16);
     }
 
     private Set<EnumFacing> getVisibleFacings(BlockPos pos)
@@ -1332,7 +1329,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         {
             return null;
         }
-        else if (renderchunk.getPosition().getY() > p_getRenderChunkOffset_5_)
+        else if (renderchunk.getPosY() > p_getRenderChunkOffset_5_)
         {
             return null;
         }
@@ -1340,9 +1337,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         {
             if (p_getRenderChunkOffset_4_)
             {
-                BlockPos blockpos = renderchunk.getPosition();
-                int i = p_getRenderChunkOffset_1_.getX() - blockpos.getX();
-                int j = p_getRenderChunkOffset_1_.getZ() - blockpos.getZ();
+//                BlockPos blockpos = renderchunk.getPosition();
+                int i = p_getRenderChunkOffset_1_.getX() - renderchunk.getPosX();
+                int j = p_getRenderChunkOffset_1_.getZ() - renderchunk.getPosZ();
                 int k = i * i + j * j;
 
                 if (k > this.renderDistanceSq)

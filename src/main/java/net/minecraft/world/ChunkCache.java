@@ -21,6 +21,39 @@ public class ChunkCache implements IBlockAccess
     /** Reference to the World object. */
     protected World worldObj;
 
+    public ChunkCache(World worldIn, int x1, int y1, int z1, int x2, int y2, int z2, int subIn)
+    {
+        this.worldObj = worldIn;
+        this.chunkX = x1 - subIn >> 4;
+        this.chunkZ = z1 - subIn >> 4;
+        int i = x2 + subIn >> 4;
+        int j = z2 + subIn >> 4;
+        this.chunkArray = new Chunk[i - this.chunkX + 1][j - this.chunkZ + 1];
+        this.hasExtendedLevels = true;
+
+        for (int k = this.chunkX; k <= i; ++k)
+        {
+            for (int l = this.chunkZ; l <= j; ++l)
+            {
+                this.chunkArray[k - this.chunkX][l - this.chunkZ] = worldIn.getChunkFromChunkCoords(k, l);
+            }
+        }
+
+        for (int i1 = x1 >> 4; i1 <= x2 >> 4; ++i1)
+        {
+            for (int j1 = z1 >> 4; j1 <= z2 >> 4; ++j1)
+            {
+                Chunk chunk = this.chunkArray[i1 - this.chunkX][j1 - this.chunkZ];
+
+                if (chunk != null && !chunk.getAreLevelsEmpty(y1, y2))
+                {
+                    this.hasExtendedLevels = false;
+                }
+            }
+        }
+    }
+
+    @Deprecated
     public ChunkCache(World worldIn, BlockPos posFromIn, BlockPos posToIn, int subIn)
     {
         this.worldObj = worldIn;

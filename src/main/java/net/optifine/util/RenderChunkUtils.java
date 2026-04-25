@@ -16,7 +16,7 @@ public class RenderChunkUtils
         }
         else
         {
-            int i = renderChunk.getPosition().getY() >> 4;
+            int i = renderChunk.getPosY() >> 4;
             ExtendedBlockStorage extendedblockstorage = aextendedblockstorage[i];
             return extendedblockstorage == null ? 0 : extendedblockstorage.getBlockRefCount();
         }

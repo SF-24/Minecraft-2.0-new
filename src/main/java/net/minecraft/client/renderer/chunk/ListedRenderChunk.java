@@ -10,10 +10,16 @@ public class ListedRenderChunk extends RenderChunk
 {
     private final int baseDisplayList = GLAllocation.generateDisplayLists(EnumWorldBlockLayer.values().length);
 
-    public ListedRenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos pos, int indexIn)
+//    public ListedRenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos pos, int indexIn)
+//    {
+//        super(worldIn, renderGlobalIn, pos.getX(),pos.getY(),pos.getZ(), indexIn);
+//    }
+
+    public ListedRenderChunk(World worldIn, RenderGlobal renderGlobalIn, int x, int y, int z, int indexIn)
     {
-        super(worldIn, renderGlobalIn, pos, indexIn);
+        super(worldIn, renderGlobalIn, x,y,z, indexIn);
     }
+
 
     public int getDisplayList(EnumWorldBlockLayer layer, CompiledChunk p_178600_2_)
     {

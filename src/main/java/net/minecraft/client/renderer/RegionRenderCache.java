@@ -16,7 +16,10 @@ import net.optifine.DynamicLights;
 public class RegionRenderCache extends ChunkCache
 {
     private static final IBlockState DEFAULT_STATE = Blocks.air.getDefaultState();
-    private final BlockPos position;
+//    private final BlockPos position;
+    private final int posX;
+    private final int posY;
+    private final int posZ;
     private int[] combinedLights;
     private IBlockState[] blockStates;
     private static ArrayDeque<int[]> cacheLights = new ArrayDeque();
@@ -25,13 +28,30 @@ public class RegionRenderCache extends ChunkCache
 
     public RegionRenderCache(World worldIn, BlockPos posFromIn, BlockPos posToIn, int subIn)
     {
-        super(worldIn, posFromIn, posToIn, subIn);
-        this.position = posFromIn.subtract(new Vec3i(subIn, subIn, subIn));
+        super(worldIn, posFromIn.getX(),posFromIn.getY(),posFromIn.getZ(), posToIn.getX(),posToIn.getY(),posToIn.getZ(), subIn);
+//        this.position = posFromIn.subtract(new Vec3i(subIn, subIn, subIn));
+        posX = posFromIn.getX()-subIn;
+        posY = posFromIn.getY()-subIn;
+        posZ = posFromIn.getZ()-subIn;
         int i = 8000;
         this.combinedLights = allocateLights(8000);
         Arrays.fill((int[])((int[])this.combinedLights), (int) - 1);
         this.blockStates = allocateStates(8000);
     }
+
+    public RegionRenderCache(World worldIn, int x1, int y1, int z1, int x2, int y2, int z2, int subIn)
+    {
+        super(worldIn, x1,y1,z1,x2,y2,z2, subIn);
+//        this.position = new BlockPos(x1-subIn,y1-subIn,z1-subIn); // posFromIn.subtract(new Vec3i(subIn, subIn, subIn));
+        posX=x1-subIn;
+        posY=y1-subIn;
+        posZ=z1-subIn;
+        int i = 8000;
+        this.combinedLights = allocateLights(8000);
+        Arrays.fill((int[])((int[])this.combinedLights), (int) - 1);
+        this.blockStates = allocateStates(8000);
+    }
+
 
     public TileEntity getTileEntity(BlockPos pos)
     {
@@ -42,7 +62,7 @@ public class RegionRenderCache extends ChunkCache
 
     public int getCombinedLight(BlockPos pos, int lightValue)
     {
-        int i = this.getPositionIndex(pos);
+        int i = this.getPositionIndex(pos.getX(),pos.getY(),pos.getZ());
         int j = this.combinedLights[i];
 
         if (j == -1)
@@ -62,7 +82,7 @@ public class RegionRenderCache extends ChunkCache
 
     public IBlockState getBlockState(BlockPos pos)
     {
-        int i = this.getPositionIndex(pos);
+        int i = this.getPositionIndex(pos.getX(),pos.getY(),pos.getZ());
         IBlockState iblockstate = this.blockStates[i];
 
         if (iblockstate == null)
@@ -79,12 +99,13 @@ public class RegionRenderCache extends ChunkCache
         return super.getBlockState(pos);
     }
 
-    private int getPositionIndex(BlockPos p_175630_1_)
+    // Works now. Mineshaft
+    private int getPositionIndex(int xIn, int yIn, int zIn)
     {
-        int i = p_175630_1_.getX() - this.position.getX();
-        int j = p_175630_1_.getY() - this.position.getY();
-        int k = p_175630_1_.getZ() - this.position.getZ();
-        return i * 400 + k * 20 + j;
+        int i = xIn - posX;
+        int j = yIn - posY;
+        int k = zIn - posZ;
+        return i * 400 + j * 20 + k;
     }
 
     public void freeBuffers()

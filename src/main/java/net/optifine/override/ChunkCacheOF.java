@@ -31,6 +31,7 @@ public class ChunkCacheOF implements IBlockAccess
     private static final ArrayCache cacheCombinedLights = new ArrayCache(Integer.TYPE, 16);
     private static final ArrayCache cacheBlockStates = new ArrayCache(IBlockState.class, 16);
 
+    @Deprecated
     public ChunkCacheOF(ChunkCache chunkCache, BlockPos posFromIn, BlockPos posToIn, int subIn)
     {
         this.chunkCache = chunkCache;
@@ -49,6 +50,25 @@ public class ChunkCacheOF implements IBlockAccess
         this.posY = j << 4;
         this.posZ = k << 4;
     }
+
+//    public ChunkCacheOF(ChunkCache chunkCache, int x1, int y1, int z1, int x2, int y2, int z2, int subIn)
+//    {
+//        this.chunkCache = chunkCache;
+//        int i = x1 - subIn >> 4;
+//        int j = y1 - subIn >> 4;
+//        int k = z1 - subIn >> 4;
+//        int l = x2 + subIn >> 4;
+//        int i1 = y2 + subIn >> 4;
+//        int j1 = z2 + subIn >> 4;
+//        this.sizeX = l - i + 1 << 4;
+//        this.sizeY = i1 - j + 1 << 4;
+//        this.sizeZ = j1 - k + 1 << 4;
+//        this.sizeXY = this.sizeX * this.sizeY;
+//        this.arraySize = this.sizeX * this.sizeY * this.sizeZ;
+//        this.posX = i << 4;
+//        this.posY = j << 4;
+//        this.posZ = k << 4;
+//    }
 
     private int getPositionIndex(BlockPos pos)
     {

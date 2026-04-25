@@ -214,4 +214,69 @@ public class BlockPosM extends BlockPos
             }
         };
     }
+
+//    public static Iterable getAllInBoxMutable(int x1, int y1, int z1, int x2, int y2, int z2)
+//    {
+////        final BlockPos blockpos = new BlockPos(Math.min(x1, x2), Math.min(y1,y2), Math.min(z1,z2));
+////        final BlockPos blockpos1 = new BlockPos(Math.min(x1, x2), Math.min(y1,y2), Math.min(z1,z2));
+//
+//        int bx = Math.min(x1, x2);
+//        int by = Math.min(y1, y2);
+//        int bz = Math.min(z1, z2);
+//        int bx1 = Math.max(x1, x2);
+//        int by1 = Math.max(y1, y2);
+//        int bz1 = Math.max(z1, z2);
+//
+//        return new Iterable()
+//        {
+//            public Iterator iterator()
+//            {
+//                return new AbstractIterator()
+//                {
+//                    private BlockPosM theBlockPosM = null;
+//                    protected BlockPosM computeNext0()
+//                    {
+//                        if (this.theBlockPosM == null)
+//                        {
+//                            this.theBlockPosM = new BlockPosM(bx, by, bz, 3);
+//                            return this.theBlockPosM;
+//                        }
+//                        else if (this.theBlockPosM.getX()==bx1 && this.theBlockPosM.getY()==by1 && this.theBlockPosM.getZ()==bz1)
+//                        {
+//                            return (BlockPosM)this.endOfData();
+//                        }
+//                        else
+//                        {
+//                            int i = this.theBlockPosM.getX();
+//                            int j = this.theBlockPosM.getY();
+//                            int k = this.theBlockPosM.getZ();
+//
+//                            if (i < bx1)
+//                            {
+//                                ++i;
+//                            }
+//                            else if (j < by1)
+//                            {
+//                                i = bx;
+//                                ++j;
+//                            }
+//                            else if (k < bz1)
+//                            {
+//                                i = bx;
+//                                j = by;
+//                                ++k;
+//                            }
+//
+//                            this.theBlockPosM.setXyz(i, j, k);
+//                            return this.theBlockPosM;
+//                        }
+//                    }
+//                    protected Object computeNext()
+//                    {
+//                        return this.computeNext0();
+//                    }
+//                };
+//            }
+//        };
+//    }
 }

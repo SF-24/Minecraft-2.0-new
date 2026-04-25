@@ -44,8 +44,8 @@ public class ViewFrustum
                 for (int i1 = 0; i1 < this.countChunksZ; ++i1)
                 {
                     int j1 = (i1 * this.countChunksY + l) * this.countChunksX + k;
-                    BlockPos blockpos = new BlockPos(k * 16, l * 16, i1 * 16);
-                    this.renderChunks[j1] = renderChunkFactory.makeRenderChunk(this.world, this.renderGlobal, blockpos, j++);
+//                    BlockPos blockpos = new BlockPos(k * 16, l * 16, i1 * 16);
+                    this.renderChunks[j1] = renderChunkFactory.makeRenderChunk(this.world, this.renderGlobal, k * 16, l * 16, i1 * 16, j++);
 
                     if (Config.isVbo() && Config.isRenderRegions())
                     {
@@ -105,15 +105,16 @@ public class ViewFrustum
                 {
                     int i2 = l1 * 16;
                     RenderChunk renderchunk = this.renderChunks[(j1 * this.countChunksY + l1) * this.countChunksX + l];
-                    BlockPos blockpos = renderchunk.getPosition();
+//                    BlockPos blockpos = renderchunk.getPosition();
 
-                    if (blockpos.getX() != i1 || blockpos.getY() != i2 || blockpos.getZ() != k1)
+                    if (renderchunk.getPosX() != i1 || renderchunk.getPosY() != i2 || renderchunk.getPosZ() != k1)
                     {
-                        BlockPos blockpos1 = new BlockPos(i1, i2, k1);
+//                        BlockPos blockpos1 = new BlockPos(i1, i2, k1);
 
-                        if (!blockpos1.equals(renderchunk.getPosition()))
+//                        if (!blockpos1.equals(renderchunk.getPosition()))
+                        if(i1!=renderchunk.getPosX() || i2 != renderchunk.getPosY() || k1!=renderchunk.getPosZ())
                         {
-                            renderchunk.setPosition(blockpos1);
+                            renderchunk.setPosition(i1, i2, k1);
                         }
                     }
                 }
@@ -268,9 +269,9 @@ public class ViewFrustum
 
     private void updateVboRegion(RenderChunk p_updateVboRegion_1_)
     {
-        BlockPos blockpos = p_updateVboRegion_1_.getPosition();
-        int i = blockpos.getX() >> 8 << 8;
-        int j = blockpos.getZ() >> 8 << 8;
+//        BlockPos blockpos = p_updateVboRegion_1_.getPosition();
+        int i = p_updateVboRegion_1_.getPosX() >> 8 << 8;
+        int j = p_updateVboRegion_1_.getPosZ() >> 8 << 8;
         ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i, j);
         EnumWorldBlockLayer[] aenumworldblocklayer = RenderChunk.ENUM_WORLD_BLOCK_LAYERS;
         VboRegion[] avboregion = (VboRegion[])this.mapVboRegions.get(chunkcoordintpair);
