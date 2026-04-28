@@ -1682,7 +1682,7 @@
       "tile/piston/out"
     ]
   },
-"music.old_menu": {
+  "music.old_menu": {
     "category": "music",
     "sounds": [
       {
@@ -1714,7 +1714,7 @@
         "type": "event",
         "name": "music.intro"
       },
-	  {
+      {
         "type": "event",
         "name": "music.intro_new"
       }
@@ -1736,10 +1736,21 @@
         "name": "music/menu/newmenu1",
         "stream": true
       },
-	  {
+      {
         "name": "music/menu/newmenu2",
         "stream": true
-      }
+      },
+      {
+        "name": "music/menu/dunock_street",
+        "stream": true
+      },
+      {
+        "name": "music/menu/rebirth",
+        "stream": true
+      },
+      {
+        "name": "music/menu/myuu_lament",
+        "stream": true
     ]
   },
   "music.game": {
