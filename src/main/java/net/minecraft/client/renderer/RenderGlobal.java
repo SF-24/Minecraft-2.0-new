@@ -1183,6 +1183,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 {
                     for (int dx = -this.renderDistanceChunks; dx <= this.renderDistanceChunks; ++dx)
                     {
+                        // Circular check.
+//                        if (dx * dx + dz * dz > (this.renderDistanceChunks - 0.5) * (this.renderDistanceChunks - 0.5)) continue;
+
 //                        System.out.println("Dist: " + String.valueOf(dz) + "^2," + String.valueOf(dx) + "^2 = " + dx*dx+dz*dz + " | " + renderDistanceChunks*renderDistanceChunks);
                         RenderChunk renderchunk3 = this.viewFrustum.getRenderChunk((dz << 4) + 8, j1, (dx << 4) + 8);
                         if (renderchunk3 != null && renderchunk3.isBoundingBoxInFrustum(camera, frameCount)) {

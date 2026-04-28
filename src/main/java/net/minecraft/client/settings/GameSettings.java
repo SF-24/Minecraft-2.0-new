@@ -3206,6 +3206,8 @@ public class GameSettings
 
     public void resetSettings()
     {
+        this.gammaSetting = 70.0F;
+        this.saturation = 0.0F;
         this.renderDistanceChunks = 8;
         this.viewBobbing = true;
         this.anaglyph = false;
@@ -3216,8 +3218,6 @@ public class GameSettings
         this.fancyGraphics = true;
         this.ambientOcclusion = 2;
         this.clouds = 2;
-        this.gammaSetting = 70.0F;
-        this.saturation = 0.0F;
         this.particleSetting = 0;
         this.language = 0;
         this.heldItemTooltips = true;

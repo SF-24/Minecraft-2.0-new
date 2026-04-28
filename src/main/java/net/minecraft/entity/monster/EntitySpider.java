@@ -255,7 +255,7 @@ public class EntitySpider extends EntityMob {
         }
 
         // Set the type
-        if (this.worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.JUNGLE || this.worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.TROPICAL_OCEAN) //&& this.getRNG().nextInt(4) != 0)
+        if (this.worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.JUNGLE || this.worldObj.getBiomeGenForCoords((int) posX, (int) posZ).getClimateZone() == ClimateZone.TROPICAL_OCEAN && this.rand.nextInt(5)==0) //&& this.getRNG().nextInt(4) != 0)
         {
             this.setSpiderType(2);
         } else {
@@ -332,9 +332,11 @@ public class EntitySpider extends EntityMob {
             {
                 this.potionEffectId = Potion.regeneration.id;
             }
+            // Temporarily disabled invis due to bugs.
             else if (i <= 4)
             {
-                this.potionEffectId = Potion.invisibility.id;
+//                this.potionEffectId = Potion.invisibility.id;
+                this.potionEffectId = Potion.jump.id;
             }
         }
     }
