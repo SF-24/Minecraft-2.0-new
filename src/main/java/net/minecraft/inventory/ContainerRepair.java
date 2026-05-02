@@ -253,8 +253,8 @@ public class ContainerRepair extends Container
                         }
                     }
 
-                    Map<Integer, Integer> map1 = EnchantmentHelper.getEnchantments(secondInput);
-                    Iterator iterator1 = map1.keySet().iterator();
+                    Map<Integer, Integer> secondItemEnchants = EnchantmentHelper.getEnchantments(secondInput);
+                    Iterator iterator1 = secondItemEnchants.keySet().iterator();
 
                     while (iterator1.hasNext())
                     {
@@ -264,7 +264,7 @@ public class ContainerRepair extends Container
                         if (enchantment != null)
                         {
                             int k5 = enchMap.containsKey(Integer.valueOf(i5)) ? ((Integer)enchMap.get(Integer.valueOf(i5))).intValue() : 0;
-                            int l3 = ((Integer)map1.get(Integer.valueOf(i5))).intValue();
+                            int l3 = ((Integer)secondItemEnchants.get(Integer.valueOf(i5))).intValue();
                             int i6;
 
                             if (k5 == l3)

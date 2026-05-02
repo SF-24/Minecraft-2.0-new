@@ -50,6 +50,9 @@ public class SkinRegistry {
 
             HttpsURLConnection connection = (HttpsURLConnection) new URL(String.format(url)).openConnection();
 
+            connection.setConnectTimeout(2500); // 2.5 seconds
+            connection.setReadTimeout(2500);
+
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 return new BufferedReader(new InputStreamReader(connection.getInputStream())).lines().collect(Collectors.joining());
             } else {
@@ -59,20 +62,26 @@ public class SkinRegistry {
         } catch (IOException e) {
             MineshaftLogger.logWarning("request for url " + url + " failed: " + e.getMessage());
             return defaultResponse;
-        } catch (NullPointerException ignored) {
+        } catch (Exception ignored) {
             MineshaftLogger.logWarning("request for url " + url + " failed: " + "null");
             return defaultResponse;
         }
     }
 
     public static UUID getUUID(GameProfile profile) {
-        String reply = getRequest(String.format("https://api.mojang.com/users/profiles/minecraft/%s", profile.getName()),profile.getId().toString());
+        String reply = getRequest(String.format("https://api.mojang.com/users/profiles/minecraft/%s", profile.getName()),null);
+        if(reply==null) return null;
         return UUID.fromString(parseJson(reply).getAsJsonObject().get("id").getAsString().replaceFirst(
                 "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
         ));
     }
 
     public static void loadSkins(String name, UUID uuid) {
+        if(uuid==null) {
+            Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/" + "empty" + ".png"));
+            Minecraft.getMinecraft().userRenderData.skinResource.put(name, DefaultPlayerSkin.TEXTURE_STEVE);
+            return;
+        }
         String reply = getRequest(String.format("https://v0-backend-delta-taupe.vercel.app/cape?id=%s", UUIDTypeAdapter.fromUUID(uuid).replace("-","")),"{\"current_cape\":\"empty\",\"current_skin\":\"steve\",\"is_slim\":false}");
         if(reply==null) {
             Minecraft.getMinecraft().userRenderData.capeResource.put(name, new ResourceLocation("textures/entity/cape/" + "empty" + ".png"));
@@ -127,6 +136,8 @@ public class SkinRegistry {
     public static boolean setSkin(GameProfile profile, UUID uuid) {
         try {
             HttpsURLConnection connection = (HttpsURLConnection) new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", UUIDTypeAdapter.fromUUID(uuid))).openConnection();
+            connection.setConnectTimeout(2500); // 2.5 seconds
+            connection.setReadTimeout(2500);
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 String reply = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
                 String skin = reply.split("\"value\":\"")[1].split("\"")[0];

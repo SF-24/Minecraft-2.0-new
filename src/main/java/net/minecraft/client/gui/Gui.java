@@ -181,6 +181,18 @@ public class Gui
         tessellator.draw();
     }
 
+    public void drawModalRectWithCustomSizedTexture(int xCoord, int yCoord, TextureAtlasSprite textureSprite, int widthIn, int heightIn, int textureHeight, int textureWidth)
+    {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos((double)(xCoord + 0), (double)(yCoord + heightIn), (double)this.zLevel).tex((double)textureSprite.getMinU() / textureWidth, (double)textureSprite.getMaxV() / textureHeight).endVertex();
+        worldrenderer.pos((double)(xCoord + widthIn), (double)(yCoord + heightIn), (double)this.zLevel).tex((double)textureSprite.getMaxU(), (double)textureSprite.getMaxV()).endVertex();
+        worldrenderer.pos((double)(xCoord + widthIn), (double)(yCoord + 0), (double)this.zLevel).tex((double)textureSprite.getMaxU(), (double)textureSprite.getMinV()).endVertex();
+        worldrenderer.pos((double)(xCoord + 0), (double)(yCoord + 0), (double)this.zLevel).tex((double)textureSprite.getMinU(), (double)textureSprite.getMinV()).endVertex();
+        tessellator.draw();
+    }
+
     /**
      * Draws a textured rectangle at z = 0. Args: x, y, u, v, width, height, textureWidth, textureHeight
      */
@@ -195,6 +207,27 @@ public class Gui
         worldrenderer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
         worldrenderer.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
         worldrenderer.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
+
+    // REct
+    public void drawTexturedRectFixed(int x, int y, int u, int v, int width, int height, int texturePartWidth, int texturePartHeight, float texW, float texH) {
+        float f = 1.0F / texW;
+        float f1 = 1.0F / texH;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+
+        // We explicitly separate 'width' (screen) from 'texturePartWidth' (the slice in the PNG)
+        worldrenderer.pos((double)x, (double)(y + height), (double)this.zLevel)
+                .tex((double)((float)u * f), (double)((float)(v + texturePartHeight) * f1)).endVertex();
+        worldrenderer.pos((double)(x + width), (double)(y + height), (double)this.zLevel)
+                .tex((double)((float)(u + texturePartWidth) * f), (double)((float)(v + texturePartHeight) * f1)).endVertex();
+        worldrenderer.pos((double)(x + width), (double)y, (double)this.zLevel)
+                .tex((double)((float)(u + texturePartWidth) * f), (double)((float)v * f1)).endVertex();
+        worldrenderer.pos((double)x, (double)y, (double)this.zLevel)
+                .tex((double)((float)u * f), (double)((float)v * f1)).endVertex();
+
         tessellator.draw();
     }
 

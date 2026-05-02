@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiOptionButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.IProgressMeter;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -25,6 +22,16 @@ import org.lwjgl.input.Mouse;
 
 public class GuiAchievements extends GuiScreen implements IProgressMeter
 {
+    boolean isPermanentNotification = false;
+
+//    // Decrease these (more negative) to allow moving further Right/Down
+//    private static final int field_146572_y = AchievementList.minDisplayColumn * 24 - 200; // Was -112
+//    private static final int field_146571_z = AchievementList.minDisplayRow * 24 - 200; // Was -112
+//
+//    // Increase these to allow moving further Left/Up
+//    private static final int field_146559_A = AchievementList.maxDisplayColumn * 24 + -1; // Was -77
+//    private static final int field_146560_B = AchievementList.maxDisplayRow * 24 + -1; // Was -77
+
     private static final int field_146572_y = AchievementList.minDisplayColumn * 24 - 112;
     private static final int field_146571_z = AchievementList.minDisplayRow * 24 - 112;
     private static final int field_146559_A = AchievementList.maxDisplayColumn * 24 - 77;
@@ -33,8 +40,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     protected GuiScreen parentScreen;
 
     // changing values breaks game
-    protected int field_146555_f = 256;
-    protected int field_146557_g = 202;
+    protected int width_param = 384;
+    protected int height_param = 202;
 
     protected int field_146563_h;
     protected int field_146564_i;
@@ -55,8 +62,11 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     {
         this.parentScreen = parentScreenIn;
         this.statFileWriter = statFileWriterIn;
-        int i = 141;
-        int j = 141;
+//        int i = 141;
+//        int j = 141;
+
+        int i = (int)(((double) Minecraft.getMinecraft().displayWidth / 2) * 0.80) / 2;
+        int j = (int)(((double) Minecraft.getMinecraft().displayHeight / 2) * 0.80) / 2;
         this.field_146569_s = this.field_146567_u = this.field_146565_w = (double)(AchievementList.openInventory.displayColumn * 24 - i / 2 - 12);
         this.field_146568_t = this.field_146566_v = this.field_146573_x = (double)(AchievementList.openInventory.displayRow * 24 - j / 2);
     }
@@ -71,7 +81,24 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         this.buttonList.clear();
 
         // done button for ui
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, I18n.format("gui.done", new Object[0])));
+//        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 24 + 32 /*+ 24*/, this.height / 2 + 74, 80, 20, I18n.format("gui.done", new Object[0])));
+
+        // 1. Set the UI to take up 80% of whatever the current screen width/height is
+        // This is the key to scaling with resolution.
+        this.width_param = (int)(this.width * 0.80);
+        this.height_param = (int)(this.height * 0.80);
+
+        // 2. Define minimum sizes so it doesn't break on tiny windows
+        if (this.width_param < 256) this.width_param = 256;
+        if (this.height_param < 202) this.height_param = 202;
+
+        // 3. Center the UI
+        int centerWidth = (this.width - this.width_param) / 2;
+        int centerHeight = (this.height - this.height_param) / 2;
+
+        // 4. Update the Button position
+        // We use height_param so it stays at the bottom of the window
+        this.buttonList.add(new GuiOptionButton(1, centerWidth + (this.width_param / 2) - 40, centerHeight + this.height_param - 25, 80, 20, I18n.format("gui.done")));
     }
 
     /**
@@ -120,12 +147,15 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         {
             if (Mouse.isButtonDown(0))
             {
-                int i = (this.width - this.field_146555_f) / 2;
-                int j = (this.height - this.field_146557_g) / 2;
-                int k = i + 8;
+                // Calculations
+                int i = (this.width - this.width_param) / 2;
+                int j = (this.height - this.height_param) / 2;
+                int k = i + 16; // from 8
                 int l = j + 17;
+                int clickableWidth = this.width_param - 32;
+                int clickableHeight = this.height_param - 32;
 
-                if ((this.field_146554_D == 0 || this.field_146554_D == 1) && mouseX >= k && mouseX < k + 224 && mouseY >= l && mouseY < l + 155)
+                if ((this.field_146554_D == 0 || this.field_146554_D == 1) && mouseX >= k && mouseX < k + clickableWidth && mouseY >= l && mouseY < l + clickableHeight)
                 {
                     if (this.field_146554_D == 0)
                     {
@@ -165,10 +195,10 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             if (this.field_146570_r != f3)
             {
                 float f5 = f3 - this.field_146570_r;
-                float f4 = f3 * (float)this.field_146555_f;
-                float f = f3 * (float)this.field_146557_g;
-                float f1 = this.field_146570_r * (float)this.field_146555_f;
-                float f2 = this.field_146570_r * (float)this.field_146557_g;
+                float f4 = f3 * (float)this.width_param;
+                float f = f3 * (float)this.height_param;
+                float f1 = this.field_146570_r * (float)this.width_param;
+                float f2 = this.field_146570_r * (float)this.height_param;
                 this.field_146567_u -= (double)((f1 - f4) * 0.5F);
                 this.field_146566_v -= (double)((f2 - f) * 0.5F);
                 this.field_146565_w = this.field_146569_s = this.field_146567_u;
@@ -194,6 +224,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             {
                 this.field_146573_x = (double)(field_146560_B - 1);
             }
+
+            // Overcomplicated logic ends
 
             this.drawDefaultBackground();
             this.drawAchievementScreen(mouseX, mouseY, partialTicks);
@@ -241,8 +273,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     protected void drawTitle()
     {
         // i and j? Centre of ui?
-        int i = (this.width - this.field_146555_f) / 2;
-        int j = (this.height - this.field_146557_g) / 2;
+        int i = (this.width - this.width_param) / 2;
+        int j = (this.height - this.height_param) / 2;
         this.fontRendererObj.drawString(I18n.format("gui.achievements", new Object[0]), i + 15, j + 5, 4210752);
     }
 
@@ -274,8 +306,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
 
         // center achievement ui
-        int centerWidth = (this.width - this.field_146555_f) / 2;
-        int centerHeight = (this.height - this.field_146557_g) / 2;
+        int centerWidth = (this.width - this.width_param) / 2;
+        int centerHeight = (this.height - this.height_param) / 2;
         int i1 = centerWidth + 16;
         int j1 = centerHeight + 17;
 
@@ -304,12 +336,15 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         float f = 16.0F / this.field_146570_r;
         float f1 = 16.0F / this.field_146570_r;
 
-        for (int l3 = 0; (float)l3 * f - (float)j2 < 155.0F; ++l3)
+        int innerWidth = this.width_param - 32;
+        int innerHeight = this.height_param - 47;
+
+        for (int l3 = 0; (float)l3 * f - (float)j2 < innerHeight; ++l3)
         {
             float f2 = 0.6F - (float)(l1 + l3) / 25.0F * 0.3F;
             GlStateManager.color(f2, f2, f2, 1.0F);
 
-            for (int i4 = 0; (float)i4 * f1 - (float)i2 < 224.0F; ++i4)
+            for (int i4 = 0; (float)i4 * f1 - (float)i2 < innerWidth; ++i4)
             {
                 random.setSeed((long)(this.mc.getSession().getPlayerID().hashCode() + k1 + i4 + (l1 + l3) * 16));
                 int j4 = random.nextInt(1 + l1 + l3) + (l1 + l3) / 2;
@@ -424,7 +459,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             int l6 = achievement2.displayColumn * 24 - i;
             int j7 = achievement2.displayRow * 24 - j;
 
-            if (l6 >= -24 && j7 >= -24 && (float)l6 <= 224.0F * this.field_146570_r && (float)j7 <= 155.0F * this.field_146570_r)
+            if (l6 >= -24 && j7 >= -24 && (float)l6 <= innerWidth * this.field_146570_r && (float)j7 <= innerHeight * this.field_146570_r)
             {
                 int l7 = this.statFileWriter.func_150874_c(achievement2);
 
@@ -502,7 +537,11 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         GlStateManager.popMatrix();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ACHIEVEMENT_BACKGROUND);
-        this.drawTexturedModalRect(centerWidth, centerHeight, 0, 0, this.field_146555_f, this.field_146557_g);
+
+        // Draw frame:
+//        drawModalRectWithCustomSizedTexture(centerWidth, centerHeight, 0, 0, this.width_param, this.height_param, 384f, 256f);
+        this.drawFrame(centerWidth,centerHeight);
+
         this.zLevel = 0.0F;
         GlStateManager.depthFunc(515);
         GlStateManager.disableDepth();
@@ -579,5 +618,46 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     public boolean doesGuiPauseGame()
     {
         return !this.loadingAchievements;
+    }
+
+    private void drawFrame(int centerWidth, int centerHeight) {
+        int corner = 30; // Border thickness in pixels
+        float texW = 256; // ACTUAL width of your image file
+        float texH = 256.0F; // ACTUAL height of your image file
+
+        // The dimensions of the frame inside your PNG (usually 256x202)
+        int frameW = 256;
+        int frameH = 202;
+
+        int uRight = frameW - corner;
+        int vBottom = frameH - corner;
+        int sideSize = frameW - (corner * 2); // The width of the middle "slice" in the PNG
+
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.mc.getTextureManager().bindTexture(ACHIEVEMENT_BACKGROUND);
+
+        // --- TOP ROW ---
+        // Top Left
+        drawTexturedRectFixed(centerWidth, centerHeight, 0, 0, corner, corner, corner, corner, texW, texH);
+        // Top Edge (Stretched)
+        drawTexturedRectFixed(centerWidth + corner, centerHeight, corner, 0, width_param - (corner * 2), corner, sideSize, corner, texW, texH);
+        // Top Right
+        drawTexturedRectFixed(centerWidth + width_param - corner, centerHeight, uRight, 0, corner, corner, corner, corner, texW, texH);
+
+        // --- MIDDLE ROW ---
+        // Left Edge (Stretched)
+        drawTexturedRectFixed(centerWidth, centerHeight + corner, 0, corner, corner, height_param - (corner * 2), corner, frameH - (corner * 2), texW, texH);
+        // Center Fill (Stretched both ways)
+        drawTexturedRectFixed(centerWidth + corner, centerHeight + corner, corner, corner, width_param - (corner * 2), height_param - (corner * 2), sideSize, frameH - (corner * 2), texW, texH);
+        // Right Edge (Stretched)
+        drawTexturedRectFixed(centerWidth + width_param - corner, centerHeight + corner, uRight, corner, corner, height_param - (corner * 2), corner, frameH - (corner * 2), texW, texH);
+
+        // --- BOTTOM ROW ---
+        // Bottom Left
+        drawTexturedRectFixed(centerWidth, centerHeight + height_param - corner, 0, vBottom, corner, corner, corner, corner, texW, texH);
+        // Bottom Edge (Stretched)
+        drawTexturedRectFixed(centerWidth + corner, centerHeight + height_param - corner, corner, vBottom, width_param - (corner * 2), corner, sideSize, corner, texW, texH);
+        // Bottom Right
+        drawTexturedRectFixed(centerWidth + width_param - corner, centerHeight + height_param - corner, uRight, vBottom, corner, corner, corner, corner, texW, texH);
     }
 }

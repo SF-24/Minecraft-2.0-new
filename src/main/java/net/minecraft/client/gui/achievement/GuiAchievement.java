@@ -88,6 +88,7 @@ public class GuiAchievement extends Gui
             }
 
             this.updateAchievementWindowScale();
+
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             double d1 = d0 * 2.0D;
@@ -100,19 +101,17 @@ public class GuiAchievement extends Gui
             d1 = d1 * 4.0D;
             d1 = 1.0D - d1;
 
-            if (d1 < 0.0D)
-            {
-                d1 = 0.0D;
-            }
+            if (d1 < 0.0D) {d1 = 0.0D;}
 
             d1 = d1 * d1;
             d1 = d1 * d1;
             int i = this.width - 160;
-            int j = 0 - (int)(d1 * 36.0D);
+            int j = -(int) (d1 * 36.0D);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableTexture2D();
             this.mc.getTextureManager().bindTexture(achievementBg);
             GlStateManager.disableLighting();
+
             this.drawTexturedModalRect(i, j, 96, 202, 160, 32);
 
             if (this.permanentNotification)

@@ -2,11 +2,8 @@ package net.minecraft.client.gui.inventory;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.ContainerResearch;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -18,7 +15,7 @@ public class GuiResearch extends GuiContainer
 
     public GuiResearch(InventoryPlayer playerInv, World worldIn)
     {
-        super(new ContainerResearch(playerInv, !worldIn.isRemote, playerInv.player));
+        super(new ContainerResearch(playerInv, worldIn));
         this.ySize=192;
     }
 
