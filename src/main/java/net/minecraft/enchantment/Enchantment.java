@@ -153,6 +153,11 @@ public abstract class Enchantment
         return 1;
     }
 
+    public int getMaxExtraLevel()
+    {
+        return 1;
+    }
+
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */

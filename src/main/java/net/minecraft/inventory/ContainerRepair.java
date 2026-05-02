@@ -179,6 +179,7 @@ public class ContainerRepair extends Container
         int levelRepairCost = 0; // was l1.
         int repairPenalty = 0;
         int extraRenameCost = 0;
+        int superEnchantCount = 0;
 
         if (firstInput == null)
         {
@@ -254,7 +255,7 @@ public class ContainerRepair extends Container
                     }
 
                     Map<Integer, Integer> secondItemEnchants = EnchantmentHelper.getEnchantments(secondInput);
-                    Iterator iterator1 = secondItemEnchants.keySet().iterator();
+                    Iterator<Integer> iterator1 = secondItemEnchants.keySet().iterator();
 
                     while (iterator1.hasNext())
                     {
@@ -300,9 +301,12 @@ public class ContainerRepair extends Container
 
                             if (flag1)
                             {
-                                if (l3 > enchantment.getMaxLevel())
+                                if (l3 > enchantment.getMaxExtraLevel())
                                 {
-                                    l3 = enchantment.getMaxLevel();
+                                    l3 = enchantment.getMaxExtraLevel();
+                                }
+                                if(l3 > enchantment.getMaxLevel()) {
+                                    superEnchantCount++;
                                 }
 
                                 enchMap.put(Integer.valueOf(i5), Integer.valueOf(l3));
@@ -377,7 +381,7 @@ public class ContainerRepair extends Container
 //                System.out.println("item0 " + itemstack.toString());
 //                System.out.println("item1 " + itemstack1.toString());
 //                System.out.println("item2 " + itemstack2.toString());
-                this.maximumCost = 20;
+                this.maximumCost = Math.min(maximumCost, 20+superEnchantCount*5);
             } else if(secondInput == null && extraRenameCost>0) {
                 this.maximumCost=1;
             }
@@ -385,7 +389,7 @@ public class ContainerRepair extends Container
             // Cap enchant costs.
             if (extraRenameCost == levelRepairCost && extraRenameCost > 0 && this.maximumCost >= 36)
             {
-                this.maximumCost = 35;
+                this.maximumCost = 35+superEnchantCount*5;
             }
 //
 //            if (this.maximumCost >= 40 && !this.thePlayer.capabilities.isCreativeMode)

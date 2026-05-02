@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import net.minecraft.block.*;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -366,6 +367,13 @@ public class Item {
 
     public boolean hasEffect(ItemStack stack) {
         return stack.isItemEnchanted();
+    }
+
+    public boolean hasSpecialGlint(ItemStack stack) {
+        if(stack.isItemEnchanted()) {
+            return EnchantmentHelper.hasSpecialGlint(stack);
+        }
+        return false;
     }
 
     /**

@@ -33,8 +33,10 @@ public class EnchantmentDigging extends Enchantment
      */
     public int getMaxLevel()
     {
-        return 5;
+        return 4;
     }
+    @Override
+    public int getMaxExtraLevel() {return 5;}
 
     /**
      * Determines if this enchantment can be applied to a specific ItemStack.

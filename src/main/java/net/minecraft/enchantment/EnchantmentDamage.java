@@ -62,8 +62,10 @@ public class EnchantmentDamage extends Enchantment
      */
     public int getMaxLevel()
     {
-        return 5;
+        return 4;
     }
+    @Override
+    public int getMaxExtraLevel() {return 5;}
 
     /**
      * Calculates the additional damage that will be dealt by an item with this enchantment. This alternative to

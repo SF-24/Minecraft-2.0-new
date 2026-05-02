@@ -35,6 +35,18 @@ public class EnchantmentHelper
     private static final EnchantmentHelper.HurtIterator ENCHANTMENT_ITERATOR_HURT = new EnchantmentHelper.HurtIterator();
     private static final EnchantmentHelper.DamageIterator ENCHANTMENT_ITERATOR_DAMAGE = new EnchantmentHelper.DamageIterator();
 
+    public static boolean hasSpecialGlint(ItemStack stack) {
+        for (Integer i5 : getEnchantments(stack).keySet()) {
+            if (Enchantment.getEnchantmentById(i5) == null) {
+                continue;
+            }
+            if (getEnchantments(stack).get(i5) > Enchantment.getEnchantmentById(i5).getMaxLevel()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Returns the level of enchantment on the ItemStack passed.
      */
@@ -490,7 +502,7 @@ public class EnchantmentHelper
         {
             if (enchantment != null && (enchantment.type.canEnchantItem(item) || flag))
             {
-                for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i)
+                for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxExtraLevel(); ++i)
                 {
                     if (p_77505_0_ >= enchantment.getMinEnchantability(i) && p_77505_0_ <= enchantment.getMaxEnchantability(i))
                     {

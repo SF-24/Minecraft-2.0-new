@@ -707,7 +707,11 @@ public final class ItemStack
 
                         if (Enchantment.getEnchantmentById(k) != null)
                         {
-                            list.add(Enchantment.getEnchantmentById(k).getTranslatedName(l));
+                            if(l>Enchantment.getEnchantmentById(k).getMaxLevel()) {
+                                list.add(EnumChatFormatting.GREEN + Enchantment.getEnchantmentById(k).getTranslatedName(l) + EnumChatFormatting.RESET);
+                            } else {
+                                list.add(Enchantment.getEnchantmentById(k).getTranslatedName(l));
+                            }
                         }
                     }
                 }
@@ -859,6 +863,11 @@ public final class ItemStack
     public boolean hasEffect()
     {
         return this.getItem().hasEffect(this);
+    }
+
+    public boolean hasSpecialGlint()
+    {
+        return this.getItem().hasSpecialGlint(this);
     }
 
     public EnumRarity getRarity()

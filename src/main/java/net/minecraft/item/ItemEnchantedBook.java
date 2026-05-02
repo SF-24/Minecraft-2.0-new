@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.WeightedRandomChestContent;
 
 public class ItemEnchantedBook extends Item
@@ -57,7 +58,11 @@ public class ItemEnchantedBook extends Item
 
                 if (Enchantment.getEnchantmentById(j) != null)
                 {
-                    tooltip.add(Enchantment.getEnchantmentById(j).getTranslatedName(k));
+                    if(k>Enchantment.getEnchantmentById(j).getMaxLevel()) {
+                        tooltip.add(EnumChatFormatting.GREEN + Enchantment.getEnchantmentById(j).getTranslatedName(k) + EnumChatFormatting.RESET);
+                    } else {
+                        tooltip.add(Enchantment.getEnchantmentById(j).getTranslatedName(k));
+                    }
                 }
             }
         }
@@ -115,7 +120,7 @@ public class ItemEnchantedBook extends Item
 
     public void getAll(Enchantment enchantment, List<ItemStack> list)
     {
-        for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i)
+        for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxExtraLevel(); ++i)
         {
             list.add(this.getEnchantedItemStack(new EnchantmentData(enchantment, i)));
         }
@@ -131,5 +136,10 @@ public class ItemEnchantedBook extends Item
         ItemStack itemstack = new ItemStack(Items.book, 1, 0);
         EnchantmentHelper.addRandomEnchantment(rand, itemstack, 30);
         return new WeightedRandomChestContent(itemstack, minChance, maxChance, weight);
+    }
+
+    @Override
+    public boolean hasSpecialGlint(ItemStack stack) {
+        return EnchantmentHelper.hasSpecialGlint(stack);
     }
 }

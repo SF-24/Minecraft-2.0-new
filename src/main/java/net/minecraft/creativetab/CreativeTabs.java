@@ -281,7 +281,7 @@ public abstract class CreativeTabs
 
                 if (flag)
                 {
-                    itemList.add(Items.enchanted_book.getEnchantedItemStack(new EnchantmentData(enchantment, enchantment.getMaxLevel())));
+                    itemList.add(Items.enchanted_book.getEnchantedItemStack(new EnchantmentData(enchantment, enchantment.getMaxExtraLevel())));
                 }
             }
         }

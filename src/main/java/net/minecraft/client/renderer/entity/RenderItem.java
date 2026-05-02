@@ -200,7 +200,12 @@ public class RenderItem implements IResourceManagerReloadListener
 
                 if (stack.hasEffect() && (!Config.isCustomItems() || !CustomItems.renderCustomEffect(this, stack, model)))
                 {
-                    this.renderEffect(model);
+                    // Green if it has a special glint. Else magenta.
+                    // Old green: -16711936, Magenta: -8372020
+                    // 25%: 1073807104, 15%: 637599488, 10%: 436272896, 5%: 218169088, 2%: 83951360
+                    // Balanced Green: 20%: 855638016, 15%: 637566976, 10%: 436239360
+                    // 11%: 469794816, 12%: 520126464, 13% 553680896
+                    this.renderEffect(model, stack.hasSpecialGlint()?469794816:-8372020);
                 }
             }
 
@@ -208,7 +213,7 @@ public class RenderItem implements IResourceManagerReloadListener
         }
     }
 
-    private void renderEffect(IBakedModel model)
+    private void renderEffect(IBakedModel model, int colour)
     {
         if (!Config.isCustomItems() || CustomItems.isUseGlint())
         {
@@ -231,14 +236,14 @@ public class RenderItem implements IResourceManagerReloadListener
                 float f = (float)(Minecraft.getSystemTime() % 3000L) / 3000.0F / 8.0F;
                 GlStateManager.translate(f, 0.0F, 0.0F);
                 GlStateManager.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
-                this.renderModel(model, -8372020);
+                this.renderModel(model, colour);
                 GlStateManager.popMatrix();
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(8.0F, 8.0F, 8.0F);
                 float f1 = (float)(Minecraft.getSystemTime() % 4873L) / 4873.0F / 8.0F;
                 GlStateManager.translate(-f1, 0.0F, 0.0F);
                 GlStateManager.rotate(10.0F, 0.0F, 0.0F, 1.0F);
-                this.renderModel(model, -8372020);
+                this.renderModel(model, colour);
                 GlStateManager.popMatrix();
                 GlStateManager.matrixMode(5888);
                 GlStateManager.blendFunc(770, 771);
