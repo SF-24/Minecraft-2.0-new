@@ -55,6 +55,7 @@ import net.optifine.shaders.ShadersRender;
 public class RenderItem implements IResourceManagerReloadListener
 {
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+    private static final ResourceLocation RES_ITEM_GLINT_SMOOTH = new ResourceLocation("textures/misc/enchanted_item_glint_smooth.png");
 
     /** False when the renderer is rendering the item's effects into a GUI */
     private boolean notRenderingEffectsInGUI = true;
@@ -203,9 +204,10 @@ public class RenderItem implements IResourceManagerReloadListener
                     // Green if it has a special glint. Else magenta.
                     // Old green: -16711936, Magenta: -8372020
                     // 25%: 1073807104, 15%: 637599488, 10%: 436272896, 5%: 218169088, 2%: 83951360
-                    // Balanced Green: 20%: 855638016, 15%: 637566976, 10%: 436239360
+                    // Forest Green: 100%: -16744448, 50%: -2147450880, 40%: 1711308800, 30%: 1291878400, 20%: 855638016, 15%: 637566976, 10%: 436239360
                     // 11%: 469794816, 12%: 520126464, 13% 553680896
-                    this.renderEffect(model, stack.hasSpecialGlint()?469794816:-8372020);
+                    // Emerald: -16736256, 90%: -436183040, Dimmed Emerald (Lower green intensity): -16740352,
+                    this.renderEffect(model, stack.hasSpecialGlint()?-16736256:-8372020, stack.hasSpecialGlint());
                 }
             }
 
@@ -213,7 +215,7 @@ public class RenderItem implements IResourceManagerReloadListener
         }
     }
 
-    private void renderEffect(IBakedModel model, int colour)
+    private void renderEffect(IBakedModel model, int colour, boolean isSmoothGlint)
     {
         if (!Config.isCustomItems() || CustomItems.isUseGlint())
         {
@@ -223,7 +225,11 @@ public class RenderItem implements IResourceManagerReloadListener
                 GlStateManager.depthFunc(514);
                 GlStateManager.disableLighting();
                 GlStateManager.blendFunc(768, 1);
-                this.textureManager.bindTexture(RES_ITEM_GLINT);
+                if(isSmoothGlint) {
+                    this.textureManager.bindTexture(RES_ITEM_GLINT_SMOOTH);
+                } else {
+                    this.textureManager.bindTexture(RES_ITEM_GLINT);
+                }
 
                 if (Config.isShaders() && !this.renderItemGui)
                 {

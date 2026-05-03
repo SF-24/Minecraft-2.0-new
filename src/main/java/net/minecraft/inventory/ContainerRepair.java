@@ -1,5 +1,6 @@
 package net.minecraft.inventory;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import net.minecraft.block.BlockAnvil;
@@ -56,6 +57,12 @@ public class ContainerRepair extends Container
     }
 
     public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, EntityPlayer player)
+    {
+        this(playerInventory, worldIn, blockPosIn, player, false);
+
+    }
+
+    public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, EntityPlayer player, boolean isDiamondAnvil)
     {
         this.outputSlot = new InventoryCraftResult();
         this.inputSlots = new InventoryBasic("Repair", true, 2)
@@ -167,19 +174,18 @@ public class ContainerRepair extends Container
      */
     public void updateRepairOutput()
     {
-        int i = 0;
-        int j = 1;
-        int k = 1;
-        int l = 1;
-        int i1 = 2;
-        int j1 = 1;
-        int k1 = 1;
         ItemStack firstInput = this.inputSlots.getStackInSlot(0);
-        this.maximumCost = 1;
+//        int repairPenalty = 0;
         int levelRepairCost = 0; // was l1.
-        int repairPenalty = 0;
+
         int extraRenameCost = 0;
+        int rawRepairCost = 0;
+        int enchantmentCost = 0;
         int superEnchantCount = 0;
+        int previousEnchantInheritedCost = 0;
+//        int inheritedRepairCost = 0;
+
+        this.maximumCost = 1; // Cap
 
         if (firstInput == null)
         {
@@ -193,15 +199,23 @@ public class ContainerRepair extends Container
             Map<Integer, Integer> enchMap = EnchantmentHelper.getEnchantments(output);
             boolean isEnchBook = false;
             // Makes repair cost increase by a fixed amount each repair.
-            repairPenalty = repairPenalty + firstInput.getRepairCost() + (secondInput == null ? 0 : secondInput.getRepairCost());
+            // Count repair penalty
+//            inheritedRepairCost = firstInput.getRepairCost() + ((secondInput!=null)?secondInput.getRepairCost():0);
+//            repairPenalty = repairPenalty + firstInput.getRepairCost() + (secondInput == null ? 0 : secondInput.getRepairCost());
             this.materialCost = 0;
 
+            // If it has a second input
             if (secondInput != null)
             {
                 isEnchBook = secondInput.getItem() == Items.enchanted_book && Items.enchanted_book.getEnchantments(secondInput).tagCount() > 0;
 
+                // If both the output is repairable. - material repair
                 if (output.isItemStackDamageable() && output.getItem().getIsRepairable(firstInput, secondInput))
                 {
+                    /**
+                     * Repairing with material items.
+                     * */
+
                     int j4 = Math.min(output.getItemDamage(), output.getMaxDamage() / 4);
 
                     if (j4 <= 0)
@@ -217,15 +231,16 @@ public class ContainerRepair extends Container
                     {
                         int j5 = output.getItemDamage() - j4;
                         output.setItemDamage(j5);
-                        ++levelRepairCost;
                         j4 = Math.min(output.getItemDamage(), output.getMaxDamage() / 4);
                     }
-
+                    if(repairItemCount>0) {
+                        ++rawRepairCost; // Increase raw repair cost by 1
+                    }
                     this.materialCost = repairItemCount;
                 }
-                // If not an ench book.
                 else
                 {
+                    // If not an enchanted book
                     if (!isEnchBook && (output.getItem() != secondInput.getItem() || !output.isItemStackDamageable()))
                     {
                         this.outputSlot.setInventorySlotContents(0, (ItemStack)null);
@@ -233,7 +248,11 @@ public class ContainerRepair extends Container
                         return;
                     }
 
-                    // Durability calculations.
+                    /**
+                     * Repairing with a second item.
+                     * */
+
+                    // Durability calculations. If it's not being repaired via a material?
                     if (output.isItemStackDamageable() && !isEnchBook)
                     {
                         int k2 = firstInput.getMaxDamage() - firstInput.getItemDamage();
@@ -250,133 +269,165 @@ public class ContainerRepair extends Container
                         if (k3 < output.getMetadata())
                         {
                             output.setItemDamage(k3);
-                            levelRepairCost += 2;
+                            rawRepairCost += 1; // ?
                         }
                     }
 
+                    /**
+                     * Enchantment Merging
+                     * */
+
                     Map<Integer, Integer> secondItemEnchants = EnchantmentHelper.getEnchantments(secondInput);
-                    Iterator<Integer> iterator1 = secondItemEnchants.keySet().iterator();
 
-                    while (iterator1.hasNext())
-                    {
-                        int i5 = ((Integer)iterator1.next()).intValue();
-                        Enchantment enchantment = Enchantment.getEnchantmentById(i5);
+                    for (int enchantId : secondItemEnchants.keySet()) {
+                        Enchantment enchantment = Enchantment.getEnchantmentById(enchantId);
 
-                        if (enchantment != null)
-                        {
-                            int k5 = enchMap.containsKey(Integer.valueOf(i5)) ? ((Integer)enchMap.get(Integer.valueOf(i5))).intValue() : 0;
-                            int l3 = ((Integer)secondItemEnchants.get(Integer.valueOf(i5))).intValue();
-                            int i6;
+                        if (enchantment != null) {
+                            int firstEnchantLevel = enchMap.getOrDefault(enchantId, 0);
+                            int secondEnchantLevel = secondItemEnchants.get(enchantId);
+                            int outputLevel;
 
-                            if (k5 == l3)
-                            {
-                                ++l3;
-                                i6 = l3;
+                            if (firstEnchantLevel == secondEnchantLevel) {
+                                outputLevel = secondEnchantLevel+1;
+                            } else {
+                                outputLevel = Math.max(secondEnchantLevel, firstEnchantLevel);
                             }
-                            else
-                            {
-                                i6 = Math.max(l3, k5);
+                            boolean canApplyEnchant = enchantment.canApply(firstInput);
+
+                            if (this.thePlayer.capabilities.isCreativeMode || firstInput.getItem() == Items.enchanted_book) {
+                                canApplyEnchant = true;
                             }
 
-                            l3 = i6;
-                            boolean flag1 = enchantment.canApply(firstInput);
-
-                            if (this.thePlayer.capabilities.isCreativeMode || firstInput.getItem() == Items.enchanted_book)
-                            {
-                                flag1 = true;
-                            }
-
-                            Iterator iterator = enchMap.keySet().iterator();
-
-                            while (iterator.hasNext())
-                            {
-                                int i4 = ((Integer)iterator.next()).intValue();
-
-                                if (i4 != i5 && !enchantment.canApplyTogether(Enchantment.getEnchantmentById(i4)))
-                                {
-                                    flag1 = false;
-                                    ++levelRepairCost;
+                            for (int otherId : enchMap.keySet()) {
+                                if (otherId != enchantId && !enchantment.canApplyTogether(Enchantment.getEnchantmentById(otherId))) {
+                                    canApplyEnchant = false;
+//                                    ++levelRepairCost;
                                 }
                             }
 
-                            if (flag1)
-                            {
-                                if (l3 > enchantment.getMaxExtraLevel())
-                                {
-                                    l3 = enchantment.getMaxExtraLevel();
+                            if (canApplyEnchant) {
+                                if (outputLevel > enchantment.getMaxLevel()) {
+                                    if(outputLevel>secondEnchantLevel) {
+                                        outputLevel = Math.max(enchantment.getMaxLevel(), Math.max(firstEnchantLevel,secondEnchantLevel));
+                                    } else {
+                                        outputLevel = enchantment.getMaxExtraLevel();
+                                    }
                                 }
-                                if(l3 > enchantment.getMaxLevel()) {
+                                if (outputLevel > enchantment.getMaxLevel()) {
                                     superEnchantCount++;
                                 }
+                                enchMap.put(enchantId, outputLevel);
+//                                int extraWeightRepairCost = 0;
 
-                                enchMap.put(Integer.valueOf(i5), Integer.valueOf(l3));
-                                int l5 = 0;
-
-                                switch (enchantment.getWeight())
-                                {
-                                    case 1:
-                                        l5 = 8;
-                                        break;
-
-                                    case 2:
-                                        l5 = 4;
-
-                                    case 3:
-                                    case 4:
-                                    case 6:
-                                    case 7:
-                                    case 8:
-                                    case 9:
-                                    default:
-                                        break;
-
-                                    case 5:
-                                        l5 = 2;
-                                        break;
-
-                                    case 10:
-                                        l5 = 1;
-                                }
-
-                                if (isEnchBook)
-                                {
-                                    l5 = Math.max(1, l5 / 2);
-                                }
-
-                                levelRepairCost += l5 * l3;
+//                                switch (enchantment.getWeight()) {
+//                                    case 1:
+//                                        extraWeightRepairCost = 8;
+//                                        break;
+//
+//                                    case 2:
+//                                        extraWeightRepairCost = 4;
+//
+//                                    case 3:
+//                                    case 4:
+//                                    case 6:
+//                                    case 7:
+//                                    case 8:
+//                                    case 9:
+//                                    default:
+//                                        break;
+//
+//                                    case 5:
+//                                        extraWeightRepairCost = 2;
+//                                        break;
+//
+//                                    case 10:
+//                                        extraWeightRepairCost = 1;
+//                                }
+//
+//                                if (isEnchBook) {
+//                                    extraWeightRepairCost = Math.max(1, extraWeightRepairCost / 2);
+//                                }
+//
+//                                levelRepairCost += extraWeightRepairCost * outputLevel;
                             }
                         }
                     }
                 }
             }
 
+            /**
+             * Rename cost.
+             * */
+
+            // Renaming.
             if (StringUtils.isBlank(this.repairedItemName))
             {
                 if (firstInput.hasDisplayName())
                 {
                     extraRenameCost = 1;
-                    levelRepairCost += extraRenameCost;
+//                    levelRepairCost += extraRenameCost;
                     output.clearCustomName();
                 }
             }
             else if (!this.repairedItemName.equals(firstInput.getDisplayName()))
             {
                 extraRenameCost = 1;
-                levelRepairCost += extraRenameCost;
+//                levelRepairCost += extraRenameCost;
                 output.setStackDisplayName(this.repairedItemName);
             }
 
-            this.maximumCost = repairPenalty + levelRepairCost;
+            /**
+             * Calculate final cost
+             * */
+
+            // If enchants applied
+            Map<Integer, Integer> enchantmentsApplied = new HashMap<>();
+
+            Map<Integer, Integer> firstEnchants = EnchantmentHelper.getEnchantments(firstInput);
+            Map<Integer, Integer> outputEnchants = EnchantmentHelper.getEnchantments(output);
+
+            for (Integer id : outputEnchants.keySet()) {
+                if (outputEnchants.get(id) > firstEnchants.getOrDefault(id, 0)) {
+                    enchantmentsApplied.put(id, outputEnchants.get(id));
+                }
+            }
+
+            // Cycle through output enchants
+            if(!enchantmentsApplied.isEmpty()) {
+                for(Integer id : enchantmentsApplied.keySet()) {
+                    enchantmentCost+= EnchantmentHelper.getEnchantCost(id, enchantmentsApplied.get(id));
+                }
+                // TODO: Cycle through enchants and find cost.
+            } else {
+                // If not enchants are added, it is a repair.
+                enchantmentCost=0;
+            }
+
+            // TODO: Cycle through other enchants and apply a penalty based on them.
+
+
+            // Count max cost.
+            this.maximumCost = previousEnchantInheritedCost + enchantmentCost + rawRepairCost + extraRenameCost;
+
+            /**
+             * Limitations
+             * */
 
             // Cannot add more than 3 enchants to an item.
-            if (levelRepairCost <= 0 || (enchMap.size()>(3+((output.getItem() instanceof ItemTool && ((ItemTool)output.getItem()).getToolMaterialName().equals("GOLD"))?1:0)) && (enchMap.size()>EnchantmentHelper.getEnchantments(firstInput).size())))
+            // Too expensive
+            if ((enchMap.size()>(3+((output.getItem() instanceof ItemTool && ((ItemTool)output.getItem()).getToolMaterialName().equals("GOLD"))?1:0)) && (enchMap.size()>EnchantmentHelper.getEnchantments(firstInput).size())))
             {
+                maximumCost = 0;
                 output = null;
             }
 
+            /**
+             * Bandaid fix:
+             * */
+
             // Disables too expensive when repairing
             // Lowers cost if above 20 levels and repairing
-            if (/*j2 == l1 && j2 > 0   && */ levelRepairCost > 0 && this.maximumCost > 20 && secondInput != null && !secondInput.isItemEnchanted()) {
+            if (/*j2 == l1 && j2 > 0   && */ this.maximumCost > 20 && secondInput != null && !secondInput.isItemEnchanted()) {
 //                System.out.println("above 20");
 //                System.out.println("item0 " + itemstack.toString());
 //                System.out.println("item1 " + itemstack1.toString());
@@ -399,11 +450,11 @@ public class ContainerRepair extends Container
 
             if (output != null)
             {
-                int k4 = output.getRepairCost();
+                int repairCost = output.getRepairCost();
 
-                if (secondInput != null && k4 < secondInput.getRepairCost())
+                if (secondInput != null && repairCost < secondInput.getRepairCost())
                 {
-                    k4 = secondInput.getRepairCost();
+                    repairCost = secondInput.getRepairCost();
                 }
 
                 // Make the repair cost increase by a fixed amount every time
@@ -411,20 +462,21 @@ public class ContainerRepair extends Container
 //                    k4 = k4 /* * 2*/ + 4; // TODO: Make better
 //                } else
 
-                // Increase cost based on number of enchantments on the item.
-                if(output.isItemEnchanted() && secondInput != null && !(maximumCost >= 20 && !secondInput.isItemEnchanted())) {
+                // Increase and charge cost based on number of enchantments on the item.
+                if(output.isItemEnchanted() && secondInput != null && !secondInput.isItemEnchanted()) {
                     int enchantsAboveThirdLevel = 0;
                     int lowEnchantments = 0;
                     for(int enchantment : EnchantmentHelper.getEnchantments(output).keySet()) {
-                        if(EnchantmentHelper.getEnchantments(output).get(enchantment)>=3) {
+                        if(EnchantmentHelper.getEnchantments(output).get(enchantment)>=3 && EnchantmentHelper.getEnchantments(output).get(enchantment)<Enchantment.getEnchantmentById(enchantment).getMaxExtraLevel()) {
                             enchantsAboveThirdLevel++;
                         } else {
                             lowEnchantments++;
                         }
                     }
-                    k4 = k4 + 1 + Math.max(0,Math.min(lowEnchantments / 2 + enchantsAboveThirdLevel,3));
+                    repairCost = repairCost + 1 + Math.max(0,Math.min(lowEnchantments / 2 + enchantsAboveThirdLevel + superEnchantCount*2,3 + superEnchantCount));
+                    System.out.println("Cost: " + repairCost + " | risen: " + 1 + Math.max(0,Math.min(lowEnchantments / 2 + enchantsAboveThirdLevel + superEnchantCount*2,3 + Math.min(4,superEnchantCount))));
                 }
-                output.setRepairCost(k4);
+                output.setRepairCost(repairCost);
                 EnchantmentHelper.setEnchantments(enchMap, output);
             }
 

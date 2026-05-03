@@ -584,4 +584,8 @@ public class EnchantmentHelper
             this.livingModifier += enchantmentIn.calcDamageByCreature(enchantmentLevel, this.entityLiving);
         }
     }
+
+    public static int getEnchantCost(int enchantmentId, int level) {
+        return 1;
+    }
 }
