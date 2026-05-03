@@ -2058,3 +2058,6 @@ title.bloodMoon.rise=Krwawy księżyc wschodzi na niebie...
 title.bloodMoon.risen=Krwawy księżyc wszedł ponad horyzont.
 title.bloodMoon.fade=Gdy nadchodzi ranek, krwawy księżyc zanika...
 
+tile.anvil.diamond_intact.name=Diamentowe kowadło
+tile.anvil.diamond_slightlyDamaged.name=Lekko uszkodzone diamentowe kowadło
+tile.anvil.diamond_veryDamaged.name=Mocno uszkodzone diamentowe kowadło

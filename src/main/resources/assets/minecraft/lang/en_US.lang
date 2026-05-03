@@ -2758,3 +2758,8 @@ title.bloodMoon.fade=As dawn rises, the blood moon fades...
 of.options.SIGN_DISTANCE=Sign dist.
 of.options.CHEST_DISTANCE=Chest dist.
 
+tile.anvil.diamond_intact.name=Diamond Anvil
+tile.anvil.diamond_slightlyDamaged.name=Slightly Damaged Diamond Anvil
+tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
+
+

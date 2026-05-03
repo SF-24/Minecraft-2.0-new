@@ -725,7 +725,7 @@ public class Chunk
     /**
      * Return the metadata corresponding to the given coordinates inside a chunk.
      */
-    private int getBlockMetadata(int x, int y, int z)
+    private int getLocalBlockMetadata(int x, int y, int z)
     {
         if (y >> 4 >= this.storageArrays.length)
         {
@@ -740,8 +740,14 @@ public class Chunk
 
     public int getBlockMetadata(BlockPos pos)
     {
-        return this.getBlockMetadata(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
+        return this.getLocalBlockMetadata(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
     }
+
+    public int getBlockMetadata(int x, int y, int z)
+    {
+        return this.getLocalBlockMetadata(x & 15, y, z & 15);
+    }
+
 
     public IBlockState setBlockPrimitive(int x, int y, int z, int newId)
     {

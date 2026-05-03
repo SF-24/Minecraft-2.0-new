@@ -26,14 +26,14 @@ public class EnchantmentHelper
     /**
      * Used to calculate the extra armor of enchantments on armors equipped on player.
      */
-    private static final EnchantmentHelper.ModifierDamage enchantmentModifierDamage = new EnchantmentHelper.ModifierDamage();
+    private static final ModifierDamage enchantmentModifierDamage = new ModifierDamage();
 
     /**
      * Used to calculate the (magic) extra damage done by enchantments on current equipped item of player.
      */
-    private static final EnchantmentHelper.ModifierLiving enchantmentModifierLiving = new EnchantmentHelper.ModifierLiving();
-    private static final EnchantmentHelper.HurtIterator ENCHANTMENT_ITERATOR_HURT = new EnchantmentHelper.HurtIterator();
-    private static final EnchantmentHelper.DamageIterator ENCHANTMENT_ITERATOR_DAMAGE = new EnchantmentHelper.DamageIterator();
+    private static final ModifierLiving enchantmentModifierLiving = new ModifierLiving();
+    private static final HurtIterator ENCHANTMENT_ITERATOR_HURT = new HurtIterator();
+    private static final DamageIterator ENCHANTMENT_ITERATOR_DAMAGE = new DamageIterator();
 
     public static boolean hasSpecialGlint(ItemStack stack) {
         for (Integer i5 : getEnchantments(stack).keySet()) {
@@ -170,7 +170,7 @@ public class EnchantmentHelper
     /**
      * Executes the enchantment modifier on the ItemStack passed.
      */
-    private static void applyEnchantmentModifier(EnchantmentHelper.IModifier modifier, ItemStack stack)
+    private static void applyEnchantmentModifier(IModifier modifier, ItemStack stack)
     {
         if (stack != null)
         {
@@ -195,7 +195,7 @@ public class EnchantmentHelper
     /**
      * Executes the enchantment modifier on the array of ItemStack passed.
      */
-    private static void applyEnchantmentModifierArray(EnchantmentHelper.IModifier modifier, ItemStack[] stacks)
+    private static void applyEnchantmentModifierArray(IModifier modifier, ItemStack[] stacks)
     {
         for (ItemStack itemstack : stacks)
         {
@@ -520,7 +520,7 @@ public class EnchantmentHelper
         return map;
     }
 
-    static final class DamageIterator implements EnchantmentHelper.IModifier
+    static final class DamageIterator implements IModifier
     {
         public EntityLivingBase user;
         public Entity target;
@@ -535,7 +535,7 @@ public class EnchantmentHelper
         }
     }
 
-    static final class HurtIterator implements EnchantmentHelper.IModifier
+    static final class HurtIterator implements IModifier
     {
         public EntityLivingBase user;
         public Entity attacker;
@@ -555,7 +555,7 @@ public class EnchantmentHelper
         void calculateModifier(Enchantment enchantmentIn, int enchantmentLevel);
     }
 
-    static final class ModifierDamage implements EnchantmentHelper.IModifier
+    static final class ModifierDamage implements IModifier
     {
         public int damageModifier;
         public DamageSource source;
@@ -570,7 +570,7 @@ public class EnchantmentHelper
         }
     }
 
-    static final class ModifierLiving implements EnchantmentHelper.IModifier
+    static final class ModifierLiving implements IModifier
     {
         public float livingModifier;
         public EnumCreatureAttribute entityLiving;
@@ -586,6 +586,13 @@ public class EnchantmentHelper
     }
 
     public static int getEnchantCost(int enchantmentId, int level) {
-        return 1;
+        if(Enchantment.getEnchantmentById(enchantmentId)==null) return 1;
+        switch (Enchantment.getEnchantmentById(enchantmentId).getWeight()) {
+            case 1: return 8*level;
+            case 2: return 4*level;
+            case 5: return 2*level;
+            case 10: return level;
+            default: return level;
+        }
     }
 }

@@ -2591,3 +2591,7 @@ title.bloodMoon.rise=A blood moon rises in the sky...
 title.bloodMoon.risen=A blood moon has risen above the horizon.
 title.bloodMoon.fade=As dawn rises, the blood moon fades...
 
+
+tile.anvil.diamond_intact.name=Diamond Anvil
+tile.anvil.diamond_slightlyDamaged.name=Slightly Damaged Diamond Anvil
+tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil

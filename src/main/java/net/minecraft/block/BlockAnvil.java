@@ -1,8 +1,7 @@
 package net.minecraft.block;
 
-import java.util.List;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
@@ -25,15 +24,18 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class BlockAnvil extends BlockFalling
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyInteger DAMAGE = PropertyInteger.create("damage", 0, 2);
+    public static final PropertyBool IS_DIAMOND = PropertyBool.create("isdiamond");
 
     protected BlockAnvil()
     {
         super(Material.anvil);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(DAMAGE, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(DAMAGE, Integer.valueOf(0)).withProperty(IS_DIAMOND,false));
         this.setLightOpacity(0);
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
@@ -58,7 +60,9 @@ public class BlockAnvil extends BlockFalling
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         EnumFacing enumfacing = placer.getHorizontalFacing().rotateY();
-        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, enumfacing).withProperty(DAMAGE, Integer.valueOf(meta >> 2));
+//        int damageValue = (meta & 6) >> 1;
+//        boolean isDiamond = (meta & 8) != 0;
+        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, enumfacing).withProperty(DAMAGE, (meta & 6) >> 1).withProperty(IS_DIAMOND, (meta & 8) != 0);
     }
 
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
@@ -77,7 +81,14 @@ public class BlockAnvil extends BlockFalling
      */
     public int damageDropped(IBlockState state)
     {
-        return ((Integer)state.getValue(DAMAGE)).intValue();
+        int damage = ((Integer)state.getValue(DAMAGE)).intValue();
+        int meta = damage << 1; // Shift it back to the Bit 1-2 position
+
+        if (((Boolean)state.getValue(IS_DIAMOND)).booleanValue()) {
+            meta |= 8; // Add the Diamond bit back
+        }
+        return meta;
+//        return state.getValue(DAMAGE).intValue();
     }
 
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)
@@ -100,8 +111,11 @@ public class BlockAnvil extends BlockFalling
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         list.add(new ItemStack(itemIn, 1, 0));
-        list.add(new ItemStack(itemIn, 1, 1));
         list.add(new ItemStack(itemIn, 1, 2));
+        list.add(new ItemStack(itemIn, 1, 4));
+        list.add(new ItemStack(itemIn, 1, 8));
+        list.add(new ItemStack(itemIn, 1, 10));
+        list.add(new ItemStack(itemIn, 1, 12));
     }
 
     protected void onStartFalling(EntityFallingBlock fallingEntity)
@@ -132,7 +146,14 @@ public class BlockAnvil extends BlockFalling
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3)).withProperty(DAMAGE, (meta & 15) >> 2);    }
+        // Facing uses 1 bit to free up 1 bit for the type.
+        EnumFacing enumfacing = (meta & 1) == 0 ? EnumFacing.NORTH : EnumFacing.WEST;
+
+        // Damage uses 2 bits.
+        return this.getDefaultState()
+                .withProperty(FACING, enumfacing)
+                .withProperty(DAMAGE, (meta & 6) >> 1)
+                .withProperty(IS_DIAMOND, (meta & 8) != 0);    }
 
     /**
      * Convert the BlockState into the correct metadata value
@@ -140,14 +161,26 @@ public class BlockAnvil extends BlockFalling
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
-        i = i | ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
-        i = i | (Integer) state.getValue(DAMAGE) << 2;
+        EnumFacing facing = state.getValue(FACING);
+
+        // Bit 0: Alignment
+        if (facing.getAxis() == EnumFacing.Axis.X) {
+            i |= 1;
+        }
+
+        // Bits 1-2: Damage (0, 1, 2)
+        i |= state.getValue(DAMAGE) << 1;
+
+        // Bit 3: Diamond
+        if (state.getValue(IS_DIAMOND)) {
+            i |= 8;
+        }
         return i;
     }
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {FACING, DAMAGE});
+        return new BlockState(this, FACING, DAMAGE, IS_DIAMOND);
     }
 
     public static class Anvil implements IInteractionObject
@@ -178,7 +211,7 @@ public class BlockAnvil extends BlockFalling
 
         public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
         {
-            return new ContainerRepair(playerInventory, this.world, this.position, playerIn);
+            return new ContainerRepair(playerInventory, this.world, this.position, playerIn, (this.world.getBlockMetadata(position.getX(), position.getY(), position.getZ())&8)!=0);
         }
 
         public String getGuiID()

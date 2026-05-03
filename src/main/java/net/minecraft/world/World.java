@@ -1105,6 +1105,18 @@ public abstract class World implements IBlockAccess
         }
     }
 
+    public int getBlockMetadata(int x, int y, int z)
+    {
+        if (!this.isValid(x,y,z))
+        {
+            return 0;
+        }
+        else
+        {
+            return this.getChunkFromBlockCoords(x,z).getBlockMetadata(x,y,z);
+        }
+    }
+
     /**
      * Checks whether its daytime by seeing if the light subtracted from the skylight is less than 4
      */
