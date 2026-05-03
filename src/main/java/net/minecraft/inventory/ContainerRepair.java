@@ -386,7 +386,7 @@ public class ContainerRepair extends Container
              * Calculate final cost
              * */
 
-            if(rawRepairCost<=0 && extraRenameCost<=0 && output.getEnchantmentTagList()!=null && output.getEnchantmentTagList().equals(firstInput.getEnchantmentTagList())) {
+            if(rawRepairCost==0 && extraRenameCost==0 && output.getEnchantmentTagList()!=null && output.getEnchantmentTagList().equals(firstInput.getEnchantmentTagList())) {
                 maximumCost = 0;
                 output=null;
             } else if(!isDiamondAnvil && output.hasSpecialGlint()) {
@@ -429,6 +429,7 @@ public class ContainerRepair extends Container
 
                 // Count max cost.
                 this.maximumCost = currentSuperEnchants*5 + ((rawRepairCost>0)?Math.min(20, inheritedRepairCost+rawRepairCost):0) + enchantmentCost + (rawRepairCost==0?extraRenameCost:0);
+                if(maximumCost==0) maximumCost=1;
 
                 /**
                  * Limitations
