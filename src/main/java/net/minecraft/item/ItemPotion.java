@@ -121,10 +121,14 @@ public class ItemPotion extends Item
             // INCREASED THROW DISTANCE:
             // Minecraft's default throw speed modifier for normal splash potions is 1.375F.
             // By multiplying throwPower by a higher value (e.g., 2.2F), you throw it significantly further.
-            float baseVelocityMultiplier = 1.75f; // was 1.375f;
+            float baseVelocityMultiplier = 1.55f; // was 1.375f;
+
+            double spawnX = playerIn.posX - Math.sin(playerIn.rotationYaw * Math.PI / 180.0) * Math.cos(playerIn.rotationPitch * Math.PI / 180.0) * 0.5;
+            double spawnY = playerIn.posY + playerIn.getEyeHeight() - 0.1;
+            double spawnZ = playerIn.posZ + Math.cos(playerIn.rotationYaw * Math.PI / 180.0) * Math.cos(playerIn.rotationPitch * Math.PI / 180.0) * 0.5;
 
             // Set the heading and velocity vector based on player look angle and calculated power
-            entityPotion.setThrowableHeading(playerIn.motionX, playerIn.motionY, playerIn.motionZ, throwPower * baseVelocityMultiplier, 1.0F);
+            entityPotion.setThrowableHeading(spawnX, spawnY, spawnZ, throwPower * baseVelocityMultiplier, 1.0F);
 
             worldIn.spawnEntityInWorld(entityPotion);
         }
