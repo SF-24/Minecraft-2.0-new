@@ -70,7 +70,7 @@ public class EnchantmentProtection extends Enchantment
     @Override
     public int getMaxExtraLevel()
     {
-        return 5;
+        return 4;
     }
 
     /**

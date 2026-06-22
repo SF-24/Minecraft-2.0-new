@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -216,6 +217,25 @@ public class SoundHandler implements IResourceManagerReloadListener, ITickable
     {
         this.sndManager.pauseAllSounds();
     }
+
+    public void stopSoundsExceptMusic(boolean stopRecords)
+    {
+        // Iterate through all playing sounds and stop them if they aren't music
+
+        for (Entry<String, ISound> stringISoundEntry : sndManager.playingSounds.entrySet()) {
+            ISound sound = stringISoundEntry.getValue();
+
+            if (sound != null && sound.getSoundLocation() != null) {
+                String path = sound.getSoundLocation().getResourcePath(); // e.g., "music.game" or "mob.zombie.say"
+
+                // Stop the sound ONLY if it does not contain "music" or "record" in its path
+                if (!path.contains("music") && (stopRecords || !path.contains("record"))) {
+                    sndManager.stopSound(sound);
+                }
+            }
+        }
+    }
+
 
     public void stopSounds()
     {

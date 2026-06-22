@@ -899,23 +899,23 @@ public class Item {
         registerItem(valueBase+470, "steel_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.STEEL, 3, 1)).setUnlocalizedName("chestplateSteel"));
         registerItem(valueBase+471, "steel_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.STEEL, 3, 2)).setUnlocalizedName("leggingsSteel"));
         registerItem(valueBase+472, "steel_boots", (new ItemArmor(ItemArmor.ArmorMaterial.STEEL, 3, 3)).setUnlocalizedName("bootsSteel"));
-        registerItem(valueBase+473, "amethyst_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 0)).setUnlocalizedName("helmetAmethyst"));
-        registerItem(valueBase+474, "amethyst_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 1)).setUnlocalizedName("chestplateAmethyst"));
-        registerItem(valueBase+475, "amethyst_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 2)).setUnlocalizedName("leggingsAmethyst"));
-        registerItem(valueBase+476, "amethyst_boots", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 3)).setUnlocalizedName("bootsAmethyst"));
+//        registerItem(valueBase+473, "amethyst_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 0)).setUnlocalizedName("helmetAmethyst"));
+//        registerItem(valueBase+474, "amethyst_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 1)).setUnlocalizedName("chestplateAmethyst"));
+//        registerItem(valueBase+475, "amethyst_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 2)).setUnlocalizedName("leggingsAmethyst"));
+//        registerItem(valueBase+476, "amethyst_boots", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 3)).setUnlocalizedName("bootsAmethyst"));
 
 
         // New items
         // 298 -> 318, 290->294, 345,346,347, 359, 420,421
         registerItem(valueBase+298, "steel_sword", (new ItemSword(Item.ToolMaterial.STEEL)).setUnlocalizedName("swordSteel"));
-        registerItem(valueBase+299, "amethyst_sword", (new ItemSword(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("swordAmethyst"));
+//        registerItem(valueBase+299, "amethyst_sword", (new ItemSword(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("swordAmethyst"));
 
         registerItem(valueBase+300, "steel_shovel", (new ItemSpade(Item.ToolMaterial.STEEL)).setUnlocalizedName("shovelSteel"));
         registerItem(valueBase+301, "steel_pickaxe", (new ItemPickaxe(Item.ToolMaterial.STEEL)).setUnlocalizedName("pickaxeSteel"));
         registerItem(valueBase+302, "steel_axe", (new ItemAxe(Item.ToolMaterial.STEEL)).setUnlocalizedName("hatchetSteel"));
-        registerItem(valueBase+303, "amethyst_shovel", (new ItemSpade(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("shovelAmethyst"));
-        registerItem(valueBase+304, "amethyst_pickaxe", (new ItemPickaxe(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("pickaxeAmethyst"));
-        registerItem(valueBase+305, "amethyst_axe", (new ItemAxe(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("hatchetAmethyst"));
+//        registerItem(valueBase+303, "amethyst_shovel", (new ItemSpade(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("shovelAmethyst"));
+//        registerItem(valueBase+304, "amethyst_pickaxe", (new ItemPickaxe(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("pickaxeAmethyst"));
+//        registerItem(valueBase+305, "amethyst_axe", (new ItemAxe(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("hatchetAmethyst"));
 
         // space up to 317
 
@@ -925,7 +925,7 @@ public class Item {
         registerItem(valueBase+1293, "diamond_hoe", (new ItemHoe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("hoeDiamond"));
         registerItem(valueBase+1294, "golden_hoe", (new ItemHoe(Item.ToolMaterial.GOLD)).setUnlocalizedName("hoeGold"));
         registerItem(valueBase+1295, "steel_hoe", (new ItemHoe(Item.ToolMaterial.STEEL)).setUnlocalizedName("hoeSteel"));
-        registerItem(valueBase+1296, "amethyst_hoe", (new ItemHoe(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("hoeAmethyst"));
+//        registerItem(valueBase+1296, "amethyst_hoe", (new ItemHoe(Item.ToolMaterial.AMETHYST)).setUnlocalizedName("hoeAmethyst"));
         registerItem(valueBase+1300, "shears", (new ItemShears()).setUnlocalizedName("shears"));
         registerItem(valueBase+1301, "compass", (new Item()).setUnlocalizedName("compass").setCreativeTab(CreativeTabs.tabTools));
         registerItem(valueBase+1302, "fishing_rod", (new ItemFishingRod()).setUnlocalizedName("fishingRod"));
@@ -936,7 +936,7 @@ public class Item {
         registerItem(valueBase+4041, "steel_ingot", (new Item()).setUnlocalizedName("ingotSteel").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(valueBase+4042, "steel_nugget", (new Item()).setUnlocalizedName("nuggetSteel").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(valueBase+4043, "nether_ash", (new Item()).setUnlocalizedName("netherAsh").setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(valueBase+4044, "amethyst", (new Item()).setUnlocalizedName("amethyst").setCreativeTab(CreativeTabs.tabMaterials));
+//        registerItem(valueBase+4044, "amethyst", (new Item()).setUnlocalizedName("amethyst").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(valueBase+4045, "ruby", (new Item()).setUnlocalizedName("ruby").setCreativeTab(CreativeTabs.tabMaterials));
 
         registerItem(valueBase+5000, "ender_pouch", (new ItemBackpack(0)).setUnlocalizedName("pouchEnder").setUnlocalizedName("pouchEnder").setCreativeTab(CreativeTabs.tabTools));
@@ -1060,7 +1060,7 @@ public class Item {
 
         public Item getRepairItem()
         {
-            return this == WOOD ? Item.getItemFromBlock(Blocks.planks) : (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == EMERALD ? Items.diamond :  null))));
+            return this == WOOD ? Item.getItemFromBlock(Blocks.planks) : (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == EMERALD ? Items.diamond :  (this == STEEL ? Items.steel_ingot :  null)))));
         }
         //(this == STEEL ? Items.steel_ingot : (this == AMETHYST ? Items.amethyst :
     }

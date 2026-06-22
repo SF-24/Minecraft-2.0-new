@@ -12,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityGrenade;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
@@ -84,6 +85,54 @@ public class ItemPotion extends Item
         return list;
     }
 
+    public void onPlayerStoppedUsing(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int timeLeft)
+    {
+        if (!playerIn.capabilities.isCreativeMode)
+        {
+            --itemStackIn.stackSize;
+        }
+
+        // TODO: Move to separate class
+
+        // Calculate how long the player charged the potion
+        int chargeDuration = this.getMaxItemUseDuration(itemStackIn) - timeLeft;
+
+        // Convert charge ticks to a generic float scaling between 0.0F and 1.0F (Fully charged at 1 second / 20 ticks)
+        float throwPower = (float)chargeDuration / 20.0F;
+        throwPower = (throwPower * throwPower + throwPower * 2.0F) / 3.0F;
+
+        // Don't throw if they barely clicked
+        if ((double)throwPower < 0.1D)
+        {
+            return;
+        }
+
+        if (throwPower > 1.0F)
+        {
+            throwPower = 1.0F;
+        }
+
+        worldIn.playSoundAtEntity(playerIn, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+
+        if (!worldIn.isRemote)
+        {
+            EntityPotion entityPotion = new EntityPotion(worldIn, playerIn, itemStackIn);
+
+            // INCREASED THROW DISTANCE:
+            // Minecraft's default throw speed modifier for normal splash potions is 1.375F.
+            // By multiplying throwPower by a higher value (e.g., 2.2F), you throw it significantly further.
+            float baseVelocityMultiplier = 1.75f; // was 1.375f;
+
+            // Set the heading and velocity vector based on player look angle and calculated power
+            entityPotion.setThrowableHeading(playerIn.motionX, playerIn.motionY, playerIn.motionZ, throwPower * baseVelocityMultiplier, 1.0F);
+
+            worldIn.spawnEntityInWorld(entityPotion);
+        }
+
+        playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
+    }
+
+
     /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
      * the Item before the action is complete.
@@ -128,6 +177,10 @@ public class ItemPotion extends Item
      */
     public int getMaxItemUseDuration(ItemStack stack)
     {
+        if (isSplash(stack.getMetadata()))
+        {
+            return 72000; // Bow/Grenade charge duration
+        }
         return 20;
     }
 
@@ -136,6 +189,10 @@ public class ItemPotion extends Item
      */
     public EnumAction getItemUseAction(ItemStack stack)
     {
+        if (isSplash(stack.getMetadata()))
+        {
+            return EnumAction.BOW;
+        }
         return EnumAction.DRINK;
     }
 
@@ -144,29 +201,8 @@ public class ItemPotion extends Item
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
-        if (isSplash(itemStackIn.getMetadata()))
-        {
-            if (!playerIn.capabilities.isCreativeMode)
-            {
-                --itemStackIn.stackSize;
-            }
-
-            worldIn.playSoundAtEntity(playerIn, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-
-            // Spawn the potion
-            if (!worldIn.isRemote)
-            {
-                worldIn.spawnEntityInWorld(new EntityPotion(worldIn, playerIn, itemStackIn));
-            }
-
-            playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
-            return itemStackIn;
-        }
-        else
-        {
-            playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
-            return itemStackIn;
-        }
+        playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
+        return itemStackIn;
     }
 
     /**

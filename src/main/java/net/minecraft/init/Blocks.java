@@ -204,8 +204,8 @@ public class Blocks
     public static final BlockSlab double_stone_slab2;
     public static final BlockSlab stone_slab2;
     // New stuff
-//    public static final Block nether_ash_ore;
-//    public static final Block steel_block;
+    public static final Block nether_ash_ore;
+    public static final Block steel_block;
     public static final Block nether_gold_ore;
 
     public static final Block ruby_ore;
@@ -445,8 +445,8 @@ public class Blocks
             double_stone_slab2 = (BlockSlab)getRegisteredBlock("double_stone_slab2");
             stone_slab2 = (BlockSlab)getRegisteredBlock("stone_slab2");
             // New stuff
-//            nether_ash_ore = getRegisteredBlock("nether_ash_ore");
-//            steel_block = getRegisteredBlock("steel_block");
+            nether_ash_ore = getRegisteredBlock("nether_ash_ore");
+            steel_block = getRegisteredBlock("steel_block");
             nether_gold_ore = getRegisteredBlock("nether_gold_ore");
 
             ruby_block = getRegisteredBlock("ruby_block");

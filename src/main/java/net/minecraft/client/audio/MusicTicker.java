@@ -30,7 +30,7 @@ public class MusicTicker implements ITickable
             if (!musicticker$musictype.getMusicLocation().equals(this.currentMusic.getSoundLocation()))
             {
                 // stop music abruptly stopping
-                //this.mc.getSoundHandler().stopSound(this.currentMusic);
+//                this.mc.getSoundHandler().stopSound(this.currentMusic);
                 this.timeUntilNextMusic = MathHelper.getRandomIntegerInRange(this.rand, 0, musicticker$musictype.getMinDelay() / 2);
             }
 
@@ -67,12 +67,12 @@ public class MusicTicker implements ITickable
     {
         INTRO(new ResourceLocation("minecraft:music.intro"), 20, 600),
         MENU(new ResourceLocation("minecraft:music.menu"), 20, 600),
-        GAME(new ResourceLocation("minecraft:music.game"), 12000, 24000),
+        GAME(new ResourceLocation("minecraft:music.game"), 4800 /*was 12000*/, 18000 /*was 24000*/),
         CREATIVE(new ResourceLocation("minecraft:music.game.creative"), 1200, 3600),
         CREDITS(new ResourceLocation("minecraft:music.game.end.credits"), Integer.MAX_VALUE, Integer.MAX_VALUE),
         NETHER(new ResourceLocation("minecraft:music.game.nether"), 1200, 3600),
         END_BOSS(new ResourceLocation("minecraft:music.game.end.dragon"), 0, 0),
-        END(new ResourceLocation("minecraft:music.game.end"), 6000, 24000);
+        END(new ResourceLocation("minecraft:music.game.end"), 6000, 18000 /*was 24000*/);
 
         private final ResourceLocation musicLocation;
         private final int minDelay;

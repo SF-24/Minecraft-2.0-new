@@ -508,10 +508,10 @@ public class EnchantmentHelper
                     {
                         if (map == null)
                         {
-                            map = Maps.<Integer, EnchantmentData>newHashMap();
+                            map = Maps.newHashMap();
                         }
 
-                        map.put(Integer.valueOf(enchantment.effectId), new EnchantmentData(enchantment, i));
+                        map.put(enchantment.effectId, new EnchantmentData(enchantment, i));
                     }
                 }
             }

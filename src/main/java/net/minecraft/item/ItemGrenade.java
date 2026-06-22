@@ -60,16 +60,6 @@ public class ItemGrenade extends Item {
     }
 
 
-    /**
-     * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
-     * the Item before the action is complete.
-     */
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn)
-    {
-        return stack;
-    }
-
-
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
         if (stack.getMetadata() == 0)
@@ -80,6 +70,4 @@ public class ItemGrenade extends Item {
             tooltip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("grenade.holy.description.3"));
         }
     }
-
-
 }

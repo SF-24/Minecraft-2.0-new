@@ -2394,12 +2394,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             this.mcResourcePackRepository.clearResourcePack();
             this.ingameGUI.resetPlayersOverlayFooterHeader();
-            this.setServerData((ServerData)null);
+            this.setServerData(null);
             this.integratedServerIsRunning = false;
         }
 
         // stops music stopping
-        // this.mcSoundHandler.stopSounds();
+        this.mcSoundHandler.stopSoundsExceptMusic(false);
         this.theWorld = worldClientIn;
 
         if (worldClientIn != null)

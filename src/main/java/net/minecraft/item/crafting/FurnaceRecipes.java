@@ -64,7 +64,7 @@ public class FurnaceRecipes
 
         // New stuff
 //        this.addSmeltingRecipe(new ItemStack(Items.iron_ingot), new ItemStack(Items.steel_nugget), 0.7f);
-//        this.addSmeltingRecipeForBlock((Blocks.nether_ash_ore), new ItemStack(Items.nether_ash), 0.7f);
+        this.addSmeltingRecipeForBlock((Blocks.nether_ash_ore), new ItemStack(Items.nether_ash), 0.7f);
         this.addSmeltingRecipeForBlock((Blocks.nether_gold_ore), new ItemStack(Items.gold_ingot), 1.0f);
 
     }

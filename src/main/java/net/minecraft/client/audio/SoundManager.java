@@ -54,7 +54,7 @@ public class SoundManager
 
     /** A counter for how long the sound manager has been running */
     private int playTime = 0;
-    private final Map<String, ISound> playingSounds = HashBiMap.<String, ISound>create();
+    final Map<String, ISound> playingSounds = HashBiMap.<String, ISound>create();
     private final Map<ISound, String> invPlayingSounds;
     private Map<ISound, SoundPoolEntry> playingSoundPoolEntries;
     private final Multimap<SoundCategory, String> categorySounds;
