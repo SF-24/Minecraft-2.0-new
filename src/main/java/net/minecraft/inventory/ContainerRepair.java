@@ -53,9 +53,9 @@ public class ContainerRepair extends Container
     /** The player that has this container open. */
     private final EntityPlayer thePlayer;
 
-    public ContainerRepair(InventoryPlayer playerInventory, World worldIn, EntityPlayer player)
+    public ContainerRepair(InventoryPlayer playerInventory, World worldIn, EntityPlayer player, boolean isDiamondAnvil)
     {
-        this(playerInventory, worldIn, BlockPos.ORIGIN, player);
+        this(playerInventory, worldIn, BlockPos.ORIGIN, player,isDiamondAnvil);
     }
 
     public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, EntityPlayer player)
