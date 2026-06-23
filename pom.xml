@@ -21,16 +21,39 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>create-my-bundle</id>
+                        <id>client-jar</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <descriptors>
+                                <descriptor>src/assembly/client.xml</descriptor>
+                            </descriptors>
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <mainClass>net.minecraft.Run</mainClass>
+                                </manifest>
+                            </archive>
+                            <finalName>${project.artifactId}-${project.version}-client</finalName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>server-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-${project.version}-server</finalName>
+                            <descriptors>
+                                <descriptor>src/assembly/server.xml</descriptor>
+                            </descriptors>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>net.minecraft.server.dedicated.DedicatedServer</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
