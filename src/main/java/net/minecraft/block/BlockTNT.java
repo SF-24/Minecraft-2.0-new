@@ -17,6 +17,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public class BlockTNT extends Block
 {
@@ -29,26 +30,29 @@ public class BlockTNT extends Block
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.onBlockAdded(worldIn, pos, state);
+        super.onBlockAdded(worldIn, x,y,z, state);
 
-        if (worldIn.isBlockPowered(pos))
+        if (worldIn.isBlockPowered(new BlockPos(x,y,z))) // TODO: replace w. ints
         {
-            this.onBlockDestroyedByPlayer(worldIn, pos, state.withProperty(EXPLODE, Boolean.valueOf(true)));
-            worldIn.setBlockToAir(pos);
+            this.onBlockDestroyedByPlayer(worldIn, new BlockPos(x,y,z), state.withProperty(EXPLODE, Boolean.valueOf(true)));
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x,y,z);
         if (worldIn.isBlockPowered(pos))
         {
             this.onBlockDestroyedByPlayer(worldIn, pos, state.withProperty(EXPLODE, Boolean.valueOf(true)));
-            worldIn.setBlockToAir(pos);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 

@@ -98,8 +98,10 @@ public class BlockBeacon extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x,y,z);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (tileentity instanceof TileEntityBeacon)

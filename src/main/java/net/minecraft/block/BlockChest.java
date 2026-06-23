@@ -87,13 +87,14 @@ public class BlockChest extends BlockContainer
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.checkForSurroundingChests(worldIn, pos, state);
+        this.checkForSurroundingChests(worldIn, new BlockPos(x,y,z), state);
 
         for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
         {
-            BlockPos blockpos = pos.offset(enumfacing);
+            BlockPos blockpos = new BlockPos(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ());
             IBlockState iblockstate = worldIn.getBlockState(blockpos);
 
             if (iblockstate.getBlock() == this)
@@ -400,10 +401,11 @@ public class BlockChest extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
+        TileEntity tileentity = worldIn.getTileEntity(new BlockPos(x,y,z));
 
         if (tileentity instanceof TileEntityChest)
         {
@@ -411,8 +413,10 @@ public class BlockChest extends BlockContainer
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (tileentity instanceof IInventory)
@@ -421,7 +425,7 @@ public class BlockChest extends BlockContainer
             worldIn.updateComparatorOutputLevel(pos, this);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)

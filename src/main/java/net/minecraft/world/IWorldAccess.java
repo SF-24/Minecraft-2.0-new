@@ -47,10 +47,10 @@ public interface IWorldAccess
     void onEntityRemoved(Entity entityIn);
 
     @Deprecated
-    void playRecord(String recordName, BlockPos blockPosIn);
+    void playRecord(String recordName, int x, int y, int z);
 
     @Deprecated
-    void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data);
+    void playAuxSFX(EntityPlayer player, int sfxType, int x, int y, int z, int data);
 
     @Deprecated
     void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress);

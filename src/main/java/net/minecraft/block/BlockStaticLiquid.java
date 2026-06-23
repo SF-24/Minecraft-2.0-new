@@ -24,8 +24,10 @@ public class BlockStaticLiquid extends BlockLiquid
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         if (!this.checkForMixing(worldIn, pos, state))
         {
             this.updateLiquid(worldIn, pos, state);
@@ -104,11 +106,12 @@ public class BlockStaticLiquid extends BlockLiquid
         return worldIn.getBlockState(pos).getBlock().getMaterial().getCanBurn();
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (state.getBlock().equals(Blocks.water) && (worldIn.provider.getDimensionId() != -1))
         {
-            Blocks.aether_portal.func_176548_d(worldIn, pos);
+            Blocks.aether_portal.func_176548_d(worldIn, new BlockPos(x,y,z));
         }
     }
 }

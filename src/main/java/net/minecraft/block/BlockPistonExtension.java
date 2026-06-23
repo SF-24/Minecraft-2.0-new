@@ -55,17 +55,20 @@ public class BlockPistonExtension extends Block
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.breakBlock(worldIn, pos, state);
-        EnumFacing enumfacing = ((EnumFacing)state.getValue(FACING)).getOpposite();
-        pos = pos.offset(enumfacing);
-        IBlockState iblockstate = worldIn.getBlockState(pos);
+        super.breakBlock(worldIn, x,y,z, state);
+        EnumFacing enumfacing = state.getValue(FACING).getOpposite();
+        x+=enumfacing.getFrontOffsetX();
+        y+=enumfacing.getFrontOffsetY();
+        z+=enumfacing.getFrontOffsetZ();;
+        IBlockState iblockstate = worldIn.getBlockState(x,y,z);
 
         if ((iblockstate.getBlock() == Blocks.piston || iblockstate.getBlock() == Blocks.sticky_piston) && ((Boolean)iblockstate.getValue(BlockPistonBase.EXTENDED)).booleanValue())
         {
-            iblockstate.getBlock().dropBlockAsItem(worldIn, pos, iblockstate, 0);
-            worldIn.setBlockToAir(pos);
+            iblockstate.getBlock().dropBlockAsItem(worldIn, x,y,z, iblockstate, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
@@ -193,19 +196,22 @@ public class BlockPistonExtension extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-        BlockPos blockpos = pos.offset(enumfacing.getOpposite());
-        IBlockState iblockstate = worldIn.getBlockState(blockpos);
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING).getOpposite();
+        x+=enumfacing.getFrontOffsetX();
+        y+=enumfacing.getFrontOffsetY();
+        z+=enumfacing.getFrontOffsetZ();
+        IBlockState iblockstate = worldIn.getBlockState(x,y,z);
 
         if (iblockstate.getBlock() != Blocks.piston && iblockstate.getBlock() != Blocks.sticky_piston)
         {
-            worldIn.setBlockToAir(pos);
+            worldIn.setBlockToAir(x,y,z);
         }
         else
         {
-            iblockstate.getBlock().onNeighborBlockChange(worldIn, blockpos, iblockstate, neighborBlock);
+            iblockstate.getBlock().onNeighborBlockChange(worldIn, x,y,z, iblockstate, neighborBlock);
         }
     }
 

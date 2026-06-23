@@ -64,16 +64,19 @@ public class BlockPistonBase extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
-            this.checkForMove(worldIn, pos, state);
+            this.checkForMove(worldIn, new BlockPos(x,y,z), state);
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x,y,z);
         if (!worldIn.isRemote && worldIn.getTileEntity(pos) == null)
         {
             this.checkForMove(worldIn, pos, state);
@@ -398,7 +401,7 @@ public class BlockPistonBase extends Block
             {
                 BlockPos blockpos = (BlockPos)list1.get(j);
                 Block block = worldIn.getBlockState(blockpos).getBlock();
-                block.dropBlockAsItem(worldIn, blockpos, worldIn.getBlockState(blockpos), 0);
+                block.dropBlockAsItem(worldIn, blockpos.getX(),blockpos.getY(),blockpos .getZ(), worldIn.getBlockState(blockpos), 0);
                 worldIn.setBlockToAir(blockpos);
                 --i;
                 ablock[i] = block;

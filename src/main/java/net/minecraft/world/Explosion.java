@@ -215,7 +215,7 @@ public class Explosion
                 {
                     if (block.canDropFromExplosion(this))
                     {
-                        block.dropBlockAsItemWithChance(this.worldObj, blockpos, this.worldObj.getBlockState(blockpos), 1.0F / this.explosionSize, 0);
+                        block.dropBlockAsItemWithChance(this.worldObj, blockpos.getX(),blockpos.getY(),blockpos.getZ(), this.worldObj.getBlockState(blockpos), 1.0F / this.explosionSize, 0);
                     }
 
                     this.worldObj.setBlockState(blockpos, Blocks.air.getDefaultState(), 3);

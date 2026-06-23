@@ -49,13 +49,11 @@ public abstract class BlockLeaves extends BlockLeavesBase
         return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int k, int l, int i1, IBlockState state)
     {
         int i = 1;
         int j = i + 1;
-        int k = pos.getX();
-        int l = pos.getY();
-        int i1 = pos.getZ();
 
         if (worldIn.isAreaLoaded(new BlockPos(k - j, l - j, i1 - j), new BlockPos(k + j, l + j, i1 + j)))
         {
@@ -65,12 +63,14 @@ public abstract class BlockLeaves extends BlockLeavesBase
                 {
                     for (int l1 = -i; l1 <= i; ++l1)
                     {
-                        BlockPos blockpos = pos.add(j1, k1, l1);
-                        IBlockState iblockstate = worldIn.getBlockState(blockpos);
+                        int x = j1+k;
+                        int y = l+k1;
+                        int z = i1+l1;
+                        IBlockState iblockstate = worldIn.getBlockState(x,y,z);
 
                         if (iblockstate.getBlock().getMaterial() == Material.leaves && !((Boolean)iblockstate.getValue(CHECK_DECAY)).booleanValue())
                         {
-                            worldIn.setBlockState(blockpos, iblockstate.withProperty(CHECK_DECAY, Boolean.valueOf(true)), 4);
+                            worldIn.setBlockState(x,y,z, iblockstate.withProperty(CHECK_DECAY, Boolean.valueOf(true)), 4);
                         }
                     }
                 }
@@ -202,7 +202,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
 
     private void destroy(World worldIn, BlockPos pos)
     {
-        this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+        this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), worldIn.getBlockState(pos), 0);
         worldIn.setBlockToAir(pos);
     }
 
@@ -225,7 +225,8 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (!worldIn.isRemote)
         {
@@ -244,7 +245,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
             if (worldIn.rand.nextInt(i) == 0)
             {
                 Item item = this.getItemDropped(state, worldIn.rand, fortune);
-                spawnAsEntity(worldIn, pos, new ItemStack(item, 1, this.damageDropped(state)));
+                spawnAsEntity(worldIn, x,y,z, new ItemStack(item, 1, this.damageDropped(state)));
             }
 
             i = 200;
@@ -259,7 +260,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
                 }
             }
 
-            this.dropApple(worldIn, pos, state, i);
+            this.dropApple(worldIn, new BlockPos(x,y,z), state, i);
         }
     }
 

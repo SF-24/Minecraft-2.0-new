@@ -2781,8 +2781,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         this.markBlocksForUpdate(x1 - 1, y1 - 1, z1 - 1, x2 + 1, y2 + 1, z2 + 1);
     }
 
-    public void playRecord(String recordName, BlockPos blockPosIn)
+    public void playRecord(String recordName, int x, int y, int z)
     {
+        BlockPos blockPosIn = new BlockPos(x,y,z);
         ISound isound = this.mapSoundPositions.get(blockPosIn);
 
         if (isound != null)
@@ -3075,106 +3076,111 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         }
     }
 
-    public void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data)
+    @Deprecated
+    public void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data) {
+        playAuxSFX(player,sfxType,blockPosIn.getX(),blockPosIn.getY(),blockPosIn.getZ(),data);
+    }
+
+    public void playAuxSFX(EntityPlayer player, int sfxType, int x, int y, int z, int data)
     {
         Random random = this.theWorld.rand;
 
         switch (sfxType)
         {
             case 1000:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.click", 1.0F, 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.click", 1.0F, 1.0F, false);
                 break;
 
             case 1001:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.click", 1.0F, 1.2F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.click", 1.0F, 1.2F, false);
                 break;
 
             case 1002:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.bow", 1.0F, 1.2F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.bow", 1.0F, 1.2F, false);
                 break;
 
             case 1003:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.door_open", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.door_open", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
 
             case 1004:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.fizz", 0.5F, 2.6F + (random.nextFloat() - random.nextFloat()) * 0.8F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.fizz", 0.5F, 2.6F + (random.nextFloat() - random.nextFloat()) * 0.8F, false);
                 break;
 
             case 1005:
                 if (Item.getItemById(data) instanceof ItemRecord)
                 {
-                    this.theWorld.playRecord(blockPosIn, "records." + ((ItemRecord)Item.getItemById(data)).recordName);
+                    this.theWorld.playRecord(x,y,z, "records." + ((ItemRecord)Item.getItemById(data)).recordName);
                 }
                 else
                 {
-                    this.theWorld.playRecord(blockPosIn, null);
+                    this.theWorld.playRecord(x,y,z, null);
                 }
 
                 break;
 
             case 1006:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.door_close", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.door_close", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
 
             case 1007:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.ghast.charge", 10.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.ghast.charge", 10.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1008:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.ghast.fireball", 10.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.ghast.fireball", 10.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1009:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.ghast.fireball", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.ghast.fireball", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1010:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.zombie.wood", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.zombie.wood", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1011:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.zombie.metal", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.zombie.metal", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1012:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.zombie.woodbreak", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.zombie.woodbreak", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1014:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.wither.shoot", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.wither.shoot", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1015:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.bat.takeoff", 0.05F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.bat.takeoff", 0.05F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1016:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.zombie.infect", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.zombie.infect", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1017:
-                this.theWorld.playSoundAtPos(blockPosIn, "mob.zombie.unfect", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "mob.zombie.unfect", 2.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F, false);
                 break;
 
             case 1020:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.anvil_break", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.anvil_break", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
 
             case 1021:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.anvil_use", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.anvil_use", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
 
             case 1022:
-                this.theWorld.playSoundAtPos(blockPosIn, "random.anvil_land", 0.3F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
+                this.theWorld.playSoundAtPos(x,y,z, "random.anvil_land", 0.3F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
 
             case 2000:
                 int i = data % 3 - 1;
                 int j = data / 3 % 3 - 1;
-                double d0 = (double)blockPosIn.getX() + (double)i * 0.6D + 0.5D;
-                double d1 = (double)blockPosIn.getY() + 0.5D;
-                double d2 = (double)blockPosIn.getZ() + (double)j * 0.6D + 0.5D;
+                double d0 = x + (double)i * 0.6D + 0.5D;
+                double d1 = y + 0.5D;
+                double d2 = z + (double)j * 0.6D + 0.5D;
 
                 for (int i1 = 0; i1 < 10; ++i1)
                 {
@@ -3195,16 +3201,16 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
                 if (block.getMaterial() != Material.air)
                 {
-                    this.mc.getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation(block.stepSound.getBreakSound()), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getFrequency() * 0.8F, (float)blockPosIn.getX() + 0.5F, (float)blockPosIn.getY() + 0.5F, (float)blockPosIn.getZ() + 0.5F));
+                    this.mc.getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation(block.stepSound.getBreakSound()), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getFrequency() * 0.8F, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F));
                 }
 
-                this.mc.effectRenderer.addBlockDestroyEffects(blockPosIn, block.getStateFromMeta(data >> 12 & 255));
+                this.mc.effectRenderer.addBlockDestroyEffects(new BlockPos(x,y,z), block.getStateFromMeta(data >> 12 & 255));
                 break;
 
             case 2002:
-                double d3 = blockPosIn.getX();
-                double d4 = blockPosIn.getY();
-                double d5 = blockPosIn.getZ();
+                double d3 = x;
+                double d4 = y;
+                double d5 = z;
 
                 for (int k = 0; k < 8; ++k)
                 {
@@ -3239,13 +3245,13 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     }
                 }
 
-                this.theWorld.playSoundAtPos(blockPosIn, "game.potion.smash", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
+                this.theWorld.playSoundAtPos(new BlockPos(x,y,z), "game.potion.smash", 1.0F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
 
             case 2003:
-                double d6 = (double)blockPosIn.getX() + 0.5D;
-                double d8 = blockPosIn.getY();
-                double d10 = (double)blockPosIn.getZ() + 0.5D;
+                double d6 = (double)x + 0.5D;
+                double d8 = y;
+                double d10 = z + 0.5D;
 
                 for (int l1 = 0; l1 < 8; ++l1)
                 {
@@ -3263,9 +3269,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             case 2004:
                 for (int l = 0; l < 20; ++l)
                 {
-                    double d12 = (double)blockPosIn.getX() + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
-                    double d13 = (double)blockPosIn.getY() + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
-                    double d14 = (double)blockPosIn.getZ() + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
+                    double d12 = x + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
+                    double d13 = y + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
+                    double d14 = z + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
                     this.theWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d12, d13, d14, 0.0D, 0.0D, 0.0D);
                     this.theWorld.spawnParticle(EnumParticleTypes.FLAME, d12, d13, d14, 0.0D, 0.0D, 0.0D);
                 }
@@ -3273,7 +3279,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 return;
 
             case 2005:
-                ItemDye.spawnBonemealParticles(this.theWorld, blockPosIn, data);
+                ItemDye.spawnBonemealParticles(this.theWorld, new BlockPos(x,y,z), data);
         }
     }
 

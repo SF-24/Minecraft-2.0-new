@@ -89,17 +89,18 @@ public class BlockSnow extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        this.checkAndDropBlock(worldIn, pos, state);
+        this.checkAndDropBlock(worldIn, x,y,z, state);
     }
 
-    private boolean checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
+    private boolean checkAndDropBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        if (!this.canPlaceBlockAt(worldIn, pos))
+        if (!this.canPlaceBlockAt(worldIn, new BlockPos(x,y,z)))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
             return false;
         }
         else
@@ -108,6 +109,7 @@ public class BlockSnow extends Block
         }
     }
 
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
     {
         spawnAsEntity(worldIn, pos, new ItemStack(Items.snowball, ((Integer)state.getValue(LAYERS)).intValue() + 1, 0));
@@ -135,7 +137,7 @@ public class BlockSnow extends Block
     {
         if (worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11)
         {
-            this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+            this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), worldIn.getBlockState(pos), 0);
             worldIn.setBlockToAir(pos);
         }
     }

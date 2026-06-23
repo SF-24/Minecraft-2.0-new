@@ -30,6 +30,7 @@ public class BlockIce extends BlockBreakable
         return EnumWorldBlockLayer.TRANSLUCENT;
     }
 
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
     {
         player.triggerAchievement(StatList.mineBlockStatArray[Block.getIdFromBlock(this)]);
@@ -53,7 +54,7 @@ public class BlockIce extends BlockBreakable
             }
 
             int i = EnchantmentHelper.getFortuneModifier(player);
-            this.dropBlockAsItem(worldIn, pos, state, i);
+            this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), state, i);
             Material material = worldIn.getBlockState(pos.down()).getBlock().getMaterial();
 
             if (material.blocksMovement() || material.isLiquid())
@@ -71,6 +72,7 @@ public class BlockIce extends BlockBreakable
         return 0;
     }
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         if (worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11 - this.getLightOpacity())
@@ -81,7 +83,7 @@ public class BlockIce extends BlockBreakable
             }
             else
             {
-                this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+                this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), worldIn.getBlockState(pos), 0);
                 worldIn.setBlockState(pos, Blocks.water.getDefaultState());
             }
         }

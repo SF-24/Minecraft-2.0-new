@@ -16,9 +16,10 @@ public class BlockFloating extends Block {
         super(blockMaterialIn, blockMapColorIn);
     }
 
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        updateTick(worldIn,pos,new Random());
+        updateTick(worldIn,new BlockPos(x,y,z),new Random());
     }
 
     private void updateTick(World worldIn, BlockPos pos, Random random) {

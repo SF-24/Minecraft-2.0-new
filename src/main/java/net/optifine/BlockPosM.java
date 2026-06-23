@@ -7,6 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3i;
 
+@Deprecated
 public class BlockPosM extends BlockPos
 {
     private int mx;
@@ -16,16 +17,19 @@ public class BlockPosM extends BlockPos
     private BlockPosM[] facings;
     private boolean needsUpdate;
 
+    @Deprecated
     public BlockPosM(int x, int y, int z)
     {
         this(x, y, z, 0);
     }
 
+    @Deprecated
     public BlockPosM(double xIn, double yIn, double zIn)
     {
         this(MathHelper.floor_double(xIn), MathHelper.floor_double(yIn), MathHelper.floor_double(zIn));
     }
 
+    @Deprecated
     public BlockPosM(int x, int y, int z, int level)
     {
         super(0, 0, 0);

@@ -93,12 +93,13 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y , int z, IBlockState state, Block neighborBlock)
     {
-        if (!this.canBePlacedOn(worldIn, pos.down()))
+        if (!this.canBePlacedOn(worldIn, new BlockPos(x,y-1,z)))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
@@ -184,14 +185,15 @@ public abstract class BlockBasePressurePlate extends Block
         return new AxisAlignedBB((double)((float)pos.getX() + 0.125F), (double)pos.getY(), (double)((float)pos.getZ() + 0.125F), (double)((float)(pos.getX() + 1) - 0.125F), (double)pos.getY() + 0.25D, (double)((float)(pos.getZ() + 1) - 0.125F));
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (this.getRedstoneStrength(state) > 0)
         {
-            this.updateNeighbors(worldIn, pos);
+            this.updateNeighbors(worldIn, new BlockPos(x, y, z));
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     /**

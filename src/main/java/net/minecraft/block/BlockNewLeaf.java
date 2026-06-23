@@ -137,6 +137,7 @@ public class BlockNewLeaf extends BlockLeaves
         return new BlockState(this, new IProperty[] {VARIANT, CHECK_DECAY, DECAYABLE});
     }
 
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
     {
         if (!worldIn.isRemote && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Items.shears)

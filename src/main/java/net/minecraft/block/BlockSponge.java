@@ -44,31 +44,35 @@ public class BlockSponge extends Block
      * Gets the metadata of the item this Block can drop. This method is called when the block gets destroyed. It
      * returns the metadata of the dropped item based on the old metadata of the block.
      */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return ((Boolean)state.getValue(WET)).booleanValue() ? 1 : 0;
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.tryAbsorb(worldIn, pos, state);
+        this.tryAbsorb(worldIn, x,y,z, state);
     }
 
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        this.tryAbsorb(worldIn, pos, state);
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+        this.tryAbsorb(worldIn, x,y,z, state);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
     }
 
-    protected void tryAbsorb(World worldIn, BlockPos pos, IBlockState state)
+
+    protected void tryAbsorb(World worldIn, int x, int y, int z, IBlockState state)
     {
-        if (!((Boolean)state.getValue(WET)).booleanValue() && this.absorb(worldIn, pos))
+        if (!((Boolean)state.getValue(WET)).booleanValue() && this.absorb(worldIn, new BlockPos(x,y,z)))
         {
-            worldIn.setBlockState(pos, state.withProperty(WET, Boolean.valueOf(true)), 2);
-            worldIn.playAuxSFX(2001, pos, Block.getIdFromBlock(Blocks.water));
+            worldIn.setBlockState(x,y,z, state.withProperty(WET, Boolean.valueOf(true)), 2);
+            worldIn.playAuxSFX(2001, x,y,z, Block.getIdFromBlock(Blocks.water));
         }
     }
 

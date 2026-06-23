@@ -1,6 +1,8 @@
 package net.minecraft.block;
 
 import java.util.Random;
+
+import net.minecraft.MineshaftLogger;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -22,6 +24,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public class BlockDoor extends Block
 {
@@ -200,42 +203,44 @@ public class BlockDoor extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER)
         {
-            BlockPos blockpos = pos.down();
-            IBlockState iblockstate = worldIn.getBlockState(blockpos);
+            // Blockpos is 1 down
+//            BlockPos blockpos = pos.down();
+            IBlockState iblockstate = worldIn.getBlockState(x,y-1,z);
 
             if (iblockstate.getBlock() != this)
             {
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockToAir(x,y,z);
             }
             else if (neighborBlock != this)
             {
-                this.onNeighborBlockChange(worldIn, blockpos, iblockstate, neighborBlock);
+                this.onNeighborBlockChange(worldIn, x,y-1,z, iblockstate, neighborBlock);
             }
         }
         else
         {
             boolean flag1 = false;
-            BlockPos blockpos1 = pos.up();
-            IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
+//            BlockPos blockpos1 = pos.up();
+            IBlockState iblockstate1 = worldIn.getBlockState(x,y+1,z);
 
             if (iblockstate1.getBlock() != this)
             {
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockToAir(x,y,z);
                 flag1 = true;
             }
 
-            if (!World.doesBlockHaveSolidTopSurface(worldIn, pos.down()))
+            if (!World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y-1,z)))
             {
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockToAir(x,y,z);
                 flag1 = true;
 
                 if (iblockstate1.getBlock() == this)
                 {
-                    worldIn.setBlockToAir(blockpos1);
+                    worldIn.setBlockToAir(x,y+1,z);
                 }
             }
 
@@ -243,22 +248,22 @@ public class BlockDoor extends Block
             {
                 if (!worldIn.isRemote)
                 {
-                    this.dropBlockAsItem(worldIn, pos, state, 0);
+                    this.dropBlockAsItem(worldIn, x,y,z, state, 0);
                 }
             }
             else
             {
-                boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos1);
+                boolean flag = worldIn.isBlockPowered(new BlockPos(x,y,z)) || worldIn.isBlockPowered(new BlockPos(x,y+1,z));
 
-                if ((flag || neighborBlock.canProvidePower()) && neighborBlock != this && flag != ((Boolean)iblockstate1.getValue(POWERED)).booleanValue())
+                if ((flag || neighborBlock.canProvidePower()) && neighborBlock != this && flag != iblockstate1.getValue(POWERED).booleanValue())
                 {
-                    worldIn.setBlockState(blockpos1, iblockstate1.withProperty(POWERED, Boolean.valueOf(flag)), 2);
+                    worldIn.setBlockState(x,y+1,z, iblockstate1.withProperty(POWERED, Boolean.valueOf(flag)), 2);
 
                     if (flag != ((Boolean)state.getValue(OPEN)).booleanValue())
                     {
-                        worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(flag)), 2);
-                        worldIn.markBlockRangeForRenderUpdate(pos, pos);
-                        worldIn.playAuxSFXAtEntity((EntityPlayer)null, flag ? 1003 : 1006, pos, 0);
+                        worldIn.setBlockState(x,y,z, state.withProperty(OPEN, Boolean.valueOf(flag)), 2);
+                        worldIn.markBlockForRenderUpdate(x,y,z);
+                        worldIn.playAuxSFXAtEntity((EntityPlayer)null, flag ? 1003 : 1006, x,y,z, 0);
                     }
                 }
             }
@@ -294,18 +299,33 @@ public class BlockDoor extends Block
 
     public static int combineMetadata(IBlockAccess worldIn, BlockPos pos)
     {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        int i = iblockstate.getBlock().getMetaFromState(iblockstate);
-        boolean flag = isTop(i);
-        IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
-        int j = iblockstate1.getBlock().getMetaFromState(iblockstate1);
-        int k = flag ? j : i;
-        IBlockState iblockstate2 = worldIn.getBlockState(pos.up());
-        int l = iblockstate2.getBlock().getMetaFromState(iblockstate2);
-        int i1 = flag ? i : l;
-        boolean flag1 = (i1 & 1) != 0;
-        boolean flag2 = (i1 & 2) != 0;
-        return removeHalfBit(k) | (flag ? 8 : 0) | (flag1 ? 16 : 0) | (flag2 ? 32 : 0);
+        if (pos == null || worldIn == null)
+        {
+            MineshaftLogger.logError("Null door position or world!");
+            return 0; // safe fallback
+        }
+        try {
+            IBlockState bottomBlockState = worldIn.getBlockState(pos);
+            int i = bottomBlockState.getBlock().getMetaFromState(bottomBlockState);
+            boolean flag = isTop(i);
+            if (!(bottomBlockState.getBlock() instanceof BlockDoor)) {
+                MineshaftLogger.logError("EROR! Null door blockstate");
+                return 0;
+            }
+
+            IBlockState supportBlockState = worldIn.getBlockState(pos.down());
+            int j = supportBlockState.getBlock().getMetaFromState(supportBlockState);
+            int k = flag ? j : i;
+            IBlockState topBlockState = worldIn.getBlockState(pos.up());
+            int l = topBlockState.getBlock().getMetaFromState(topBlockState);
+            int i1 = flag ? i : l;
+            boolean flag1 = (i1 & 1) != 0;
+            boolean flag2 = (i1 & 2) != 0;
+            return removeHalfBit(k) | (flag ? 8 : 0) | (flag1 ? 16 : 0) | (flag2 ? 32 : 0);
+        } catch (Throwable throwable) {
+            MineshaftLogger.logError("Error combining metadata for door: " + throwable.getMessage());
+            return 0;
+        }
     }
 
     public Item getItem(World worldIn, BlockPos pos)
@@ -318,6 +338,7 @@ public class BlockDoor extends Block
         return this == Blocks.iron_door ? Items.iron_door : (this == Blocks.spruce_door ? Items.spruce_door : (this == Blocks.birch_door ? Items.birch_door : (this == Blocks.jungle_door ? Items.jungle_door : (this == Blocks.acacia_door ? Items.acacia_door : (this == Blocks.dark_oak_door ? Items.dark_oak_door : Items.oak_door)))));
     }
 
+    @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
     {
         BlockPos blockpos = pos.down();

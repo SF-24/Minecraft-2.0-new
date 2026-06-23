@@ -112,13 +112,14 @@ public class BlockFarmland extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
 
-        if (worldIn.getBlockState(pos.up()).getBlock().getMaterial().isSolid())
+        if (worldIn.getBlockState(x,y+1,z).getBlock().getMaterial().isSolid())
         {
-            worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+            worldIn.setBlockState(x,y,z, Blocks.dirt.getDefaultState());
         }
     }
 

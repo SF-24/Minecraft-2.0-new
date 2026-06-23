@@ -141,7 +141,8 @@ public class BlockSkull extends BlockContainer
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
     }
 
@@ -156,12 +157,14 @@ public class BlockSkull extends BlockContainer
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
             if (!((Boolean)state.getValue(NODROP)).booleanValue())
             {
+                BlockPos pos = new BlockPos(x, y, z);
                 TileEntity tileentity = worldIn.getTileEntity(pos);
 
                 if (tileentity instanceof TileEntitySkull)
@@ -177,11 +180,11 @@ public class BlockSkull extends BlockContainer
                         itemstack.getTagCompound().setTag("SkullOwner", nbttagcompound);
                     }
 
-                    spawnAsEntity(worldIn, pos, itemstack);
+                    spawnAsEntity(worldIn, x,y,z, itemstack);
                 }
             }
 
-            super.breakBlock(worldIn, pos, state);
+            super.breakBlock(worldIn, x,y,z, state);
         }
     }
 
@@ -246,7 +249,7 @@ public class BlockSkull extends BlockContainer
                     for (int j1 = 0; j1 < blockpattern.getThumbLength(); ++j1)
                     {
                         BlockWorldState blockworldstate2 = blockpattern$patternhelper.translateOffset(i1, j1, 0);
-                        worldIn.notifyNeighborsRespectDebug(blockworldstate2.getPos(), Blocks.air);
+                        worldIn.notifyNeighborsRespectDebug(blockworldstate2.getPos().getX(),blockworldstate2.getPos().getY(),blockworldstate2.getPos().getZ(), Blocks.air);
                     }
                 }
             }

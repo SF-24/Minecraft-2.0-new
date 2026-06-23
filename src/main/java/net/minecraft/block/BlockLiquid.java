@@ -291,17 +291,19 @@ public abstract class BlockLiquid extends Block
         return vec3.xCoord == 0.0D && vec3.zCoord == 0.0D ? -1000.0D : MathHelper.atan2(vec3.zCoord, vec3.xCoord) - (Math.PI / 2D);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.checkForMixing(worldIn, pos, state);
+        this.checkForMixing(worldIn, new BlockPos(x,y,z), state);
     }
 
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        this.checkForMixing(worldIn, pos, state);
+        this.checkForMixing(worldIn, new BlockPos(x,y,z), state);
     }
 
     public boolean checkForMixing(World worldIn, BlockPos pos, IBlockState state)

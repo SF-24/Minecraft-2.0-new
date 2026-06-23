@@ -136,8 +136,10 @@ public class BlockBrewingStand extends BlockContainer
         worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (tileentity instanceof TileEntityBrewingStand)
@@ -145,7 +147,7 @@ public class BlockBrewingStand extends BlockContainer
             InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityBrewingStand)tileentity);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     /**

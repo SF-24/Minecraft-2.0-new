@@ -39,10 +39,11 @@ public abstract class BlockContainer extends Block implements ITileEntityProvide
         return -1;
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.breakBlock(worldIn, pos, state);
-        worldIn.removeTileEntity(pos);
+        super.breakBlock(worldIn, x,y,z, state);
+        worldIn.removeTileEntity(new BlockPos(x,y,z));
     }
 
     /**

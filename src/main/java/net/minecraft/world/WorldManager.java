@@ -1,5 +1,6 @@
 package net.minecraft.world;
 
+import net.BlockPosUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -9,30 +10,30 @@ import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 
-public class WorldManager implements IWorldAccess
-{
-    /** Reference to the MinecraftServer object. */
+public class WorldManager implements IWorldAccess {
+    /**
+     * Reference to the MinecraftServer object.
+     */
     private MinecraftServer mcServer;
 
-    /** The WorldServer object. */
+    /**
+     * The WorldServer object.
+     */
     private WorldServer theWorldServer;
 
-    public WorldManager(MinecraftServer mcServerIn, WorldServer worldServerIn)
-    {
+    public WorldManager(MinecraftServer mcServerIn, WorldServer worldServerIn) {
         this.mcServer = mcServerIn;
         this.theWorldServer = worldServerIn;
     }
 
-    public void spawnParticle(int particleID, boolean ignoreRange, double xCoord, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int... parameters)
-    {
+    public void spawnParticle(int particleID, boolean ignoreRange, double xCoord, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int... parameters) {
     }
 
     /**
      * Called on all IWorldAccesses when an entity is created or loaded. On client worlds, starts downloading any
      * necessary textures. On server worlds, adds the entity to the entity tracker.
      */
-    public void onEntityAdded(Entity entityIn)
-    {
+    public void onEntityAdded(Entity entityIn) {
         this.theWorldServer.getEntityTracker().trackEntity(entityIn);
     }
 
@@ -40,8 +41,7 @@ public class WorldManager implements IWorldAccess
      * Called on all IWorldAccesses when an entity is unloaded or destroyed. On client worlds, releases any downloaded
      * textures. On server worlds, removes the entity from the entity tracker.
      */
-    public void onEntityRemoved(Entity entityIn)
-    {
+    public void onEntityRemoved(Entity entityIn) {
         this.theWorldServer.getEntityTracker().untrackEntity(entityIn);
         this.theWorldServer.getScoreboard().func_181140_a(entityIn);
     }
@@ -49,40 +49,34 @@ public class WorldManager implements IWorldAccess
     /**
      * Plays the specified sound. Arg: soundName, x, y, z, volume, pitch
      */
-    public void playSound(String soundName, double x, double y, double z, float volume, float pitch)
-    {
-        this.mcServer.getConfigurationManager().sendToAllNear(x, y, z, volume > 1.0F ? (double)(16.0F * volume) : 16.0D, this.theWorldServer.provider.getDimensionId(), new S29PacketSoundEffect(soundName, x, y, z, volume, pitch));
+    public void playSound(String soundName, double x, double y, double z, float volume, float pitch) {
+        this.mcServer.getConfigurationManager().sendToAllNear(x, y, z, volume > 1.0F ? (double) (16.0F * volume) : 16.0D, this.theWorldServer.provider.getDimensionId(), new S29PacketSoundEffect(soundName, x, y, z, volume, pitch));
     }
 
     /**
      * Plays sound to all near players except the player reference given
      */
-    public void playSoundToNearExcept(EntityPlayer except, String soundName, double x, double y, double z, float volume, float pitch)
-    {
-        this.mcServer.getConfigurationManager().sendToAllNearExcept(except, x, y, z, volume > 1.0F ? (double)(16.0F * volume) : 16.0D, this.theWorldServer.provider.getDimensionId(), new S29PacketSoundEffect(soundName, x, y, z, volume, pitch));
+    public void playSoundToNearExcept(EntityPlayer except, String soundName, double x, double y, double z, float volume, float pitch) {
+        this.mcServer.getConfigurationManager().sendToAllNearExcept(except, x, y, z, volume > 1.0F ? (double) (16.0F * volume) : 16.0D, this.theWorldServer.provider.getDimensionId(), new S29PacketSoundEffect(soundName, x, y, z, volume, pitch));
     }
 
     /**
      * On the client, re-renders all blocks in this range, inclusive. On the server, does nothing. Args: min x, min y,
      * min z, max x, max y, max z
      */
-    public void markBlockRangeForRenderUpdate(int x1, int y1, int z1, int x2, int y2, int z2)
-    {
+    public void markBlockRangeForRenderUpdate(int x1, int y1, int z1, int x2, int y2, int z2) {
     }
 
-    public void markBlockForUpdate(BlockPos pos)
-    {
+    public void markBlockForUpdate(BlockPos pos) {
         this.theWorldServer.getPlayerManager().markBlockForUpdate(pos);
     }
 
-    public void markBlockForUpdate(int x, int y, int z)
-    {
-        this.theWorldServer.getPlayerManager().markBlockForUpdate(x,y,z);
+    public void markBlockForUpdate(int x, int y, int z) {
+        this.theWorldServer.getPlayerManager().markBlockForUpdate(x, y, z);
     }
 
 
-    public void notifyLightSet(BlockPos pos)
-    {
+    public void notifyLightSet(BlockPos pos) {
     }
 
     @Override
@@ -90,13 +84,16 @@ public class WorldManager implements IWorldAccess
 
     }
 
-    public void playRecord(String recordName, BlockPos blockPosIn)
-    {
+    public void playRecord(String recordName, int x, int y, int z) {
     }
 
-    public void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data)
+    public void playAuxSFX(EntityPlayer player, int sfxType, BlockPos pos, int data) {
+        this.mcServer.getConfigurationManager().sendToAllNearExcept(player, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), 64.0D, this.theWorldServer.provider.getDimensionId(), new S28PacketEffect(sfxType, pos, data, false));
+    }
+
+    public void playAuxSFX(EntityPlayer player, int sfxType, int x, int y, int z, int data)
     {
-        this.mcServer.getConfigurationManager().sendToAllNearExcept(player, (double)blockPosIn.getX(), (double)blockPosIn.getY(), (double)blockPosIn.getZ(), 64.0D, this.theWorldServer.provider.getDimensionId(), new S28PacketEffect(sfxType, blockPosIn, data, false));
+        this.mcServer.getConfigurationManager().sendToAllNearExcept(player, x, y, z, 64.0D, this.theWorldServer.provider.getDimensionId(), new S28PacketEffect(sfxType, x,y,z, data, false));
     }
 
     public void broadcastSound(int soundID, BlockPos pos, int data)

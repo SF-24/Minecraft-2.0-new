@@ -14,6 +14,8 @@ import net.minecraft.world.World;
 
 public class EntityPotion extends EntityThrowable
 {
+    float init_velocity = 0.5F;
+
     /**
      * The damage value of the thrown potion that this EntityPotion represents.
      */
@@ -33,6 +35,13 @@ public class EntityPotion extends EntityThrowable
     {
         super(worldIn, throwerIn);
         this.potionDamage = potionDamageIn;
+    }
+
+    public EntityPotion(World worldIn, EntityLivingBase throwerIn, ItemStack potionDamageIn, float init_velocity)
+    {
+        super(worldIn, throwerIn);
+        this.potionDamage = potionDamageIn;
+        this.init_velocity=init_velocity;
     }
 
     public EntityPotion(World worldIn, double x, double y, double z, int p_i1791_8_)
@@ -56,7 +65,7 @@ public class EntityPotion extends EntityThrowable
 
     protected float getVelocity()
     {
-        return 0.5F;
+        return init_velocity; // Was 0.5
     }
 
     protected float getInaccuracy()

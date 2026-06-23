@@ -21,13 +21,11 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBanner extends BlockContainer
-{
+public class BlockBanner extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 
-    protected BlockBanner()
-    {
+    protected BlockBanner() {
         super(Material.wood);
         float f = 0.25F;
         float f1 = 1.0F;
@@ -37,75 +35,68 @@ public class BlockBanner extends BlockContainer
     /**
      * Gets the localized name of this block. Used for the statistics page.
      */
-    public String getLocalizedName()
-    {
+    public String getLocalizedName() {
         return StatCollector.translateToLocal("item.banner.white.name");
     }
 
-    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
-    {
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
         return null;
     }
 
-    public AxisAlignedBB getSelectedBoundingBox(World worldIn, BlockPos pos)
-    {
+    public AxisAlignedBB getSelectedBoundingBox(World worldIn, BlockPos pos) {
         this.setBlockBoundsBasedOnState(worldIn, pos);
         return super.getSelectedBoundingBox(worldIn, pos);
     }
 
-    public boolean isFullCube()
-    {
+    public boolean isFullCube() {
         return false;
     }
 
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
-    {
+    public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
         return true;
     }
 
     /**
      * Used to determine ambient occlusion and culling when rebuilding chunks for render
      */
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     /**
      * Return true if an entity can be spawned inside the block (used to get the player's bed spawn location)
      */
-    public boolean canSpawnInBlock()
-    {
+    public boolean canSpawnInBlock() {
         return true;
     }
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityBanner();
     }
 
     /**
      * Get the Item that this Block should drop when harvested.
      */
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Items.banner;
     }
 
-    public Item getItem(World worldIn, BlockPos pos)
-    {
+    public Item getItem(World worldIn, BlockPos pos) {
         return Items.banner;
     }
 
     /**
      * Spawns this Block's drops into the World as EntityItems.
+     *
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        TileEntity tileentity = worldIn.getTileEntity(x,y,z);
 
         if (tileentity instanceof TileEntityBanner)
         {
@@ -117,11 +108,11 @@ public class BlockBanner extends BlockContainer
             nbttagcompound.removeTag("z");
             nbttagcompound.removeTag("id");
             itemstack.setTagInfo("BlockEntityTag", nbttagcompound);
-            spawnAsEntity(worldIn, pos, itemstack);
+            spawnAsEntity(worldIn, x,y,z, itemstack);
         }
         else
         {
-            super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
+            super.dropBlockAsItemWithChance(worldIn, x,y,z, state, chance, fortune);
         }
     }
 
@@ -130,6 +121,7 @@ public class BlockBanner extends BlockContainer
         return !this.hasInvalidNeighbor(worldIn, pos) && super.canPlaceBlockAt(worldIn, pos);
     }
 
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
     {
         if (te instanceof TileEntityBanner)
@@ -184,17 +176,17 @@ public class BlockBanner extends BlockContainer
             }
         }
 
-        public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+        public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
         {
-            EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+            EnumFacing enumfacing = (EnumFacing)state.getValue(FACING).getOpposite();
 
-            if (!worldIn.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock().getMaterial().isSolid())
+            if (!worldIn.getBlockState(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ()).getBlock().getMaterial().isSolid())
             {
-                this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+                worldIn.setBlockToAir(x,y,z);
             }
 
-            super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+            super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
         }
 
         public IBlockState getStateFromMeta(int meta)
@@ -227,15 +219,15 @@ public class BlockBanner extends BlockContainer
             this.setDefaultState(this.blockState.getBaseState().withProperty(ROTATION, Integer.valueOf(0)));
         }
 
-        public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+        public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
         {
-            if (!worldIn.getBlockState(pos.down()).getBlock().getMaterial().isSolid())
+            if (!worldIn.getBlockState(x,y-1,z).getBlock().getMaterial().isSolid())
             {
-                this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+                worldIn.setBlockToAir(x,y,z);
             }
 
-            super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+            super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
         }
 
         public IBlockState getStateFromMeta(int meta)

@@ -42,10 +42,11 @@ public class BlockPumpkin extends BlockDirectional
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.onBlockAdded(worldIn, pos, state);
-        this.trySpawnGolem(worldIn, pos);
+        super.onBlockAdded(worldIn, x,y,z, state);
+        this.trySpawnGolem(worldIn, new BlockPos(x,y,z));
     }
 
     public boolean canDispenserPlace(World worldIn, BlockPos pos)
@@ -78,7 +79,7 @@ public class BlockPumpkin extends BlockDirectional
             for (int i1 = 0; i1 < this.getSnowmanPattern().getThumbLength(); ++i1)
             {
                 BlockWorldState blockworldstate1 = blockpattern$patternhelper.translateOffset(0, i1, 0);
-                worldIn.notifyNeighborsRespectDebug(blockworldstate1.getPos(), Blocks.air);
+                worldIn.notifyNeighborsRespectDebug(blockworldstate1.getPos().getX(),blockworldstate1.getPos().getY(), blockworldstate1.getPos().getZ(), Blocks.air);
             }
         }
         else if ((blockpattern$patternhelper = this.getGolemPattern().match(worldIn, pos)) != null)
@@ -107,7 +108,7 @@ public class BlockPumpkin extends BlockDirectional
                 for (int l1 = 0; l1 < this.getGolemPattern().getThumbLength(); ++l1)
                 {
                     BlockWorldState blockworldstate2 = blockpattern$patternhelper.translateOffset(k1, l1, 0);
-                    worldIn.notifyNeighborsRespectDebug(blockworldstate2.getPos(), Blocks.air);
+                    worldIn.notifyNeighborsRespectDebug(blockworldstate2.getPos().getX(),blockworldstate2.getPos().getY(),blockworldstate2.getPos().getZ(), Blocks.air);
                 }
             }
         }

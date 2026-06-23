@@ -25,6 +25,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public class BlockHopper extends BlockContainer
 {
@@ -112,11 +113,13 @@ public class BlockHopper extends BlockContainer
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.updateState(worldIn, pos, state);
+        this.updateState(worldIn, new BlockPos(x,y,z), state);
     }
 
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (worldIn.isRemote)
@@ -140,9 +143,9 @@ public class BlockHopper extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World worldIn, int x, int y ,int z, IBlockState state, Block neighborBlock)
     {
-        this.updateState(worldIn, pos, state);
+        this.updateState(worldIn, new BlockPos(x,y,z), state);
     }
 
     private void updateState(World worldIn, BlockPos pos, IBlockState state)
@@ -155,17 +158,19 @@ public class BlockHopper extends BlockContainer
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        BlockPos blockpos = new BlockPos(x, y, z);
+        TileEntity tileentity = worldIn.getTileEntity(blockpos);
 
         if (tileentity instanceof TileEntityHopper)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityHopper)tileentity);
-            worldIn.updateComparatorOutputLevel(pos, this);
+            InventoryHelper.dropInventoryItems(worldIn, blockpos, (TileEntityHopper)tileentity);
+            worldIn.updateComparatorOutputLevel(blockpos, this);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     /**

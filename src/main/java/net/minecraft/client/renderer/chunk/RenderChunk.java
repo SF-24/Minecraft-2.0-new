@@ -831,9 +831,27 @@ public class RenderChunk
         this.renderChunkNeighboursUpated = true;
     }
 
-    public boolean isBoundingBoxInFrustum(ICamera p_isBoundingBoxInFrustum_1_, int p_isBoundingBoxInFrustum_2_)
+    public boolean isBoundingBoxInFrustum(ICamera camera, int flags)
     {
-        return this.getBoundingBoxParent().isBoundingBoxInFrustumFully(p_isBoundingBoxInFrustum_1_, p_isBoundingBoxInFrustum_2_) ? true : p_isBoundingBoxInFrustum_1_.isBoundingBoxInFrustum(this.boundingBox);
+        if (camera == null)
+        {
+            // No camera -> don’t attempt to render this chunk
+            return false;
+        }
+        AxisAlignedBB box = this.boundingBox;
+        if (box == null)
+        {
+            // No bounding box yet -> safest is to skip rendering
+            return false;
+        }
+
+        AabbFrame parent = this.getBoundingBoxParent();
+        if (parent != null && parent.isBoundingBoxInFrustumFully(camera, flags))
+        {
+            return true;
+        }
+
+        return this.getBoundingBoxParent().isBoundingBoxInFrustumFully(camera, flags) || camera.isBoundingBoxInFrustum(this.boundingBox);
     }
 
     public AabbFrame getBoundingBoxParent()

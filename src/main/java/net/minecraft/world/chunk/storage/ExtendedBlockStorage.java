@@ -88,20 +88,36 @@ public class ExtendedBlockStorage
         this.data[y << 8 | z << 4 | x] = (char)Block.BLOCK_STATE_IDS.get(state);
     }
 
-    public void setId(int x, int y, int z, int id)
+    public void setId(int x, int y, int z, int newId)
     {
-        Block block = this.get(x,y,z).getBlock();
+//        if (Reflector.IExtendedBlockState.isInstance(state))
+//        {
+//            state = (IBlockState)Reflector.call(state, Reflector.IExtendedBlockState_getClean, new Object[0]);
+//        }
 
-        if (id!=0)
+        int oldId = this.getId(x, y, z);
+
+        if (oldId!=0)
         {
             --this.blockRefCount;
 
-            if (block.getTickRandomly())
-            {
-                --this.tickRefCount;
-            }
+//            if (block.getTickRandomly()) // Tick old
+//            {
+//                --this.tickRefCount;
+//            }
         }
-        this.data[y << 8 | z << 4 | x] = (char)id;
+
+        if (newId!=0)
+        {
+            ++this.blockRefCount;
+
+//            if (block1.getTickRandomly()) // Tick new
+//            {
+//                ++this.tickRefCount;
+//            }
+        }
+
+        this.data[y << 8 | z << 4 | x] = (char)newId;
     }
 
 

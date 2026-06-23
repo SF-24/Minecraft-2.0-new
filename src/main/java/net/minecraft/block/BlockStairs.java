@@ -617,15 +617,17 @@ public class BlockStairs extends Block
         return this.modelBlock.canPlaceBlockAt(worldIn, pos);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.onNeighborBlockChange(worldIn, pos, this.modelState, Blocks.air);
-        this.modelBlock.onBlockAdded(worldIn, pos, this.modelState);
+        this.onNeighborBlockChange(worldIn, x,y,z, this.modelState, Blocks.air);
+        this.modelBlock.onBlockAdded(worldIn, x,y,z, this.modelState);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.modelBlock.breakBlock(worldIn, pos, this.modelState);
+        this.modelBlock.breakBlock(worldIn, x,y,z, this.modelState);
     }
 
     /**

@@ -72,7 +72,7 @@ public class BlockJukebox extends BlockContainer
                 if (itemstack != null)
                 {
                     worldIn.playAuxSFX(1005, pos, 0);
-                    worldIn.playRecord(pos, null);
+                    worldIn.playRecord(pos.getX(),pos.getY(),pos.getZ(), null);
                     blockjukebox$tileentityjukebox.setRecord(null);
                     float f = 0.7F;
                     double d0 = (double)(worldIn.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
@@ -87,20 +87,22 @@ public class BlockJukebox extends BlockContainer
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.dropRecord(worldIn, pos, state);
-        super.breakBlock(worldIn, pos, state);
+        this.dropRecord(worldIn, new BlockPos(x,y,z), state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (!worldIn.isRemote)
         {
-            super.dropBlockAsItemWithChance(worldIn, pos, state, chance, 0);
+            super.dropBlockAsItemWithChance(worldIn, x,y,z, state, chance, 0);
         }
     }
 

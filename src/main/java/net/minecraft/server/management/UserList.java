@@ -13,10 +13,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.Writer;
+
+import java.io.*;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -55,6 +53,40 @@ public class UserList<K, V extends UserListEntry<K>>
         GsonBuilder gsonbuilder = (new GsonBuilder()).setPrettyPrinting();
         gsonbuilder.registerTypeHierarchyAdapter(UserListEntry.class, new UserList.Serializer());
         this.gson = gsonbuilder.create();
+    }
+
+    public File getSaveFile()
+    {
+        return this.saveFile;
+    }
+
+    public void readSavedFile() throws IOException, FileNotFoundException
+    {
+        Collection<UserListEntry<K>> collection = null;
+        BufferedReader bufferedreader = null;
+
+        try
+        {
+            bufferedreader = Files.newReader(this.saveFile, Charsets.UTF_8);
+            collection = (Collection)this.gson.fromJson((Reader)bufferedreader, saveFileFormat);
+        }
+        finally
+        {
+            IOUtils.closeQuietly((Reader)bufferedreader);
+        }
+
+        if (collection != null)
+        {
+            this.values.clear();
+
+            for (UserListEntry<K> userlistentry : collection)
+            {
+                if (userlistentry.getValue() != null)
+                {
+                    this.values.put(this.getObjectKey(userlistentry.getValue()), (V)userlistentry);
+                }
+            }
+        }
     }
 
     public boolean isLanServer()

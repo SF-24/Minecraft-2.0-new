@@ -119,26 +119,27 @@ public class BlockAetherPortal extends BlockBreakable
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         EnumFacing.Axis enumfacing$axis = state.getValue(AXIS);
 
         if (enumfacing$axis == EnumFacing.Axis.X)
         {
-            BlockAetherPortal.Size blockportal$size = new BlockAetherPortal.Size(worldIn, pos, EnumFacing.Axis.X);
+            BlockAetherPortal.Size blockportal$size = new BlockAetherPortal.Size(worldIn, new BlockPos(x,y,z), EnumFacing.Axis.X);
 
             if (!blockportal$size.func_150860_b() || blockportal$size.field_150864_e < blockportal$size.field_150868_h * blockportal$size.field_150862_g)
             {
-                worldIn.setBlockState(pos, Blocks.air.getDefaultState());
+                worldIn.setBlockState(x,y,z, Blocks.air.getDefaultState());
             }
         }
         else if (enumfacing$axis == EnumFacing.Axis.Z)
         {
-            BlockAetherPortal.Size blockportal$size1 = new BlockAetherPortal.Size(worldIn, pos, EnumFacing.Axis.Z);
+            BlockAetherPortal.Size blockportal$size1 = new BlockAetherPortal.Size(worldIn, new BlockPos(x,y,z), EnumFacing.Axis.Z);
 
             if (!blockportal$size1.func_150860_b() || blockportal$size1.field_150864_e < blockportal$size1.field_150868_h * blockportal$size1.field_150862_g)
             {
-                worldIn.setBlockState(pos, Blocks.air.getDefaultState());
+                worldIn.setBlockState(x,y,z, Blocks.air.getDefaultState());
             }
         }
     }

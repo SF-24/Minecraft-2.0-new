@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import net.minecraft.MineshaftLogger;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
@@ -76,7 +77,7 @@ public class ChunkProviderHell implements IChunkProvider
     double[] noiseData3;
     double[] noiseData4;
     double[] noiseData5;
-    private final ArrayList<Block> blocks = Lists.newArrayList(Blocks.netherrack,Blocks.soul_sand);
+    private final ArrayList<Block> blocks = Lists.newArrayList(Blocks.netherrack,Blocks.soul_sand, Blocks.gravel);
 
     public ChunkProviderHell(World worldIn, boolean p_i45637_2_, long seed)
     {
@@ -463,22 +464,26 @@ public class ChunkProviderHell implements IChunkProvider
             this.field_177470_t.generate(this.worldObj, this.hellRNG, blockpos.add(this.hellRNG.nextInt(16) + 8, this.hellRNG.nextInt(120) + 4, this.hellRNG.nextInt(16) + 8));
         }
 
-        if (hellRNG.nextInt(100) == 0)
+        /*if (hellRNG.nextInt(5) == 0)
         {
-            int i = hellRNG.nextInt(16) + 8;
-            int j = hellRNG.nextInt(16) + 8;
-            BlockPos pos = worldObj.getHeight(blockpos.add(i, 33, j));
+            try {
+                int i = hellRNG.nextInt(16) + 8;
+                int j = hellRNG.nextInt(16) + 8;
+                int y = worldObj.getHeight(i, j);
 
-            if(blocks.contains(worldObj.getBlockState(pos).getBlock())) {
-                while(blocks.contains(worldObj.getBlockState(pos).getBlock())&&pos.getY()<67) {
-                    pos=pos.up();
-                }
-                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos);
+                if (blocks.contains(worldObj.getBlockState(i, y, j).getBlock())) {
+                    while (blocks.contains(worldObj.getBlockState(i, y, j).getBlock()) && y < 67) {
+                        y++;
+                    }
+                    (new WorldGenNetherWells()).generate(worldObj, hellRNG, i, y, j);
 //                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down());
 //                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down(2));
+                }
+            } catch (Exception exception) {
+                MineshaftLogger.logError("Error generating nether well! \n" + exception.getMessage());
             }
 
-        }
+        }*/
 
         BlockFalling.fallInstantly = false;
     }

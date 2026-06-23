@@ -79,17 +79,18 @@ public class BlockCarpet extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        this.checkForDrop(worldIn, pos, state);
+        this.checkForDrop(worldIn, x,y,z, state);
     }
 
-    private boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
+    private boolean checkForDrop(World worldIn, int x, int y, int z, IBlockState state)
     {
-        if (!this.canBlockStay(worldIn, pos))
+        if (!this.canBlockStay(worldIn, new BlockPos(x,y,z)))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
             return false;
         }
         else

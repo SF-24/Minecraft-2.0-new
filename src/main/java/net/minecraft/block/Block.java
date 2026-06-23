@@ -565,7 +565,7 @@ public class Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
     }
 
@@ -577,11 +577,11 @@ public class Block
         return 10;
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
     }
 
@@ -613,15 +613,15 @@ public class Block
     /**
      * Spawn this Block's drops into the World as EntityItems
      */
-    public final void dropBlockAsItem(World worldIn, BlockPos pos, IBlockState state, int forture)
+    public final void dropBlockAsItem(World worldIn, int x, int y, int z, IBlockState state, int forture)
     {
-        this.dropBlockAsItemWithChance(worldIn, pos, state, 1.0F, forture);
+        this.dropBlockAsItemWithChance(worldIn, x,y,z, state, 1.0F, forture);
     }
 
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (!worldIn.isRemote)
         {
@@ -635,17 +635,22 @@ public class Block
 
                     if (item != null)
                     {
-                        spawnAsEntity(worldIn, pos, new ItemStack(item, 1, this.damageDropped(state)));
+                        spawnAsEntity(worldIn, x,y,z, new ItemStack(item, 1, this.damageDropped(state)));
                     }
                 }
             }
         }
     }
 
+    @Deprecated
+    public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack) {
+        spawnAsEntity(worldIn,pos.getX(),pos.getY(),pos.getZ(),stack);
+    }
+
     /**
      * Spawns the given ItemStack as an EntityItem into the World at the given position
      */
-    public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack)
+    public static void spawnAsEntity(World worldIn, int x, int y, int z, ItemStack stack)
     {
         if (!worldIn.isRemote && worldIn.getGameRules().getBoolean("doTileDrops"))
         {
@@ -653,7 +658,7 @@ public class Block
             double d0 = (double)(worldIn.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
             double d1 = (double)(worldIn.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
             double d2 = (double)(worldIn.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            EntityItem entityitem = new EntityItem(worldIn, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, stack);
+            EntityItem entityitem = new EntityItem(worldIn, (double)x + d0, (double)y + d1, (double)z + d2, stack);
             entityitem.setDefaultPickupDelay();
             worldIn.spawnEntityInWorld(entityitem);
         }
@@ -1016,7 +1021,8 @@ public class Block
         else
         {
             int i = EnchantmentHelper.getFortuneModifier(player);
-            this.dropBlockAsItem(worldIn, pos, state, i);
+            // TODO: Migrate to ints
+            this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), state, i);
         }
     }
 

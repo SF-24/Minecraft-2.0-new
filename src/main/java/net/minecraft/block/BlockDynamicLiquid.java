@@ -166,7 +166,7 @@ public class BlockDynamicLiquid extends BlockLiquid
                 }
                 else
                 {
-                    state.getBlock().dropBlockAsItem(worldIn, pos, state, 0);
+                    state.getBlock().dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), state, 0);
                 }
             }
 
@@ -283,8 +283,10 @@ public class BlockDynamicLiquid extends BlockLiquid
         return material != this.blockMaterial && material != Material.lava && !this.isBlocked(worldIn, pos, state);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         if (!this.checkForMixing(worldIn, pos, state))
         {
             worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));

@@ -24,17 +24,19 @@ public class BlockRedstoneLight extends Block
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
-            if (this.isOn && !worldIn.isBlockPowered(pos))
+            BlockPos blockpos = new BlockPos(x,y,z);
+            if (this.isOn && !worldIn.isBlockPowered(blockpos))
             {
-                worldIn.setBlockState(pos, Blocks.redstone_lamp.getDefaultState(), 2);
+                worldIn.setBlockState(x,y,z, Blocks.redstone_lamp.getDefaultState(), 2);
             }
-            else if (!this.isOn && worldIn.isBlockPowered(pos))
+            else if (!this.isOn && worldIn.isBlockPowered(blockpos))
             {
-                worldIn.setBlockState(pos, Blocks.lit_redstone_lamp.getDefaultState(), 2);
+                worldIn.setBlockState(x,y,z, Blocks.lit_redstone_lamp.getDefaultState(), 2);
             }
         }
     }
@@ -42,17 +44,18 @@ public class BlockRedstoneLight extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
-            if (this.isOn && !worldIn.isBlockPowered(pos))
+            if (this.isOn && !worldIn.isBlockPowered(new BlockPos(x, y, z)))
             {
-                worldIn.scheduleUpdate(pos, this, 4);
+                worldIn.scheduleUpdate(new BlockPos(x,y,z), this, 4);
             }
-            else if (!this.isOn && worldIn.isBlockPowered(pos))
+            else if (!this.isOn && worldIn.isBlockPowered(new BlockPos(x,y,z)))
             {
-                worldIn.setBlockState(pos, Blocks.lit_redstone_lamp.getDefaultState(), 2);
+                worldIn.setBlockState(x,y,z, Blocks.lit_redstone_lamp.getDefaultState(), 2);
             }
         }
     }

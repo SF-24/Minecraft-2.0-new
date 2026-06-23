@@ -45,9 +45,10 @@ public class BlockPistonMoving extends BlockContainer
         return new TileEntityPiston(state, facing, extending, renderHead);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        TileEntity tileentity = worldIn.getTileEntity(new BlockPos(x, y, z));
 
         if (tileentity instanceof TileEntityPiston)
         {
@@ -55,7 +56,7 @@ public class BlockPistonMoving extends BlockContainer
         }
         else
         {
-            super.breakBlock(worldIn, pos, state);
+            super.breakBlock(worldIn, x,y,z, state);
         }
     }
 
@@ -123,16 +124,17 @@ public class BlockPistonMoving extends BlockContainer
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (!worldIn.isRemote)
         {
-            TileEntityPiston tileentitypiston = this.getTileEntity(worldIn, pos);
+            TileEntityPiston tileentitypiston = this.getTileEntity(worldIn, new BlockPos(x,y,z));
 
             if (tileentitypiston != null)
             {
                 IBlockState iblockstate = tileentitypiston.getPistonState();
-                iblockstate.getBlock().dropBlockAsItem(worldIn, pos, iblockstate, 0);
+                iblockstate.getBlock().dropBlockAsItem(worldIn, x,y,z, iblockstate, 0);
             }
         }
     }
@@ -148,11 +150,12 @@ public class BlockPistonMoving extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
-            worldIn.getTileEntity(pos);
+            worldIn.getTileEntity(new BlockPos(x,y,z));
         }
     }
 

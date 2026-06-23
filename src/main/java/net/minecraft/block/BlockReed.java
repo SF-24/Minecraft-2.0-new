@@ -91,9 +91,10 @@ public class BlockReed extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        this.checkForDrop(worldIn, pos, state);
+        this.checkForDrop(worldIn, new BlockPos(x,y,z), state);
     }
 
     protected final boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
@@ -104,7 +105,7 @@ public class BlockReed extends Block
         }
         else
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+            this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), state, 0);
             worldIn.setBlockToAir(pos);
             return false;
         }

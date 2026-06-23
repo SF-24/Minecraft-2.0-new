@@ -18,6 +18,7 @@ import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public class BlockTorch extends Block
 {
@@ -55,6 +56,21 @@ public class BlockTorch extends Block
         return false;
     }
 
+    private boolean canPlaceOn(World worldIn, int x, int y, int z)
+    {
+        // TODO:
+        if (World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y,z)))
+        {
+            return true;
+        }
+        else
+        {
+            Block block = worldIn.getBlockState(x,y,z).getBlock();
+            return block instanceof BlockFence || block == Blocks.glass || block == Blocks.cobblestone_wall || block == Blocks.stained_glass;
+        }
+    }
+
+    @Deprecated
     private boolean canPlaceOn(World worldIn, BlockPos pos)
     {
         if (World.doesBlockHaveSolidTopSurface(worldIn, pos))
@@ -72,7 +88,7 @@ public class BlockTorch extends Block
     {
         for (EnumFacing enumfacing : FACING.getAllowedValues())
         {
-            if (this.canPlaceAt(worldIn, pos, enumfacing))
+            if (this.canPlaceAt(worldIn, pos.getX(),pos.getY(),pos.getZ(), enumfacing))
             {
                 return true;
             }
@@ -81,11 +97,13 @@ public class BlockTorch extends Block
         return false;
     }
 
-    private boolean canPlaceAt(World worldIn, BlockPos pos, EnumFacing facing)
+    private boolean canPlaceAt(World worldIn, int x, int y, int z, EnumFacing facing)
     {
-        BlockPos blockpos = pos.offset(facing.getOpposite());
+        x -= facing.getFrontOffsetX();
+        y -= facing.getFrontOffsetY();
+        z -= facing.getFrontOffsetZ();
         boolean flag = facing.getAxis().isHorizontal();
-        return flag && worldIn.isBlockNormalCube(blockpos, true) || facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos);
+        return flag && worldIn.isBlockNormalCube(new BlockPos(x,y,z), true) || facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, x,y,z);
     }
 
     /**
@@ -94,7 +112,7 @@ public class BlockTorch extends Block
      */
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        if (this.canPlaceAt(worldIn, pos, facing))
+        if (this.canPlaceAt(worldIn, pos.getX(),pos.getY(),pos.getZ(), facing))
         {
             return this.getDefaultState().withProperty(FACING, facing);
         }
@@ -112,22 +130,24 @@ public class BlockTorch extends Block
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.checkForDrop(worldIn, pos, state);
+        this.checkForDrop(worldIn, x,y,z, state);
     }
 
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        this.onNeighborChangeInternal(worldIn, pos, state);
+        this.onNeighborChangeInternal(worldIn, x,y,z, state);
     }
 
-    protected boolean onNeighborChangeInternal(World worldIn, BlockPos pos, IBlockState state)
+    protected boolean onNeighborChangeInternal(World worldIn, int x, int y, int z, IBlockState state)
     {
-        if (!this.checkForDrop(worldIn, pos, state))
+        if (!this.checkForDrop(worldIn, x,y,z, state))
         {
             return true;
         }
@@ -138,19 +158,19 @@ public class BlockTorch extends Block
             EnumFacing enumfacing1 = enumfacing.getOpposite();
             boolean flag = false;
 
-            if (enumfacing$axis.isHorizontal() && !worldIn.isBlockNormalCube(pos.offset(enumfacing1), true))
+            if (enumfacing$axis.isHorizontal() && !worldIn.isBlockNormalCube(new BlockPos(x,y,z).offset(enumfacing1), true))
             {
                 flag = true;
             }
-            else if (enumfacing$axis.isVertical() && !this.canPlaceOn(worldIn, pos.offset(enumfacing1)))
+            else if (enumfacing$axis.isVertical() && !this.canPlaceOn(worldIn, new BlockPos(x,y,z).offset(enumfacing1)))
             {
                 flag = true;
             }
 
             if (flag)
             {
-                this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+                worldIn.setBlockToAir(x,y,z);
                 return true;
             }
             else
@@ -160,18 +180,18 @@ public class BlockTorch extends Block
         }
     }
 
-    protected boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
+    protected boolean checkForDrop(World worldIn, int x, int y, int z, IBlockState state)
     {
-        if (state.getBlock() == this && this.canPlaceAt(worldIn, pos, (EnumFacing)state.getValue(FACING)))
+        if (state.getBlock() == this && this.canPlaceAt(worldIn, x,y,z, (EnumFacing)state.getValue(FACING)))
         {
             return true;
         }
         else
         {
-            if (worldIn.getBlockState(pos).getBlock() == this)
+            if (worldIn.getBlockState(x,y,z).getBlock() == this)
             {
-                this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+                worldIn.setBlockToAir(x,y,z);
             }
 
             return false;

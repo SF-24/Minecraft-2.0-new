@@ -371,21 +371,24 @@ public class BlockFire extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!World.doesBlockHaveSolidTopSurface(worldIn, pos.down()) && !this.canNeighborCatchFire(worldIn, pos))
+        if (!World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y-1,z)) && !this.canNeighborCatchFire(worldIn, new BlockPos(x,y,z)))
         {
-            worldIn.setBlockToAir(pos);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x,y,z);
         if (worldIn.provider.getDimensionId() > 0 || !Blocks.portal.func_176548_d(worldIn, pos))
         {
             if (!World.doesBlockHaveSolidTopSurface(worldIn, pos.down()) && !this.canNeighborCatchFire(worldIn, pos))
             {
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockToAir(x,y,z);
             }
             else
             {

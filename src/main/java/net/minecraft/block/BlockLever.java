@@ -135,25 +135,27 @@ public class BlockLever extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         if (this.func_181091_e(worldIn, pos, state) && !func_181090_a(worldIn, pos, ((BlockLever.EnumOrientation)state.getValue(FACING)).getFacing().getOpposite()))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
             worldIn.setBlockToAir(pos);
         }
     }
 
-    private boolean func_181091_e(World p_181091_1_, BlockPos p_181091_2_, IBlockState p_181091_3_)
+    private boolean func_181091_e(World p_181091_1_, BlockPos pos, IBlockState p_181091_3_)
     {
-        if (this.canPlaceBlockAt(p_181091_1_, p_181091_2_))
+        if (this.canPlaceBlockAt(p_181091_1_, pos))
         {
             return true;
         }
         else
         {
-            this.dropBlockAsItem(p_181091_1_, p_181091_2_, p_181091_3_, 0);
-            p_181091_1_.setBlockToAir(p_181091_2_);
+            this.dropBlockAsItem(p_181091_1_, pos.getX(),pos.getY(),pos.getZ(), p_181091_3_, 0);
+            p_181091_1_.setBlockToAir(pos);
             return false;
         }
     }
@@ -211,16 +213,18 @@ public class BlockLever extends Block
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (((Boolean)state.getValue(POWERED)).booleanValue())
         {
+            BlockPos pos = new BlockPos(x, y, z);
             worldIn.notifyNeighborsOfStateChange(pos, this);
             EnumFacing enumfacing = ((BlockLever.EnumOrientation)state.getValue(FACING)).getFacing();
             worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing.getOpposite()), this);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)

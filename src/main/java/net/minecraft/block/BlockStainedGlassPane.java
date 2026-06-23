@@ -80,19 +80,21 @@ public class BlockStainedGlassPane extends BlockPane
         return new BlockState(this, new IProperty[] {NORTH, EAST, WEST, SOUTH, COLOR});
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
-            BlockBeacon.updateColorAsync(worldIn, pos);
+            BlockBeacon.updateColorAsync(worldIn, new BlockPos(x,y,z));
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
-            BlockBeacon.updateColorAsync(worldIn, pos);
+            BlockBeacon.updateColorAsync(worldIn, new BlockPos(x,y,z));
         }
     }
 }

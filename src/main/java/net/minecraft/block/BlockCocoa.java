@@ -18,6 +18,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public class BlockCocoa extends BlockDirectional implements IGrowable
 {
@@ -30,11 +31,12 @@ public class BlockCocoa extends BlockDirectional implements IGrowable
         this.setTickRandomly(true);
     }
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         if (!this.canBlockStay(worldIn, pos, state))
         {
-            this.dropBlock(worldIn, pos, state);
+            this.dropBlock(worldIn, pos.getX(),pos.getY(),pos.getZ(), state);
         }
         else if (worldIn.rand.nextInt(5) == 0)
         {
@@ -134,26 +136,29 @@ public class BlockCocoa extends BlockDirectional implements IGrowable
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         if (!this.canBlockStay(worldIn, pos, state))
         {
-            this.dropBlock(worldIn, pos, state);
+            this.dropBlock(worldIn, x,y,z, state);
         }
     }
 
-    private void dropBlock(World worldIn, BlockPos pos, IBlockState state)
+    private void dropBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
-        this.dropBlockAsItem(worldIn, pos, state, 0);
+        worldIn.setBlockState(x,y,z, Blocks.air.getDefaultState(), 3);
+        this.dropBlockAsItem(worldIn, x,y,z, state, 0);
     }
 
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
-        int i = ((Integer)state.getValue(AGE)).intValue();
+        int i = state.getValue(AGE).intValue();
         int j = 1;
 
         if (i >= 2)
@@ -163,7 +168,7 @@ public class BlockCocoa extends BlockDirectional implements IGrowable
 
         for (int k = 0; k < j; ++k)
         {
-            spawnAsEntity(worldIn, pos, new ItemStack(Items.dye, 1, EnumDyeColor.BROWN.getDyeDamage()));
+            spawnAsEntity(worldIn, x,y,z, new ItemStack(Items.dye, 1, EnumDyeColor.BROWN.getDyeDamage()));
         }
     }
 

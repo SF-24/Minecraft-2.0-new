@@ -114,10 +114,12 @@ public class BlockObserver extends Block
     /**
      * Called after the block is set in the Chunk data, but before the Tile Entity is set
      */
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
+            BlockPos pos = new BlockPos(x,y,z);
             if (((Boolean)state.getValue(POWERED)).booleanValue())
             {
                 this.updateTick(worldIn, pos, state, worldIn.rand);
@@ -130,8 +132,10 @@ public class BlockObserver extends Block
     /**
      * Called serverside after this block is replaced with another in Chunk, but before the Tile Entity is updated
      */
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x,y,z);
         if (((Boolean)state.getValue(POWERED)).booleanValue() && worldIn.isUpdateScheduled(pos, this))
         {
             this.updateNeighborsInFront(worldIn, pos, state.withProperty(POWERED, Boolean.valueOf(false)));

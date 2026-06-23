@@ -58,7 +58,8 @@ public class BlockNetherWart extends BlockBush
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (!worldIn.isRemote)
         {
@@ -76,7 +77,7 @@ public class BlockNetherWart extends BlockBush
 
             for (int j = 0; j < i; ++j)
             {
-                spawnAsEntity(worldIn, pos, new ItemStack(Items.nether_wart));
+                spawnAsEntity(worldIn, x,y,z, new ItemStack(Items.nether_wart));
             }
         }
     }

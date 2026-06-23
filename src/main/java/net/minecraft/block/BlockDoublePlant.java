@@ -81,6 +81,7 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
         }
     }
 
+    @Override
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         if (!this.canBlockStay(worldIn, pos, state))
@@ -102,7 +103,7 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
 
                 if (!flag)
                 {
-                    this.dropBlockAsItem(worldIn, blockpos1, state, 0);
+                    this.dropBlockAsItem(worldIn, blockpos1.getX(), blockpos1.getY(), blockpos1.getZ(), state, 0);
                 }
             }
         }
@@ -187,28 +188,28 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
 
                     if (blockdoubleplant$enumplanttype != BlockDoublePlant.EnumPlantType.FERN && blockdoubleplant$enumplanttype != BlockDoublePlant.EnumPlantType.GRASS)
                     {
-                        worldIn.destroyBlock(pos.down(), true);
+                        worldIn.destroyBlock(pos.getX(),pos.getY()-1,pos.getZ(), true);
                     }
                     else if (!worldIn.isRemote)
                     {
                         if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Items.shears)
                         {
                             this.onHarvest(worldIn, pos, iblockstate, player);
-                            worldIn.setBlockToAir(pos.down());
+                            worldIn.setBlockToAir(pos.getX(),pos.getY()-1,pos.getZ());
                         }
                         else
                         {
-                            worldIn.destroyBlock(pos.down(), true);
+                            worldIn.destroyBlock(pos.getX(),pos.getY()-1,pos.getZ(), true);
                         }
                     }
                     else
                     {
-                        worldIn.setBlockToAir(pos.down());
+                        worldIn.setBlockToAir(pos.getX(),pos.getY()-1,pos.getZ());
                     }
                 }
                 else
                 {
-                    worldIn.setBlockToAir(pos.down());
+                    worldIn.setBlockToAir(pos.getX(),pos.getY()-1,pos.getZ());
                 }
             }
         }

@@ -22,11 +22,13 @@ public abstract class BlockLog extends BlockRotatedPillar
         this.setStepSound(soundTypeWood);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         int i = 4;
         int j = i + 1;
 
+        BlockPos pos = new BlockPos(x,y,z);
         if (worldIn.isAreaLoaded(pos.add(-j, -j, -j), pos.add(j, j, j)))
         {
             for (BlockPos blockpos : BlockPos.getAllInBox(pos.add(-i, -i, -i), pos.add(i, i, i)))

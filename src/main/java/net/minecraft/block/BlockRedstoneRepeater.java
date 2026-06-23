@@ -124,10 +124,11 @@ public class BlockRedstoneRepeater extends BlockRedstoneDiode
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.breakBlock(worldIn, pos, state);
-        this.notifyNeighbors(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
+        this.notifyNeighbors(worldIn, new BlockPos(x,y,z), state);
     }
 
     /**

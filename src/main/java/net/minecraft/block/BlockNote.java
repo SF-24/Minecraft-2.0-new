@@ -27,10 +27,10 @@ public class BlockNote extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        boolean flag = worldIn.isBlockPowered(pos);
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        boolean flag = worldIn.isBlockPowered(new BlockPos(x,y,z));
+        TileEntity tileentity = worldIn.getTileEntity(new BlockPos(x,y,z));
 
         if (tileentity instanceof TileEntityNote)
         {
@@ -40,7 +40,7 @@ public class BlockNote extends BlockContainer
             {
                 if (flag)
                 {
-                    tileentitynote.triggerNote(worldIn, pos);
+                    tileentitynote.triggerNote(worldIn, new BlockPos(x,y,z));
                 }
 
                 tileentitynote.previousRedstoneState = flag;

@@ -109,18 +109,19 @@ public class BlockTripWireHook extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (neighborBlock != this)
         {
-            if (this.checkForDrop(worldIn, pos, state))
+            if (this.checkForDrop(worldIn, new BlockPos(x,y,z), state))
             {
                 EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
 
-                if (!worldIn.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock().isNormalCube())
+                if (!worldIn.getBlockState(x-enumfacing.getFrontOffsetX(),y-enumfacing.getFrontOffsetY(),z-enumfacing.getFrontOffsetZ()).getBlock().isNormalCube())
                 {
-                    this.dropBlockAsItem(worldIn, pos, state, 0);
-                    worldIn.setBlockToAir(pos);
+                    this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+                    worldIn.setBlockToAir(x,y,z);
                 }
             }
         }
@@ -261,7 +262,7 @@ public class BlockTripWireHook extends Block
     {
         if (!this.canPlaceBlockAt(worldIn, pos))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+            this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), state, 0);
             worldIn.setBlockToAir(pos);
             return false;
         }
@@ -295,23 +296,25 @@ public class BlockTripWireHook extends Block
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         boolean flag = ((Boolean)state.getValue(ATTACHED)).booleanValue();
         boolean flag1 = ((Boolean)state.getValue(POWERED)).booleanValue();
 
         if (flag || flag1)
         {
-            this.func_176260_a(worldIn, pos, state, true, false, -1, (IBlockState)null);
+            this.func_176260_a(worldIn, new BlockPos(x,y,z), state, true, false, -1, (IBlockState)null);
         }
 
         if (flag1)
         {
-            worldIn.notifyNeighborsOfStateChange(pos, this);
-            worldIn.notifyNeighborsOfStateChange(pos.offset(((EnumFacing)state.getValue(FACING)).getOpposite()), this);
+            worldIn.notifyNeighborsOfStateChange(x,y,z, this);
+            EnumFacing enumfacing = state.getValue(FACING).getOpposite();
+            worldIn.notifyNeighborsOfStateChange(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ(), this);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z,state);
     }
 
     public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)

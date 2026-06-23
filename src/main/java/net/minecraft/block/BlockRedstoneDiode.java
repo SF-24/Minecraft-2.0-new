@@ -11,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public abstract class BlockRedstoneDiode extends BlockDirectional
 {
@@ -91,20 +92,22 @@ public abstract class BlockRedstoneDiode extends BlockDirectional
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x,y,z);
         if (this.canBlockStay(worldIn, pos))
         {
             this.updateState(worldIn, pos, state);
         }
         else
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
 
             for (EnumFacing enumfacing : EnumFacing.values())
             {
-                worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing), this);
+                worldIn.notifyNeighborsOfStateChange(x+ enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(), z+enumfacing.getFrontOffsetZ(), this);
             }
         }
     }
@@ -203,9 +206,10 @@ public abstract class BlockRedstoneDiode extends BlockDirectional
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.notifyNeighbors(worldIn, pos, state);
+        this.notifyNeighbors(worldIn, new BlockPos(x,y,z), state);
     }
 
     protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state)

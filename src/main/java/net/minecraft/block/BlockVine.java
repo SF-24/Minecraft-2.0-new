@@ -229,12 +229,13 @@ public class BlockVine extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!worldIn.isRemote && !this.recheckGrownSides(worldIn, pos, state))
+        if (!worldIn.isRemote && !this.recheckGrownSides(worldIn, new BlockPos(x,y,z), state))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
@@ -411,6 +412,7 @@ public class BlockVine extends Block
         return 0;
     }
 
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
     {
         if (!worldIn.isRemote && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Items.shears)

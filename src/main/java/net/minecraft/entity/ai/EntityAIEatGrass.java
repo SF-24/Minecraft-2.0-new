@@ -96,7 +96,7 @@ public class EntityAIEatGrass extends EntityAIBase
             {
                 if (this.entityWorld.getGameRules().getBoolean("mobGriefing"))
                 {
-                    this.entityWorld.destroyBlock(blockpos, false);
+                    this.entityWorld.destroyBlock(blockpos.getX(), blockpos.getY(), blockpos.getZ(), false);
                 }
 
                 this.grassEaterEntity.eatGrassBonus();

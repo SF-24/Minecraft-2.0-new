@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.optifine.BlockPosM;
 
 public class BlockCommandBlock extends BlockContainer
 {
@@ -38,21 +39,22 @@ public class BlockCommandBlock extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
-            boolean flag = worldIn.isBlockPowered(pos);
+            boolean flag = worldIn.isBlockPowered(new BlockPos(x,y,z));
             boolean flag1 = ((Boolean)state.getValue(TRIGGERED)).booleanValue();
 
             if (flag && !flag1)
             {
-                worldIn.setBlockState(pos, state.withProperty(TRIGGERED, Boolean.valueOf(true)), 4);
-                worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+                worldIn.setBlockState(x,y,z, state.withProperty(TRIGGERED, Boolean.valueOf(true)), 4);
+                worldIn.scheduleUpdate(new BlockPos(x,y,z), this, this.tickRate(worldIn));
             }
             else if (!flag && flag1)
             {
-                worldIn.setBlockState(pos, state.withProperty(TRIGGERED, Boolean.valueOf(false)), 4);
+                worldIn.setBlockState(x,y,z, state.withProperty(TRIGGERED, Boolean.valueOf(false)), 4);
             }
         }
     }

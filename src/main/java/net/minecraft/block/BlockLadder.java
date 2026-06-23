@@ -111,17 +111,18 @@ public class BlockLadder extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
 
-        if (!this.canBlockStay(worldIn, pos, enumfacing))
+        if (!this.canBlockStay(worldIn, new BlockPos(x,y,z), enumfacing))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
 
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
     }
 
     protected boolean canBlockStay(World worldIn, BlockPos pos, EnumFacing facing)

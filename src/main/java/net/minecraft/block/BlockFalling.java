@@ -24,17 +24,19 @@ public class BlockFalling extends Block
         super(materialIn);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+        worldIn.scheduleUpdate(new BlockPos(x,y,z), this, this.tickRate(worldIn));
     }
 
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+        worldIn.scheduleUpdate(new BlockPos(x,y,z), this, this.tickRate(worldIn));
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)

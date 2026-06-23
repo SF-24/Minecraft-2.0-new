@@ -606,7 +606,7 @@ public class EntityRabbit extends EntityAnimal
                 if (this.field_179499_e && block instanceof BlockCarrot && ((Integer)iblockstate.getValue(BlockCarrot.AGE)).intValue() == 7)
                 {
                     world.setBlockState(blockpos, Blocks.air.getDefaultState(), 2);
-                    world.destroyBlock(blockpos, true);
+                    world.destroyBlock(blockpos.getX(), blockpos.getY(), blockpos.getZ(), true);
                     this.rabbit.createEatingParticles();
                 }
 

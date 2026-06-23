@@ -119,7 +119,7 @@ public class CommandFill extends CommandBase
                                 {
                                     if (args[8].equals("destroy"))
                                     {
-                                        world.destroyBlock(blockpos4, true);
+                                        world.destroyBlock(blockpos4.getX(), blockpos4.getY(), blockpos4.getZ(), true);
                                     }
                                     else if (args[8].equals("keep"))
                                     {
@@ -203,7 +203,7 @@ public class CommandFill extends CommandBase
                 for (BlockPos blockpos5 : list)
                 {
                     Block block2 = world.getBlockState(blockpos5).getBlock();
-                    world.notifyNeighborsRespectDebug(blockpos5, block2);
+                    world.notifyNeighborsRespectDebug(blockpos5.getX(),blockpos5.getY(),blockpos5.getZ(), block2);
                 }
 
                 if (j <= 0)

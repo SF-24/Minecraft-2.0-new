@@ -50,10 +50,11 @@ public class BlockDispenser extends BlockContainer
         return 4;
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.onBlockAdded(worldIn, pos, state);
-        this.setDefaultDirection(worldIn, pos, state);
+        super.onBlockAdded(worldIn, x,y,z, state);
+        this.setDefaultDirection(worldIn, new BlockPos(x,y,z), state);
     }
 
     private void setDefaultDirection(World worldIn, BlockPos pos, IBlockState state)
@@ -154,19 +155,21 @@ public class BlockDispenser extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());
-        boolean flag1 = ((Boolean)state.getValue(TRIGGERED)).booleanValue();
+        boolean flag1 = state.getValue(TRIGGERED).booleanValue();
 
         if (flag && !flag1)
         {
             worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
-            worldIn.setBlockState(pos, state.withProperty(TRIGGERED, Boolean.valueOf(true)), 4);
+            worldIn.setBlockState(x,y,z, state.withProperty(TRIGGERED, Boolean.valueOf(true)), 4);
         }
         else if (!flag && flag1)
         {
-            worldIn.setBlockState(pos, state.withProperty(TRIGGERED, Boolean.valueOf(false)), 4);
+            worldIn.setBlockState(x,y,z, state.withProperty(TRIGGERED, Boolean.valueOf(false)), 4);
         }
     }
 
@@ -213,8 +216,10 @@ public class BlockDispenser extends BlockContainer
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
+        BlockPos pos = new BlockPos(x, y, z);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (tileentity instanceof TileEntityDispenser)
@@ -223,7 +228,7 @@ public class BlockDispenser extends BlockContainer
             worldIn.updateComparatorOutputLevel(pos, this);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     /**

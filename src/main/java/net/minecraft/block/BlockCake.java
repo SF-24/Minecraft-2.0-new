@@ -110,11 +110,12 @@ public class BlockCake extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!this.canBlockStay(worldIn, pos))
+        if (!this.canBlockStay(worldIn, new BlockPos(x,y,z)))
         {
-            worldIn.setBlockToAir(pos);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 

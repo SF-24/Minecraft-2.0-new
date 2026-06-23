@@ -86,19 +86,21 @@ public class BlockStainedGlass extends BlockBreakable
         return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
-            BlockBeacon.updateColorAsync(worldIn, pos);
+            BlockBeacon.updateColorAsync(worldIn, new BlockPos(x,y,z));
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
-            BlockBeacon.updateColorAsync(worldIn, pos);
+            BlockBeacon.updateColorAsync(worldIn, new BlockPos(x,y,z));
         }
     }
 

@@ -447,9 +447,15 @@ public class WorldClient extends World
      * @param pitch The pitch of the sound
      * @param distanceDelay True if the sound is delayed over distance
      */
+    @Deprecated
     public void playSoundAtPos(BlockPos pos, String soundName, float volume, float pitch, boolean distanceDelay)
     {
         this.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, soundName, volume, pitch, distanceDelay);
+    }
+
+    public void playSoundAtPos(int x, int y, int z, String soundName, float volume, float pitch, boolean distanceDelay)
+    {
+        this.playSound((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, soundName, volume, pitch, distanceDelay);
     }
 
     /**

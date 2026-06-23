@@ -142,7 +142,8 @@ public class BlockTrapDoor extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
@@ -155,7 +156,7 @@ public class BlockTrapDoor extends Block
 //            }
 //            else
             {
-                boolean flag = worldIn.isBlockPowered(pos);
+                boolean flag = worldIn.isBlockPowered(new BlockPos(x,y,z));
 
                 if (flag || neighborBlock.canProvidePower())
                 {
@@ -163,8 +164,8 @@ public class BlockTrapDoor extends Block
 
                     if (flag1 != flag)
                     {
-                        worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(flag)), 2);
-                        worldIn.playAuxSFXAtEntity((EntityPlayer)null, flag ? 1003 : 1006, pos, 0);
+                        worldIn.setBlockState(x,y,z, state.withProperty(OPEN, Boolean.valueOf(flag)), 2);
+                        worldIn.playAuxSFXAtEntity((EntityPlayer)null, flag ? 1003 : 1006, x,y,z, 0);
                     }
                 }
             }

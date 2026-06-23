@@ -77,6 +77,8 @@ public class BlockPos extends Vec3i
 
     /**
      * Offset this BlockPos 1 block up
+     *
+     * @return
      */
     public BlockPos up()
     {
@@ -344,6 +346,15 @@ public class BlockPos extends Vec3i
             this.x = x_;
             this.y = y_;
             this.z = z_;
+        }
+
+        public BlockPos up() {this.y+=1;
+            return null;
+        }
+
+        public void setY(int y)
+        {
+            this.y=y;
         }
 
         public int getX()

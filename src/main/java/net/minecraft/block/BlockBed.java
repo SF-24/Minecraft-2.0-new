@@ -143,24 +143,25 @@ public class BlockBed extends BlockDirectional
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
 
         if (state.getValue(PART) == BlockBed.EnumPartType.HEAD)
         {
-            if (worldIn.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock() != this)
+            if (worldIn.getBlockState(x-enumfacing.getFrontOffsetX(),y-enumfacing.getFrontOffsetY(),z-enumfacing.getFrontOffsetZ()).getBlock() != this)
             {
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockToAir(x,y,z);
             }
         }
-        else if (worldIn.getBlockState(pos.offset(enumfacing)).getBlock() != this)
+        else if (worldIn.getBlockState(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ()).getBlock() != this)
         {
-            worldIn.setBlockToAir(pos);
+            worldIn.setBlockToAir(x,y,z);
 
             if (!worldIn.isRemote)
             {
-                this.dropBlockAsItem(worldIn, pos, state, 0);
+                this.dropBlockAsItem(worldIn, x,y,z, state, 0);
             }
         }
     }
@@ -225,11 +226,12 @@ public class BlockBed extends BlockDirectional
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (state.getValue(PART) == BlockBed.EnumPartType.FOOT)
         {
-            super.dropBlockAsItemWithChance(worldIn, pos, state, chance, 0);
+            super.dropBlockAsItemWithChance(worldIn, x,y,z, state, chance, 0);
         }
     }
 

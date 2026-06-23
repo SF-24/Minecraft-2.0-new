@@ -218,7 +218,7 @@ public class CommandClone extends CommandBase
 
                             for (CommandClone.StaticCloneData commandclone$staticclonedata3 : list4)
                             {
-                                world.notifyNeighborsRespectDebug(commandclone$staticclonedata3.pos, commandclone$staticclonedata3.blockState.getBlock());
+                                world.notifyNeighborsRespectDebug(commandclone$staticclonedata3.pos.getX(),commandclone$staticclonedata3.pos.getY(),commandclone$staticclonedata3.pos.getZ(), commandclone$staticclonedata3.blockState.getBlock());
                             }
 
                             List<NextTickListEntry> list5 = world.func_175712_a(structureboundingbox, false);

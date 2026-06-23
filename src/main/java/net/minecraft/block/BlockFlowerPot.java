@@ -174,25 +174,27 @@ public class BlockFlowerPot extends BlockContainer
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!World.doesBlockHaveSolidTopSurface(worldIn, pos.down()))
+        if (!World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y-1,z)))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        TileEntityFlowerPot tileentityflowerpot = this.getTileEntity(worldIn, pos);
+        TileEntityFlowerPot tileentityflowerpot = this.getTileEntity(worldIn, new BlockPos(x,y,z));
 
         if (tileentityflowerpot != null && tileentityflowerpot.getFlowerPotItem() != null)
         {
-            spawnAsEntity(worldIn, pos, new ItemStack(tileentityflowerpot.getFlowerPotItem(), 1, tileentityflowerpot.getFlowerPotData()));
+            spawnAsEntity(worldIn, x,y,z, new ItemStack(tileentityflowerpot.getFlowerPotItem(), 1, tileentityflowerpot.getFlowerPotData()));
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)

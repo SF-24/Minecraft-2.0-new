@@ -86,7 +86,7 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock
 
             if (this.field_179501_f == 0 && block instanceof BlockCrops && ((Integer)iblockstate.getValue(BlockCrops.AGE)).intValue() == 7)
             {
-                world.destroyBlock(blockpos, true);
+                world.destroyBlock(blockpos.getX(),blockpos.getY(),blockpos.getZ(), true);
             }
             else if (this.field_179501_f == 1 && block == Blocks.air)
             {

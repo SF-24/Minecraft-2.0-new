@@ -28,6 +28,7 @@ public class BlockCactus extends Block
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         BlockPos blockpos = pos.up();
@@ -50,7 +51,7 @@ public class BlockCactus extends Block
                     worldIn.setBlockState(blockpos, this.getDefaultState());
                     IBlockState iblockstate = state.withProperty(AGE, Integer.valueOf(0));
                     worldIn.setBlockState(pos, iblockstate, 4);
-                    this.onNeighborBlockChange(worldIn, blockpos, iblockstate, this);
+                    this.onNeighborBlockChange(worldIn, blockpos.getX(),blockpos.getY(),blockpos.getZ(), iblockstate, this);
                 }
                 else
                 {
@@ -93,11 +94,12 @@ public class BlockCactus extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!this.canBlockStay(worldIn, pos))
+        if (!this.canBlockStay(worldIn, new BlockPos(x,y,z)))
         {
-            worldIn.destroyBlock(pos, true);
+            worldIn.destroyBlock(x,y,z, true);
         }
     }
 

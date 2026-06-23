@@ -42,9 +42,10 @@ public class BlockFurnace extends BlockContainer
         return Item.getItemFromBlock(Blocks.furnace);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.setDefaultFacing(worldIn, pos, state);
+        this.setDefaultFacing(worldIn, new BlockPos(x,y,z), state);
     }
 
     private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
@@ -195,10 +196,12 @@ public class BlockFurnace extends BlockContainer
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y ,int z, IBlockState state)
     {
         if (!keepInventory)
         {
+            BlockPos pos = new BlockPos(x, y, z);
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
             if (tileentity instanceof TileEntityFurnace)
@@ -208,7 +211,7 @@ public class BlockFurnace extends BlockContainer
             }
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     public boolean hasComparatorInputOverride()

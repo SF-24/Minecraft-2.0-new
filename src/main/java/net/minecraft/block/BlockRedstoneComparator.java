@@ -240,15 +240,18 @@ public class BlockRedstoneComparator extends BlockRedstoneDiode implements ITile
         this.onStateChange(worldIn, pos, state);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.onBlockAdded(worldIn, pos, state);
-        worldIn.setTileEntity(pos, this.createNewTileEntity(worldIn, 0));
+        super.onBlockAdded(worldIn, x,y,z, state);
+        worldIn.setTileEntity(new BlockPos(x,y,z), this.createNewTileEntity(worldIn, 0));
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.breakBlock(worldIn, pos, state);
+        BlockPos pos = new BlockPos(x,y,z);
+        super.breakBlock(worldIn, x,y,z, state);
         worldIn.removeTileEntity(pos);
         this.notifyNeighbors(worldIn, pos, state);
     }

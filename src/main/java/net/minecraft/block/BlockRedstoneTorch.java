@@ -69,24 +69,26 @@ public class BlockRedstoneTorch extends BlockTorch
         return 2;
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (this.isOn)
         {
             for (EnumFacing enumfacing : EnumFacing.values())
             {
-                worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing), this);
+                worldIn.notifyNeighborsOfStateChange(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ(), this);
             }
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (this.isOn)
         {
             for (EnumFacing enumfacing : EnumFacing.values())
             {
-                worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing), this);
+                worldIn.notifyNeighborsOfStateChange(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ(), this);
             }
         }
     }
@@ -150,13 +152,15 @@ public class BlockRedstoneTorch extends BlockTorch
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!this.onNeighborChangeInternal(worldIn, pos, state))
+        if (!this.onNeighborChangeInternal(worldIn, x,y,z, state))
         {
-            if (this.isOn == this.shouldBeOff(worldIn, pos, state))
+            BlockPos blockpos = new BlockPos(x, y, z);
+            if (this.isOn == this.shouldBeOff(worldIn, blockpos, state))
             {
-                worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+                worldIn.scheduleUpdate(blockpos, this, this.tickRate(worldIn));
             }
         }
     }

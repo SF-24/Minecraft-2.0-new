@@ -19,15 +19,16 @@ public class BlockStandingSign extends BlockSign
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (!worldIn.getBlockState(pos.down()).getBlock().getMaterial().isSolid())
+        if (!worldIn.getBlockState(x,y-1,z).getBlock().getMaterial().isSolid())
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
 
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
     }
 
     /**

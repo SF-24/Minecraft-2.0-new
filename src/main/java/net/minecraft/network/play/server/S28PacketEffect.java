@@ -29,6 +29,15 @@ public class S28PacketEffect implements Packet<INetHandlerPlayClient>
         this.serverWide = serverWideIn;
     }
 
+    public S28PacketEffect(int soundTypeIn, int x, int y, int z, int soundDataIn, boolean serverWideIn)
+    {
+        this.soundType = soundTypeIn;
+        this.soundPos = new BlockPos(x, y, z);
+        this.soundData = soundDataIn;
+        this.serverWide = serverWideIn;
+    }
+
+
     /**
      * Reads the raw packet data from the data stream.
      */

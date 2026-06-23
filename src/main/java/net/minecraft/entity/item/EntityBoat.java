@@ -396,7 +396,7 @@ public class EntityBoat extends Entity
                     }
                     else if (block == Blocks.waterlily)
                     {
-                        this.worldObj.destroyBlock(blockpos, true);
+                        this.worldObj.destroyBlock(blockpos.getX(),blockpos.getY(),blockpos.getZ(), true);
                         this.isCollidedHorizontally = false;
                     }
                 }

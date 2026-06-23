@@ -364,7 +364,7 @@ public class EntityWither extends EntityMob implements IBossDisplayData, IRanged
 
                                 if (block.getMaterial() != Material.air && canDestroyBlock(block))
                                 {
-                                    flag = this.worldObj.destroyBlock(blockpos, true) || flag;
+                                    flag = this.worldObj.destroyBlock(blockpos.getX(),blockpos.getY(),blockpos.getZ(), true) || flag;
                                 }
                             }
                         }

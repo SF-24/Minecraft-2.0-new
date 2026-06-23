@@ -153,7 +153,7 @@ public class ItemBucket extends Item
                 {
                     if (!worldIn.isRemote && flag && !material.isLiquid())
                     {
-                        worldIn.destroyBlock(pos, true);
+                        worldIn.destroyBlock(pos.getX(),pos.getY(),pos.getZ(), true);
                     }
 
                     worldIn.setBlockState(pos, this.isFull.getDefaultState(), 3);

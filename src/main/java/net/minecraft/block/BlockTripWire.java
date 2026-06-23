@@ -86,15 +86,16 @@ public class BlockTripWire extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         boolean flag = ((Boolean)state.getValue(SUSPENDED)).booleanValue();
-        boolean flag1 = !World.doesBlockHaveSolidTopSurface(worldIn, pos.down());
+        boolean flag1 = !World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y-1,z));
 
         if (flag != flag1)
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
@@ -118,18 +119,21 @@ public class BlockTripWire extends Block
         }
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        state = state.withProperty(SUSPENDED, Boolean.valueOf(!World.doesBlockHaveSolidTopSurface(worldIn, pos.down())));
-        worldIn.setBlockState(pos, state, 3);
-        this.notifyHook(worldIn, pos, state);
+        state = state.withProperty(SUSPENDED, Boolean.valueOf(!World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y-1,z))));
+        worldIn.setBlockState(x,y,z, state, 3);
+        this.notifyHook(worldIn, new BlockPos(x,y,z), state);
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        this.notifyHook(worldIn, pos, state.withProperty(POWERED, Boolean.valueOf(true)));
+        this.notifyHook(worldIn, new BlockPos(x,y,z), state.withProperty(POWERED, Boolean.valueOf(true)));
     }
 
+    @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
     {
         if (!worldIn.isRemote)

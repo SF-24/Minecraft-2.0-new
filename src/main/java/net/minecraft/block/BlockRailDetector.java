@@ -128,10 +128,11 @@ public class BlockRailDetector extends BlockRailBase
         worldIn.updateComparatorOutputLevel(pos, this);
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.onBlockAdded(worldIn, pos, state);
-        this.updatePoweredState(worldIn, pos, state);
+        super.onBlockAdded(worldIn, x,y,z, state);
+        this.updatePoweredState(worldIn, new BlockPos(x,y,z), state);
     }
 
     public IProperty<BlockRailBase.EnumRailDirection> getShapeProperty()

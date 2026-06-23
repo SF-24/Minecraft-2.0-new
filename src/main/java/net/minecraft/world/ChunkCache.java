@@ -1,5 +1,6 @@
 package net.minecraft.world;
 
+import net.minecraft.MineshaftLogger;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -8,6 +9,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
+
+import java.util.logging.Logger;
 
 public class ChunkCache implements IBlockAccess
 {
@@ -116,23 +119,80 @@ public class ChunkCache implements IBlockAccess
 
     public IBlockState getBlockState(BlockPos pos)
     {
-        if (pos.getY() >= 0 && pos.getY() < 256)
-        {
-            int i = (pos.getX() >> 4) - this.chunkX;
-            int j = (pos.getZ() >> 4) - this.chunkZ;
-
-            if (i >= 0 && i < this.chunkArray.length && j >= 0 && j < this.chunkArray[i].length)
-            {
-                Chunk chunk = this.chunkArray[i][j];
-
-                if (chunk != null)
-                {
-                    return chunk.getBlockState(pos);
-                }
-            }
+        if(pos==null) {
+            MineshaftLogger.logError("Position is null for getting block state!");
+            return Blocks.air.getDefaultState();
         }
+        if (pos.getY() < 0 || pos.getY() >= 256) return Blocks.air.getDefaultState();
+        int i = (pos.getX() >> 4) - this.chunkX;
+        int j = (pos.getZ() >> 4) - this.chunkZ;
 
-        return Blocks.air.getDefaultState();
+        if (i < 0 || i >= this.chunkArray.length)
+            return Blocks.air.getDefaultState();
+
+        Chunk[] row = this.chunkArray[i];
+        if (row == null || j < 0 || j >= row.length) return Blocks.air.getDefaultState();
+
+        Chunk chunk = row[j];
+        if (chunk == null) return Blocks.air.getDefaultState();
+
+        try
+        {
+            return chunk.getBlockState(pos);
+        }
+        catch (Throwable t)
+        {
+            System.err.println("[ChunkCache] NPE at " + pos + " | chunkX=" + chunkX + " chunkZ=" + chunkZ);
+            t.printStackTrace();
+            return Blocks.air.getDefaultState();
+        }
+//        if (pos.getY() < 0 || pos.getY() >= 256)
+//        {
+//            return Blocks.air.getDefaultState();
+//        }
+//
+//        int i = (pos.getX() >> 4) - this.chunkX;
+//        int j = (pos.getZ() >> 4) - this.chunkZ;
+//
+//        if (i < 0 || i >= this.chunkArray.length)
+//        {
+//            return Blocks.air.getDefaultState();
+//        }
+//
+//        Chunk[] row = this.chunkArray[i];          // ← This can be null
+//        if (row == null || j < 0 || j >= row.length)
+//        {
+//            return Blocks.air.getDefaultState();
+//        }
+//
+//        Chunk chunk = row[j];
+//        if (chunk == null)
+//        {
+//            return Blocks.air.getDefaultState();
+//        }
+//
+//        return chunk.getBlockState(pos);
+//        if (pos.getY() >= 0 && pos.getY() < 256)
+//        {
+//            int i = (pos.getX() >> 4) - this.chunkX;
+//            int j = (pos.getZ() >> 4) - this.chunkZ;
+//
+//            if (i >= 0 && i < this.chunkArray.length && j >= 0 && j < this.chunkArray[i].length)
+//            {
+//                try {
+//                    Chunk chunk = this.chunkArray[i][j];
+//
+//                    if (chunk != null) {
+//                        return chunk.getBlockState(pos);
+//                    }
+//                } catch (Exception e) {
+//                    MineshaftLogger.logError("Error getting blockstate: " + e.getMessage());
+//                    return Blocks.air.getDefaultState();
+//                }
+//            }
+//        }
+//
+//        return Blocks.air.getDefaultState();
     }
 
     public BiomeGenBase getBiomeGenForCoords(BlockPos pos)

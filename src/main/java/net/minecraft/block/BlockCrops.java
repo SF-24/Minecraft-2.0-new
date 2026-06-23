@@ -143,9 +143,10 @@ public class BlockCrops extends BlockBush implements IGrowable
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
-        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, 0);
+        super.dropBlockAsItemWithChance(worldIn, x,y,z, state, chance, 0);
 
         if (!worldIn.isRemote)
         {
@@ -159,7 +160,7 @@ public class BlockCrops extends BlockBush implements IGrowable
                 {
                     if (worldIn.rand.nextInt(15) <= i)
                     {
-                        spawnAsEntity(worldIn, pos, new ItemStack(this.getSeed(), 1, 0));
+                        spawnAsEntity(worldIn, x,y,z, new ItemStack(this.getSeed(), 1, 0));
                     }
                 }
             }

@@ -69,12 +69,13 @@ public class BlockSilverfish extends Block
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, IBlockState state, float chance, int fortune)
     {
         if (!worldIn.isRemote && worldIn.getGameRules().getBoolean("doTileDrops"))
         {
             EntitySilverfish entitysilverfish = new EntitySilverfish(worldIn);
-            entitysilverfish.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+            entitysilverfish.setLocationAndAngles((double)x + 0.5D, y, (double)z + 0.5D, 0.0F, 0.0F);
             worldIn.spawnEntityInWorld(entitysilverfish);
             entitysilverfish.spawnExplosionParticle();
         }

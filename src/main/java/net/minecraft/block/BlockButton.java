@@ -68,6 +68,8 @@ public abstract class BlockButton extends Block
         return func_181088_a(worldIn, pos, side.getOpposite());
     }
 
+    // TODO:!
+    @Deprecated
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         for (EnumFacing enumfacing : EnumFacing.values())
@@ -99,25 +101,27 @@ public abstract class BlockButton extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        if (this.checkForDrop(worldIn, pos, state) && !func_181088_a(worldIn, pos, ((EnumFacing)state.getValue(FACING)).getOpposite()))
+        // TODO:!!!
+        if (this.checkForDrop(worldIn, x,y,z, state) && !func_181088_a(worldIn, new BlockPos(x,y,z), ((EnumFacing)state.getValue(FACING)).getOpposite()))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
     }
 
-    private boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
+    private boolean checkForDrop(World worldIn, int x, int y, int z, IBlockState state)
     {
-        if (this.canPlaceBlockAt(worldIn, pos))
+        if (this.canPlaceBlockAt(worldIn, new BlockPos(x,y,z)))
         {
             return true;
         }
         else
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
             return false;
         }
     }
@@ -181,14 +185,15 @@ public abstract class BlockButton extends Block
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (((Boolean)state.getValue(POWERED)).booleanValue())
         {
-            this.notifyNeighbors(worldIn, pos, (EnumFacing)state.getValue(FACING));
+            this.notifyNeighbors(worldIn, new BlockPos(x,y,z), (EnumFacing)state.getValue(FACING));
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
     }
 
     public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)

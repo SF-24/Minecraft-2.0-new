@@ -87,15 +87,17 @@ public abstract class BlockRailBase extends Block
         return World.doesBlockHaveSolidTopSurface(worldIn, pos.down());
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void onBlockAdded(World worldIn, int x, int y, int z, IBlockState state)
     {
         if (!worldIn.isRemote)
         {
+            BlockPos pos = new BlockPos(x,y,z);
             state = this.func_176564_a(worldIn, pos, state, true);
 
             if (this.isPowered)
             {
-                this.onNeighborBlockChange(worldIn, pos, state, this);
+                this.onNeighborBlockChange(worldIn, x,y,z, state, this);
             }
         }
     }
@@ -103,17 +105,20 @@ public abstract class BlockRailBase extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
             BlockRailBase.EnumRailDirection blockrailbase$enumraildirection = (BlockRailBase.EnumRailDirection)state.getValue(this.getShapeProperty());
             boolean flag = false;
 
-            if (!World.doesBlockHaveSolidTopSurface(worldIn, pos.down()))
+            if (!World.doesBlockHaveSolidTopSurface(worldIn, new BlockPos(x,y-1,z)))
             {
                 flag = true;
             }
+
+            BlockPos pos = new BlockPos(x,y,z);
 
             if (blockrailbase$enumraildirection == BlockRailBase.EnumRailDirection.ASCENDING_EAST && !World.doesBlockHaveSolidTopSurface(worldIn, pos.east()))
             {
@@ -134,12 +139,12 @@ public abstract class BlockRailBase extends Block
 
             if (flag)
             {
-                this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+                worldIn.setBlockToAir(x,y,z);
             }
             else
             {
-                this.onNeighborChangedInternal(worldIn, pos, state, neighborBlock);
+                this.onNeighborChangedInternal(worldIn, new BlockPos(x,y,z), state, neighborBlock);
             }
         }
     }
@@ -163,19 +168,20 @@ public abstract class BlockRailBase extends Block
         return EnumWorldBlockLayer.CUTOUT;
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, IBlockState state)
     {
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(worldIn, x,y,z, state);
 
-        if (((BlockRailBase.EnumRailDirection)state.getValue(this.getShapeProperty())).isAscending())
+        if (state.getValue(this.getShapeProperty()).isAscending())
         {
-            worldIn.notifyNeighborsOfStateChange(pos.up(), this);
+            worldIn.notifyNeighborsOfStateChange(x,y+1,z, this);
         }
 
         if (this.isPowered)
         {
-            worldIn.notifyNeighborsOfStateChange(pos, this);
-            worldIn.notifyNeighborsOfStateChange(pos.down(), this);
+            worldIn.notifyNeighborsOfStateChange(x,y,z, this);
+            worldIn.notifyNeighborsOfStateChange(x,y-1,z, this);
         }
     }
 

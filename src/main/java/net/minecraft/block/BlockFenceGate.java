@@ -130,27 +130,29 @@ public class BlockFenceGate extends BlockDirectional
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    @Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
         if (!worldIn.isRemote)
         {
+            BlockPos pos = new BlockPos(x, y, z);
             boolean flag = worldIn.isBlockPowered(pos);
 
             if (flag || neighborBlock.canProvidePower())
             {
-                if (flag && !((Boolean)state.getValue(OPEN)).booleanValue() && !((Boolean)state.getValue(POWERED)).booleanValue())
+                if (flag && !(Boolean) state.getValue(OPEN) && !((Boolean)state.getValue(POWERED)).booleanValue())
                 {
-                    worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(true)).withProperty(POWERED, Boolean.valueOf(true)), 2);
-                    worldIn.playAuxSFXAtEntity((EntityPlayer)null, 1003, pos, 0);
+                    worldIn.setBlockState(x,y,z, state.withProperty(OPEN, Boolean.valueOf(true)).withProperty(POWERED, Boolean.valueOf(true)), 2);
+                    worldIn.playAuxSFXAtEntity(null, 1003, x,y,z, 0);
                 }
-                else if (!flag && ((Boolean)state.getValue(OPEN)).booleanValue() && ((Boolean)state.getValue(POWERED)).booleanValue())
+                else if (!flag && state.getValue(OPEN) && state.getValue(POWERED).booleanValue())
                 {
-                    worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(false)).withProperty(POWERED, Boolean.valueOf(false)), 2);
-                    worldIn.playAuxSFXAtEntity((EntityPlayer)null, 1006, pos, 0);
+                    worldIn.setBlockState(x,y,z, state.withProperty(OPEN, Boolean.FALSE).withProperty(POWERED, Boolean.valueOf(false)), 2);
+                    worldIn.playAuxSFXAtEntity(null, 1006, x,y,z, 0);
                 }
-                else if (flag != ((Boolean)state.getValue(POWERED)).booleanValue())
+                else if (flag != state.getValue(POWERED))
                 {
-                    worldIn.setBlockState(pos, state.withProperty(POWERED, Boolean.valueOf(flag)), 2);
+                    worldIn.setBlockState(pos, state.withProperty(POWERED, flag), 2);
                 }
             }
         }

@@ -48,10 +48,10 @@ public class BlockBush extends Block
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
-        this.checkAndDropBlock(worldIn, pos, state);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
+        this.checkAndDropBlock(worldIn, x,y,z, state);
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
@@ -59,12 +59,23 @@ public class BlockBush extends Block
         this.checkAndDropBlock(worldIn, pos, state);
     }
 
+    @Deprecated
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         if (!this.canBlockStay(worldIn, pos, state))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+            this.dropBlockAsItem(worldIn, pos.getX(),pos.getY(),pos.getZ(), state, 0);
             worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
+        }
+    }
+
+
+    protected void checkAndDropBlock(World worldIn, int x, int y, int z, IBlockState state)
+    {
+        if (!this.canBlockStay(worldIn, new BlockPos(x,y,z), state)) // TODO:
+        {
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockState(x,y,z, Blocks.air.getDefaultState(), 3);
         }
     }
 

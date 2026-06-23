@@ -56,17 +56,17 @@ public class BlockWallSign extends BlockSign
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, IBlockState state, Block neighborBlock)
     {
-        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING).getOpposite();
 
-        if (!worldIn.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock().getMaterial().isSolid())
+        if (!worldIn.getBlockState(x+enumfacing.getFrontOffsetX(),y+enumfacing.getFrontOffsetY(),z+enumfacing.getFrontOffsetZ()).getBlock().getMaterial().isSolid())
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(worldIn, x,y,z, state, 0);
+            worldIn.setBlockToAir(x,y,z);
         }
 
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+        super.onNeighborBlockChange(worldIn, x,y,z, state, neighborBlock);
     }
 
     /**

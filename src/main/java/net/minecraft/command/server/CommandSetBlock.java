@@ -94,7 +94,7 @@ public class CommandSetBlock extends CommandBase
                 {
                     if (args[5].equals("destroy"))
                     {
-                        world.destroyBlock(blockpos, true);
+                        world.destroyBlock(blockpos.getX(), blockpos.getY(), blockpos.getZ(), true);
 
                         if (block == Blocks.air)
                         {
@@ -141,7 +141,7 @@ public class CommandSetBlock extends CommandBase
                         }
                     }
 
-                    world.notifyNeighborsRespectDebug(blockpos, iblockstate.getBlock());
+                    world.notifyNeighborsRespectDebug(blockpos.getX(), blockpos.getY(), blockpos.getZ(), iblockstate.getBlock());
                     sender.setCommandStat(CommandResultStats.Type.AFFECTED_BLOCKS, 1);
                     notifyOperators(sender, this, "commands.setblock.success", new Object[0]);
                 }
