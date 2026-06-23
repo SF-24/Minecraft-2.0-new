@@ -649,7 +649,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
         else if ("minecraft:anvil".equals(s))
         {
-            this.mc.displayGuiScreen(new GuiRepair(this.inventory, this.worldObj));
+            this.mc.displayGuiScreen(new GuiRepair(this.inventory, this.worldObj,false));
+        }
+        else if ("minecraft:diamond_anvil".equals(s))
+        {
+            this.mc.displayGuiScreen(new GuiRepair(this.inventory, this.worldObj,true));
         }
     }
 

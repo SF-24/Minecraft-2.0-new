@@ -27,7 +27,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     private GuiTextField nameField;
     private InventoryPlayer playerInventory;
 
-    public GuiRepair(InventoryPlayer inventoryIn, World worldIn)
+    public GuiRepair(InventoryPlayer inventoryIn, World worldIn, boolean isDiamondAnvil)
     {
         super(new ContainerRepair(inventoryIn, worldIn, Minecraft.getMinecraft().thePlayer));
         this.playerInventory = inventoryIn;
@@ -78,6 +78,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
             boolean flag = true;
             String s = I18n.format("container.repair.cost", new Object[] {Integer.valueOf(this.anvil.maximumCost)});
 
+            // TODO: FIX?!
             if (this.anvil.maximumCost == -99 && !this.mc.thePlayer.capabilities.isCreativeMode)
             {
 //                s = I18n.format("container.repair.expensive", new Object[0]);
@@ -90,6 +91,38 @@ public class GuiRepair extends GuiContainer implements ICrafting
             else if (!this.anvil.getSlot(2).canTakeStack(this.playerInventory.player))
             {
                 i = 16736352;
+            }
+
+            if (flag)
+            {
+                int j = -16777216 | (i & 16579836) >> 2 | i & -16777216;
+                int k = this.xSize - 8 - this.fontRendererObj.getStringWidth(s);
+                int l = 67;
+
+                if (this.fontRendererObj.getUnicodeFlag())
+                {
+                    drawRect(k - 3, l - 2, this.xSize - 7, l + 10, -16777216);
+                    drawRect(k - 2, l - 1, this.xSize - 8, l + 9, -12895429);
+                }
+                else
+                {
+                    this.fontRendererObj.drawString(s, k, l + 1, j);
+                    this.fontRendererObj.drawString(s, k + 1, l, j);
+                    this.fontRendererObj.drawString(s, k + 1, l + 1, j);
+                }
+
+                this.fontRendererObj.drawString(s, k, l, i);
+            }
+        } else {
+            int i = 8453920;
+            boolean flag = true;
+            String s = I18n.format("container.repair.cost", new Object[] {Integer.valueOf(this.anvil.maximumCost)});
+
+            if(this.anvil.maximumCost == -99) {
+                s = I18n.format("Requires diamond anvil.", new Object[0]);
+                i = 16736352;
+            } else {
+                flag = false;
             }
 
             if (flag)

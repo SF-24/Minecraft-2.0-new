@@ -1,8 +1,6 @@
 package net.minecraft.inventory;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import net.minecraft.MineshaftLogger;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -18,6 +16,9 @@ import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContainerRepair extends Container
 {
@@ -60,7 +61,6 @@ public class ContainerRepair extends Container
     public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, EntityPlayer player)
     {
         this(playerInventory, worldIn, blockPosIn, player, false);
-
     }
 
     public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, EntityPlayer player, boolean isDiamondAnvil)
@@ -173,6 +173,11 @@ public class ContainerRepair extends Container
 
     /**
      * called when the Anvil Input Slot changes, calculates the new result and puts it in the output slot
+     *
+     * ==============================================================================
+     * UPDATES THE OUTPUT ITEM
+     *
+     * ===============================================================================
      */
     public void updateRepairOutput()
     {
@@ -203,7 +208,6 @@ public class ContainerRepair extends Container
             // Makes repair cost increase by a fixed amount each repair.
             // Count repair penalty
             inheritedRepairCost = firstInput.getRepairCost() + ((secondInput!=null)?secondInput.getRepairCost():0);
-//            repairPenalty = repairPenalty + firstInput.getRepairCost() + (secondInput == null ? 0 : secondInput.getRepairCost());
             this.materialCost = 0;
 
             // If it has a second input
@@ -317,10 +321,14 @@ public class ContainerRepair extends Container
                                 }
                                 if (outputLevel > enchantment.getMaxLevel()) {
                                     if(!isDiamondAnvil) {
-                                        this.maximumCost=0;
+                                        MineshaftLogger.logDebug("Disallowing super enchanting, as it's a normal anvil.");
+                                        // Disallow super enchants on normal anvil
+                                        this.maximumCost=-67;
                                         return;
+                                    } else {
+                                        MineshaftLogger.logDebug("Allowing super enchanting on diamond anvil.");
+                                        justAppliedSuperEnchantCount++;
                                     }
-                                    justAppliedSuperEnchantCount++;
                                 }
                                 enchMap.put(enchantId, outputLevel);
                             }
@@ -351,41 +359,54 @@ public class ContainerRepair extends Container
             }
 
             /**
+             * ============================================================================================================
              * Calculate final cost
+             * ============================================================================================================
              * */
 
+            /** Early abort */
             if(rawRepairCost==0 && extraRenameCost==0 && !enchMap.isEmpty() && enchMap.equals(firstInput.getEnchantmentTagList())) {
                 maximumCost = 0;
                 output=null;
+                MineshaftLogger.logDebug("Early abort! ????????????????????????????????");
             } else if(!isDiamondAnvil && output.hasSpecialGlint()) {
                 maximumCost = 0;
                 output=null;
             } else {
+                /**
+                 * ====================================================================================================
+                 *                                         CALCULATE COSTS:
+                 * ====================================================================================================
+                 * */
 
                 int currentSuperEnchants=0;
                 // If enchants applied
                 Map<Integer, Integer> enchantmentsApplied = new HashMap<>();
-//                Map<Integer, Integer> otherEnchantments = new HashMap<>();
-
                 Map<Integer, Integer> firstEnchants = EnchantmentHelper.getEnchantments(firstInput);
                 Map<Integer, Integer> outputEnchants = enchMap;
 
-                for (Integer id : outputEnchants.keySet()) {
-                    int currentLevel = outputEnchants.get(id);
-                    int previousLevel = firstEnchants.getOrDefault(id, 0);
+                if(firstEnchants.isEmpty()) {
+                    enchantmentsApplied=enchMap;
+                } else {
+                    for (Integer id : outputEnchants.keySet()) {
+                        int currentLevel = outputEnchants.get(id);
+                        int previousLevel = firstEnchants.getOrDefault(id, 0);
 
-                    // Only track if it's an actual addition or upgrade
-                    if (currentLevel > previousLevel) {
-                        enchantmentsApplied.put(id, currentLevel);
-                        System.out.println("Enchant id " + id + " level " + currentLevel);
+                        // Only track if it's an actual addition or upgrade
+                        if (currentLevel > previousLevel) {
+                            enchantmentsApplied.put(id, currentLevel);
+                            System.out.println("Enchant id " + id + " level " + currentLevel);
 
-                        // FIXED: Safe null check for the enchantment object
-                        Enchantment ench = Enchantment.getEnchantmentById(id);
-                        if (ench != null && currentLevel > ench.getMaxExtraLevel()) {
-                            currentSuperEnchants++;
+                            // FIXED: Safe null check for the enchantment object
+                            Enchantment ench = Enchantment.getEnchantmentById(id);
+                            if (ench != null && currentLevel > ench.getMaxLevel()) {
+                                currentSuperEnchants++;
+                            }
                         }
                     }
                 }
+                MineshaftLogger.logDebug("Ench map: " + enchMap.toString());
+                MineshaftLogger.logDebug("Applied ench: " + enchantmentsApplied.toString());
 
                 // Cycle through output enchants
                 if (!enchantmentsApplied.isEmpty()) {
@@ -393,6 +414,7 @@ public class ContainerRepair extends Container
                         int newLevel = enchantmentsApplied.get(id);
                         int oldLevel = firstEnchants.getOrDefault(id, 0);
 
+                        // Compare new and old cost.
                         int newLevelCost = EnchantmentHelper.getEnchantCost(id, newLevel);
                         int oldLevelCost = (oldLevel > 0) ? EnchantmentHelper.getEnchantCost(id, oldLevel) : 0;
 
@@ -406,11 +428,21 @@ public class ContainerRepair extends Container
                     // If not enchants are added, it is a repair.
                     // TODO:
                     enchantmentCost = 0;
+                    MineshaftLogger.logDebug("No enchantments applied");
                 }
-
                 // TODO: Cycle through other enchants and apply a penalty based on them.
+
                 // Count max cost.
                 this.maximumCost = currentSuperEnchants*5 + ((rawRepairCost>0)?Math.min(20, inheritedRepairCost+rawRepairCost):0) + enchantmentCost + (rawRepairCost==0?extraRenameCost:0);
+
+                // Print debugging:
+
+                System.out.println("SuperEnchants: " + currentSuperEnchants +
+                        " | EnchantCost: " + enchantmentCost +
+                        " | RawRepair: " + rawRepairCost);
+
+                MineshaftLogger.logDebug("Enchantment cost (max.): " + maximumCost);
+
 
                 /**
                  * Limitations
@@ -419,6 +451,7 @@ public class ContainerRepair extends Container
                 // Cannot add more than 3 enchants to an item.
                 // Too expensive
                 if ((enchMap.size() > (3 + ((output.getItem() instanceof ItemTool && ((ItemTool) output.getItem()).getToolMaterialName().equals("GOLD")) ? 1 : 0)) && (enchMap.size() > EnchantmentHelper.getEnchantments(firstInput).size()))) {
+                    MineshaftLogger.logDebug("Aborting item enchanting as it's over capacity.");
                     maximumCost = 0;
                     output = null;
                 }
@@ -510,7 +543,7 @@ public class ContainerRepair extends Container
 
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.theWorld.getBlockState(this.selfPosition).getBlock() != Blocks.anvil ? false : playerIn.getDistanceSq((double)this.selfPosition.getX() + 0.5D, (double)this.selfPosition.getY() + 0.5D, (double)this.selfPosition.getZ() + 0.5D) <= 64.0D;
+        return this.theWorld.getBlockState(this.selfPosition).getBlock() == Blocks.anvil && playerIn.getDistanceSq((double) this.selfPosition.getX() + 0.5D, (double) this.selfPosition.getY() + 0.5D, (double) this.selfPosition.getZ() + 0.5D) <= 64.0D;
     }
 
     /**
@@ -519,7 +552,7 @@ public class ContainerRepair extends Container
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
         {
@@ -572,6 +605,12 @@ public class ContainerRepair extends Container
      */
     public void updateItemName(String newName)
     {
+        // TODO: CHECK! +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        if (this.theWorld != null && this.theWorld.isRemote) {
+            // If it's the client thread, let packet data handle it, don't run calculations!
+            return;
+        }
+
         this.repairedItemName = newName;
 
         if (this.getSlot(2).getHasStack())

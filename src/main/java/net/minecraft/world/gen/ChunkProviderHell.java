@@ -463,22 +463,22 @@ public class ChunkProviderHell implements IChunkProvider
             this.field_177470_t.generate(this.worldObj, this.hellRNG, blockpos.add(this.hellRNG.nextInt(16) + 8, this.hellRNG.nextInt(120) + 4, this.hellRNG.nextInt(16) + 8));
         }
 
-        if (hellRNG.nextInt(100) == 0)
-        {
-            int i = hellRNG.nextInt(16) + 8;
-            int j = hellRNG.nextInt(16) + 8;
-            BlockPos pos = worldObj.getHeight(blockpos.add(i, 33, j));
-
-            if(blocks.contains(worldObj.getBlockState(pos).getBlock())) {
-                while(blocks.contains(worldObj.getBlockState(pos).getBlock())&&pos.getY()<67) {
-                    pos=pos.up();
-                }
-                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos);
-//                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down());
-//                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down(2));
-            }
-
-        }
+//        if (hellRNG.nextInt(100) == 0)
+//        {
+//            int i = hellRNG.nextInt(16) + 8;
+//            int j = hellRNG.nextInt(16) + 8;
+//            BlockPos pos = worldObj.getHeight(blockpos.add(i, 33, j));
+//
+//            if(blocks.contains(worldObj.getBlockState(pos).getBlock())) {
+//                while(blocks.contains(worldObj.getBlockState(pos).getBlock())&&pos.getY()<67) {
+//                    pos=pos.up();
+//                }
+//                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos);
+////                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down());
+////                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down(2));
+//            }
+//
+//        }
 
         BlockFalling.fallInstantly = false;
     }

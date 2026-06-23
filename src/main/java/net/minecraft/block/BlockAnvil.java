@@ -1,6 +1,7 @@
 package net.minecraft.block;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
@@ -211,11 +212,16 @@ public class BlockAnvil extends BlockFalling
 
         public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
         {
-            return new ContainerRepair(playerInventory, this.world, this.position, playerIn, (this.world.getBlockMetadata(position.getX(), position.getY(), position.getZ())&8)!=0);
+            IBlockState state = this.world.getBlockState(this.position);
+            return new ContainerRepair(playerInventory, this.world, this.position, playerIn, state.getValue(IS_DIAMOND));
         }
 
         public String getGuiID()
         {
+            IBlockState state = this.world.getBlockState(this.position);
+            if(state.getValue(IS_DIAMOND)) {
+                return "minecraft:diamond_anvil";
+            }
             return "minecraft:anvil";
         }
     }

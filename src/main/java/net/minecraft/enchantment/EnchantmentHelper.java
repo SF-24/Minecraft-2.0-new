@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import net.minecraft.MineshaftLogger;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -592,7 +594,10 @@ public class EnchantmentHelper
             case 2: return 4*level;
             case 5: return 2*level;
             case 10: return level;
-            default: return level;
+            default: {
+                MineshaftLogger.logError("Error: Unknown enchantment weight: " + Enchantment.getEnchantmentById(enchantmentId).getWeight() + ", EnchantmentID: " + enchantmentId);
+                return level;
+            }
         }
     }
 }

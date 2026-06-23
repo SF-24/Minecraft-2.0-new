@@ -87,11 +87,6 @@ public class ItemPotion extends Item
 
     public void onPlayerStoppedUsing(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int timeLeft)
     {
-        if (!playerIn.capabilities.isCreativeMode)
-        {
-            --itemStackIn.stackSize;
-        }
-
         // TODO: Move to separate class
 
         // Calculate how long the player charged the potion
@@ -106,7 +101,6 @@ public class ItemPotion extends Item
         {
             return;
         }
-
         if (throwPower > 1.0F)
         {
             throwPower = 1.0F;
@@ -116,21 +110,18 @@ public class ItemPotion extends Item
 
         if (!worldIn.isRemote)
         {
-            EntityPotion entityPotion = new EntityPotion(worldIn, playerIn, itemStackIn);
+            EntityPotion entityPotion = new EntityPotion(worldIn, playerIn, itemStackIn/*, throwPower*0.8F*/);
+            float baseVelocityMultiplier = 1.0f; // was 1.375f;
 
-            // INCREASED THROW DISTANCE:
-            // Minecraft's default throw speed modifier for normal splash potions is 1.375F.
-            // By multiplying throwPower by a higher value (e.g., 2.2F), you throw it significantly further.
-            float baseVelocityMultiplier = 1.55f; // was 1.375f;
-
-            double spawnX = playerIn.posX - Math.sin(playerIn.rotationYaw * Math.PI / 180.0) * Math.cos(playerIn.rotationPitch * Math.PI / 180.0) * 0.5;
-            double spawnY = playerIn.posY + playerIn.getEyeHeight() - 0.1;
-            double spawnZ = playerIn.posZ + Math.cos(playerIn.rotationYaw * Math.PI / 180.0) * Math.cos(playerIn.rotationPitch * Math.PI / 180.0) * 0.5;
-
-            // Set the heading and velocity vector based on player look angle and calculated power
-            entityPotion.setThrowableHeading(spawnX, spawnY, spawnZ, throwPower * baseVelocityMultiplier, 1.0F);
-
+            double dirX = -Math.sin(Math.toRadians(playerIn.rotationYaw)) * Math.cos(Math.toRadians(playerIn.rotationPitch));
+            double dirY = -Math.sin(Math.toRadians(playerIn.rotationPitch));
+            double dirZ = Math.cos(Math.toRadians(playerIn.rotationYaw)) * Math.cos(Math.toRadians(playerIn.rotationPitch));
+            entityPotion.setThrowableHeading(dirX,dirY,dirZ, throwPower*baseVelocityMultiplier, 1.0f);
             worldIn.spawnEntityInWorld(entityPotion);
+        }
+        if (!playerIn.capabilities.isCreativeMode)
+        {
+            --itemStackIn.stackSize;
         }
 
         playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
