@@ -483,6 +483,11 @@ public class DedicatedServer extends MinecraftServer implements IServer
     }
 
     @Override
+    public int getPort() {
+        return this.[po]
+    }
+
+    @Override
     public String getMotd() {
         return getMOTD();
     }
