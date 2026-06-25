@@ -769,10 +769,6 @@ public abstract class ServerConfigurationManager
         return !this.whiteListEnforced || this.ops.hasEntry(profile) || this.whiteListedPlayers.hasEntry(profile);
     }
 
-    public boolean isWhiteListEnabled() {
-        return this.whiteListEnforced;
-    }
-
     public boolean canSendCommands(GameProfile profile)
     {
         return this.ops.hasEntry(profile) || this.mcServer.isSinglePlayer() && this.mcServer.worldServers[0].getWorldInfo().areCommandsAllowed() && this.mcServer.getServerOwner().equalsIgnoreCase(profile.getName()) || this.commandsAllowedForAll;
