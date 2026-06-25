@@ -217,6 +217,9 @@ public class ChunkProviderAether implements IChunkProvider
             {
                 float f = (float)(j + p_73187_2_) / 1.0F;
                 float f1 = (float)(k + p_73187_4_) / 1.0F;
+                // Forces a giant islands in the centre of the world!
+
+
                 float f2 = 100.0F - MathHelper.sqrt_float(f * f + f1 * f1) * 8.0F;
 
                 if (f2 > 80.0F)
@@ -228,6 +231,9 @@ public class ChunkProviderAether implements IChunkProvider
                 {
                     f2 = -100.0F;
                 }
+
+                // NEW:
+                f2 = 0;
 
                 for (int l = 0; l < p_73187_6_; ++l)
                 {

@@ -210,7 +210,7 @@ public abstract class WorldProvider
 
     public static WorldProvider getProviderForDimension(int dimension)
     {
-        return (WorldProvider)(dimension == -1 ? new WorldProviderHell() : (dimension == 0 ? new WorldProviderSurface() : (dimension == 1 ? new WorldProviderEnd() : (dimension == 2 ? new WorldProviderAether() : null))));
+        return dimension == -1 ? new WorldProviderHell() : (dimension == 0 ? new WorldProviderSurface() : (dimension == 1 ? new WorldProviderEnd() : (dimension == 2 ? new WorldProviderAether() : null)));
     }
 
     /**
