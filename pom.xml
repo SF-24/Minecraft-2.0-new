@@ -6,8 +6,8 @@
 
     <groupId>net.marcloud.mcp.189</groupId>
     <artifactId>MCP</artifactId>
-    <version>1.8.9-fork</version>
-    <description>MCP for 1.8.9-fork</description>
+    <version>1.8.9</version>
+    <description>MCP for 1.8.9</description>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -37,7 +37,6 @@
                                 </manifest>
                             </archive>
                             <finalName>${project.artifactId}-${project.version}-client</finalName>
-                            <descriptorRefs>jar-with-dependencies</descriptorRefs>
                         </configuration>
                     </execution>
                     <execution>

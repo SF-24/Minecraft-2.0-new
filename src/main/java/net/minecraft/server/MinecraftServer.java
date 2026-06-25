@@ -96,15 +96,8 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     private final ServerStatusResponse statusResponse = new ServerStatusResponse();
     private final Random random = new Random();
 
-    // Minecart stuff
-    public float minecartAccelerationConstant;
-    public float minecartMaximumSpeed;
-
-
     /** The server's port. */
     private int serverPort = -1;
-    private String hostname;
-
 
     /** The server world instances. */
     public WorldServer[] worldServers;
@@ -1254,10 +1247,6 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         return this.canSpawnNPCs;
     }
 
-    public float getMinecartAccelerationConstant() {return this.minecartAccelerationConstant;}
-    public float getMinecartMaximumSpeed() {return this.minecartMaximumSpeed;}
-    public float getMinecartDefaultAccelerationConstant() {return 0.09f;}
-
     /**
      * Get if native transport should be used. Native transport means linux server performance improvements and
      * optimized packet sending/receiving on linux
@@ -1423,6 +1412,11 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         return false;
     }
 
+    public boolean getForceGamemode()
+    {
+        return this.isGamemodeForced;
+    }
+
     public Proxy getServerProxy()
     {
         return this.serverProxy;
@@ -1561,50 +1555,4 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     {
         return 256;
     }
-
-    public int getPort()
-    {
-        return this.serverPort;
-    }
-
-    public void setPort(int port)
-    {
-        this.serverPort = port;
-    }
-
-    public String getHostname()
-    {
-        return this.hostname;
-    }
-
-    public void setHostname(String host)
-    {
-        this.hostname = host;
-    }
-
-    public void setForceGamemode(boolean force)
-    {
-        this.isGamemodeForced = force;
-    }
-
-    public boolean getForceGamemode()
-    {
-        return this.isGamemodeForced;
-    }
-
-    public long getCurrentTime()
-    {
-        return this.currentTime;
-    }
-
-    public Thread getServerThread()
-    {
-        return this.serverThread;
-    }
-
-    public void registerTickable(ITickable tickable)
-    {
-        this.playersOnline.add(tickable);
-    }
-
 }

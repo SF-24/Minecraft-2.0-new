@@ -16,14 +16,6 @@ public class UserListWhitelist extends UserList<GameProfile, UserListWhitelistEn
         return new UserListWhitelistEntry(entryData);
     }
 
-    /**
-     * Returns true if the profile is in the whitelist.
-     */
-    public boolean isWhitelisted(GameProfile profile)
-    {
-        return this.hasEntry(profile);
-    }
-
     public String[] getKeys()
     {
         String[] astring = new String[this.getValues().size()];
