@@ -107,7 +107,7 @@ public class ViewFrustum
                     RenderChunk renderchunk = this.renderChunks[(j1 * this.countChunksY + l1) * this.countChunksX + l];
 //                    BlockPos blockpos = renderchunk.getPosition();
 
-                    if (renderchunk.getPosX() != i1 || renderchunk.getPosY() != i2 || renderchunk.getPosZ() != k1)
+                    if (!renderchunk.isPosInitialised() || renderchunk.getPosX() != i1 || renderchunk.getPosY() != i2 || renderchunk.getPosZ() != k1)
                     {
 //                        BlockPos blockpos1 = new BlockPos(i1, i2, k1);
 

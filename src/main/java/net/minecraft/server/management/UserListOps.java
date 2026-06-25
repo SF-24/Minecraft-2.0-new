@@ -32,6 +32,12 @@ public class UserListOps extends UserList<GameProfile, UserListOpsEntry>
     public boolean bypassesPlayerLimit(GameProfile profile)
     {
         UserListOpsEntry userlistopsentry = (UserListOpsEntry)this.getEntry(profile);
+        return userlistopsentry != null && userlistopsentry.bypassesPlayerLimit();
+    }
+
+    public boolean func_183026_b(GameProfile p_183026_1_)
+    {
+        UserListOpsEntry userlistopsentry = (UserListOpsEntry)this.getEntry(p_183026_1_);
         return userlistopsentry != null ? userlistopsentry.bypassesPlayerLimit() : false;
     }
 

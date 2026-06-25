@@ -51,6 +51,7 @@ public class RenderChunk
     private final RenderGlobal renderGlobal;
     public static int renderChunksUpdated;
 //    private BlockPos position;
+    boolean posInitialised = false;
     private int posX;
     private int posY;
     private int posZ;
@@ -109,7 +110,7 @@ public class RenderChunk
         this.renderGlobal = renderGlobalIn;
         this.index = indexIn;
 
-        if (x!=this.posX || y!=this.posY || (z!=this.posZ))
+        if (!posInitialised || x!=this.posX || y!=this.posY || (z!=this.posZ))
         {
             this.setPosition(x, y, z);
         }
@@ -149,6 +150,7 @@ public class RenderChunk
         this.posX = x;
         this.posY = y;
         this.posZ = z;
+        posInitialised=true;
         int i = 8;
         this.regionX = x >> i << i;
         this.regionZ = z >> i << i;
@@ -593,6 +595,8 @@ public class RenderChunk
     public int getPosY() {return posY;}
     public int getPosZ() {return posZ;}
 
+    public boolean isPosInitialised() {return this.posInitialised;}
+
     public void setNeedsUpdate(boolean needsUpdateIn)
     {
         this.needsUpdate = needsUpdateIn;
@@ -831,9 +835,9 @@ public class RenderChunk
         this.renderChunkNeighboursUpated = true;
     }
 
-    public boolean isBoundingBoxInFrustum(ICamera p_isBoundingBoxInFrustum_1_, int p_isBoundingBoxInFrustum_2_)
+    public boolean isBoundingBoxInFrustum(ICamera camera, int frameCount)
     {
-        return this.getBoundingBoxParent().isBoundingBoxInFrustumFully(p_isBoundingBoxInFrustum_1_, p_isBoundingBoxInFrustum_2_) ? true : p_isBoundingBoxInFrustum_1_.isBoundingBoxInFrustum(this.boundingBox);
+        return this.getBoundingBoxParent().isBoundingBoxInFrustumFully(camera, frameCount) ? true : camera.isBoundingBoxInFrustum(this.boundingBox);
     }
 
     public AabbFrame getBoundingBoxParent()

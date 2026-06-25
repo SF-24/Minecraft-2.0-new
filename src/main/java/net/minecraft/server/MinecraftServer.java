@@ -96,8 +96,9 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     private final ServerStatusResponse statusResponse = new ServerStatusResponse();
     private final Random random = new Random();
 
-    /** The server's port. */
+    /** The server's port and hostname. */
     private int serverPort = -1;
+    private String hostname;
 
     /** The server world instances. */
     public WorldServer[] worldServers;
@@ -121,6 +122,11 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
      * The task the server is currently working on(and will output on outputPercentRemaining).
      */
     public String currentTask;
+
+    /** Vehicle motion constants and game options */
+    public float minecartAccelerationConstant;
+    public float minecartMaximumSpeed;
+
 
     /** The percentage of the current task finished so far. */
     public int percentDone;
@@ -1237,6 +1243,10 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         return this.canSpawnAnimals;
     }
 
+    public float getMinecartAccelerationConstant() {return this.minecartAccelerationConstant;}
+    public float getMinecartMaximumSpeed() {return this.minecartMaximumSpeed;}
+    public float getMinecartDefaultAccelerationConstant() {return 0.09f;}
+
     public void setCanSpawnAnimals(boolean spawnAnimals)
     {
         this.canSpawnAnimals = spawnAnimals;
@@ -1554,5 +1564,46 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     public int getNetworkCompressionTreshold()
     {
         return 256;
+    }
+
+
+    public int getPort()
+    {
+        return this.serverPort;
+    }
+
+    public void setPort(int port)
+    {
+        this.serverPort = port;
+    }
+
+    public String getHostname()
+    {
+        return this.hostname;
+    }
+
+    public void setHostname(String host)
+    {
+        this.hostname = host;
+    }
+
+    public void setForceGamemode(boolean force)
+    {
+        this.isGamemodeForced = force;
+    }
+
+    public long getCurrentTime()
+    {
+        return this.currentTime;
+    }
+
+    public Thread getServerThread()
+    {
+        return this.serverThread;
+    }
+
+    public void registerTickable(ITickable tickable)
+    {
+        this.playersOnline.add(tickable);
     }
 }

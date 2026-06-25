@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.culling;
 
+import net.minecraft.MineshaftLogger;
 import net.minecraft.util.AxisAlignedBB;
 
 public class Frustum implements ICamera
@@ -39,6 +40,10 @@ public class Frustum implements ICamera
      */
     public boolean isBoundingBoxInFrustum(AxisAlignedBB p_78546_1_)
     {
+        if(p_78546_1_ == null) {
+            MineshaftLogger.logError("Warning! Null frustum bounding box (AxisAlignedBB). ");
+            return false;
+        }
         return this.isBoxInFrustum(p_78546_1_.minX, p_78546_1_.minY, p_78546_1_.minZ, p_78546_1_.maxX, p_78546_1_.maxY, p_78546_1_.maxZ);
     }
 

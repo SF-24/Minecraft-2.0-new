@@ -93,7 +93,7 @@ public class BiomeGenMountains extends BiomeGenBase
     /**
      * this creates a mutation specific to Hills biomes
      */
-    private BiomeGenMountains mutateHills(BiomeGenBase p_150633_1_)
+    BiomeGenMountains mutateHills(BiomeGenBase p_150633_1_)
     {
         this.field_150638_aH = this.field_150637_aG;
         this.func_150557_a(p_150633_1_.color, true);

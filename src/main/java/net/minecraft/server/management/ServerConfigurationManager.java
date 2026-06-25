@@ -533,7 +533,7 @@ public abstract class ServerConfigurationManager
 
     /**
      * Transfers an entity from a world to another world.
-     *  
+     *
      * @param oldWorldIn The world transfering from
      * @param toWorldIn The world transfering the entity to
      */
@@ -767,6 +767,10 @@ public abstract class ServerConfigurationManager
     public boolean canJoin(GameProfile profile)
     {
         return !this.whiteListEnforced || this.ops.hasEntry(profile) || this.whiteListedPlayers.hasEntry(profile);
+    }
+
+    public boolean isWhiteListEnabled() {
+        return this.whiteListEnforced;
     }
 
     public boolean canSendCommands(GameProfile profile)

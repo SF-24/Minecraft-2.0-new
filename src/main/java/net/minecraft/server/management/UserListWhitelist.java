@@ -52,4 +52,11 @@ public class UserListWhitelist extends UserList<GameProfile, UserListWhitelistEn
 
         return null;
     }
+    /**
+     * Returns true if the profile is in the whitelist.
+     */
+    public boolean isWhitelisted(GameProfile profile)
+    {
+        return this.hasEntry(profile);
+    }
 }
