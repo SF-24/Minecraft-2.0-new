@@ -1323,8 +1323,8 @@ public class CustomColors
             case -1:
                 fogVec = getFogColorNether(fogVec);
                 break;
-
             case 0:
+            case 2:
                 Minecraft minecraft = Minecraft.getMinecraft();
                 fogVec = getFogColor(fogVec, minecraft.theWorld, renderViewEntity.posX, renderViewEntity.posY + 1.0D, renderViewEntity.posZ);
                 break;

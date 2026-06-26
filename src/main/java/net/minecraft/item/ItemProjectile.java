@@ -6,12 +6,14 @@ import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
 
-public class ItemSnowball extends Item
+public class ItemProjectile extends Item
 {
-    public ItemSnowball()
+    byte variant;
+    public ItemProjectile(byte variant)
     {
         this.maxStackSize = 16;
         this.setCreativeTab(CreativeTabs.tabMisc);
+        this.variant=variant;
     }
 
     /**

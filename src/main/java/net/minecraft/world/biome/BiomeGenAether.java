@@ -25,6 +25,8 @@ public class BiomeGenAether extends BiomeGenBase
 
     public BiomeGenAether(int id) {
         super(id);
+        this.enableRain=false;
+        this.enableSnow=false;
         this.hasBeach=false;
         this.spawnableMonsterList.clear();
         this.spawnableCreatureList.clear();
@@ -47,6 +49,7 @@ public class BiomeGenAether extends BiomeGenBase
     {
         super.decorate(worldIn, rand, pos);
         genWells(worldIn,rand,pos);
+//        decorateWithClouds(worldIn,rand,1,50,pos.getX(),pos.getY());
     }
 
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
@@ -64,18 +67,18 @@ public class BiomeGenAether extends BiomeGenBase
 
 
     public void genWells(World worldIn, Random rand, BlockPos pos) {
-        if (rand.nextInt(100/*was 10*/) == 0) {
+        if (rand.nextInt(175 /*was 100; was 10*/) == 0) {
             int i = rand.nextInt(16) + 8;
             int j = rand.nextInt(16) + 8;
             BlockPos blockpos = worldIn.getHeight(pos.add(i, 0, j)).up();
 
             final List<WeightedRandomChestContent> chestContents = Lists.newArrayList(
-                    new WeightedRandomChestContent(Items.glowing_bread, 0, 1, 1, 2),
+//                    new WeightedRandomChestContent(Items.glowing_bread, 0, 1, 1, 2),
                     new WeightedRandomChestContent(Items.glowstone_dust, 0, 1, 6, 30),
                     new WeightedRandomChestContent(Items.slime_ball, 0, 1, 2, 5),
 //                    new WeightedRandomChestContent(Items.ruby, 0, 1, 1, 2),
                     new WeightedRandomChestContent(Items.apple, 0, 1, 2, 10),
-                    new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 2),
+                    new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1),
                     new WeightedRandomChestContent(Items.record_magnetic_circuit, 0, 1, 1, 1),
                     new WeightedRandomChestContent(Items.bread, 0, 1, 2, 5),
                     new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 2, 5),
@@ -92,4 +95,22 @@ public class BiomeGenAether extends BiomeGenBase
             }
         }
     }
+
+//    public void decorateWithClouds(World worldIn, Random rand, int minY, int maxY, int worldX, int worldZ) {
+//        int rangeY = maxY + 1 - minY;
+//        float heightModifier = rangeY / 128.0F;
+//        int yPosition;
+//
+//        if (rand.nextInt(6) == 0) {
+//            int base = rand.nextInt(96) + 16;
+//            yPosition = minY + Math.round(base * heightModifier);
+//            AERCLOUD_WHITE.place(worldIn, rand, worldX + 8, yPosition, worldZ + 8);
+//        }
+//
+//        if (rand.nextInt(24) == 0) {
+//            yPosition = rand.nextInt(32) + 4;
+//            worldIn.setBlockState(new BlockPos(worldX + 8, yPosition, worldZ + 8), Blocks.snow.getDefaultState());
+//
+//        }
+//    }
 }

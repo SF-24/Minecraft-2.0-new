@@ -760,7 +760,7 @@ public class Item {
         registerItem(valueBase+329, "saddle", (new ItemSaddle()).setUnlocalizedName("saddle"));
         registerItem(valueBase+330, "iron_door", (new ItemDoor(Blocks.iron_door)).setUnlocalizedName("doorIron"));
         registerItem(valueBase+331, "redstone", (new ItemRedstone()).setUnlocalizedName("redstone").setPotionEffect(PotionHelper.redstoneEffect));
-        registerItem(valueBase+332, "snowball", (new ItemSnowball()).setUnlocalizedName("snowball"));
+        registerItem(valueBase+332, "snowball", (new ItemProjectile((byte) 0)).setUnlocalizedName("snowball"));
         registerItem(valueBase+333, "boat", (new ItemBoat()).setUnlocalizedName("boat"));
         registerItem(valueBase+334, "leather", (new Item()).setUnlocalizedName("leather").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(valueBase+335, "milk_bucket", (new ItemBucketMilk()).setUnlocalizedName("milk").setContainerItem(item));
@@ -853,6 +853,8 @@ public class Item {
         registerItem(valueBase+429, "jungle_door", (new ItemDoor(Blocks.jungle_door)).setUnlocalizedName("doorJungle"));
         registerItem(valueBase+430, "acacia_door", (new ItemDoor(Blocks.acacia_door)).setUnlocalizedName("doorAcacia"));
         registerItem(valueBase+431, "dark_oak_door", (new ItemDoor(Blocks.dark_oak_door)).setUnlocalizedName("doorDarkOak"));
+
+        registerItem(valueBase+500, "wind_charge", (new ItemProjectile((byte) 1)).setUnlocalizedName("windCharge"));
 
         registerItem(valueBase+2256, "record_13", (new ItemRecord("13")).setUnlocalizedName("record"));
         registerItem(valueBase+2257, "record_cat", (new ItemRecord("cat")).setUnlocalizedName("record"));

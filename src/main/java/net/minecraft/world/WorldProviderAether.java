@@ -15,7 +15,6 @@ public class WorldProviderAether extends WorldProvider {
         this.dimensionId = 2;
         this.hasNoSky = false;
     }
-
     /**
      * Returns a new chunk provider which generates chunks for this world
      */

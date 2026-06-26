@@ -3929,8 +3929,11 @@ public abstract class World implements IBlockAccess
     /**
      * Returns rain strength.
      */
-    public float getRainStrength(float delta)
-    {
+    public float getRainStrength(float delta) {
+        if (this.provider instanceof WorldProviderAether) {
+            return 0.0F;
+        }
+
         return this.prevRainingStrength + (this.rainingStrength - this.prevRainingStrength) * delta;
     }
 
