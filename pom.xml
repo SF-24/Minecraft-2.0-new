@@ -9,8 +9,8 @@
     <version>1.8.9</version>
     <description>MCP for 1.8.9</description>
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -37,7 +37,6 @@
         </plugins>
     </build>
 
-
     <repositories>
         <repository>
             <id>marcloud-development-repository</id>
@@ -50,7 +49,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.0.23.Final</version>
+            <version>4.1.115.Final</version>
         </dependency>
 
         <dependency>
@@ -229,6 +228,13 @@
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
             <version>1.5.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>26.1.0</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

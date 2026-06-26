@@ -107,7 +107,7 @@ public class NetworkSystem
                 logger.info("Using default channel type");
             }
 
-            this.endpoints.add(((ServerBootstrap)((ServerBootstrap)(new ServerBootstrap()).channel(oclass)).childHandler(new ChannelInitializer<Channel>()
+            this.endpoints.add((new ServerBootstrap()).channel(oclass).childHandler(new ChannelInitializer<Channel>()
             {
                 protected void initChannel(Channel p_initChannel_1_) throws Exception
                 {
@@ -126,7 +126,7 @@ public class NetworkSystem
                     p_initChannel_1_.pipeline().addLast((String)"packet_handler", (ChannelHandler)networkmanager);
                     networkmanager.setNetHandler(new NetHandlerHandshakeTCP(NetworkSystem.this.mcServer, networkmanager));
                 }
-            }).group((EventLoopGroup)lazyloadbase.getValue()).localAddress(address, port)).bind().syncUninterruptibly());
+            }).group((EventLoopGroup)lazyloadbase.getValue()).localAddress(address, port).bind().syncUninterruptibly());
         }
     }
 

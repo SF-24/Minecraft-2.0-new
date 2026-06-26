@@ -69,7 +69,7 @@ public class Teleporter
                 }
             }
 
-            entityIn.setLocationAndAngles((double)i, (double)j, (double)k, entityIn.rotationYaw, 0.0F);
+            entityIn.setLocationAndAngles((double)i, (double)j+0.1, (double)k, entityIn.rotationYaw, 0.0F);
             entityIn.motionX = entityIn.    motionY = entityIn.motionZ = 0.0D;
         }
     }
