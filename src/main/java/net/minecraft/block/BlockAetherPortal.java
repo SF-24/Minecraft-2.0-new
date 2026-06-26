@@ -8,6 +8,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.BlockWorldState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -18,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class BlockAetherPortal extends BlockBreakable
 {
@@ -130,6 +132,8 @@ public class BlockAetherPortal extends BlockBreakable
             if (!blockportal$size.func_150860_b() || blockportal$size.field_150864_e < blockportal$size.field_150868_h * blockportal$size.field_150862_g)
             {
                 worldIn.setBlockState(pos, Blocks.air.getDefaultState());
+                WorldServer ws = (WorldServer)worldIn;
+                ws.getDefaultTeleporter().invalidatePortal(pos);
             }
         }
         else if (enumfacing$axis == EnumFacing.Axis.Z)

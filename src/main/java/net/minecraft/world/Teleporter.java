@@ -31,6 +31,14 @@ public class Teleporter
         this.random = new Random(worldIn.getSeed());
     }
 
+    public void invalidatePortal(BlockPos pos)
+    {
+        long key = ChunkCoordIntPair.chunkXZ2Int(pos.getX() >> 4, pos.getZ() >> 4);
+
+        this.destinationCoordinateCache.remove(key);
+        this.destinationCoordinateKeys.remove(Long.valueOf(key));
+    }
+
     // place portal
     public void placeInPortal(Entity entityIn, float rotationYaw, boolean aether)
     {
@@ -140,7 +148,12 @@ public class Teleporter
             double d5 = (double)blockpos.getX() + 0.5D;
             double d6 = (double)blockpos.getY() + 0.5D;
             double d7 = (double)blockpos.getZ() + 0.5D;
-            BlockPattern.PatternHelper blockpattern$patternhelper = Blocks.portal.func_181089_f(this.worldServerInstance, blockpos);
+            BlockPattern.PatternHelper blockpattern$patternhelper;
+            if(portal==Blocks.aether_portal) {
+                blockpattern$patternhelper = Blocks.aether_portal.func_181089_f(this.worldServerInstance, blockpos);
+            } else {
+                blockpattern$patternhelper = Blocks.portal.func_181089_f(this.worldServerInstance, blockpos);
+            }
             boolean flag1 = blockpattern$patternhelper.getFinger().rotateY().getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE;
             double d2 = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? (double)blockpattern$patternhelper.getPos().getZ() : (double)blockpattern$patternhelper.getPos().getX();
             d6 = (double)(blockpattern$patternhelper.getPos().getY() + 1) - entityIn.func_181014_aG().yCoord * (double)blockpattern$patternhelper.func_181119_e();
