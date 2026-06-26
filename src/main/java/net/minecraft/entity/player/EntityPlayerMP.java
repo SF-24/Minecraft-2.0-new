@@ -1258,4 +1258,9 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     {
         return null;
     }
+
+    protected CooldownTracker createCooldownTracker()
+    {
+        return new CooldownTrackerServer(this);
+    }
 }

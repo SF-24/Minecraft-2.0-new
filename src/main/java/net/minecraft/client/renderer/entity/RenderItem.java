@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -39,12 +40,7 @@ import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.Config;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3i;
+import net.minecraft.util.*;
 import net.optifine.CustomColors;
 import net.optifine.CustomItems;
 import net.optifine.reflect.Reflector;
@@ -603,6 +599,23 @@ public class RenderItem implements IResourceManagerReloadListener
                 GlStateManager.enableLighting();
                 GlStateManager.enableDepth();
                 GlStateManager.enableBlend();
+            }
+
+            // The cooldown rendering
+            EntityPlayerSP entityplayersp = Minecraft.getMinecraft().thePlayer;
+            float f3 = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Minecraft.getMinecraft().getRenderPartialTicks());
+
+            if (f3 > 0.0F)
+            {
+                GlStateManager.disableLighting();
+                GlStateManager.disableDepth();
+                GlStateManager.disableTexture2D();
+                Tessellator tessellator1 = Tessellator.getInstance();
+                WorldRenderer bufferbuilder1 = tessellator1.getWorldRenderer();
+                this.draw(bufferbuilder1, xPosition, yPosition + MathHelper.floor_float(16.0F * (1.0F - f3)), 16, MathHelper.ceiling_float_int(16.0F * f3), 255, 255, 255, 127);
+                GlStateManager.enableTexture2D();
+                GlStateManager.enableLighting();
+                GlStateManager.enableDepth();
             }
 
             if (ReflectorForge.isItemDamaged(stack))

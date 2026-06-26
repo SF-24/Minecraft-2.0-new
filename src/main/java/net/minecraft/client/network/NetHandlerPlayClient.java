@@ -1991,4 +1991,18 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     {
         return this.profile;
     }
+
+    public void handleCooldown(SPacketCooldown packetIn)
+    {
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
+
+        if (packetIn.getTicks() == 0)
+        {
+            this.gameController.thePlayer.getCooldownTracker().removeCooldown(packetIn.getItem());
+        }
+        else
+        {
+            this.gameController.thePlayer.getCooldownTracker().setCooldown(packetIn.getItem(), packetIn.getTicks());
+        }
+    }
 }

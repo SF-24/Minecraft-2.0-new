@@ -21,11 +21,7 @@ import net.minecraft.network.play.client.C0EPacketClickWindow;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
 import net.minecraft.network.play.client.C11PacketEnchantItem;
 import net.minecraft.stats.StatFileWriter;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 
@@ -405,6 +401,8 @@ public class PlayerControllerMP
             {
                 IBlockState iblockstate = worldIn.getBlockState(hitPos);
 
+                // Check the cooldown:
+
                 if ((!player.isSneaking() || player.getHeldItem() == null) && iblockstate.getBlock().onBlockActivated(worldIn, hitPos, iblockstate, player, side, f, f1, f2))
                 {
                     flag = true;
@@ -419,6 +417,7 @@ public class PlayerControllerMP
                         return false;
                     }
                 }
+
             }
 
             this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(hitPos, side.getIndex(), player.inventory.getCurrentItem(), f, f1, f2));
@@ -429,6 +428,10 @@ public class PlayerControllerMP
                 {
                     return false;
                 }
+                else if (player.getCooldownTracker().hasCooldown(heldStack.getItem()))
+                {
+                    return false;
+                }
                 else if (this.currentGameType.isCreative())
                 {
                     int i = heldStack.getMetadata();
@@ -436,7 +439,7 @@ public class PlayerControllerMP
                     boolean flag1 = heldStack.onItemUse(player, worldIn, hitPos, side, f, f1, f2);
                     heldStack.setItemDamage(i);
                     heldStack.stackSize = j;
-                    return flag1;
+                    return heldStack.onItemUse(player, worldIn, hitPos, side, f, f1, f2);
                 }
                 else
                 {
@@ -453,6 +456,7 @@ public class PlayerControllerMP
     /**
      * Notifies the server of things like consuming food, etc...
      */
+    // Equivalent to processrightclick
     public boolean sendUseItem(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn)
     {
         if (this.currentGameType == WorldSettings.GameType.SPECTATOR)
@@ -464,6 +468,12 @@ public class PlayerControllerMP
             this.syncCurrentPlayItem();
             this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(playerIn.inventory.getCurrentItem()));
             int i = itemStackIn.stackSize;
+
+            if (playerIn.getCooldownTracker().hasCooldown(itemStackIn.getItem()))
+            {
+                return false;
+            }
+
             ItemStack itemstack = itemStackIn.useItemRightClick(worldIn, playerIn);
 
             if (itemstack != itemStackIn || itemstack != null && itemstack.stackSize != i)

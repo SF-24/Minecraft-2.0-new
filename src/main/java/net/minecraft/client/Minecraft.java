@@ -3330,6 +3330,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.connectedToRealms = isConnected;
     }
 
+    public float getRenderPartialTicks()
+    {
+        return this.timer.renderPartialTicks;
+    }
+
     public EnumTweakMode getCurrentMode() {
         return currentMode;
     }

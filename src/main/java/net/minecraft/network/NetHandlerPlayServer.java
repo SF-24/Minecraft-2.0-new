@@ -584,6 +584,8 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
         EnumFacing enumfacing = EnumFacing.getFront(packetIn.getPlacedBlockDirection());
         this.playerEntity.markPlayerActive();
 
+
+
         if (packetIn.getPlacedBlockDirection() == 255)
         {
             if (itemstack == null)

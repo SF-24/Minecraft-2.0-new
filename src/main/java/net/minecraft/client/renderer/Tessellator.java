@@ -38,4 +38,9 @@ public class Tessellator
     {
         return this.worldRenderer;
     }
+
+    public WorldRenderer getBuffer()
+    {
+        return this.worldRenderer;
+    }
 }

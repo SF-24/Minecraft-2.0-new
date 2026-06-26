@@ -134,6 +134,11 @@ public abstract class EntityPlayer extends EntityLivingBase
     private ItemStack itemInUse;
 
     /**
+     * The cooldown tracker.
+     * */
+    private final CooldownTracker cooldownTracker = this.createCooldownTracker();
+
+    /**
      * This field starts off equal to getMaxItemUseDuration and is decremented on each tick
      */
     private int itemInUseCount;
@@ -390,6 +395,10 @@ public abstract class EntityPlayer extends EntityLivingBase
         {
             this.setPosition(d3, this.posY, d4);
         }
+
+        // Check for extra logic.
+
+        this.cooldownTracker.tick();
     }
 
     /**
@@ -2507,6 +2516,16 @@ public abstract class EntityPlayer extends EntityLivingBase
                 ID_LOOKUP[entityplayer$enumchatvisibility.chatVisibility] = entityplayer$enumchatvisibility;
             }
         }
+    }
+
+    protected CooldownTracker createCooldownTracker()
+    {
+        return new CooldownTracker();
+    }
+
+    public CooldownTracker getCooldownTracker()
+    {
+        return this.cooldownTracker;
     }
 
     public static enum EnumStatus
