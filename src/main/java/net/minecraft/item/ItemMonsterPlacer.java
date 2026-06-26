@@ -10,8 +10,11 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
@@ -22,6 +25,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.mineshaft.item.SpawnEggHelper;
 
 public class ItemMonsterPlacer extends Item
 {
@@ -46,7 +50,7 @@ public class ItemMonsterPlacer extends Item
 
     public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
-        EntityList.EntityEggInfo entitylist$entityegginfo = (EntityList.EntityEggInfo)EntityList.entityEggs.get(Integer.valueOf(stack.getMetadata()));
+        EntityList.EntityEggInfo entitylist$entityegginfo = EntityList.entityEggs.get(Integer.valueOf(stack.getMetadata()));
         return entitylist$entityegginfo != null ? (renderPass == 0 ? entitylist$entityegginfo.primaryColor : entitylist$entityegginfo.secondaryColor) : 16777215;
     }
 
@@ -95,7 +99,7 @@ public class ItemMonsterPlacer extends Item
                 d0 = 0.5D;
             }
 
-            Entity entity = spawnCreature(worldIn, stack.getMetadata(), (double)pos.getX() + 0.5D, (double)pos.getY() + d0, (double)pos.getZ() + 0.5D);
+            Entity entity = spawnCreature(worldIn, stack, stack.getMetadata(), (double)pos.getX() + 0.5D, (double)pos.getY() + d0, (double)pos.getZ() + 0.5D);
 
             if (entity != null)
             {
@@ -149,7 +153,7 @@ public class ItemMonsterPlacer extends Item
 
                     if (worldIn.getBlockState(blockpos).getBlock() instanceof BlockLiquid)
                     {
-                        Entity entity = spawnCreature(worldIn, itemStackIn.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
+                        Entity entity = spawnCreature(worldIn, itemStackIn, itemStackIn.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
 
                         if (entity != null)
                         {
@@ -177,7 +181,7 @@ public class ItemMonsterPlacer extends Item
      * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
      * Parameters: world, entityID, x, y, z.
      */
-    public static Entity spawnCreature(World worldIn, int entityID, double x, double y, double z)
+    public static Entity spawnCreature(World worldIn, ItemStack spawnItem, int entityID, double x, double y, double z)
     {
         if (!EntityList.entityEggs.containsKey(Integer.valueOf(entityID)))
         {
@@ -193,7 +197,18 @@ public class ItemMonsterPlacer extends Item
 
                 if (entity instanceof EntityLivingBase)
                 {
+
                     EntityLiving entityliving = (EntityLiving)entity;
+
+                    if(spawnItem!=null) {
+                        NBTTagCompound entityTag = spawnItem.getTagCompound().getCompoundTag("EntityTag");
+                        NBTTagCompound entityData = new NBTTagCompound();
+                        entityliving.writeToNBT(entityData); // Save current default data
+                        for (String key : entityTag.getKeySet()) {
+                            entityData.setTag(key, entityTag.getTag(key));
+                        }
+                        entityliving.readFromNBT(entityData);
+                    }
                     entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(worldIn.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
@@ -216,5 +231,6 @@ public class ItemMonsterPlacer extends Item
         {
             subItems.add(new ItemStack(itemIn, 1, entitylist$entityegginfo.spawnedID));
         }
+        subItems.add(SpawnEggHelper.getSpawnEgg("PigZombieBrute", EntityPigZombie.class,"PigmanType",1));
     }
 }

@@ -2760,6 +2760,8 @@ tile.anvil.diamond_intact.name=Diamond Anvil
 tile.anvil.diamond_slightlyDamaged.name=Slightly Damaged Diamond Anvil
 tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
 
+item.spawnEgg.PigZombieBrute=Zombie Pigman Brute Spawn Egg
+
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod
 item.windCharge.name=Wind Charge

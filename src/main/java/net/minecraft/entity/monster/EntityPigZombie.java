@@ -1,11 +1,7 @@
 package net.minecraft.entity.monster;
 
-import java.util.UUID;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -18,6 +14,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class EntityPigZombie extends EntityZombie
 {
@@ -135,6 +133,8 @@ public class EntityPigZombie extends EntityZombie
         {
             tagCompound.setString("HurtBy", "");
         }
+        tagCompound.setByte("PigmanType", (byte) this.getPigmanType());
+
     }
 
     /**
@@ -158,6 +158,11 @@ public class EntityPigZombie extends EntityZombie
                 this.recentlyHit = this.getRevengeTimer();
             }
         }
+        if (tagCompund.hasKey("PigmanType", 99)) {
+            int i = tagCompund.getByte("PigmanType");
+            this.setPigmanType(i);
+        }
+
     }
 
     /**
@@ -270,7 +275,12 @@ public class EntityPigZombie extends EntityZombie
      */
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
     {
-        this.setCurrentItemOrArmor(0, new ItemStack(Items.golden_sword));
+        if(getPigmanType()==1) {
+            this.setCurrentItemOrArmor(0, new ItemStack(Items.golden_axe));
+            this.setCurrentItemOrArmor(3, new ItemStack(Items.golden_chestplate));
+        } else {
+            this.setCurrentItemOrArmor(0, new ItemStack(Items.golden_sword));
+        }
     }
 
     /**
@@ -312,6 +322,32 @@ public class EntityPigZombie extends EntityZombie
         public boolean shouldExecute()
         {
             return ((EntityPigZombie)this.taskOwner).isAngry() && super.shouldExecute();
+        }
+    }
+
+    /**
+     * Return this skeleton's type.
+     */
+    public int getPigmanType() {
+        return this.dataWatcher.getWatchableObjectByte(13);
+    }
+
+    /**
+     * Set this skeleton's type.
+     */
+    public void setPigmanType(int type) {
+        this.dataWatcher.updateObject(13, (byte) type);
+
+        if(type==1) {
+            // Pigman Brute
+            this.setCurrentItemOrArmor(0, new ItemStack(Items.golden_axe));
+            this.setCurrentItemOrArmor(3, new ItemStack(Items.golden_chestplate));
+            this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
+            this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] {EntityPigZombie.class}));
+            this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+            this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(6.0D);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0D);
+
         }
     }
 }
