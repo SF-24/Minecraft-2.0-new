@@ -1436,7 +1436,6 @@ public abstract class EntityLivingBase extends Entity
         this.getAttributeMap().registerAttribute(attribute);
     }
 
-
     public BaseAttributeMap getAttributeMap()
     {
         if (this.attributeMap == null)

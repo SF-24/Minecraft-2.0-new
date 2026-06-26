@@ -10,6 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
@@ -56,7 +58,11 @@ public class EntityPigZombie extends EntityZombie
         super.applyEntityAttributes();
         this.getEntityAttribute(reinforcementChance).setBaseValue(0.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0D);
+        if(getPigmanType()==1) {
+            this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(6.0D);
+        } else {
+            this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0D);
+        }
     }
 
     /**
@@ -290,7 +296,14 @@ public class EntityPigZombie extends EntityZombie
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata)
     {
         super.onInitialSpawn(difficulty, livingdata);
+        this.setPigmanType(this.getPigmanType());
         this.setVillager(false);
+
+        if(getPigmanType()==1) {
+            this.setMaxHealth(30);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier("BruteHealth", 10.0, 0));
+            this.setChild(false);
+        }
         return livingdata;
     }
 
@@ -345,9 +358,9 @@ public class EntityPigZombie extends EntityZombie
             this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
             this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] {EntityPigZombie.class}));
             this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-            this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(6.0D);
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0D);
-
+            this.setChild(false);
+            // Give 12 extra health.
+            this.addPotionEffect(new PotionEffect(Potion.absorption.getId(), Integer.MAX_VALUE, 2, false, false));
         }
     }
 }
