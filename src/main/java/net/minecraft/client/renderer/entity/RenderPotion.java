@@ -11,8 +11,8 @@ public class RenderPotion extends RenderSnowball<EntityPotion>
         super(renderManagerIn, Items.potionitem, itemRendererIn);
     }
 
-    public ItemStack func_177082_d(EntityPotion entityIn)
+    public ItemStack getITemStack(EntityPotion entityIn)
     {
-        return new ItemStack(this.field_177084_a, 1, entityIn.getPotionDamage());
+        return new ItemStack(this.renderedItem, 1, entityIn.getPotionDamage());
     }
 }

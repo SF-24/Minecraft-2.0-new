@@ -4,19 +4,21 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.projectile.EntitySnowball;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderSnowball<T extends Entity> extends Render<T>
 {
-    protected final Item field_177084_a;
+    protected final Item renderedItem;
     private final RenderItem field_177083_e;
 
-    public RenderSnowball(RenderManager renderManagerIn, Item p_i46137_2_, RenderItem p_i46137_3_)
+    public RenderSnowball(RenderManager renderManagerIn, Item renderedItem, RenderItem p_i46137_3_)
     {
         super(renderManagerIn);
-        this.field_177084_a = p_i46137_2_;
+        this.renderedItem = renderedItem;
         this.field_177083_e = p_i46137_3_;
     }
 
@@ -32,15 +34,22 @@ public class RenderSnowball<T extends Entity> extends Render<T>
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_177083_e.renderItem(this.func_177082_d(entity), ItemCameraTransforms.TransformType.GROUND);
+        this.field_177083_e.renderItem(this.getITemStack(entity), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
-    public ItemStack func_177082_d(T entityIn)
+    public ItemStack getITemStack(T entityIn)
     {
-        return new ItemStack(this.field_177084_a, 1, 0);
+        if(entityIn instanceof EntitySnowball) {
+            // Will have more values later.
+            switch (((EntitySnowball) entityIn).getProjectileType()) {
+                case 1: return new ItemStack(Items.wind_charge, 1, 0);
+                default: return new ItemStack(this.renderedItem, 1, 0);
+            }
+        }
+        return new ItemStack(this.renderedItem, 1, 0);
     }
 
     /**
