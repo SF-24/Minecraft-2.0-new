@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -49,7 +48,6 @@ public class BiomeGenAether extends BiomeGenBase
     {
         super.decorate(worldIn, rand, pos);
         genWells(worldIn,rand,pos);
-//        decorateWithClouds(worldIn,rand,1,50,pos.getX(),pos.getY());
     }
 
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
@@ -95,22 +93,4 @@ public class BiomeGenAether extends BiomeGenBase
             }
         }
     }
-
-//    public void decorateWithClouds(World worldIn, Random rand, int minY, int maxY, int worldX, int worldZ) {
-//        int rangeY = maxY + 1 - minY;
-//        float heightModifier = rangeY / 128.0F;
-//        int yPosition;
-//
-//        if (rand.nextInt(6) == 0) {
-//            int base = rand.nextInt(96) + 16;
-//            yPosition = minY + Math.round(base * heightModifier);
-//            AERCLOUD_WHITE.place(worldIn, rand, worldX + 8, yPosition, worldZ + 8);
-//        }
-//
-//        if (rand.nextInt(24) == 0) {
-//            yPosition = rand.nextInt(32) + 4;
-//            worldIn.setBlockState(new BlockPos(worldX + 8, yPosition, worldZ + 8), Blocks.snow.getDefaultState());
-//
-//        }
-//    }
 }
