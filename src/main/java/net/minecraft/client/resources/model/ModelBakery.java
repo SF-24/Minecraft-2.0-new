@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
+import net.minecraft.MineshaftLogger;
 import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.IIconCreator;
@@ -394,11 +395,16 @@ public class ModelBakery
 
     private List<String> getVariantNames(Item p_177596_1_)
     {
-        List<String> list = (List)this.variantNames.get(p_177596_1_);
+        List<String> list = this.variantNames.get(p_177596_1_);
 
         if (list == null)
         {
-            list = Collections.<String>singletonList(((ResourceLocation)Item.itemRegistry.getNameForObject(p_177596_1_)).toString());
+            try {
+                list = Collections.<String>singletonList(((ResourceLocation) Item.itemRegistry.getNameForObject(p_177596_1_)).toString());
+            } catch (Exception e) {
+                MineshaftLogger.logError("Error getting variant names for item object: " + p_177596_1_.getUnlocalizedName());
+                return Collections.emptyList();
+            }
         }
 
         return list;

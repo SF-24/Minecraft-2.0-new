@@ -65,13 +65,16 @@ public class EntitySnowball extends EntityThrowable
                 break;
             case 1:
                 // TODO:
-                worldObj.playSound(result.getBlockPos().getX(), result.getBlockPos().getY(), result.getBlockPos().getZ(), "random.explode",0.5F, 0.5F, false);
                 if(!this.worldObj.isRemote) {
                     if (result.entityHit != null && !(result.entityHit instanceof EntityEnderCrystal) && !(result.entityHit == this.getThrower())) {
                         // Do 1 damage.
                         result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)1);
                         /*Bedrock specific behaviour */
                         if(this.isBurning()) result.entityHit.setFire(5);
+                        worldObj.playSound(result.entityHit.getPosition().getX(), result.entityHit.getPosition().getY(), result.entityHit.getPosition().getZ(), "random.explode",0.5F, 0.5F, false);
+
+                    } else if(result.entityHit==null) {
+                        worldObj.playSound(result.getBlockPos().getX(), result.getBlockPos().getY(), result.getBlockPos().getZ(), "random.explode",0.5F, 0.5F, false);
                     }
                 }
 
@@ -88,7 +91,9 @@ public class EntitySnowball extends EntityThrowable
                     double z = this.posZ + worldObj.rand.nextFloat() * range - worldObj.rand.nextFloat() * range;
 
 //                    DeeperDepths.proxy.spawnParticle(6, this.worldObj, x, y, z, 0, 0, 0);
-                    ((WorldServer)this.worldObj).spawnParticle(type, x, y, z, 1, 0, 0, 0, 0.0);
+                    // Bug here:
+                    (this.worldObj).spawnParticle(type, x, y, z, 0, 0, 0, 1);
+                    // Speed 0, number = 1
                 }
 
                 break;

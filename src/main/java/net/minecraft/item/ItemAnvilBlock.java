@@ -8,17 +8,17 @@ public class ItemAnvilBlock extends ItemMultiTexture
     {
         super(block, block, new String[] {
                 "intact",           // 0
-                "unused",           // 1
+                "intact",           // 1 unused
                 "slightlyDamaged",  // 2
-                "unused",           // 3
+                "intact",           // 3 unused
                 "veryDamaged",      // 4
-                "unused",           // 5
-                "unused",           // 6
-                "unused",           // 7
+                "intact",           // 5 unused
+                "intact",           // 6 unused
+                "intact",           // 7 unused
                 "diamond_intact",   // 8
-                "unused",           // 9
+                "intact",           // 9 unused
                 "diamond_slightlyDamaged", // 10
-                "unused",           // 11
+                "intact",           // 11 unused
                 "diamond_veryDamaged"      // 12
         });
 //        super(block, block, new String[] {"intact", "slightlyDamaged", "veryDamaged"});
