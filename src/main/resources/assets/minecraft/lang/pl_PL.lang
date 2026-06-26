@@ -2017,8 +2017,6 @@ tile.cobblestoneCompressed.cobblestoneCompressedMossy.name=Utwardzony zamszony b
 
 item.pouchEnder.name=Tytka Kresu
 
-item.breadGlowing.name=Świecący chleb
-
 item.grenadeHoly.name=Święty granat ręczny
 grenade.holy.description.1=
 grenade.holy.description.2=
@@ -2061,3 +2059,7 @@ title.bloodMoon.fade=Gdy nadchodzi ranek, krwawy księżyc zanika...
 tile.anvil.diamond_intact.name=Diamentowe kowadło
 tile.anvil.diamond_slightlyDamaged.name=Lekko uszkodzone diamentowe kowadło
 tile.anvil.diamond_veryDamaged.name=Mocno uszkodzone diamentowe kowadło
+
+item.breadGlowing.name=Świecący chleb
+item.breezeRod.name=Wietrzysta różdżka
+item.windCharge.name=Wietrzysta kula

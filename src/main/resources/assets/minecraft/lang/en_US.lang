@@ -2743,7 +2743,7 @@ item.record.alpha.desc=C418 - Alpha
 item.record.key.desc=C418 - Key
 
 achievement.portalAether=Hostile Paradise
-achievement.portalAether.desc=Build and Aether Portal
+achievement.portalAether.desc=Build an Aether Portal by pouring water into a glowstone frame.
 
 generator.randomBiomes=Random Biomes
 generator.neon=Alpha

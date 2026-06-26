@@ -2569,8 +2569,6 @@ tile.cobblestoneCompressed.cobblestoneCompressedMossy.name=Mossy Compressed Cobb
 
 item.pouchEnder.name=Ender Pouch
 
-item.breadGlowing.name=Glowing Bread
-
 item.grenadeHoly.name=Holy Hand Grenade
 grenade.holy.description.1=Once the number three, being the third number, be reached, 
 grenade.holy.description.2=then lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, 
@@ -2583,7 +2581,7 @@ item.record.key.desc=C418 - Key
 tile.observer.name=Observer
 
 achievement.portalAether=Hostile Paradise
-achievement.portalAether.desc=Build and Aether Portal
+achievement.portalAether.desc=Build an Aether Portal by pouring water into a glowstone frame.
 generator.randomBiomes=Random Biomes
 
 tile.bed.bloodMoon=You may not rest during a blood moon
@@ -2595,3 +2593,7 @@ title.bloodMoon.fade=As dawn rises, the blood moon fades...
 tile.anvil.diamond_intact.name=Diamond Anvil
 tile.anvil.diamond_slightlyDamaged.name=Slightly Damaged Diamond Anvil
 tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
+
+item.breadGlowing.name=Glowing Bread
+item.breezeRod.name=Breeze Rod
+item.windCharge.name=Wind Charge
