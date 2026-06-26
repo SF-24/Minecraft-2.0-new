@@ -2720,6 +2720,7 @@ item.bootsAmethyst.name=Amethyst Boots
 tile.oreRuby.name=Ruby Ore
 tile.blockRuby.name=Ruby Block
 
+
 tile.blockRail.name=Rail Block
 tile.blockRailGold.name=Powered Rail Block
 tile.blockRailActivator.name=Activator Rail Block
@@ -2727,9 +2728,6 @@ tile.blockRailDetector.name=Detector Rail Block
 tile.blockCobweb.name=Cobweb Block
 
 item.pouchEnder.name=Ender Pouch
-
-item.breadGlowing.name=Glowing Bread
-
 item.grenadeHoly.name=Holy Hand Grenade
 
 tile.cobblestoneCompressed.cobblestoneCompressed.name=Compressed Cobblestone
@@ -2762,4 +2760,7 @@ tile.anvil.diamond_intact.name=Diamond Anvil
 tile.anvil.diamond_slightlyDamaged.name=Slightly Damaged Diamond Anvil
 tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
 
+item.breadGlowing.name=Glowing Bread
+item.breezeRod.name=Breeze Rod
+item.windCharge.name=Wind Charge
 

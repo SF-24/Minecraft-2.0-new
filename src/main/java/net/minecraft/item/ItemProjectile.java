@@ -30,7 +30,20 @@ public class ItemProjectile extends Item
 
         if (!worldIn.isRemote)
         {
-            worldIn.spawnEntityInWorld(new EntitySnowball(worldIn, playerIn));
+            switch (variant) {
+                case 0:
+                    worldIn.spawnEntityInWorld(new EntitySnowball(worldIn, playerIn,this.variant));
+                    break;
+                case 1:
+                    EntitySnowball entitySnowball = new EntitySnowball(worldIn,playerIn,this.variant);
+                    double dirX = -Math.sin(Math.toRadians(playerIn.rotationYaw)) * Math.cos(Math.toRadians(playerIn.rotationPitch));
+                    double dirY = -Math.sin(Math.toRadians(playerIn.rotationPitch));
+                    double dirZ = Math.cos(Math.toRadians(playerIn.rotationYaw)) * Math.cos(Math.toRadians(playerIn.rotationPitch));
+                    entitySnowball.setThrowableHeading(dirX,dirY,dirZ, 1.8f, 1.0f);
+                    worldIn.spawnEntityInWorld(entitySnowball);
+                    // TODO: ADD A COOLDOWN.
+                    break;
+            }
         }
 
         playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);

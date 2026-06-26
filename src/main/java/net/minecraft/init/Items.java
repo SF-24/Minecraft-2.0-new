@@ -224,6 +224,9 @@ public class Items
     public static final Item record_alpha;
     public static final Item record_key;
 
+    public static final Item breeze_rod;
+    public static final ItemProjectile wind_charge;
+
     private static Item getRegisteredItem(String name)
     {
         return (Item)Item.itemRegistry.getObject(new ResourceLocation(name));
@@ -457,6 +460,8 @@ public class Items
 
             holy_grenade = (ItemGrenade)getRegisteredItem("holy_hand_grenade");
             glowing_bread = (ItemFood) getRegisteredItem("glowing_bread");
+            wind_charge = (ItemProjectile) getRegisteredItem("wind_charge");
+            breeze_rod = getRegisteredItem("breeze_rod");
 
             ender_pouch = (ItemBackpack) getRegisteredItem("ender_pouch");
         }

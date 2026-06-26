@@ -855,6 +855,8 @@ public class Item {
         registerItem(valueBase+431, "dark_oak_door", (new ItemDoor(Blocks.dark_oak_door)).setUnlocalizedName("doorDarkOak"));
 
         registerItem(valueBase+500, "wind_charge", (new ItemProjectile((byte) 1)).setUnlocalizedName("windCharge"));
+        registerItem(valueBase+ 501, "blaze_rod", (new Item()).setUnlocalizedName("breezeRod").setCreativeTab(CreativeTabs.tabMaterials).setFull3D());
+
 
         registerItem(valueBase+2256, "record_13", (new ItemRecord("13")).setUnlocalizedName("record"));
         registerItem(valueBase+2257, "record_cat", (new ItemRecord("cat")).setUnlocalizedName("record"));

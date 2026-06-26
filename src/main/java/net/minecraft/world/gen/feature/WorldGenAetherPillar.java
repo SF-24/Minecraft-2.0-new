@@ -15,7 +15,6 @@ public class WorldGenAetherPillar extends WorldGenerator {
     private final IBlockState brickSlab = Blocks.stone_slab.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.STONE).withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
     private final IBlockState bricks = Blocks.stonebrick.getDefaultState();
     private final IBlockState flowingWater = Blocks.flowing_water.getDefaultState();
-//    private final IBlockState ruby = Blocks.ruby_block.getDefaultState();
 
     ArrayList<BlockPos> blockIgnore = new ArrayList<>();
 
@@ -32,7 +31,7 @@ public class WorldGenAetherPillar extends WorldGenerator {
         {
             for (int j = -2; j <= 2; ++j)
             {
-                if (worldIn.isAirBlock(position.add(i, -1, j)) && worldIn.isAirBlock(position.add(i, -2, j)))
+                if (worldIn.getBlockState(position.add(i, -1, j)).getBlock()==Blocks.wool || worldIn.isAirBlock(position.add(i, -1, j)) && worldIn.isAirBlock(position.add(i, -2, j)))
                 {
                     return false;
                 }

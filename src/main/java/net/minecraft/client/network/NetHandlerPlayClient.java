@@ -163,18 +163,18 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
         if (packetIn.getType() == 10)
         {
-            entity = EntityMinecart.getMinecart(this.clientWorldController, d0, d1, d2, EntityMinecart.EnumMinecartType.byNetworkID(packetIn.func_149009_m()));
+            entity = EntityMinecart.getMinecart(this.clientWorldController, d0, d1, d2, EntityMinecart.EnumMinecartType.byNetworkID(packetIn.getDataField()));
         }
         else if (packetIn.getType() == 90)
         {
-            Entity entity1 = this.clientWorldController.getEntityByID(packetIn.func_149009_m());
+            Entity entity1 = this.clientWorldController.getEntityByID(packetIn.getDataField());
 
             if (entity1 instanceof EntityPlayer)
             {
                 entity = new EntityFishHook(this.clientWorldController, d0, d1, d2, (EntityPlayer)entity1);
             }
 
-            packetIn.func_149002_g(0);
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 60)
         {
@@ -182,7 +182,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else if (packetIn.getType() == 61)
         {
-            entity = new EntitySnowball(this.clientWorldController, d0, d1, d2);
+            entity = new EntitySnowball(this.clientWorldController, d0, d1, d2,packetIn.getDataField());
         }
         // entity grenade | EntityGrenade : render code
         /*else if (packetIn.getType() == 201)
@@ -191,13 +191,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }*/
         else if (packetIn.getType() == 71)
         {
-            entity = new EntityItemFrame(this.clientWorldController, new BlockPos(MathHelper.floor_double(d0), MathHelper.floor_double(d1), MathHelper.floor_double(d2)), EnumFacing.getHorizontal(packetIn.func_149009_m()));
-            packetIn.func_149002_g(0);
+            entity = new EntityItemFrame(this.clientWorldController, new BlockPos(MathHelper.floor_double(d0), MathHelper.floor_double(d1), MathHelper.floor_double(d2)), EnumFacing.getHorizontal(packetIn.getDataField()));
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 77)
         {
             entity = new EntityLeashKnot(this.clientWorldController, new BlockPos(MathHelper.floor_double(d0), MathHelper.floor_double(d1), MathHelper.floor_double(d2)));
-            packetIn.func_149002_g(0);
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 65)
         {
@@ -214,17 +214,17 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         else if (packetIn.getType() == 63)
         {
             entity = new EntityLargeFireball(this.clientWorldController, d0, d1, d2, (double)packetIn.getSpeedX() / 8000.0D, (double)packetIn.getSpeedY() / 8000.0D, (double)packetIn.getSpeedZ() / 8000.0D);
-            packetIn.func_149002_g(0);
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 64)
         {
             entity = new EntitySmallFireball(this.clientWorldController, d0, d1, d2, (double)packetIn.getSpeedX() / 8000.0D, (double)packetIn.getSpeedY() / 8000.0D, (double)packetIn.getSpeedZ() / 8000.0D);
-            packetIn.func_149002_g(0);
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 66)
         {
             entity = new EntityWitherSkull(this.clientWorldController, d0, d1, d2, (double)packetIn.getSpeedX() / 8000.0D, (double)packetIn.getSpeedY() / 8000.0D, (double)packetIn.getSpeedZ() / 8000.0D);
-            packetIn.func_149002_g(0);
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 62)
         {
@@ -232,13 +232,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else if (packetIn.getType() == 73)
         {
-            entity = new EntityPotion(this.clientWorldController, d0, d1, d2, packetIn.func_149009_m());
-            packetIn.func_149002_g(0);
+            entity = new EntityPotion(this.clientWorldController, d0, d1, d2, packetIn.getDataField());
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 75)
         {
             entity = new EntityExpBottle(this.clientWorldController, d0, d1, d2);
-            packetIn.func_149002_g(0);
+            packetIn.setDataField(0);
         }
         else if (packetIn.getType() == 1)
         {
@@ -262,8 +262,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else if (packetIn.getType() == 70)
         {
-            entity = new EntityFallingBlock(this.clientWorldController, d0, d1, d2, Block.getStateById(packetIn.func_149009_m() & 65535));
-            packetIn.func_149002_g(0);
+            entity = new EntityFallingBlock(this.clientWorldController, d0, d1, d2, Block.getStateById(packetIn.getDataField() & 65535));
+            packetIn.setDataField(0);
         }
 
         if (entity != null)
@@ -288,11 +288,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             entity.setEntityId(packetIn.getEntityID());
             this.clientWorldController.addEntityToWorld(packetIn.getEntityID(), entity);
 
-            if (packetIn.func_149009_m() > 0)
+            if (packetIn.getDataField() > 0)
             {
                 if (packetIn.getType() == 60)
                 {
-                    Entity entity2 = this.clientWorldController.getEntityByID(packetIn.func_149009_m());
+                    Entity entity2 = this.clientWorldController.getEntityByID(packetIn.getDataField());
 
                     if (entity2 instanceof EntityLivingBase && entity instanceof EntityArrow)
                     {
