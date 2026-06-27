@@ -2767,4 +2767,6 @@ item.breezeRod.name=Breeze Rod
 item.windCharge.name=Wind Charge
 item.displayBubble.name=Bubble Render Display
 item.staffWind.name=Wind Staff
+item.staffWater.name=Water Staff
+item.staffFire.name=Fire Staff
 
