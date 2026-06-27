@@ -30,7 +30,19 @@ public class RenderSnowball<T extends Entity> extends Render<T>
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)x, (float)y, (float)z);
         GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(0.5F, 0.5F, 0.5F);
+
+        // Scale the model based on whether it's riding an entity
+        if(entity instanceof EntitySnowball && ((EntitySnowball) entity).getProjectileType()==10) {
+            if (entity.riddenByEntity!=null) {
+                // Scale up 4x if carrying an entity
+                GlStateManager.scale(4.0F, 4.0F, 4.0F);
+            } else {
+                // Normal size (1.5x)
+                GlStateManager.scale(1.5F, 1.5F, 1.5F);
+            }
+        } else {
+            GlStateManager.scale(0.5F, 0.5F, 0.5F);
+        }
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.locationBlocksTexture);
