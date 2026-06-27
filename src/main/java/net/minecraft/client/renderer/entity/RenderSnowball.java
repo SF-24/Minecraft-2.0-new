@@ -34,11 +34,9 @@ public class RenderSnowball<T extends Entity> extends Render<T>
         // Scale the model based on whether it's riding an entity
         if(entity instanceof EntitySnowball && ((EntitySnowball) entity).getProjectileType()==10) {
             if (entity.riddenByEntity!=null) {
-                // Scale up 4x if carrying an entity
-                GlStateManager.scale(4.0F, 4.0F, 4.0F);
+                GlStateManager.scale(1.5f,1.5f,1.5f);
             } else {
-                // Normal size (1.5x)
-                GlStateManager.scale(1.5F, 1.5F, 1.5F);
+                GlStateManager.scale(0.5f,0.5f,0.5f);
             }
         } else {
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
