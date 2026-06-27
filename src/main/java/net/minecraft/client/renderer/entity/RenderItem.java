@@ -1282,6 +1282,9 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerItem(Items.glowing_bread, "glowing_bread");
         this.registerItem(Items.breeze_rod, "breeze_rod");
         this.registerItem(Items.wind_charge, "wind_charge");
+        this.registerItem(Items.water_staff, "water_staff");
+
+        this.registerItem(Items.display_bubble, "display_bubble");
 
 //        this.registerBlock(Blocks.amethyst_block, "amethyst_block");
 //        this.registerBlock(Blocks.amethyst_crystal, "amethyst_crystal");

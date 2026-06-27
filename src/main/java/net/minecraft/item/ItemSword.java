@@ -62,8 +62,6 @@ public class ItemSword extends Item
 //            target.setInWeb();
 //        }
 
-
-
         stack.damageItem(1, attacker);
         return true;
     }

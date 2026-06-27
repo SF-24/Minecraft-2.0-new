@@ -1,5 +1,6 @@
 package net.minecraft.creativetab;
 
+import java.util.Collections;
 import java.util.List;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.enchantment.Enchantment;
@@ -9,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.mineshaft.item.CreativeTabOrderManager;
 
 public abstract class CreativeTabs
 {
@@ -244,19 +246,21 @@ public abstract class CreativeTabs
     /**
      * only shows items which have tabToDisplayOn == this
      */
-    public void displayAllReleventItems(List<ItemStack> p_78018_1_)
+    public void displayAllReleventItems(List<ItemStack> itemList)
     {
         for (Item item : Item.itemRegistry)
         {
             if (item != null && item.getCreativeTab() == this)
             {
-                item.getSubItems(item, this, p_78018_1_);
+                item.getSubItems(item, this, itemList);
             }
         }
 
+        itemList.sort(CreativeTabOrderManager.getComparator());
+
         if (this.getRelevantEnchantmentTypes() != null)
         {
-            this.addEnchantmentBooksToList(p_78018_1_, this.getRelevantEnchantmentTypes());
+            this.addEnchantmentBooksToList(itemList, this.getRelevantEnchantmentTypes());
         }
     }
 

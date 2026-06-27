@@ -34,6 +34,8 @@ public abstract class EntityThrowable extends Entity implements IProjectile
     private int ticksInGround;
     private int ticksInAir;
 
+//    protected boolean hasNoGravity;
+
     public EntityThrowable(World worldIn)
     {
         super(worldIn);
@@ -240,43 +242,48 @@ public abstract class EntityThrowable extends Entity implements IProjectile
         this.posX += this.motionX;
         this.posY += this.motionY;
         this.posZ += this.motionZ;
-        float f1 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-        this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
-        for (this.rotationPitch = (float)(MathHelper.atan2(this.motionY, (double)f1) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
-        {
-            ;
-        }
+        float f2 = 1.0f;
+        float f3 = 0;
+        if(!hasNoGravity()) {
+            float f1 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+            this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
-        while (this.rotationPitch - this.prevRotationPitch >= 180.0F)
-        {
-            this.prevRotationPitch += 360.0F;
-        }
-
-        while (this.rotationYaw - this.prevRotationYaw < -180.0F)
-        {
-            this.prevRotationYaw -= 360.0F;
-        }
-
-        while (this.rotationYaw - this.prevRotationYaw >= 180.0F)
-        {
-            this.prevRotationYaw += 360.0F;
-        }
-
-        this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
-        this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
-        float f2 = 0.99F;
-        float f3 = this.getGravityVelocity();
-
-        if (this.isInWater())
-        {
-            for (int i = 0; i < 4; ++i)
+            for (this.rotationPitch = (float)(MathHelper.atan2(this.motionY, (double)f1) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
             {
-                float f4 = 0.25F;
-                this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ, new int[0]);
+                ;
             }
 
-            f2 = 0.8F;
+            while (this.rotationPitch - this.prevRotationPitch >= 180.0F)
+            {
+                this.prevRotationPitch += 360.0F;
+            }
+
+            while (this.rotationYaw - this.prevRotationYaw < -180.0F)
+            {
+                this.prevRotationYaw -= 360.0F;
+            }
+
+            while (this.rotationYaw - this.prevRotationYaw >= 180.0F)
+            {
+                this.prevRotationYaw += 360.0F;
+            }
+
+            this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
+            this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
+
+            f3 = this.getGravityVelocity();
+            f2 = 0.99F;
+            if (this.isInWater())
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    float f4 = 0.25F;
+                    this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ, new int[0]);
+                }
+
+                f2 = 0.8F;
+            }
         }
 
         this.motionX *= (double)f2;
@@ -311,6 +318,7 @@ public abstract class EntityThrowable extends Entity implements IProjectile
         tagCompound.setString("inTile", resourcelocation == null ? "" : resourcelocation.toString());
         tagCompound.setByte("shake", (byte)this.throwableShake);
         tagCompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
+//        tagCompound.setByte("hasNoGravity", (byte)(this.hasNoGravity ? 1 : 0));
 
         if ((this.throwerName == null || this.throwerName.length() == 0) && this.thrower instanceof EntityPlayer)
         {
@@ -340,6 +348,7 @@ public abstract class EntityThrowable extends Entity implements IProjectile
 
         this.throwableShake = tagCompund.getByte("shake") & 255;
         this.inGround = tagCompund.getByte("inGround") == 1;
+//        this.hasNoGravity = tagCompund.getByte("hasNoGravity") == 1;
         this.thrower = null;
         this.throwerName = tagCompund.getString("ownerName");
 
@@ -376,5 +385,9 @@ public abstract class EntityThrowable extends Entity implements IProjectile
         }
 
         return this.thrower;
+    }
+
+    protected boolean hasNoGravity() {
+        return false;
     }
 }

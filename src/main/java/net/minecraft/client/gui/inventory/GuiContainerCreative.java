@@ -29,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.mineshaft.item.CreativeTabOrderManager;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -350,6 +351,9 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                 item.getSubItems(item, (CreativeTabs)null, guicontainercreative$containercreative.itemList);
             }
         }
+
+        // TODO:
+        guicontainercreative$containercreative.itemList.sort(CreativeTabOrderManager.getComparator());
 
         for (Enchantment enchantment : Enchantment.enchantmentsBookList)
         {

@@ -46,6 +46,7 @@ public class RenderSnowball<T extends Entity> extends Render<T>
             // Will have more values later.
             switch (((EntitySnowball) entityIn).getProjectileType()) {
                 case 1: return new ItemStack(Items.wind_charge, 1, 0);
+                case 10: return new ItemStack(Items.display_bubble, 1, 0);
                 default: return new ItemStack(this.renderedItem, 1, 0);
             }
         }
