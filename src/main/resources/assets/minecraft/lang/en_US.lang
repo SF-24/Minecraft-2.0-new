@@ -2765,4 +2765,6 @@ item.spawnEgg.PigZombieBrute=Zombie Pigman Brute Spawn Egg
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod
 item.windCharge.name=Wind Charge
+item.displayBubble.name=Bubble Render Display
+item.staffWind.name=Wind Staff
 
