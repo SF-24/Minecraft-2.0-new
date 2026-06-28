@@ -941,7 +941,7 @@ public class Item {
 
         // Missing: 597,598
 
-        registerItem(valueBase+599, "holy_hand_grenade", (new ItemGrenade(0)).setUnlocalizedName("grenadeHoly").setCreativeTab(CreativeTabs.tabCombat));
+        registerItem(valueBase+599, "holy_hand_grenade", (new ItemGrenade(0)).setUnlocalizedName("grenadeHoly").setMaxStackSize(1).setMaxBundleStackSize(4).setCreativeTab(CreativeTabs.tabCombat));
 
         registerItem(valueBase+600, "shears", (new ItemShears()).setUnlocalizedName("shears"));
         registerItem(valueBase+601, "compass", (new Item()).setUnlocalizedName("compass").setCreativeTab(CreativeTabs.tabTools));
@@ -951,7 +951,7 @@ public class Item {
         registerItem(valueBase+605, "name_tag", (new ItemNameTag()).setUnlocalizedName("nameTag"));
 
         // moved items
-        registerItem(valueBase+606, "enchanted_book", (new ItemEnchantedBook()).setMaxStackSize(1).setUnlocalizedName("enchantedBook"));
+        registerItem(valueBase+606, "enchanted_book", (new ItemEnchantedBook()).setMaxBundleStackSize(4).setMaxStackSize(1).setUnlocalizedName("enchantedBook"));
 
         // Unusable items:
         registerItem(valueBase+700, "display_bubble", (new ItemProjectile((byte) 10)).setUnlocalizedName("displayBubble"));

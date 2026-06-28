@@ -52,7 +52,7 @@ public class ItemBundle extends Item {
 
     private static int getItemstackAmount(ItemStack stack) {
         int size = 1;
-        if (stack.getMaxStackSize() < 64) size = 64 / stack.getItem().getBundledItemStackLimit();
+        if (stack.getMaxStackSize() < 64) size = 64 / (stack.getItem().getBundledItemStackLimit()==1?4:stack.getItem().getBundledItemStackLimit());
         return size;
     }
 

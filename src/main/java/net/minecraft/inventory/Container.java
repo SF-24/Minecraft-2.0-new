@@ -128,7 +128,7 @@ public abstract class Container {
         InventoryPlayer inventoryplayer = playerIn.inventory;
 
         // Bundles
-        if (!this.isCreativeGui && slotId >= 0 && slotId < this.inventorySlots.size()) {
+        if (slotId >= 0 && slotId < this.inventorySlots.size()) {
             Slot slot = this.inventorySlots.get(slotId);
             ItemStack cursorStack = playerIn.inventory.getItemStack();
 
