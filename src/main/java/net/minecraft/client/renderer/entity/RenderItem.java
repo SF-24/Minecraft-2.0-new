@@ -34,11 +34,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFishFood;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.src.Config;
 import net.minecraft.util.*;
 import net.optifine.CustomColors;
@@ -386,6 +382,9 @@ public class RenderItem implements IResourceManagerReloadListener
                 if (item == Items.fishing_rod && entityplayer.fishEntity != null)
                 {
                     modelresourcelocation = new ModelResourceLocation("fishing_rod_cast", "inventory");
+                }
+                else if(item == Items.bundle && ItemBundle.isFull(stack)) {
+                    modelresourcelocation = new ModelResourceLocation("bundle_full", "inventory");
                 }
                 else if (item == Items.bow && entityplayer.getItemInUse() != null)
                 {
@@ -1277,6 +1276,7 @@ public class RenderItem implements IResourceManagerReloadListener
 //        this.registerItem(Items.amethyst, "amethyst");
 
         this.registerItem(Items.ender_pouch, "ender_pouch");
+        this.registerItem(Items.bundle, "bundle");
 
         this.registerItem(Items.holy_grenade, "holy_hand_grenade");
         this.registerItem(Items.glowing_bread, "glowing_bread");

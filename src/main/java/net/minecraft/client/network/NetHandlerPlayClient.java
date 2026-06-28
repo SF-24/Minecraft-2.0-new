@@ -1022,7 +1022,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             {
                 ItemStack itemstack = entityplayer.inventoryContainer.getSlot(packetIn.func_149173_d()).getStack();
 
-                if (packetIn.func_149174_e() != null && (itemstack == null || itemstack.stackSize < packetIn.func_149174_e().stackSize))
+                if (packetIn.func_149174_e() != null && ((itemstack == null || itemstack.isEmpty()) || itemstack.stackSize < packetIn.func_149174_e().stackSize))
                 {
                     packetIn.func_149174_e().animationsToGo = 5;
                 }

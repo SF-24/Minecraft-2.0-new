@@ -2762,6 +2762,10 @@ tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
 
 item.spawnEgg.PigZombieBrute=Zombie Pigman Brute Spawn Egg
 
+item.bundle.name=Bundle
+item.bundle.dyed=Dyed
+item.bundle.fullness=Fullness: %s/%s
+
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod
 item.windCharge.name=Wind Charge

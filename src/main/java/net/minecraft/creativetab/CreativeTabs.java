@@ -142,7 +142,7 @@ public abstract class CreativeTabs
 
     public ItemStack getIconItemStack()
     {
-        if (this.iconItemStack == null)
+        if (this.iconItemStack == null || iconItemStack.isEmpty())
         {
             this.iconItemStack = new ItemStack(this.getTabIconItem(), 1, this.getIconItemDamage());
         }

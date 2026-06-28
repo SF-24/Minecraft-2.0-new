@@ -1436,7 +1436,7 @@ public class CustomColors
 
     public static int getColorFromItemStack(ItemStack itemStack, int layer, int color)
     {
-        if (itemStack == null)
+        if (itemStack == null || itemStack.isEmpty())
         {
             return color;
         }

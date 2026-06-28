@@ -136,7 +136,7 @@ public class InventoryPlayer implements IInventory
                 this.currentItem = j;
             }
 
-            if (itemstack == null || !itemstack.isItemEnchantable() || this.getInventorySlotContainItemAndDamage(itemstack.getItem(), itemstack.getItemDamage()) != this.currentItem)
+            if ((itemstack == null || itemstack.isEmpty()) || !itemstack.isItemEnchantable() || this.getInventorySlotContainItemAndDamage(itemstack.getItem(), itemstack.getItemDamage()) != this.currentItem)
             {
                 int k = this.getInventorySlotContainItemAndDamage(itemIn, metadataIn);
                 int l;

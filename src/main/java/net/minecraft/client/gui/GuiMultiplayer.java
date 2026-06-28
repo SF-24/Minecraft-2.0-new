@@ -375,7 +375,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
         if (this.hoveringText != null)
         {
-            this.drawHoveringText(Lists.newArrayList(Splitter.on("\n").split(this.hoveringText)), mouseX, mouseY);
+            this.drawHoveringText(Lists.newArrayList(Splitter.on("\n").split(this.hoveringText)), mouseX, mouseY, 0);
         }
     }
 

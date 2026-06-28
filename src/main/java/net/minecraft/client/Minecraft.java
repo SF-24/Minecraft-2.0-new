@@ -1610,7 +1610,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                                 this.thePlayer.swingItem();
                             }
 
-                            if (itemstack == null)
+                            if (itemstack == null || itemstack.isEmpty())
                             {
                                 return;
                             }
@@ -2561,7 +2561,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     EntityItemFrame entityitemframe = (EntityItemFrame)this.objectMouseOver.entityHit;
                     ItemStack itemstack = entityitemframe.getDisplayedItem();
 
-                    if (itemstack == null)
+                    if (itemstack == null || itemstack.isEmpty())
                     {
                         item = Items.item_frame;
                     }

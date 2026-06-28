@@ -917,7 +917,7 @@ public abstract class EntityLiving extends EntityLivingBase
                     break;
                 }
 
-                if (itemstack == null)
+                if (itemstack == null || itemstack.isEmpty())
                 {
                     Item item = getArmorItemForSlot(j + 1, i);
 

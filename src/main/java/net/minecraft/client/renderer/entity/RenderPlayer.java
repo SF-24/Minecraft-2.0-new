@@ -90,7 +90,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
             modelplayer.aimedBow = false;
             modelplayer.isSneak = clientPlayer.isSneaking();
 
-            if (itemstack == null)
+            if (itemstack == null || itemstack.isEmpty())
             {
                 modelplayer.heldItemRight = 0;
             }

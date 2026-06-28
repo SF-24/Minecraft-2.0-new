@@ -275,7 +275,7 @@ public abstract class GuiContainer extends GuiScreen
         this.zLevel = 100.0F;
         this.itemRender.zLevel = 100.0F;
 
-        if (itemstack == null)
+        if (itemstack == null || itemstack.isEmpty())
         {
             String s1 = slotIn.getSlotTexture();
 

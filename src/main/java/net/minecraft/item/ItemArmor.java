@@ -82,6 +82,7 @@ public class ItemArmor extends Item
         this.damageReduceAmount = material.getDamageReductionAmount(armorType);
         this.setMaxDamage(material.getDurability(armorType));
         this.maxStackSize = 1;
+        this.maxBundleStackSize=4;
         this.setCreativeTab(CreativeTabs.tabCombat);
         BlockDispenser.dispenseBehaviorRegistry.putObject(this, dispenserBehavior);
     }
@@ -223,7 +224,7 @@ public class ItemArmor extends Item
         int i = EntityLiving.getArmorPosition(itemStackIn) - 1;
         ItemStack itemstack = playerIn.getCurrentArmor(i);
 
-        if (itemstack == null)
+        if (itemstack == null || itemstack.isEmpty())
         {
             playerIn.setCurrentItemOrArmor(i, itemStackIn.copy());
             itemStackIn.stackSize = 0;

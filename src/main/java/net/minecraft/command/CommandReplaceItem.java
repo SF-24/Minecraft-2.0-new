@@ -165,7 +165,7 @@ public class CommandReplaceItem extends CommandBase
 
                 if (!entity.replaceItemInInventory(j, itemstack))
                 {
-                    throw new CommandException("commands.replaceitem.failed", new Object[] {Integer.valueOf(j), Integer.valueOf(k), itemstack == null ? "Air" : itemstack.getChatComponent()});
+                    throw new CommandException("commands.replaceitem.failed", new Object[] {Integer.valueOf(j), Integer.valueOf(k), itemstack == null || itemstack.isEmpty() ? "Air" : itemstack.getChatComponent()});
                 }
 
                 if (entity instanceof EntityPlayer)
@@ -175,7 +175,7 @@ public class CommandReplaceItem extends CommandBase
             }
 
             sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, k);
-            notifyOperators(sender, this, "commands.replaceitem.success", new Object[] {Integer.valueOf(j), Integer.valueOf(k), itemstack == null ? "Air" : itemstack.getChatComponent()});
+            notifyOperators(sender, this, "commands.replaceitem.success", new Object[] {Integer.valueOf(j), Integer.valueOf(k), itemstack == null || itemstack.isEmpty() ? "Air" : itemstack.getChatComponent()});
         }
     }
 

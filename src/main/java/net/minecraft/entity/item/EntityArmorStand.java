@@ -477,14 +477,14 @@ public class EntityArmorStand extends EntityLivingBase
     {
         ItemStack itemstack = this.contents[p_175422_2_];
 
-        if (itemstack == null || (this.disabledSlots & 1 << p_175422_2_ + 8) == 0)
+        if (itemstack == null || itemstack.isEmpty() || (this.disabledSlots & 1 << p_175422_2_ + 8) == 0)
         {
             if (itemstack != null || (this.disabledSlots & 1 << p_175422_2_ + 16) == 0)
             {
                 int i = p_175422_1_.inventory.currentItem;
                 ItemStack itemstack1 = p_175422_1_.inventory.getStackInSlot(i);
 
-                if (p_175422_1_.capabilities.isCreativeMode && (itemstack == null || itemstack.getItem() == Item.getItemFromBlock(Blocks.air)) && itemstack1 != null)
+                if (p_175422_1_.capabilities.isCreativeMode && ((itemstack == null || itemstack.isEmpty()) || itemstack.getItem() == Item.getItemFromBlock(Blocks.air)) && itemstack1 != null)
                 {
                     ItemStack itemstack3 = itemstack1.copy();
                     itemstack3.stackSize = 1;
@@ -492,7 +492,7 @@ public class EntityArmorStand extends EntityLivingBase
                 }
                 else if (itemstack1 != null && itemstack1.stackSize > 1)
                 {
-                    if (itemstack == null)
+                    if (itemstack == null || itemstack.isEmpty())
                     {
                         ItemStack itemstack2 = itemstack1.copy();
                         itemstack2.stackSize = 1;

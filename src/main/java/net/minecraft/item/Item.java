@@ -49,6 +49,7 @@ public class Item {
      * Maximum size of the stack.
      */
     protected int maxStackSize = 64;
+    protected int maxBundleStackSize = -1;
 
     /**
      * Maximum damage an item can handle.
@@ -149,6 +150,13 @@ public class Item {
      */
     public int getItemStackLimit() {
         return this.maxStackSize;
+    }
+
+    public int getBundledItemStackLimit() {
+        if(this.maxBundleStackSize>0) {
+            return this.maxBundleStackSize;
+        }
+        return maxStackSize;
     }
 
     /**
@@ -898,8 +906,9 @@ public class Item {
 //        registerItem(valueBase+475, "amethyst_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 2)).setUnlocalizedName("leggingsAmethyst"));
 //        registerItem(valueBase+476, "amethyst_boots", (new ItemArmor(ItemArmor.ArmorMaterial.AMETHYST, 3, 3)).setUnlocalizedName("bootsAmethyst"));
 
-        // Missing 477-493
+        // Missing 477-492
 
+        registerItem(valueBase+493, "bundle", (new ItemBundle()).setUnlocalizedName("bundle").setCreativeTab(CreativeTabs.tabTools));
         registerItem(valueBase+494, "ender_pouch", (new ItemBackpack(0)).setUnlocalizedName("pouchEnder").setUnlocalizedName("pouchEnder").setCreativeTab(CreativeTabs.tabTools));
 
         registerItem(valueBase+495, "steel_ingot", (new Item()).setUnlocalizedName("ingotSteel").setCreativeTab(CreativeTabs.tabMaterials));

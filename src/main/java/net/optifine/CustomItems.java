@@ -662,7 +662,7 @@ public class CustomItems
         {
             return null;
         }
-        else if (itemStack == null)
+        else if (itemStack == null || itemStack.isEmpty())
         {
             return null;
         }
@@ -842,7 +842,7 @@ public class CustomItems
         {
             return false;
         }
-        else if (itemStack == null)
+        else if (itemStack == null || itemStack.isEmpty())
         {
             return false;
         }
@@ -935,7 +935,7 @@ public class CustomItems
         {
             return false;
         }
-        else if (itemStack == null)
+        else if (itemStack == null || itemStack.isEmpty())
         {
             return false;
         }

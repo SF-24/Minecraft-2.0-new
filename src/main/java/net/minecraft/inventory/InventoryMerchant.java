@@ -201,13 +201,13 @@ public class InventoryMerchant implements IInventory
         ItemStack itemstack = this.theInventory[0];
         ItemStack itemstack1 = this.theInventory[1];
 
-        if (itemstack == null)
+        if (itemstack == null || itemstack.isEmpty())
         {
             itemstack = itemstack1;
             itemstack1 = null;
         }
 
-        if (itemstack == null)
+        if (itemstack == null || itemstack.isEmpty())
         {
             this.setInventorySlotContents(2, (ItemStack)null);
         }

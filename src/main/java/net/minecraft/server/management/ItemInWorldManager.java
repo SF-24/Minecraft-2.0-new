@@ -173,7 +173,7 @@ public class ItemInWorldManager
                 {
                     ItemStack itemstack = this.thisPlayerMP.getCurrentEquippedItem();
 
-                    if (itemstack == null)
+                    if (itemstack == null || itemstack.isEmpty())
                     {
                         return;
                     }
@@ -289,7 +289,7 @@ public class ItemInWorldManager
                 {
                     ItemStack itemstack = this.thisPlayerMP.getCurrentEquippedItem();
 
-                    if (itemstack == null)
+                    if (itemstack == null || itemstack.isEmpty())
                     {
                         return false;
                     }

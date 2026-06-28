@@ -586,7 +586,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
 
         if (packetIn.getPlacedBlockDirection() == 255)
         {
-            if (itemstack == null)
+            if (itemstack == null || itemstack.isEmpty())
             {
                 return;
             }
@@ -1101,12 +1101,12 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
             }
 
             boolean flag1 = packetIn.getSlotId() >= 1 && packetIn.getSlotId() < 36 + InventoryPlayer.getHotbarSize();
-            boolean flag2 = itemstack == null || itemstack.getItem() != null;
-            boolean flag3 = itemstack == null || itemstack.getMetadata() >= 0 && itemstack.stackSize <= 64 && itemstack.stackSize > 0;
+            boolean flag2 = (itemstack == null || itemstack.isEmpty()) || itemstack.getItem() != null;
+            boolean flag3 = (itemstack == null || itemstack.isEmpty()) || itemstack.getMetadata() >= 0 && itemstack.stackSize <= 64 && itemstack.stackSize > 0;
 
             if (flag1 && flag2 && flag3)
             {
-                if (itemstack == null)
+                if (itemstack == null || itemstack.isEmpty())
                 {
                     this.playerEntity.inventoryContainer.putStackInSlot(packetIn.getSlotId(), (ItemStack)null);
                 }

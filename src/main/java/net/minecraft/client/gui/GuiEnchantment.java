@@ -297,7 +297,7 @@ public class GuiEnchantment extends GuiContainer
                     }
                 }
 
-                this.drawHoveringText(list, mouseX, mouseY);
+                this.drawHoveringText(list, mouseX, mouseY, 0);
                 break;
             }
         }

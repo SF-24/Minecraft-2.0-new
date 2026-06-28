@@ -460,7 +460,7 @@ public class EntityItem extends Entity
     {
         ItemStack itemstack = this.getDataWatcher().getWatchableObjectItemStack(10);
 
-        if (itemstack == null)
+        if (itemstack == null || itemstack.isEmpty())
         {
             if (this.worldObj != null)
             {

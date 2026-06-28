@@ -224,6 +224,8 @@ public class Items
     public static final Item record_alpha;
     public static final Item record_key;
 
+    public static final ItemBundle bundle;
+
     public static final Item breeze_rod;
     public static final ItemProjectile wind_charge;
     public static final ItemProjectile display_bubble;
@@ -467,6 +469,7 @@ public class Items
             breeze_rod = getRegisteredItem("breeze_rod");
 
             ender_pouch = (ItemBackpack) getRegisteredItem("ender_pouch");
+            bundle = (ItemBundle) getRegisteredItem("bundle");
 
             display_bubble = (ItemProjectile) getRegisteredItem("display_bubble");
             water_staff = (ItemStaff) getRegisteredItem("water_staff");

@@ -629,7 +629,7 @@ public class ItemRenderer
                 flag = true;
             }
         }
-        else if (this.itemToRender == null && itemstack == null)
+        else if (this.itemToRender == null && (itemstack == null || itemstack.isEmpty()))
         {
             flag = false;
         }

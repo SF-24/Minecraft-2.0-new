@@ -1142,7 +1142,7 @@ public class GuiIngame extends Gui
         {
             ItemStack itemstack = this.mc.thePlayer.inventory.getCurrentItem();
 
-            if (itemstack == null)
+            if (itemstack == null || itemstack.isEmpty())
             {
                 this.remainingHighlightTicks = 0;
             }

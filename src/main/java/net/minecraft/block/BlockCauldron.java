@@ -100,7 +100,7 @@ public class BlockCauldron extends Block
         {
             ItemStack itemstack = playerIn.inventory.getCurrentItem();
 
-            if (itemstack == null)
+            if (itemstack == null || itemstack.isEmpty())
             {
                 return true;
             }

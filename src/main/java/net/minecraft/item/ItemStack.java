@@ -1090,8 +1090,12 @@ public final class ItemStack
         }
     }
 
+    public void setEmpty(boolean isEmpty) {
+        this.emptyFlag=true;
+    }
+
     public boolean isEmpty() {
-        if (this == ItemStack.empty)
+        if (this == ItemStack.empty || this.emptyFlag)
         {
             return true;
         }

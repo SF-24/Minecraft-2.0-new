@@ -209,7 +209,7 @@ public class GuiCreateFlatWorld extends GuiScreen
             Block block = iblockstate.getBlock();
             Item item = Item.getItemFromBlock(block);
             ItemStack itemstack = block != Blocks.air && item != null ? new ItemStack(item, 1, block.getMetaFromState(iblockstate)) : null;
-            String s = itemstack == null ? "Air" : item.getItemStackDisplayName(itemstack);
+            String s = (itemstack == null || itemstack.isEmpty()) ? "Air" : item.getItemStackDisplayName(itemstack);
 
             if (item == null)
             {

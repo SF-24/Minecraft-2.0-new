@@ -321,7 +321,7 @@ public class ContainerResearch extends Container
     public int getLapisAmount()
     {
         ItemStack itemstack = this.tableInventory.getStackInSlot(1);
-        return itemstack == null ? 0 : itemstack.stackSize;
+        return itemstack == null || itemstack.isEmpty() ? 0 : itemstack.stackSize;
     }
 
     /**

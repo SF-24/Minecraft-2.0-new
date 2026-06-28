@@ -286,7 +286,7 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
     {
         for (ItemStack itemstack : this.inventory)
         {
-            if (itemstack == null || itemstack.stackSize != itemstack.getMaxStackSize())
+            if (itemstack == null || itemstack.isEmpty() || itemstack.stackSize != itemstack.getMaxStackSize())
             {
                 return false;
             }
@@ -363,7 +363,7 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
             {
                 ItemStack itemstack = inventoryIn.getStackInSlot(j);
 
-                if (itemstack == null || itemstack.stackSize != itemstack.getMaxStackSize())
+                if (itemstack == null || itemstack.isEmpty() || itemstack.stackSize != itemstack.getMaxStackSize())
                 {
                     return false;
                 }
@@ -576,7 +576,7 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
         {
             boolean flag = false;
 
-            if (itemstack == null)
+            if (itemstack == null || itemstack.isEmpty())
             {
                 inventoryIn.setInventorySlotContents(index, stack);
                 stack = null;

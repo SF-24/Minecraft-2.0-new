@@ -315,7 +315,7 @@ public class DynamicLights
 
     public static int getLightLevel(ItemStack itemStack)
     {
-        if (itemStack == null)
+        if (itemStack == null || itemStack.isEmpty())
         {
             return 0;
         }

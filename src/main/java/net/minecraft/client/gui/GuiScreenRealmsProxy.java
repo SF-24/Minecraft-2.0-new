@@ -116,7 +116,7 @@ public class GuiScreenRealmsProxy extends GuiScreen
      */
     public void drawHoveringText(List<String> textLines, int x, int y)
     {
-        super.drawHoveringText(textLines, x, y);
+        super.drawHoveringText(textLines, x, y, 0);
     }
 
     /**

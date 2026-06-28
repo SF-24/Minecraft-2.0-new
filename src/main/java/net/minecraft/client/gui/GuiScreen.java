@@ -26,6 +26,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityList;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
+import net.minecraft.item.ItemBundle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTBase;
@@ -37,6 +38,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,6 +51,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Set<String> PROTOCOLS = Sets.newHashSet(new String[] {"http", "https"});
     private static final Splitter NEWLINE_SPLITTER = Splitter.on('\n');
+
+    public static final ResourceLocation SLOT = new ResourceLocation("minecraft", "textures/gui/slots/slot.png");
+    public static final ResourceLocation SLOT_NOT_FULL = new ResourceLocation("minecraft", "textures/gui/slots/slot_not_full.png");
+
 
     /** Reference to the Minecraft object. */
     protected Minecraft mc;
@@ -171,7 +177,60 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             }
         }
 
-        this.drawHoveringText(list, x, y);
+        if(stack.getItem() instanceof ItemBundle && (ItemBundle.getSlotCount(stack)>0)) {
+            this.drawHoveringText(list, x, y, (((ItemBundle.getSlotCount(stack)+1) + 3) / 4)*18+2);
+        } else {
+            this.drawHoveringText(list, x, y);
+        }
+
+        if(stack.getItem() instanceof ItemBundle && stack.hasTagCompound() && ItemBundle.getItemAmount(stack) > 0) {
+            // Draw bundle tooltip:
+
+            GlStateManager.disableRescaleNormal();
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.disableLighting();
+//            GlStateManager.disableDepth();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.translate(0.0F, 0.0F, 300.0F);
+            mc.getRenderItem().zLevel = 500.0F;
+
+            Minecraft mc = Minecraft.getMinecraft();
+
+            ItemStack[] stacks = ItemBundle.getItems(stack);
+            if (stacks == null) return;
+
+            int count = ItemBundle.getItemAmount(stack);
+            int slot = 0;
+
+            RenderHelper.enableGUIStandardItemLighting();
+
+            while (slot < stacks.length) {
+                int newX = x + 12 + ((slot & 3) * 18);
+                int newY = y + 2 + (slot/4 * 18) + ((4 + list.size() - 1) * list.size());
+
+                GlStateManager.color(1, 1, 1, 1);
+
+                mc.getTextureManager().bindTexture(SLOT);
+                drawModalRectWithCustomSizedTexture(newX - 1, newY - 1, 0, 0, 18, 18, 18, 18);
+
+                ItemStack st = stacks[slot];
+
+                mc.getRenderItem().renderItemAndEffectIntoGUI(st, newX,newY);
+                mc.getRenderItem().renderItemOverlayIntoGUI(this.fontRendererObj, st, newX, newY, String.valueOf(st.getCount()));
+                slot++;
+            }
+
+            if (ItemBundle.getItemAmount(stack) < ItemBundle.getBundleLimit()) {
+                int newX = x + 12 + ((slot & 3) * 18);
+                int newY = y + 2 + (slot/4 * 18) + ((4 + list.size() - 1) * list.size());
+
+                mc.getTextureManager().bindTexture(SLOT_NOT_FULL);
+                drawModalRectWithCustomSizedTexture(newX - 1, newY - 1, 0, 0, 18, 18, 18, 18);
+            }
+            GlStateManager.enableDepth();
+            GlStateManager.enableLighting();
+            mc.getRenderItem().zLevel = 0F;
+        }
     }
 
     /**
@@ -180,13 +239,18 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     protected void drawCreativeTabHoveringText(String tabName, int mouseX, int mouseY)
     {
-        this.drawHoveringText(Arrays.<String>asList(new String[] {tabName}), mouseX, mouseY);
+        this.drawHoveringText(Arrays.<String>asList(new String[] {tabName}), mouseX, mouseY, 0);
     }
 
     /**
      * Draws a List of strings as a tooltip. Every entry is drawn on a seperate line.
      */
     protected void drawHoveringText(List<String> textLines, int x, int y)
+    {
+        drawHoveringText(textLines,x,y,0);
+    }
+
+    protected void drawHoveringText(List<String> textLines, int x, int y, int extraHeight)
     {
         if (!textLines.isEmpty())
         {
@@ -212,7 +276,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
             if (textLines.size() > 1)
             {
-                k += 2 + (textLines.size() - 1) * 10;
+                // Draw backgorund.
+                k += 2 + (textLines.size() - 1) * 10 + extraHeight;
             }
 
             if (l1 + i > this.width)
@@ -323,7 +388,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                             }
 
                             list1.add(nbttagcompound.getString("id"));
-                            this.drawHoveringText(list1, x, y);
+                            this.drawHoveringText(list1, x, y, 0);
                         }
                         else
                         {
@@ -338,7 +403,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             }
             else if (hoverevent.getAction() == HoverEvent.Action.SHOW_TEXT)
             {
-                this.drawHoveringText(NEWLINE_SPLITTER.splitToList(hoverevent.getValue().getFormattedText()), x, y);
+                this.drawHoveringText(NEWLINE_SPLITTER.splitToList(hoverevent.getValue().getFormattedText()), x, y, 0);
             }
             else if (hoverevent.getAction() == HoverEvent.Action.SHOW_ACHIEVEMENT)
             {
@@ -357,7 +422,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                         list.addAll(this.fontRendererObj.listFormattedStringToWidth(s1, 150));
                     }
 
-                    this.drawHoveringText(list, x, y);
+                    this.drawHoveringText(list, x, y, 0);
                 }
                 else
                 {

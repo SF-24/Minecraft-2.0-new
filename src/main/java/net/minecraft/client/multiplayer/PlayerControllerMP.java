@@ -130,7 +130,7 @@ public class PlayerControllerMP
                 Block block = this.mc.theWorld.getBlockState(pos).getBlock();
                 ItemStack itemstack = this.mc.thePlayer.getCurrentEquippedItem();
 
-                if (itemstack == null)
+                if (itemstack == null || itemstack.isEmpty())
                 {
                     return false;
                 }
@@ -205,7 +205,7 @@ public class PlayerControllerMP
                 Block block = this.mc.theWorld.getBlockState(loc).getBlock();
                 ItemStack itemstack = this.mc.thePlayer.getCurrentEquippedItem();
 
-                if (itemstack == null)
+                if (itemstack == null || itemstack.isEmpty())
                 {
                     return false;
                 }
@@ -359,7 +359,7 @@ public class PlayerControllerMP
     private boolean isHittingPosition(BlockPos pos)
     {
         ItemStack itemstack = this.mc.thePlayer.getHeldItem();
-        boolean flag = this.currentItemHittingBlock == null && itemstack == null;
+        boolean flag = this.currentItemHittingBlock == null && (itemstack == null || itemstack.isEmpty());
 
         if (this.currentItemHittingBlock != null && itemstack != null)
         {
