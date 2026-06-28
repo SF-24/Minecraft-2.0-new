@@ -2,6 +2,9 @@ package net.minecraft.item;
 
 import com.google.common.base.Predicates;
 import java.util.List;
+import java.util.UUID;
+
+import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -9,6 +12,8 @@ import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
@@ -282,4 +287,15 @@ public class ItemArmor extends Item
             return this.name;
         }
     }
+
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers()
+    {
+        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers();
+        if(material==ArmorMaterial.STEEL) {
+            UUID uuid = new UUID(this.armorType, this.getClass().hashCode());
+            multimap.put(SharedMonsterAttributes.knockbackResistance.getAttributeUnlocalizedName(), new AttributeModifier(uuid, "Armour modifier", 0.15, 0));
+        }
+        return multimap;
+    }
+
 }

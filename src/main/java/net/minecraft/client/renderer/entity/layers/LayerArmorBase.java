@@ -100,6 +100,7 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
                 case IRON:
                 case GOLD:
                 case DIAMOND:
+                case STEEL:
                     GlStateManager.color(this.colorR, this.colorG, this.colorB, this.alpha);
                     t.render(entitylivingbaseIn, p_177182_2_, p_177182_3_, p_177182_5_, p_177182_6_, p_177182_7_, scale);
             }
