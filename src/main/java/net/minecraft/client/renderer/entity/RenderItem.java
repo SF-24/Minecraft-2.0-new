@@ -37,6 +37,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.src.Config;
 import net.minecraft.util.*;
+import net.mineshaft.item.SpecialItemModelLocation;
 import net.optifine.CustomColors;
 import net.optifine.CustomItems;
 import net.optifine.reflect.Reflector;
@@ -363,6 +364,14 @@ public class RenderItem implements IResourceManagerReloadListener
         if (stack != null)
         {
             IBakedModel ibakedmodel = this.itemModelMesher.getItemModel(stack);
+
+            ModelResourceLocation modelresourcelocation = SpecialItemModelLocation.getSpecialResourceLocation(stack);
+            if (modelresourcelocation != null)
+            {
+                ibakedmodel = this.itemModelMesher.getModelManager().getModel(modelresourcelocation);
+                this.modelLocation = modelresourcelocation;
+            }
+
             this.renderItemModelTransform(stack, ibakedmodel, cameraTransformType);
         }
     }
@@ -382,9 +391,6 @@ public class RenderItem implements IResourceManagerReloadListener
                 if (item == Items.fishing_rod && entityplayer.fishEntity != null)
                 {
                     modelresourcelocation = new ModelResourceLocation("fishing_rod_cast", "inventory");
-                }
-                else if(item == Items.bundle && ItemBundle.isFull(stack)) {
-                    modelresourcelocation = new ModelResourceLocation("bundle_full", "inventory");
                 }
                 else if (item == Items.bow && entityplayer.getItemInUse() != null)
                 {
@@ -406,6 +412,9 @@ public class RenderItem implements IResourceManagerReloadListener
                 else if (Reflector.ForgeItem_getModel.exists())
                 {
                     modelresourcelocation = (ModelResourceLocation)Reflector.call(item, Reflector.ForgeItem_getModel, new Object[] {stack, entityplayer, Integer.valueOf(entityplayer.getItemInUseCount())});
+                }
+                else {
+                    modelresourcelocation = SpecialItemModelLocation.getSpecialResourceLocation(stack);
                 }
 
                 if (modelresourcelocation != null)
@@ -1276,8 +1285,8 @@ public class RenderItem implements IResourceManagerReloadListener
 //        this.registerItem(Items.amethyst, "amethyst");
 
         this.registerItem(Items.ender_pouch, "ender_pouch");
-        this.registerItem(Items.bundle, "bundle");
-
+        // Custom item registration.
+        this.itemModelMesher.register(Items.bundle, stack -> ItemBundle.isFull(stack) ? new ModelResourceLocation("bundle_filled", "inventory") : new ModelResourceLocation("bundle", "inventory"));
         this.registerItem(Items.holy_grenade, "holy_hand_grenade");
         this.registerItem(Items.glowing_bread, "glowing_bread");
         this.registerItem(Items.breeze_rod, "breeze_rod");

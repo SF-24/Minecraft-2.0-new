@@ -65,6 +65,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         this.allowUserInput = true;
         this.ySize = 136;
         this.xSize = 195;
+        this.inventorySlots.isCreativeGui=true;
     }
 
     /**

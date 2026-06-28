@@ -2,8 +2,6 @@ package net.minecraft.inventory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.List;
-import java.util.Set;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
@@ -12,11 +10,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 
+import java.util.List;
+import java.util.Set;
+
 public abstract class Container {
     public List<ItemStack> inventoryItemStacks = Lists.<ItemStack>newArrayList();
     public List<Slot> inventorySlots = Lists.<Slot>newArrayList();
     public int windowId;
     private short transactionID;
+    public boolean isCreativeGui = false;
 
     /**
      * The current drag mode (0 : evenly split, 1 : one item by slot, 2 : not used ?)
@@ -126,7 +128,7 @@ public abstract class Container {
         InventoryPlayer inventoryplayer = playerIn.inventory;
 
         // Bundles
-        if (slotId >= 0 && slotId < this.inventorySlots.size()) {
+        if (!this.isCreativeGui && slotId >= 0 && slotId < this.inventorySlots.size()) {
             Slot slot = this.inventorySlots.get(slotId);
             ItemStack cursorStack = playerIn.inventory.getItemStack();
 

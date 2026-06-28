@@ -119,6 +119,11 @@ public class Item {
         return this;
     }
 
+    public Item setMaxBundleStackSize(int maxBundleStackSize) {
+        this.maxBundleStackSize = maxBundleStackSize;
+        return this;
+    }
+
     /**
      * Called when a Block is right-clicked with this Item
      */
@@ -799,7 +804,7 @@ public class Item {
         registerItem(valueBase+351, "dye", (new ItemDye()).setUnlocalizedName("dyePowder"));
         registerItem(valueBase+352, "bone", (new Item()).setUnlocalizedName("bone").setFull3D().setCreativeTab(CreativeTabs.tabMisc));
         registerItem(valueBase+353, "sugar", (new Item()).setUnlocalizedName("sugar").setPotionEffect(PotionHelper.sugarEffect).setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(valueBase+354, "cake", (new ItemReed(Blocks.cake)).setMaxStackSize(1).setUnlocalizedName("cake").setCreativeTab(CreativeTabs.tabFood));
+        registerItem(valueBase+354, "cake", (new ItemReed(Blocks.cake)).setMaxStackSize(1).setMaxBundleStackSize(4).setUnlocalizedName("cake").setCreativeTab(CreativeTabs.tabFood));
         registerItem(valueBase+355, "bed", (new ItemBed()).setMaxStackSize(1).setUnlocalizedName("bed"));
         registerItem(valueBase+356, "repeater", (new ItemReed(Blocks.unpowered_repeater)).setUnlocalizedName("diode").setCreativeTab(CreativeTabs.tabRedstone));
         registerItem(valueBase+357, "cookie", (new ItemFood(2, 0.1F, false, EnumFoodType.BAKING)).setUnlocalizedName("cookie"));
@@ -861,9 +866,9 @@ public class Item {
         registerItem(valueBase+414, "rabbit_foot", (new Item()).setUnlocalizedName("rabbitFoot").setPotionEffect(PotionHelper.rabbitFootEffect).setCreativeTab(CreativeTabs.tabBrewing));
         registerItem(valueBase+415, "rabbit_hide", (new Item()).setUnlocalizedName("rabbitHide").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(valueBase+416, "armor_stand", (new ItemArmorStand()).setUnlocalizedName("armorStand").setMaxStackSize(16));
-        registerItem(valueBase+417, "iron_horse_armor", (new Item()).setUnlocalizedName("horsearmormetal").setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMisc));
-        registerItem(valueBase+418, "golden_horse_armor", (new Item()).setUnlocalizedName("horsearmorgold").setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMisc));
-        registerItem(valueBase+419, "diamond_horse_armor", (new Item()).setUnlocalizedName("horsearmordiamond").setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMisc));
+        registerItem(valueBase+417, "iron_horse_armor", (new Item()).setUnlocalizedName("horsearmormetal").setMaxStackSize(1).setMaxBundleStackSize(4).setCreativeTab(CreativeTabs.tabMisc));
+        registerItem(valueBase+418, "golden_horse_armor", (new Item()).setUnlocalizedName("horsearmorgold").setMaxStackSize(1).setMaxBundleStackSize(4).setCreativeTab(CreativeTabs.tabMisc));
+        registerItem(valueBase+419, "diamond_horse_armor", (new Item()).setUnlocalizedName("horsearmordiamond").setMaxStackSize(1).setMaxBundleStackSize(4).setCreativeTab(CreativeTabs.tabMisc));
         registerItem(valueBase+422, "command_block_minecart", (new ItemMinecart(EntityMinecart.EnumMinecartType.COMMAND_BLOCK)).setUnlocalizedName("minecartCommandBlock").setCreativeTab((CreativeTabs) null));
         registerItem(valueBase+423, "mutton", (new ItemFood(2, 0.3F, true, EnumFoodType.RAW_MEAT)).setUnlocalizedName("muttonRaw"));
         registerItem(valueBase+424, "cooked_mutton", (new ItemFood(6, 0.8F, true, EnumFoodType.COOKED_MEAT)).setUnlocalizedName("muttonCooked"));

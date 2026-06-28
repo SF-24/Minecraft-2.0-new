@@ -41,7 +41,7 @@ public class ItemBundle extends Item {
         if(getItems(stack)==null) return 0;
         int amount = 0;
         for(ItemStack itemStack : getItems(stack)) {
-            amount += getItemstackAmount(itemStack);
+            amount += getItemstackAmount(itemStack) * itemStack.stackSize;
         }
         return amount;
     }
