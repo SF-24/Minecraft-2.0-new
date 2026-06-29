@@ -1544,6 +1544,7 @@ public class Config
 
     public static boolean isCustomColors()
     {
+        if(MinecraftServer.getServer().isDedicatedServer()) return false;
         return gameSettings.ofCustomColors;
     }
 
