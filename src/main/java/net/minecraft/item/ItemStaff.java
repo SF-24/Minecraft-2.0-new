@@ -8,6 +8,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import java.util.Random;
 
@@ -52,7 +53,7 @@ public class ItemStaff extends Item {
                 }
             }
 
-            worldIn.playSound(playerIn.posX,playerIn.posY,playerIn.posZ, "entity.ghast.shoot",5.0F,1.0F,false);
+            worldIn.playSound(playerIn.posX,playerIn.posY,playerIn.posZ, "mob.ghast.shoot",5.0F,1.0F,false);
 
             Random rand = new Random();
             float yaw = playerIn.rotationYaw;
@@ -63,9 +64,16 @@ public class ItemStaff extends Item {
             float z = (float)Math.cos(Math.toRadians(yaw));
             double y = -Math.sin(Math.toRadians(pitch));
 
-            // Spawn 8 flame particles around the player
-            for(int i = 0; i < 8; ++i) {
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, playerIn.posX, playerIn.posY + 1.0d, playerIn.posZ, ((double)(x + rand.nextFloat()) - 0.5d) / 2.0d, (y + (double)rand.nextFloat() - 0.5d) / 8.0d, ((double)(z + rand.nextFloat()) - 0.5d) / 2.0d, 0);
+            if(worldIn instanceof WorldServer) {
+                WorldServer worldServer = (WorldServer) worldIn;
+                // Spawn 8 flame particles around the player
+                for(int i = 0; i < 8; ++i) {
+                    worldServer.spawnParticle(EnumParticleTypes.FLAME, false, playerIn.posX, playerIn.posY + 1.0d, playerIn.posZ, 1, ((double) (x + rand.nextFloat()) - 0.5d) / 2.0d, (y + (double) rand.nextFloat() - 0.5d) / 8.0d, ((double) (z + rand.nextFloat()) - 0.5d) / 2.0d, 0.0d, new int[0]);
+                }
+            } else {
+                for(int i = 0; i < 8; ++i) {
+                    worldIn.spawnParticle(EnumParticleTypes.FLAME, playerIn.posX, playerIn.posY + 1.0d, playerIn.posZ, ((double)(x + rand.nextFloat()) - 0.5d) / 2.0d, (y + (double)rand.nextFloat() - 0.5d) / 8.0d, ((double)(z + rand.nextFloat()) - 0.5d) / 2.0d, 0);
+                }
             }
 
             // Swing the player's arm
