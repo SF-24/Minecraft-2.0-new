@@ -9,6 +9,7 @@ import net.minecraft.item.EnumFoodStackType;
 import net.minecraft.item.EnumTweakMode;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 
 public class GameRules
 {
@@ -56,7 +57,9 @@ public class GameRules
             if(key.equals("currentMode")) {
                 EnumTweakMode value = gamerules$value.getMode();
                 Item.setCurrentMode(value);
-                Minecraft.getMinecraft().setCurrentMode(value);
+                if(!MinecraftServer.getServer().isDedicatedServer()) {
+                    Minecraft.getMinecraft().setCurrentMode(value);
+                }
             }
             if(key.equals("maxFoodStack")) {
                 try {

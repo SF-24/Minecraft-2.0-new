@@ -1,8 +1,8 @@
 package net.mineshaft.item;
 
-import net.minecraft.MineshaftLogger;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.mineshaft.MineshaftLogger;
 
 import java.util.*;
 

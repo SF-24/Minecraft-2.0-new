@@ -487,10 +487,10 @@ public class DedicatedServer extends MinecraftServer implements IServer
         return getMOTD();
     }
 
-    public void setGuiEnabled()
+    public void setGuiEnabled(boolean value)
     {
         MinecraftServerGui.createServerGui(this);
-        this.guiIsEnabled = true;
+        this.guiIsEnabled = value;
     }
 
     public boolean getGuiEnabled()

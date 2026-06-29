@@ -1,6 +1,5 @@
 package net.minecraft.entity.projectile;
 
-import net.minecraft.MineshaftLogger;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

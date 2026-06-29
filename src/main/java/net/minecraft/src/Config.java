@@ -44,6 +44,7 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.FrameTimer;
@@ -1792,12 +1793,13 @@ public class Config
 
     public static boolean isSmoothWorld()
     {
+        if(MinecraftServer.getServer().isDedicatedServer()) return false;
         return gameSettings.ofSmoothWorld;
     }
 
     public static boolean isLazyChunkLoading()
     {
-        return gameSettings.ofLazyChunkLoading;
+        return (MinecraftServer.getServer().isDedicatedServer() || gameSettings.ofLazyChunkLoading);
     }
 
     public static boolean isDynamicFov()

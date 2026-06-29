@@ -37,6 +37,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.src.Config;
 import net.minecraft.util.*;
+import net.mineshaft.MineshaftLogger;
 import net.mineshaft.item.SpecialItemModelLocation;
 import net.optifine.CustomColors;
 import net.optifine.CustomItems;
@@ -156,7 +157,7 @@ public class RenderItem implements IResourceManagerReloadListener
 
     public void renderItem(ItemStack stack, IBakedModel model)
     {
-        if (stack != null)
+        if (stack != null && !stack.isEmpty())
         {
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
@@ -192,7 +193,7 @@ public class RenderItem implements IResourceManagerReloadListener
                     OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, f, f1);
                 }
 
-                if (stack.hasEffect() && (!Config.isCustomItems() || !CustomItems.renderCustomEffect(this, stack, model)))
+                if (stack.getItem()!=null && stack.hasEffect() && (!Config.isCustomItems() || !CustomItems.renderCustomEffect(this, stack, model)))
                 {
                     // Green if it has a special glint. Else magenta.
                     // Old green: -16711936, Magenta: -8372020
@@ -201,6 +202,9 @@ public class RenderItem implements IResourceManagerReloadListener
                     // 11%: 469794816, 12%: 520126464, 13% 553680896
                     // Emerald: -16736256, 90%: -436183040, Dimmed Emerald (Lower green intensity): -16740352,
                     this.renderEffect(model, stack.hasSpecialGlint()?-16736256:-8372020, stack.hasSpecialGlint());
+                } else if(stack.getItem()==null) {
+                    MineshaftLogger.logError("Detected null item in stack: " + stack.toString());
+                    return;
                 }
             }
 

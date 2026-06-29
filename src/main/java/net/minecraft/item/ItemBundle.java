@@ -1,6 +1,5 @@
 package net.minecraft.item;
 
-import net.minecraft.MineshaftLogger;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -10,6 +9,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
+import net.mineshaft.MineshaftLogger;
 
 import java.util.List;
 

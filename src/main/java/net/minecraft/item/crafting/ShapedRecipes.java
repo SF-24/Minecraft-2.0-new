@@ -103,7 +103,7 @@ public class ShapedRecipes implements IRecipe
 
                 if (itemstack1 != null || itemstack != null)
                 {
-                    if ((itemstack1 == null||itemstack1.isEmpty()) && itemstack != null || itemstack1 != null && (itemstack == null || itemstack.isEmpty()))
+                    if ((itemstack1 == null||itemstack1.isEmpty()) && itemstack != null || itemstack1 != null && (itemstack == null))
                     {
                         return false;
                     }

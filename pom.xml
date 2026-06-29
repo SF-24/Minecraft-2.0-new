@@ -32,6 +32,24 @@
                             </descriptorRefs>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>build-server</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>net.minecraft.server.dedicated.DedicatedServer</mainClass>
+                                </manifest>
+                            </archive>
+                            <finalName>server-run</finalName>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
@@ -49,7 +67,8 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.115.Final</version>
+<!--            <version>4.1.115.Final</version>-->
+            <version>4.0.23.Final</version>
         </dependency>
 
         <dependency>

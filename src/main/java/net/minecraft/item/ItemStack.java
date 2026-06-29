@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 public final class ItemStack
 {
     private boolean emptyFlag;
-    public static final ItemStack empty = new ItemStack((Item)null);
+    public static final ItemStack empty = null;
     public static final DecimalFormat DECIMALFORMAT = new DecimalFormat("#.###");
 
     /** Size of the stack. */

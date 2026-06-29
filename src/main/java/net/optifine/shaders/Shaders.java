@@ -53,6 +53,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Config;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -61,6 +62,7 @@ import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.mineshaft.MineshaftLogger;
 import net.optifine.CustomBlockLayers;
 import net.optifine.CustomColors;
 import net.optifine.GlErrors;
@@ -5866,7 +5868,17 @@ public class Shaders
 
     static
     {
-        shaderPacksDir = new File(Minecraft.getMinecraft().mcDataDir, "shaderpacks");
-        configFile = new File(Minecraft.getMinecraft().mcDataDir, "optionsshaders.txt");
+        File shaders;
+        File config;
+        try {
+            shaders = new File(Minecraft.getMinecraft().mcDataDir, "shaderpacks");
+            config = new File(Minecraft.getMinecraft().mcDataDir, "optionsshaders.txt");
+        } catch (NullPointerException ignored) {
+            MineshaftLogger.logInfo("Not a client, so ignoring shaders dir");
+            shaders = new File(MinecraftServer.getServer().getDataDirectory(), "shaderpacks");
+            config = new File(MinecraftServer.getServer().getDataDirectory(), "optionsshaders.txt");
+        }
+        shaderPacksDir=shaders;
+        configFile=config;
     }
 }

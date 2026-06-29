@@ -31,6 +31,7 @@ import net.minecraft.client.stream.TwitchStream;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.network.play.client.C15PacketClientSettings;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Config;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
@@ -2492,6 +2493,7 @@ public class GameSettings
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CLEAR_WATER)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofClearWater ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.AA_LEVEL)
@@ -2531,14 +2533,17 @@ public class GameSettings
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_FONTS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofCustomFonts ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_COLORS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofCustomColors ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_SKY)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofCustomSky ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.SHOW_CAPES)
@@ -2548,50 +2553,62 @@ public class GameSettings
 
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_ITEMS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofCustomItems ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.NATURAL_TEXTURES)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofNaturalTextures ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.EMISSIVE_TEXTURES)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofEmissiveTextures ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.FAST_MATH)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOn();
             return this.ofFastMath ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.FAST_RENDER)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofFastRender ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.TRANSLUCENT_BLOCKS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofTranslucentBlocks == 1 ? s + Lang.getFast() : (this.ofTranslucentBlocks == 2 ? s + Lang.getFancy() : s + Lang.getDefault());
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.LAZY_CHUNK_LOADING)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofLazyChunkLoading ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.RENDER_REGIONS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofRenderRegions ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.SMART_ANIMATIONS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofSmartAnimations ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.DYNAMIC_FOV)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofDynamicFov ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.ALTERNATE_BLOCKS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofAlternateBlocks ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.DYNAMIC_LIGHTS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             int k = indexOf(this.ofDynamicLights, OF_DYNAMIC_LIGHTS);
             return s + getTranslation(KEYS_DYNAMIC_LIGHTS, k);
         }
@@ -2601,10 +2618,12 @@ public class GameSettings
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_ENTITY_MODELS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofCustomEntityModels ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.CUSTOM_GUIS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.ofCustomGuis ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.SHOW_GL_ERRORS)
@@ -2621,6 +2640,7 @@ public class GameSettings
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.ADVANCED_TOOLTIPS)
         {
+            if(MinecraftServer.getServer().isDedicatedServer()) return s + Lang.getOff();
             return this.advancedItemTooltips ? s + Lang.getOn() : s + Lang.getOff();
         }
         else if (p_getKeyBindingOF_1_ == GameSettings.Options.FRAMERATE_LIMIT)

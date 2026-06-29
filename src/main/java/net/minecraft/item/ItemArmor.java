@@ -229,7 +229,7 @@ public class ItemArmor extends Item
         int i = EntityLiving.getArmorPosition(itemStackIn) - 1;
         ItemStack itemstack = playerIn.getCurrentArmor(i);
 
-        if (itemstack == null || itemstack.isEmpty())
+        if (itemstack == null)
         {
             playerIn.setCurrentItemOrArmor(i, itemStackIn.copy());
             itemStackIn.stackSize = 0;

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Config;
 import net.optifine.Lagometer;
 import org.apache.logging.log4j.LogManager;
@@ -76,7 +77,7 @@ public class Profiler
             }
         }
 
-        if (Config.isFastRender())
+        if (!MinecraftServer.getServer().isDedicatedServer() && Config.isFastRender())
         {
             int j = name.hashCode();
 

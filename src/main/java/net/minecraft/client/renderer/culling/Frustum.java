@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.culling;
 
-import net.minecraft.MineshaftLogger;
 import net.minecraft.util.AxisAlignedBB;
+import net.mineshaft.MineshaftLogger;
 
 public class Frustum implements ICamera
 {
