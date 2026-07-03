@@ -229,6 +229,7 @@ public class Items
     public static final Item breeze_rod;
     public static final ItemProjectile wind_charge;
     public static final ItemProjectile display_bubble;
+    public static final ItemCrossbow steel_crossbow;
     public static final ItemStaff water_staff;
     public static final ItemStaff fire_staff;
 
@@ -471,6 +472,7 @@ public class Items
             ender_pouch = (ItemBackpack) getRegisteredItem("ender_pouch");
             bundle = (ItemBundle) getRegisteredItem("bundle");
 
+            steel_crossbow = (ItemCrossbow) getRegisteredItem("steel_crossbow");
             display_bubble = (ItemProjectile) getRegisteredItem("display_bubble");
             water_staff = (ItemStaff) getRegisteredItem("water_staff");
             fire_staff = (ItemStaff) getRegisteredItem("fire_staff");

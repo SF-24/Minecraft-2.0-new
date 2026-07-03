@@ -19,6 +19,7 @@ public class EntityBat extends EntityAmbientCreature
     public EntityBat(World worldIn)
     {
         super(worldIn);
+        this.isFlyingMob=true;
         this.setSize(0.5F, 0.9F);
         this.setIsBatHanging(true);
     }
@@ -26,7 +27,7 @@ public class EntityBat extends EntityAmbientCreature
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(16, new Byte((byte)0));
+        this.dataWatcher.addObject(16, ((byte)0));
     }
 
     /**

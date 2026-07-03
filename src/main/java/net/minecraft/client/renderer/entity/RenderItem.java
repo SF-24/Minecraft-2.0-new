@@ -1291,6 +1291,10 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerItem(Items.ender_pouch, "ender_pouch");
         // Custom item registration.
         this.itemModelMesher.register(Items.bundle, stack -> ItemBundle.isFull(stack) ? new ModelResourceLocation("bundle_filled", "inventory") : new ModelResourceLocation("bundle", "inventory"));
+
+        // Steel crossbow
+        this.itemModelMesher.register(Items.steel_crossbow, stack -> ItemCrossbow.isLoaded(stack) ? new ModelResourceLocation("steel_crossbow_loaded", "inventory") : new ModelResourceLocation("steel_crossbow", "inventory"));
+
         this.registerItem(Items.holy_grenade, "holy_hand_grenade");
         this.registerItem(Items.glowing_bread, "glowing_bread");
         this.registerItem(Items.breeze_rod, "breeze_rod");

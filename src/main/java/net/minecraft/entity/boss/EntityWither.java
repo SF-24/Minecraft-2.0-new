@@ -61,6 +61,7 @@ public class EntityWither extends EntityMob implements IBossDisplayData, IRanged
         super(worldIn);
         this.setHealth(this.getMaxHealth());
         this.setSize(0.9F, 3.5F);
+        this.isFlyingMob=true;
         this.isImmuneToFire = true;
         ((PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.tasks.addTask(0, new EntityAISwimming(this));

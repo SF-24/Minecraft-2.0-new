@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class ItemBow extends Item
@@ -86,6 +87,8 @@ public class ItemBow extends Item
 
             if (!worldIn.isRemote)
             {
+                float velocityMultiplier = MathHelper.sqrt_double(entityarrow.motionX * entityarrow.motionX + entityarrow.motionY * entityarrow.motionY + entityarrow.motionZ * entityarrow.motionZ);
+                System.out.println("Starting velocity: " + velocityMultiplier);
                 worldIn.spawnEntityInWorld(entityarrow);
             }
         }

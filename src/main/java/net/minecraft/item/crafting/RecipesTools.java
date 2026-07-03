@@ -28,5 +28,7 @@ public class RecipesTools
         }
 
         p_77586_1_.addRecipe(new ItemStack(Items.shears), new Object[] {" #", "# ", '#', Items.iron_ingot});
+
+        // TODO: Staves
     }
 }

@@ -32,6 +32,7 @@ public class EntityBlaze extends EntityMob
         super(worldIn);
         this.isImmuneToFire = true;
         this.experienceValue = 15;
+        this.isFlyingMob=true;
         this.tasks.addTask(4, new EntityBlaze.AIFireballAttack(this));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWander(this, 1.0D));

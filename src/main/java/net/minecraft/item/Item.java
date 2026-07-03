@@ -928,8 +928,9 @@ public class Item {
         // Missing: 502-589
 
         registerItem(valueBase+510, "glowing_bread", (new ItemFood(20, 1.0F, false, EnumFoodType.BAKING)).setUnlocalizedName("breadGlowing"));
-        registerItem(valueBase+ 520, "water_staff", (new ItemStaff(0,50)).setUnlocalizedName("staffWater").setCreativeTab(CreativeTabs.tabCombat).setFull3D());
-        registerItem(valueBase+ 521, "fire_staff", (new ItemStaff(1,50)).setUnlocalizedName("staffFire").setCreativeTab(CreativeTabs.tabCombat).setFull3D());
+        registerItem(valueBase+ 519, "steel_crossbow", (new ItemCrossbow(0,40,1.5f,1,420)).setUnlocalizedName("crossbowSteel").setCreativeTab(CreativeTabs.tabCombat).setFull3D());
+        registerItem(valueBase+ 520, "fire_staff", (new ItemStaff(1,50)).setUnlocalizedName("staffFire").setCreativeTab(CreativeTabs.tabCombat).setFull3D());
+        registerItem(valueBase+ 521, "water_staff", (new ItemStaff(0,50)).setUnlocalizedName("staffWater").setCreativeTab(CreativeTabs.tabCombat).setFull3D());
 
         registerItem(valueBase+590, "wooden_hoe", (new ItemHoe(Item.ToolMaterial.WOOD)).setUnlocalizedName("hoeWood"));
         registerItem(valueBase+591, "stone_hoe", (new ItemHoe(Item.ToolMaterial.STONE)).setUnlocalizedName("hoeStone"));

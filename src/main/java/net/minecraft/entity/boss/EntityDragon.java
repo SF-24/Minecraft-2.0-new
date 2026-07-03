@@ -89,6 +89,7 @@ public class EntityDragon extends EntityLiving implements IBossDisplayData, IEnt
         this.setHealth(this.getMaxHealth());
         this.setSize(16.0F, 8.0F);
         this.noClip = true;
+        this.isFlyingMob=true;
         this.isImmuneToFire = true;
         this.targetY = 100.0D;
         this.ignoreFrustumCheck = true;
