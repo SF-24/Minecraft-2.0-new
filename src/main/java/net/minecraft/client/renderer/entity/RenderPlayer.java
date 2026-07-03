@@ -117,7 +117,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
                         modelplayer.aimedCrossBow = true;
                     }
                 } else if((itemstack.getItem() == Items.steel_crossbow) && ItemCrossbow.isLoaded(itemstack)) {
-                    modelplayer.aimedCrossBow = true;
+                    modelplayer.aimedBow = true;
                 }
             }
         }

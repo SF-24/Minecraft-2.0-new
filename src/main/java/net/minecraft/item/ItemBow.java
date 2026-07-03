@@ -52,11 +52,11 @@ public class ItemBow extends Item
                 entityarrow.setIsCritical(true);
             }
 
-            int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
+            int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
 
-            if (j > 0)
+            if (powerLevel > 0)
             {
-                entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
+                entityarrow.setDamage(entityarrow.getDamage() + (double)powerLevel * 0.5D + 0.5D);
             }
 
             int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);

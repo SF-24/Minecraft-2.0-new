@@ -329,7 +329,7 @@ public class ItemRenderer
         GlStateManager.rotate(-8.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.translate(-0.9F, 0.2F, 0.0F);
         float f = (float)this.itemToRender.getMaxItemUseDuration() - ((float)clientPlayer.getItemInUseCount() - partialTicks + 1.0F);
-        float f1=f/20;
+        float f1 = f / 20.0F;
         f1 = (f1 * f1 + f1 * 2.0F) / 3.0F;
 
         if (f1 > 1.0F)
@@ -430,9 +430,11 @@ public class ItemRenderer
                         case BOW:
                             this.transformFirstPersonItem(f, 0.0F);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
+                            break;
                         case CROSSBOW:
                             this.transformFirstPersonItem(f, 0.0F);
                             this.doCrossbowTransformations(partialTicks, abstractclientplayer);
+                            break;
                     }
                 }
                 else
