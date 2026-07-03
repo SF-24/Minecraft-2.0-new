@@ -37,6 +37,7 @@ public class ModelBiped extends ModelBase
 
     /** Records whether the model should be rendered aiming a bow. */
     public boolean aimedBow;
+    public boolean aimedCrossBow;
 
     public ModelBiped()
     {
@@ -232,7 +233,7 @@ public class ModelBiped extends ModelBase
         this.bipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
         this.bipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 
-        if (this.aimedBow)
+        if (this.aimedBow||this.aimedCrossBow)
         {
             float f3 = 0.0F;
             float f4 = 0.0F;
@@ -249,7 +250,6 @@ public class ModelBiped extends ModelBase
             this.bipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
             this.bipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
         }
-
         copyModelAngles(this.bipedHead, this.bipedHeadwear);
     }
 
@@ -264,6 +264,7 @@ public class ModelBiped extends ModelBase
             this.heldItemRight = modelbiped.heldItemRight;
             this.isSneak = modelbiped.isSneak;
             this.aimedBow = modelbiped.aimedBow;
+            this.aimedCrossBow = modelbiped.aimedCrossBow;
         }
     }
 

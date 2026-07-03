@@ -12,7 +12,9 @@ import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
 import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemCrossbow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -110,6 +112,12 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
                     {
                         modelplayer.aimedBow = true;
                     }
+                    else if (enumaction == EnumAction.CROSSBOW)
+                    {
+                        modelplayer.aimedCrossBow = true;
+                    }
+                } else if((itemstack.getItem() == Items.steel_crossbow) && ItemCrossbow.isLoaded(itemstack)) {
+                    modelplayer.aimedCrossBow = true;
                 }
             }
         }

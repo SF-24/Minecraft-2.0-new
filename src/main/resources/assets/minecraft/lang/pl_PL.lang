@@ -2063,3 +2063,8 @@ tile.anvil.diamond_veryDamaged.name=Mocno uszkodzone diamentowe kowadło
 item.breadGlowing.name=Świecący chleb
 item.breezeRod.name=Wietrzysta różdżka
 item.windCharge.name=Wietrzysta kula
+item.crossbowSteel.name=Stalowa kusza
+item.staffWind.name=Wietrzysta laska
+item.staffWater.name=Mokra laska
+item.staffFire.name=Płonąca laska
+
