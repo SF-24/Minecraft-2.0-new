@@ -1,8 +1,12 @@
 {
     "variants": {
-        "facing=north": { "model": "lit_furnace" },
-        "facing=south": { "model": "lit_furnace", "y": 180 },
-        "facing=west":  { "model": "lit_furnace", "y": 270 },
-        "facing=east":  { "model": "lit_furnace", "y": 90 }
+        "facing=north,is_forge=false": { "model": "lit_furnace" },
+        "facing=south,is_forge=false": { "model": "lit_furnace", "y": 180 },
+        "facing=west,is_forge=false":  { "model": "lit_furnace", "y": 270 },
+        "facing=east,is_forge=false":  { "model": "lit_furnace", "y": 90 },
+        "facing=north,is_forge=true": { "model": "lit_forge" },
+        "facing=south,is_forge=true": { "model": "lit_forge", "y": 180 },
+        "facing=west,is_forge=true":  { "model": "lit_forge", "y": 270 },
+        "facing=east,is_forge=true":  { "model": "lit_forge", "y": 90 }
     }
 }

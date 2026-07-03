@@ -705,6 +705,7 @@ public class RenderItem implements IResourceManagerReloadListener
         //render wall sign
         this.registerBlock(Blocks.wall_sign, "wall_sign");
 
+        this.registerBlock(Blocks.furnace, 1, "forge");
         this.registerBlock(Blocks.anvil, "anvil_intact");
         this.registerBlock(Blocks.anvil, 2, "anvil_slightly_damaged");
         this.registerBlock(Blocks.anvil, 4, "anvil_very_damaged");

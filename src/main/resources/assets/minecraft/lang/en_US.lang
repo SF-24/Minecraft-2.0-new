@@ -685,7 +685,7 @@ tile.blockDiamond.name=Block of Diamond
 tile.workbench.name=Crafting Table
 tile.crops.name=Crops
 tile.farmland.name=Farmland
-tile.furnace.name=Furnace
+tile.furnace.furnace.name=Furnace
 tile.sign.name=Sign
 tile.doorWood.name=Wooden Door
 tile.ladder.name=Ladder
@@ -2765,6 +2765,8 @@ item.spawnEgg.PigZombieBrute=Zombie Pigman Brute Spawn Egg
 item.bundle.name=Bundle
 item.bundle.dyed=Dyed
 item.bundle.fullness=Fullness: %s/%s
+
+tile.furnace.forge.name=Forge
 
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod

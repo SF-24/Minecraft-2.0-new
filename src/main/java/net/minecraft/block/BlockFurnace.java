@@ -1,11 +1,11 @@
 package net.minecraft.block;
 
-import java.util.Random;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -21,16 +21,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
+import java.util.List;
+import java.util.Random;
+
 public class BlockFurnace extends BlockContainer
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyBool IS_FORGE = PropertyBool.create("is_forge");
     private final boolean isBurning;
     private static boolean keepInventory;
 
     protected BlockFurnace(boolean isBurning)
     {
         super(Material.rock);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(IS_FORGE, false));
         this.isBurning = isBurning;
     }
 
@@ -142,13 +146,13 @@ public class BlockFurnace extends BlockContainer
 
         if (active)
         {
-            worldIn.setBlockState(pos, Blocks.lit_furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, Blocks.lit_furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, Blocks.lit_furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(IS_FORGE, iblockstate.getValue(IS_FORGE)), 3);
+            worldIn.setBlockState(pos, Blocks.lit_furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(IS_FORGE, iblockstate.getValue(IS_FORGE)), 3);
         }
         else
         {
-            worldIn.setBlockState(pos, Blocks.furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, Blocks.furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, Blocks.furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(IS_FORGE, iblockstate.getValue(IS_FORGE)), 3);
+            worldIn.setBlockState(pos, Blocks.furnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(IS_FORGE, iblockstate.getValue(IS_FORGE)), 3);
         }
 
         keepInventory = false;
@@ -182,7 +186,7 @@ public class BlockFurnace extends BlockContainer
      */
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(IS_FORGE, stack.getMetadata()==1), 2);
 
         if (stack.hasDisplayName())
         {
@@ -239,7 +243,7 @@ public class BlockFurnace extends BlockContainer
      */
     public IBlockState getStateForEntityRender(IBlockState state)
     {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.SOUTH);
+        return this.getDefaultState().withProperty(FACING, EnumFacing.SOUTH).withProperty(IS_FORGE, false);
     }
 
     /**
@@ -247,14 +251,15 @@ public class BlockFurnace extends BlockContainer
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+
+        EnumFacing enumfacing = EnumFacing.getFront(meta-4);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {
             enumfacing = EnumFacing.NORTH;
         }
 
-        return this.getDefaultState().withProperty(FACING, enumfacing);
+        return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(IS_FORGE, meta % 4 == 0);
     }
 
     /**
@@ -262,11 +267,23 @@ public class BlockFurnace extends BlockContainer
      */
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
+        return state.getValue(FACING).getIndex() + (state.getValue(IS_FORGE) ? 4 : 0);
     }
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {FACING});
+        return new BlockState(this, FACING, IS_FORGE);
+    }
+
+    /**
+     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
+     */
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    {
+        if(itemIn.getCreativeTab()==null) {
+            return;
+        }
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
     }
 }

@@ -1735,7 +1735,7 @@ tile.flower2.tulipOrange.name=Pomarańczowy tulipan
 tile.flower2.tulipPink.name=Różowy tulipan
 tile.flower2.tulipRed.name=Czerwony tulipan
 tile.flower2.tulipWhite.name=Biały tulipan
-tile.furnace.name=Piec
+tile.furnace.furnace.name=Piec
 tile.glass.name=Szkło
 tile.goldenRail.name=Zasilane tory
 tile.grass.name=Blok trawy
@@ -2059,6 +2059,8 @@ title.bloodMoon.fade=Gdy nadchodzi ranek, krwawy księżyc zanika...
 tile.anvil.diamond_intact.name=Diamentowe kowadło
 tile.anvil.diamond_slightlyDamaged.name=Lekko uszkodzone diamentowe kowadło
 tile.anvil.diamond_veryDamaged.name=Mocno uszkodzone diamentowe kowadło
+
+tile.furnace.forge.name=Piec Hutniczy
 
 item.breadGlowing.name=Świecący chleb
 item.breezeRod.name=Wietrzysta różdżka

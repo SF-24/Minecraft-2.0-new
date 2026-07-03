@@ -2282,7 +2282,7 @@ tile.flower2.tulipOrange.name=Orange Tulip
 tile.flower2.tulipPink.name=Pink Tulip
 tile.flower2.tulipRed.name=Red Tulip
 tile.flower2.tulipWhite.name=White Tulip
-tile.furnace.name=Furnace
+tile.furnace.furnace.name=Furnace
 tile.glass.name=Glass Block
 tile.goldenRail.name=Powered Rail
 tile.grass.name=Grass Block
@@ -2593,6 +2593,8 @@ title.bloodMoon.fade=As dawn rises, the blood moon fades...
 tile.anvil.diamond_intact.name=Diamond Anvil
 tile.anvil.diamond_slightlyDamaged.name=Slightly Damaged Diamond Anvil
 tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
+
+tile.furnace.forge.name=Forge
 
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod

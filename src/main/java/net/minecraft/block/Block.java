@@ -1334,7 +1334,7 @@ public class Block
         Block block6 = (new BlockFarmland()).setHardness(0.6F).setStepSound(soundTypeGravel).setUnlocalizedName("farmland");
         registerBlock(60, "farmland", block6);
         registerBlock(61, "furnace", (new BlockFurnace(false)).setHardness(3.5F).setStepSound(soundTypePiston).setUnlocalizedName("furnace").setCreativeTab(CreativeTabs.tabDecorations));
-        registerBlock(62, "lit_furnace", (new BlockFurnace(true)).setHardness(3.5F).setStepSound(soundTypePiston).setLightLevel(0.875F).setUnlocalizedName("furnace"));
+        registerBlock(62, "lit_furnace", (new BlockFurnace(true)).setHardness(3.5F).setStepSound(soundTypePiston).setLightLevel(0.875F).setUnlocalizedName("furnace").setCreativeTab(null));
         registerBlock(63, "standing_sign", (new BlockStandingSign()).setHardness(1.0F).setStepSound(soundTypeWood).setUnlocalizedName("sign").disableStats());
         registerBlock(64, "wooden_door", (new BlockDoor(Material.wood)).setHardness(3.0F).setStepSound(soundTypeWood).setUnlocalizedName("doorOak").disableStats());
         registerBlock(65, "ladder", (new BlockLadder()).setHardness(0.4F).setStepSound(soundTypeLadder).setUnlocalizedName("ladder"));
@@ -1490,9 +1490,6 @@ public class Block
         registerBlock(207, "powered_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailGold").setCreativeTab(CreativeTabs.tabTransport));
         registerBlock(208, "detector_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailDetector").setCreativeTab(CreativeTabs.tabTransport));
         registerBlock(209, "activator_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailActivator").setCreativeTab(CreativeTabs.tabTransport));
-
-        registerBlock(210, "forge", (new BlockFurnace(false)).setHardness(3.5F).setStepSound(soundTypePiston).setUnlocalizedName("furnace").setCreativeTab(CreativeTabs.tabDecorations));
-        registerBlock(211, "lit_forge", (new BlockFurnace(true)).setHardness(3.5F).setStepSound(soundTypePiston).setLightLevel(0.875F).setUnlocalizedName("furnace"));
 
 //        registerBlock(210, "compressed_cobblestone", (new BlockDungeon()).setHardness(100.0F).setResistance(1200.0F).setStepSound(soundTypeStone).setUnlocalizedName("cobblestoneCompressed").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(218, "observer", (new BlockObserver()).setHardness(3.0F).setUnlocalizedName("observer"));

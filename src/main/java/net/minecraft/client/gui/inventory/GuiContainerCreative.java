@@ -15,6 +15,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -353,6 +354,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                 item.getSubItems(item, (CreativeTabs)null, guicontainercreative$containercreative.itemList);
             }
         }
+//        guicontainercreative$containercreative.itemList.add(new ItemStack(Blocks.furnace, 1, 1));
 
         // TODO:
         guicontainercreative$containercreative.itemList.sort(CreativeTabOrderManager.getComparator());
