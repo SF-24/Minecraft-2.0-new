@@ -1478,8 +1478,8 @@ public class Block
         registerBlock(197, "dark_oak_door", (new BlockDoor(Material.wood)).setHardness(3.0F).setStepSound(soundTypeWood).setUnlocalizedName("doorDarkOak").disableStats());
 
         //New blocks
-//        registerBlock(198, "nether_ash_ore", (new BlockOre(MapColor.netherrackColor)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreAsh"));
-//        registerBlock(199, "steel_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockSteel").setCreativeTab(CreativeTabs.tabBlock));
+        registerBlock(198, "nether_ash_ore", (new BlockOre(MapColor.netherrackColor)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreAsh"));
+        registerBlock(199, "steel_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockSteel").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(200, "nether_gold_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreNetherGold"));
 //        registerBlock(201, "amethyst_crystal", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypeGlass).setUnlocalizedName("crystalAmethyst").setCreativeTab(CreativeTabs.tabBlock));
 //        registerBlock(202, "amethyst_block", (new Block(Material.iron, MapColor.pinkColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockAmethyst").setCreativeTab(CreativeTabs.tabBlock));
@@ -1490,6 +1490,9 @@ public class Block
         registerBlock(207, "powered_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailGold").setCreativeTab(CreativeTabs.tabTransport));
         registerBlock(208, "detector_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailDetector").setCreativeTab(CreativeTabs.tabTransport));
         registerBlock(209, "activator_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailActivator").setCreativeTab(CreativeTabs.tabTransport));
+
+        registerBlock(210, "forge", (new BlockFurnace(false)).setHardness(3.5F).setStepSound(soundTypePiston).setUnlocalizedName("furnace").setCreativeTab(CreativeTabs.tabDecorations));
+        registerBlock(211, "lit_forge", (new BlockFurnace(true)).setHardness(3.5F).setStepSound(soundTypePiston).setLightLevel(0.875F).setUnlocalizedName("furnace"));
 
 //        registerBlock(210, "compressed_cobblestone", (new BlockDungeon()).setHardness(100.0F).setResistance(1200.0F).setStepSound(soundTypeStone).setUnlocalizedName("cobblestoneCompressed").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(218, "observer", (new BlockObserver()).setHardness(3.0F).setUnlocalizedName("observer"));
