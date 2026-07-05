@@ -17,7 +17,7 @@ public class GuiTrommel extends GuiContainer
 
     public GuiTrommel(InventoryPlayer playerInv, IInventory furnaceInv)
     {
-        super(new ContainerFurnace(playerInv, furnaceInv));
+        super(new ContainerFurnace(playerInv, furnaceInv, false));
         this.playerInventory = playerInv;
         this.tileTrommel = furnaceInv;
     }

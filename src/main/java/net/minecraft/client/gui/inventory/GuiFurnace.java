@@ -14,12 +14,22 @@ public class GuiFurnace extends GuiContainer
     /** The player inventory bound to this GUI. */
     private final InventoryPlayer playerInventory;
     private IInventory tileFurnace;
+    private boolean isForge;
 
     public GuiFurnace(InventoryPlayer playerInv, IInventory furnaceInv)
     {
-        super(new ContainerFurnace(playerInv, furnaceInv));
+        super(new ContainerFurnace(playerInv, furnaceInv,false));
         this.playerInventory = playerInv;
         this.tileFurnace = furnaceInv;
+        this.isForge=false;
+    }
+
+    public GuiFurnace(InventoryPlayer playerInv, IInventory furnaceInv, boolean isForge)
+    {
+        super(new ContainerFurnace(playerInv, furnaceInv,isForge));
+        this.playerInventory = playerInv;
+        this.tileFurnace = furnaceInv;
+        this.isForge=isForge;
     }
 
     /**

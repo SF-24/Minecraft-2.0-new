@@ -318,7 +318,7 @@ public class TileEntityFurnace extends TileEntityLockable implements ITickable, 
         }
         else
         {
-            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(this.furnaceItemStacks[0]);
+            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(this.furnaceItemStacks[0],worldObj.getBlockState(pos.getX(),pos.getY(),pos.getZ()).getValue(BlockFurnace.IS_FORGE));
             return (itemstack == null || itemstack.isEmpty()) ? false : ((this.furnaceItemStacks[2] == null || this.furnaceItemStacks[2].isEmpty()) ? true : (!this.furnaceItemStacks[2].isItemEqual(itemstack) ? false : (this.furnaceItemStacks[2].stackSize < this.getInventoryStackLimit() && this.furnaceItemStacks[2].stackSize < this.furnaceItemStacks[2].getMaxStackSize() ? true : this.furnaceItemStacks[2].stackSize < itemstack.getMaxStackSize())));
         }
     }
@@ -330,7 +330,7 @@ public class TileEntityFurnace extends TileEntityLockable implements ITickable, 
     {
         if (this.canSmelt())
         {
-            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(this.furnaceItemStacks[0]);
+            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(this.furnaceItemStacks[0],worldObj.getBlockState(pos.getX(),pos.getY(),pos.getZ()).getValue(BlockFurnace.IS_FORGE));
 
             if (this.furnaceItemStacks[2] == null)
             {
@@ -393,8 +393,32 @@ public class TileEntityFurnace extends TileEntityLockable implements ITickable, 
         }
     }
 
-    public static boolean isItemFuel(ItemStack p_145954_0_)
+    public static int getItemForgeBurnTime(ItemStack p_145952_0_)
     {
+        if (p_145952_0_ == null)
+        {
+            return 0;
+        }
+        else
+        {
+            Item item = p_145952_0_.getItem();
+
+            if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air)
+            {
+                Block block = Block.getBlockFromItem(item);
+
+                if (block == Blocks.coal_block)
+                {
+                    return 16000;
+                }
+            }
+            return (item == Items.coal ? 1600 : (item == Items.lava_bucket ? 20000 : item == Items.blaze_rod ? 2400 : item == Items.holy_grenade ? 50000 : item == Items.nether_ash ? 1600 : 0)); // (item == Items.nether_ash ? 1600 :
+        }
+    }
+
+    public static boolean isItemFuel(ItemStack p_145954_0_,boolean isForge)
+    {
+        if(isForge) {return getItemForgeBurnTime(p_145954_0_) > 0;}
         return getItemBurnTime(p_145954_0_) > 0;
     }
 
@@ -419,7 +443,7 @@ public class TileEntityFurnace extends TileEntityLockable implements ITickable, 
      */
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return index == 2 ? false : (index != 1 ? true : isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack));
+        return index == 2 ? false : (index != 1 ? true : isItemFuel(stack,worldObj.getBlockState(pos.getX(),pos.getY(),pos.getZ()).getValue(BlockFurnace.IS_FORGE)) || SlotFurnaceFuel.isBucket(stack));
     }
 
     public int[] getSlotsForFace(EnumFacing side)
@@ -462,7 +486,7 @@ public class TileEntityFurnace extends TileEntityLockable implements ITickable, 
 
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
-        return new ContainerFurnace(playerInventory, this);
+        return new ContainerFurnace(playerInventory, this, this.getWorld().getBlockState(pos.getX(),pos.getY(),pos.getZ()).getValue(BlockFurnace.IS_FORGE));
     }
 
     public int getField(int id)

@@ -130,7 +130,11 @@ public class BlockFurnace extends BlockContainer
 
             if (tileentity instanceof TileEntityFurnace)
             {
-                playerIn.displayGUIChest((TileEntityFurnace)tileentity);
+                if(state.getValue(IS_FORGE)) {
+                    playerIn.displayGUIChest((TileEntityFurnace)tileentity);
+                } else {
+                    playerIn.displayGUIChest((TileEntityFurnace)tileentity);
+                }
                 playerIn.triggerAchievement(StatList.field_181741_Y);
             }
 

@@ -13,8 +13,9 @@ public class ContainerFurnace extends Container
     private int totalCookTime;
     private int furnaceBurnTime;
     private int currentItemBurnTime;
+    private boolean isForge;
 
-    public ContainerFurnace(InventoryPlayer playerInventory, IInventory furnaceInventory)
+    public ContainerFurnace(InventoryPlayer playerInventory, IInventory furnaceInventory, boolean isForge)
     {
         this.tileFurnace = furnaceInventory;
         this.addSlotToContainer(new Slot(furnaceInventory, 0, 56, 17));
@@ -113,14 +114,14 @@ public class ContainerFurnace extends Container
             }
             else if (index != 1 && index != 0)
             {
-                if (FurnaceRecipes.instance().getSmeltingResult(itemstack1) != null)
+                if (FurnaceRecipes.instance().getSmeltingResult(itemstack1,isForge) != null)
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
                         return null;
                     }
                 }
-                else if (TileEntityFurnace.isItemFuel(itemstack1))
+                else if (TileEntityFurnace.isItemFuel(itemstack1,isForge))
                 {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false))
                     {
