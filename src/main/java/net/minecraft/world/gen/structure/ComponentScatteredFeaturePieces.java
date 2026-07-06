@@ -16,6 +16,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
+import net.mineshaft.structure.EnumLootSource;
+import net.mineshaft.structure.LootTableEnchantedBook;
+import net.mineshaft.structure.LootTableList;
 
 public class ComponentScatteredFeaturePieces
 {
@@ -32,7 +35,6 @@ public class ComponentScatteredFeaturePieces
     public static class DesertPyramid extends ComponentScatteredFeaturePieces.Feature
     {
         private final boolean[] hasPlacedChest = new boolean[4];
-        private static final List<WeightedRandomChestContent> itemsToGenerateInTemple = Lists.newArrayList(new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1));
 
         public DesertPyramid()
         {
@@ -256,7 +258,7 @@ public class ComponentScatteredFeaturePieces
                 {
                     int l1 = enumfacing.getFrontOffsetX() * 2;
                     int i2 = enumfacing.getFrontOffsetZ() * 2;
-                    this.hasPlacedChest[enumfacing.getHorizontalIndex()] = this.generateChestContents(worldIn, structureBoundingBoxIn, randomIn, 10 + l1, -11, 10 + i2, WeightedRandomChestContent.func_177629_a(itemsToGenerateInTemple, Items.enchanted_book.getRandom(randomIn)), 2 + randomIn.nextInt(5));
+                    this.hasPlacedChest[enumfacing.getHorizontalIndex()] = this.generateChestContents(worldIn, structureBoundingBoxIn, randomIn, 10 + l1, -11, 10 + i2, WeightedRandomChestContent.func_177629_a(LootTableList.LootOverworld.DESERT_PYRAMID, LootTableEnchantedBook.getEnchantedBook(randomIn, EnumLootSource.DESERT_PYRAMID)), 2 + randomIn.nextInt(5));
                 }
             }
 
@@ -357,7 +359,6 @@ public class ComponentScatteredFeaturePieces
         private boolean placedHiddenChest;
         private boolean placedTrap1;
         private boolean placedTrap2;
-        private static final List<WeightedRandomChestContent> field_175816_i = Lists.newArrayList(new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1));
         private static final List<WeightedRandomChestContent> field_175815_j = Lists.newArrayList(new WeightedRandomChestContent(Items.arrow, 0, 2, 7, 30));
         private static final List<WeightedRandomChestContent> field_175815_k = Lists.newArrayList(new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.tnt), 0, 1, 2, 30));
         private static final ComponentScatteredFeaturePieces.JunglePyramid.Stones junglePyramidsRandomScatteredStones = new ComponentScatteredFeaturePieces.JunglePyramid.Stones();
@@ -554,7 +555,7 @@ public class ComponentScatteredFeaturePieces
 
                 if (!this.placedMainChest)
                 {
-                    this.placedMainChest = this.generateChestContents(worldIn, structureBoundingBoxIn, randomIn, 8, -3, 3, WeightedRandomChestContent.func_177629_a(field_175816_i, Items.enchanted_book.getRandom(randomIn)), 2 + randomIn.nextInt(5));
+                    this.placedMainChest = this.generateChestContents(worldIn, structureBoundingBoxIn, randomIn, 8, -3, 3, WeightedRandomChestContent.func_177629_a(LootTableList.LootOverworld.JUNGLE_PYRAMID, LootTableEnchantedBook.getEnchantedBook(randomIn,EnumLootSource.JUNGLE_PYRAMID)), 2 + randomIn.nextInt(5));
                 }
 
                 this.setBlockState(worldIn, cobblestoneMossy, 9, -3, 2, structureBoundingBoxIn);
@@ -587,7 +588,7 @@ public class ComponentScatteredFeaturePieces
 
                 if (!this.placedHiddenChest)
                 {
-                    this.placedHiddenChest = this.generateChestContents(worldIn, structureBoundingBoxIn, randomIn, 9, -3, 10, WeightedRandomChestContent.func_177629_a(field_175816_i, Items.enchanted_book.getRandom(randomIn)), 2 + randomIn.nextInt(5));
+                    this.placedHiddenChest = this.generateChestContents(worldIn, structureBoundingBoxIn, randomIn, 9, -3, 10, WeightedRandomChestContent.func_177629_a(LootTableList.LootOverworld.JUNGLE_PYRAMID, LootTableEnchantedBook.getEnchantedBook(randomIn,EnumLootSource.JUNGLE_PYRAMID)), 2 + randomIn.nextInt(5));
                 }
 
                 return true;

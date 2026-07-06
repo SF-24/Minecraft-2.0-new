@@ -12,6 +12,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
+import net.mineshaft.structure.LootTableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,19 +25,6 @@ public class WorldGenAetherDungeons extends WorldGenerator
     private static final String[] SPAWNERTYPES = new String[] {"Slime","Creeper","Slime","CaveSpider"};
 
     String type = "";
-
-    private static final List<WeightedRandomChestContent> CHESTCONTENT = Lists.newArrayList(
-//            new WeightedRandomChestContent(Items.glowing_bread, 0, 1, 1, 3),
-            new WeightedRandomChestContent(Items.glowstone_dust, 0, 1, 4, 10),
-            new WeightedRandomChestContent(Items.slime_ball, 0, 1, 4, 2),
-//            new WeightedRandomChestContent(Items.ruby, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.apple, 0, 1, 2, 3),
-            new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1),
-            new WeightedRandomChestContent(Items.record_magnetic_circuit, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.bread, 0, 1, 4, 5),
-            new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 4, 5),
-            new WeightedRandomChestContent(Items.gold_nugget, 0, 3, 27, 5),
-            new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 2));
 
     public boolean generate(World worldIn, Random rand, BlockPos pos)
     {
@@ -142,7 +130,7 @@ public class WorldGenAetherDungeons extends WorldGenerator
                         if (j3 == 1)
                         {
                             worldIn.setBlockState(blockpos2, Blocks.chest.correctFacing(worldIn, blockpos2, Blocks.chest.getDefaultState()), 2);
-                            List<WeightedRandomChestContent> list = WeightedRandomChestContent.func_177629_a(CHESTCONTENT, Items.enchanted_book.getRandom(rand));
+                            List<WeightedRandomChestContent> list = WeightedRandomChestContent.func_177629_a(LootTableList.LootAether.AETHER_DUNGEON, Items.enchanted_book.getRandom(rand));
                             TileEntity tileentity1 = worldIn.getTileEntity(blockpos2);
 
                             if (tileentity1 instanceof TileEntityChest)
