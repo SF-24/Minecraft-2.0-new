@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.MinecraftException;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.storage.IChunkLoader;
+import net.minecraft.world.gen.structure.template.TemplateManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +27,8 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /** The directory in which to save player data. */
     private final File playersDirectory;
     private final File mapDataDir;
+
+    private final TemplateManager structureTemplateManager;
 
     /**
      * The time in milliseconds when this field was initialized. Stored in the session lock file.
@@ -47,6 +50,11 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
         if (playersDirectoryIn)
         {
             this.playersDirectory.mkdirs();
+            this.structureTemplateManager = new TemplateManager((new File(this.worldDirectory, "structures")).toString());
+        }
+        else
+        {
+            this.structureTemplateManager = null;
         }
 
         this.setSessionLock();
@@ -348,5 +356,10 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     public String getWorldDirectoryName()
     {
         return this.saveDirectoryName;
+    }
+
+    @Override
+    public TemplateManager getStructureTemplateManager() {
+        return null;
     }
 }

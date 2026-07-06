@@ -1494,6 +1494,8 @@ public class Block
 //        registerBlock(210, "compressed_cobblestone", (new BlockDungeon()).setHardness(100.0F).setResistance(1200.0F).setStepSound(soundTypeStone).setUnlocalizedName("cobblestoneCompressed").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(218, "observer", (new BlockObserver()).setHardness(3.0F).setUnlocalizedName("observer"));
 
+        registerBlock(254, "structure_void", (new BlockStructureVoid()).setUnlocalizedName("structure_void"));
+        registerBlock(255, "structure_block", (new BlockStructure()).setHardness(3.0F).setUnlocalizedName("blockStructure"));
 
         // Aether blocks
         registerBlock(301, "aether_portal", (new BlockAetherPortal()).setHardness(-1.0F).setStepSound(soundTypeGlass).setLightLevel(0.75F).setUnlocalizedName("portalAether"));

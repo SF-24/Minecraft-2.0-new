@@ -65,6 +65,7 @@ import net.minecraft.world.chunk.storage.IChunkLoader;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraft.world.gen.feature.WorldGeneratorBonusChest;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldInfo;
@@ -1181,5 +1182,9 @@ public class WorldServer extends World implements IThreadListener
         private ServerBlockEventList()
         {
         }
+    }
+    public TemplateManager getStructureTemplateManager()
+    {
+        return this.saveHandler.getStructureTemplateManager();
     }
 }
