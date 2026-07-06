@@ -142,11 +142,11 @@ public class StatisticsFile extends StatFileWriter
                             tupleintjsonserializable.setIntegerValue(jsonobject1.getAsJsonPrimitive("value").getAsInt());
                         }
 
-                        if (jsonobject1.has("progress") && statbase.func_150954_l() != null)
+                        if (jsonobject1.has("progress") && statbase.isAchievementCompleted() != null)
                         {
                             try
                             {
-                                Constructor <? extends IJsonSerializable > constructor = statbase.func_150954_l().getConstructor(new Class[0]);
+                                Constructor <? extends IJsonSerializable > constructor = statbase.isAchievementCompleted().getConstructor(new Class[0]);
                                 IJsonSerializable ijsonserializable = (IJsonSerializable)constructor.newInstance(new Object[0]);
                                 ijsonserializable.fromJson(jsonobject1.get("progress"));
                                 tupleintjsonserializable.setJsonSerializableValue(ijsonserializable);
