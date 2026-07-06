@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.MinecraftException;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.storage.IChunkLoader;
-import net.minecraft.world.gen.structure.template.TemplateManager;
 
 public interface ISaveHandler
 {
@@ -28,8 +27,6 @@ public interface ISaveHandler
      * Saves the given World Info with the given NBTTagCompound as the Player.
      */
     void saveWorldInfoWithPlayer(WorldInfo worldInformation, NBTTagCompound tagCompound);
-
-
 
     /**
      * used to update level.dat from old format to MCRegion format
@@ -57,6 +54,4 @@ public interface ISaveHandler
      * Returns the name of the directory where world information is saved.
      */
     String getWorldDirectoryName();
-
-    TemplateManager getStructureTemplateManager();
 }

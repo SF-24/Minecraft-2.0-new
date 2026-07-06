@@ -1314,7 +1314,6 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.detector_rail_block, "detector_rail_block");
 
         this.registerBlock(Blocks.observer, "observer");
-        this.registerBlock(Blocks.structure_block, "structure_block");
 
         // dungeon block
 //        this.registerBlock(Blocks.compressed_cobblestone, 0,"compressed_cobblestone");

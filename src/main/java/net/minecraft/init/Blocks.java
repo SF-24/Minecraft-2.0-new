@@ -219,8 +219,6 @@ public class Blocks
     public static final Block gold_rail_block;
     public static final Block detector_rail_block;
     public static final Block activator_rail_block;
-    public static final BlockStructure structure_block;
-    public static final BlockStructureVoid structure_void;
 
 //    public static final Block compressed_cobblestone;
 
@@ -465,8 +463,6 @@ public class Blocks
 //            compressed_cobblestone = getRegisteredBlock("compressed_cobblestone");
             aether_portal = (BlockAetherPortal) getRegisteredBlock("aether_portal");
             observer = (BlockObserver) getRegisteredBlock("observer");
-            structure_block = (BlockStructure) getRegisteredBlock("structure_block");
-            structure_void = (BlockStructureVoid) getRegisteredBlock("structure_void");
 
 
         }

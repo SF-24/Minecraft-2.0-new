@@ -40,7 +40,6 @@ import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.tileentity.TileEntityStructure;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -167,15 +166,6 @@ public abstract class EntityPlayer extends EntityLivingBase
         this.setLocationAndAngles((double)blockpos.getX() + 0.5D, (double)(blockpos.getY() + 1), (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
         this.unused180 = 180.0F;
         this.fireResistance = 20;
-    }
-
-    public boolean canUseCommandBlock()
-    {
-        return this.capabilities.isCreativeMode && this.canCommandSenderUseCommand(2, "");
-    }
-
-    public void openEditStructure(TileEntityStructure structure)
-    {
     }
 
     protected void applyEntityAttributes()

@@ -1,109 +1,12 @@
 package net.minecraft.nbt;
 
-import com.google.common.collect.UnmodifiableIterator;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 
 public final class NBTUtil
 {
-    /**
-     * Reads a blockstate from the given tag.
-     *
-     * @param tag The tag the blockstate is to be read from
-     */
-    public static IBlockState readBlockState(NBTTagCompound tag)
-    {
-        if (!tag.hasKey("Name", 8))
-        {
-            return Blocks.air.getDefaultState();
-        }
-        else
-        {
-            Block block = Block.blockRegistry.getObject(new ResourceLocation(tag.getString("Name")));
-            IBlockState iblockstate = block.getDefaultState();
-
-            if (tag.hasKey("Properties", 10))
-            {
-                NBTTagCompound nbttagcompound = tag.getCompoundTag("Properties");
-                BlockState blockstatecontainer = block.getBlockState();
-
-                for (String s : nbttagcompound.getKeySet())
-                {
-                    IProperty<?> iproperty = blockstatecontainer.getProperty();
-
-                    if (iproperty != null)
-                    {
-                        iblockstate = func_193590_a(iblockstate, iproperty, s, nbttagcompound, tag);
-                    }
-                }
-            }
-
-            return iblockstate;
-        }
-    }
-
-    private static <T extends Comparable<T>> IBlockState func_193590_a(IBlockState p_193590_0_, IProperty<T> p_193590_1_, String p_193590_2_, NBTTagCompound p_193590_3_, NBTTagCompound p_193590_4_)
-    {
-        Optional<T> optional = p_193590_1_.parseValue(p_193590_3_.getString(p_193590_2_));
-
-        if (optional.isPresent())
-        {
-            return p_193590_0_.withProperty(p_193590_1_, optional.get());
-        }
-        else
-        {
-            field_193591_a.warn("Unable to read property: {} with value: {} for blockstate: {}", p_193590_2_, p_193590_3_.getString(p_193590_2_), p_193590_4_.toString());
-            return p_193590_0_;
-        }
-    }
-
-
-    /**
-     * Writes the given blockstate to the given tag.
-     *
-     * @param tag The tag to write to
-     * @param state The blockstate to be written
-     */
-    public static NBTTagCompound writeBlockState(NBTTagCompound tag, IBlockState state)
-    {
-        tag.setString("Name", ((ResourceLocation)Block.blockRegistry.getNameForObject(state.getBlock())).toString());
-
-        if (!state.getProperties().isEmpty())
-        {
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
-            UnmodifiableIterator unmodifiableiterator = state.getProperties().entrySet().iterator();
-
-            while (unmodifiableiterator.hasNext())
-            {
-                Map.Entry< IProperty<?>, Comparable<? >> entry = (Map.Entry)unmodifiableiterator.next();
-                IProperty<?> iproperty = entry.getKey();
-                nbttagcompound.setString(iproperty.getName(), getName(iproperty, entry.getValue()));
-            }
-
-            tag.setTag("Properties", nbttagcompound);
-        }
-
-        return tag;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T extends Comparable<T>> String getName(IProperty<T> p_190010_0_, Comparable<?> p_190010_1_)
-    {
-        return p_190010_0_.getName((T)p_190010_1_);
-    }
-
     /**
      * Reads and returns a GameProfile that has been saved to the passed in NBTTagCompound
      */

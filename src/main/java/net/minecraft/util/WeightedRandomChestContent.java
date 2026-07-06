@@ -20,26 +20,12 @@ public class WeightedRandomChestContent extends WeightedRandom.Item
     /** The maximum stack size of generated item. */
     private int maxStackSize;
 
-    boolean isGuaranteed;
-
-    public WeightedRandomChestContent(Item p_i45311_1_, int meta, int minimumChance, int maximumChance, int itemWeightIn)
+    public WeightedRandomChestContent(Item p_i45311_1_, int p_i45311_2_, int minimumChance, int maximumChance, int itemWeightIn)
     {
         super(itemWeightIn);
-        this.theItemId = new ItemStack(p_i45311_1_, 1, meta);
+        this.theItemId = new ItemStack(p_i45311_1_, 1, p_i45311_2_);
         this.minStackSize = minimumChance;
         this.maxStackSize = maximumChance;
-    }
-
-    public WeightedRandomChestContent(Item p_i45311_1_, int meta, int minimumChance, int maximumChance, int itemWeightIn, boolean isGuaranteedExtra)
-    {
-        super(itemWeightIn);
-        this.theItemId = new ItemStack(p_i45311_1_, 1, meta);
-        this.minStackSize = minimumChance;
-        this.maxStackSize = maximumChance;
-        this.isGuaranteed=isGuaranteedExtra;
-        if(isGuaranteedExtra) {
-            this.itemWeight=0;
-        }
     }
 
     public WeightedRandomChestContent(ItemStack stack, int minimumChance, int maximumChance, int itemWeightIn)
@@ -71,14 +57,6 @@ public class WeightedRandomChestContent extends WeightedRandom.Item
                     itemstack.stackSize = 1;
                     inv.setInventorySlotContents(random.nextInt(inv.getSizeInventory()), itemstack);
                 }
-            }
-        }
-
-        for(WeightedRandomChestContent weightedRandomChestContent : listIn) {
-            if(weightedRandomChestContent.isGuaranteed) {
-                ItemStack itemstack = weightedRandomChestContent.theItemId.copy();
-                itemstack.stackSize = weightedRandomChestContent.minStackSize+random.nextInt(weightedRandomChestContent.maxStackSize-weightedRandomChestContent.minStackSize);
-                inv.setInventorySlotContents(random.nextInt(inv.getSizeInventory()), itemstack);
             }
         }
     }
