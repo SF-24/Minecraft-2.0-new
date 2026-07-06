@@ -51,7 +51,10 @@ public class WorldChunkManagerHell extends WorldChunkManager
     }
 
     public double getDecoratorNoise(int x, int z) {
-        return decoratorNoise.getValue(x / 24.0, z / 24.0);
+        double noise = decoratorNoise.getValue(x / 24.0, z / 24.0);
+        double t = (noise + 1.0) * 0.5;
+        t = t * t * (3 - 2 * t); // smoothstep
+        return t;
     }
 
     public BiomeGenBase getBiomeGenerator(int x, int z)
