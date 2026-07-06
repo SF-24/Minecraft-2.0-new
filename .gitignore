@@ -2,3 +2,7 @@
 /target/
 /.idea/
 test_run/*
+test_run_server/*
+test_server/*
+src/assembly/*
+logs/*
