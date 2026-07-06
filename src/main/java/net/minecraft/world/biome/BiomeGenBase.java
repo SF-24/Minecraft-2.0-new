@@ -153,6 +153,9 @@ public abstract class BiomeGenBase
 
     public static final BiomeGenBase frozenMesa = (new BiomeGenMesaSnow(53, false, false)).setColor(747097).setBiomeName("Frozen Hills").setHeight(height_MesaSnow).setEnableSnow();
 
+    public static final BiomeGenBase soulSandValley = (new BiomeGenSoulSandValley(98)).setColor(1776453).setBiomeName("Soul Sand Valley").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setClimateZone(ClimateZone.NETHER);
+
+
     public static final BiomeGenBase alpha = new BiomeGenAlpha(99)
             .setBiomeName("Neon Plains")
             .setColor(5470985)

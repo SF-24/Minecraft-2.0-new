@@ -4,6 +4,7 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenDesertWells;
@@ -24,5 +25,7 @@ public class BiomeGenHell extends BiomeGenBase
         this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityPigZombie.class, 100, 4, 4));
         this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityEnderman.class, 1, 1, 4));
         this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityMagmaCube.class, 10 /*was 1*/, 4, 4));
+        this.topBlock = Blocks.netherrack.getDefaultState();
+        this.fillerBlock = Blocks.netherrack.getDefaultState();
     }
 }

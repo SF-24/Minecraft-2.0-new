@@ -14,8 +14,6 @@ import net.minecraft.world.gen.ChunkProviderFlat;
 import net.minecraft.world.gen.ChunkProviderGenerate;
 import net.minecraft.world.gen.FlatGeneratorInfo;
 
-import java.util.Random;
-
 public abstract class WorldProvider
 {
     public static final float[] moonPhaseFactors = new float[] {1.0F, 0.75F, 0.5F, 0.25F, 0.0F, 0.25F, 0.5F, 0.75F};

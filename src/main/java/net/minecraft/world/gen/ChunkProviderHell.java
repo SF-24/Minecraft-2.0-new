@@ -23,6 +23,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.structure.MapGenNetherBridge;
+import net.optifine.BlockPosM;
 
 public class ChunkProviderHell implements IChunkProvider
 {
@@ -167,13 +168,13 @@ public class ChunkProviderHell implements IChunkProvider
         }
     }
 
-    public void func_180516_b(int p_180516_1_, int p_180516_2_, ChunkPrimer p_180516_3_)
+    public void func_180516_b(int chunkX, int chunkZ, ChunkPrimer primer)
     {
         int i = this.worldObj.getSeaLevel() + 1;
         double d0 = 0.03125D;
-        this.slowsandNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.slowsandNoise, p_180516_1_ * 16, p_180516_2_ * 16, 0, 16, 16, 1, d0, d0, 1.0D);
-        this.gravelNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.gravelNoise, p_180516_1_ * 16, 109, p_180516_2_ * 16, 16, 1, 16, d0, 1.0D, d0);
-        this.netherrackExclusivityNoise = this.netherrackExculsivityNoiseGen.generateNoiseOctaves(this.netherrackExclusivityNoise, p_180516_1_ * 16, p_180516_2_ * 16, 0, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
+        this.slowsandNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.slowsandNoise, chunkX * 16, chunkZ * 16, 0, 16, 16, 1, d0, d0, 1.0D);
+        this.gravelNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.gravelNoise, chunkX * 16, 109, chunkZ * 16, 16, 1, 16, d0, 1.0D, d0);
+        this.netherrackExclusivityNoise = this.netherrackExculsivityNoiseGen.generateNoiseOctaves(this.netherrackExclusivityNoise, chunkX * 16, chunkZ * 16, 0, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
 
         for (int j = 0; j < 16; ++j)
         {
@@ -183,14 +184,15 @@ public class ChunkProviderHell implements IChunkProvider
                 boolean flag1 = this.gravelNoise[j + k * 16] + this.hellRNG.nextDouble() * 0.2D > 0.0D;
                 int l = (int)(this.netherrackExclusivityNoise[j + k * 16] / 3.0D + 3.0D + this.hellRNG.nextDouble() * 0.25D);
                 int i1 = -1;
-                IBlockState iblockstate = Blocks.netherrack.getDefaultState();
-                IBlockState iblockstate1 = Blocks.netherrack.getDefaultState();
+                BiomeGenBase biome = this.worldObj.getWorldChunkManager().getBiomeGenerator(new BlockPos(chunkX * 16+j, 30, chunkZ * 16+k));
+                IBlockState topBlock = biome.topBlock;
+                IBlockState fillerBlock = biome.fillerBlock;
 
                 for (int j1 = 127; j1 >= 0; --j1)
                 {
                     if (j1 < 127 - this.hellRNG.nextInt(5) && j1 > this.hellRNG.nextInt(5))
                     {
-                        IBlockState iblockstate2 = p_180516_3_.getBlockState(k, j1, j);
+                        IBlockState iblockstate2 = primer.getBlockState(k, j1, j);
 
                         if (iblockstate2.getBlock() != null && iblockstate2.getBlock().getMaterial() != Material.air)
                         {
@@ -200,47 +202,47 @@ public class ChunkProviderHell implements IChunkProvider
                                 {
                                     if (l <= 0)
                                     {
-                                        iblockstate = null;
-                                        iblockstate1 = Blocks.netherrack.getDefaultState();
+                                        topBlock = null;
+                                        fillerBlock = Blocks.netherrack.getDefaultState();
                                     }
                                     else if (j1 >= i - 4 && j1 <= i + 1)
                                     {
-                                        iblockstate = Blocks.netherrack.getDefaultState();
-                                        iblockstate1 = Blocks.netherrack.getDefaultState();
+                                        topBlock = Blocks.netherrack.getDefaultState();
+                                        fillerBlock = Blocks.netherrack.getDefaultState();
 
                                         if (flag1)
                                         {
-                                            iblockstate = Blocks.gravel.getDefaultState();
-                                            iblockstate1 = Blocks.netherrack.getDefaultState();
+                                            topBlock = Blocks.gravel.getDefaultState();
+                                            fillerBlock = Blocks.netherrack.getDefaultState();
                                         }
 
                                         if (flag)
                                         {
-                                            iblockstate = Blocks.soul_sand.getDefaultState();
-                                            iblockstate1 = Blocks.soul_sand.getDefaultState();
+                                            topBlock = Blocks.soul_sand.getDefaultState();
+                                            fillerBlock = Blocks.soul_sand.getDefaultState();
                                         }
                                     }
 
-                                    if (j1 < i && (iblockstate == null || iblockstate.getBlock().getMaterial() == Material.air))
+                                    if (j1 < i && (topBlock == null || topBlock.getBlock().getMaterial() == Material.air))
                                     {
-                                        iblockstate = Blocks.lava.getDefaultState();
+                                        topBlock = Blocks.lava.getDefaultState();
                                     }
 
                                     i1 = l;
 
                                     if (j1 >= i - 1)
                                     {
-                                        p_180516_3_.setBlockState(k, j1, j, iblockstate);
+                                        primer.setBlockState(k, j1, j, topBlock);
                                     }
                                     else
                                     {
-                                        p_180516_3_.setBlockState(k, j1, j, iblockstate1);
+                                        primer.setBlockState(k, j1, j, fillerBlock);
                                     }
                                 }
                                 else if (i1 > 0)
                                 {
                                     --i1;
-                                    p_180516_3_.setBlockState(k, j1, j, iblockstate1);
+                                    primer.setBlockState(k, j1, j, fillerBlock);
                                 }
                             }
                         }
@@ -251,7 +253,7 @@ public class ChunkProviderHell implements IChunkProvider
                     }
                     else
                     {
-                        p_180516_3_.setBlockState(k, j1, j, Blocks.bedrock.getDefaultState());
+                        primer.setBlockState(k, j1, j, Blocks.bedrock.getDefaultState());
                     }
                 }
             }
