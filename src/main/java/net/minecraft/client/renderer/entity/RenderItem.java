@@ -983,6 +983,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.snow, "snow");
         this.registerBlock(Blocks.snow_layer, "snow_layer");
         this.registerBlock(Blocks.soul_sand, "soul_sand");
+        this.registerBlock(Blocks.soul_soil, "soul_soil");
         this.registerBlock(Blocks.spruce_stairs, "spruce_stairs");
         this.registerBlock(Blocks.sticky_piston, "sticky_piston");
         this.registerBlock(Blocks.stone_brick_stairs, "stone_brick_stairs");

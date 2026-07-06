@@ -18,6 +18,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -187,6 +188,14 @@ public class ChunkProviderHell implements IChunkProvider
                 BiomeGenBase biome = this.worldObj.getWorldChunkManager().getBiomeGenerator(new BlockPos(chunkX * 16+j, 30, chunkZ * 16+k));
                 IBlockState topBlock = biome.topBlock;
                 IBlockState fillerBlock = biome.fillerBlock;
+
+                if(biome==BiomeGenBase.soulSandValley && this.worldObj.getWorldChunkManager() instanceof WorldChunkManagerHell) {
+                    double decoratorNoise = ((WorldChunkManagerHell) this.worldObj.getWorldChunkManager()).getDecoratorNoise(chunkX*16+j,chunkZ*16+k);
+                    if(decoratorNoise > 0.5D) {
+                        topBlock=Blocks.soul_soil.getDefaultState();
+                        fillerBlock=Blocks.soul_soil.getDefaultState();
+                    }
+                }
 
                 for (int j1 = 127; j1 >= 0; --j1)
                 {

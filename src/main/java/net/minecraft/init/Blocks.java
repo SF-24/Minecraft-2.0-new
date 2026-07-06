@@ -224,6 +224,8 @@ public class Blocks
 
     public static final BlockAetherPortal aether_portal;
     public static final BlockObserver observer;
+    public static final Block soul_soil;
+
 
 //    public static final BlockFloating gravitite_ore;
 
@@ -463,8 +465,7 @@ public class Blocks
 //            compressed_cobblestone = getRegisteredBlock("compressed_cobblestone");
             aether_portal = (BlockAetherPortal) getRegisteredBlock("aether_portal");
             observer = (BlockObserver) getRegisteredBlock("observer");
-
-
+            soul_soil = getRegisteredBlock("hellSoil");
         }
     }
 }

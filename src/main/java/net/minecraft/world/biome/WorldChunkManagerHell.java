@@ -21,12 +21,14 @@ public class WorldChunkManagerHell extends WorldChunkManager
     private long chunkSeed;
     private long worldGenSeed;
     NoiseGeneratorSimplex simplexNoise;
+    NoiseGeneratorSimplex decoratorNoise;
     private boolean useBiomes = false;
 
     public WorldChunkManagerHell(BiomeGenBase biome, float p_i45374_2_)
     {
         this.biomeList = new BiomeGenBase[]{};
         this.biomeGenerator = biome;
+        decoratorNoise = new NoiseGeneratorSimplex(new Random(109437328979L));
         this.rainfall = p_i45374_2_;
     }
 
@@ -36,6 +38,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
         this.worldGenSeed=seed;
         this.rainfall = p_i45374_2_;
         simplexNoise = new NoiseGeneratorSimplex(new Random(seed));
+        decoratorNoise = new NoiseGeneratorSimplex(new Random(109437328979L));
         useBiomes = useNetherBiomes;
     }
 
@@ -45,6 +48,10 @@ public class WorldChunkManagerHell extends WorldChunkManager
     public BiomeGenBase getBiomeGenerator(BlockPos pos)
     {
         return this.getBiomeGenerator(pos.getX(),pos.getZ());
+    }
+
+    public double getDecoratorNoise(int x, int z) {
+        return decoratorNoise.getValue(x / 24.0, z / 24.0);
     }
 
     public BiomeGenBase getBiomeGenerator(int x, int z)
