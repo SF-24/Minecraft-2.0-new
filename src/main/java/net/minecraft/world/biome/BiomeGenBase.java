@@ -153,8 +153,10 @@ public abstract class BiomeGenBase
 
     public static final BiomeGenBase frozenMesa = (new BiomeGenMesaSnow(53, false, false)).setColor(747097).setBiomeName("Frozen Hills").setHeight(height_MesaSnow).setEnableSnow();
 
-    public static final BiomeGenBase soulSandValley = (new BiomeGenSoulSandValley(98)).setColor(1776453).setBiomeName("Soul Sand Valley").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setClimateZone(ClimateZone.NETHER);
 
+    public static final BiomeGenBase gravelCrags = (new BiomeGenGravelCrags(60)).setColor(1776453).setBiomeName("Hell Crags").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setClimateZone(ClimateZone.NETHER);
+
+    public static final BiomeGenBase soulSandValley = (new BiomeGenSoulSandValley(61)).setColor(1776453).setBiomeName("Soul Sand Valley").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setClimateZone(ClimateZone.NETHER_SOUL_SAND);
 
     public static final BiomeGenBase alpha = new BiomeGenAlpha(99)
             .setBiomeName("Neon Plains")
@@ -772,12 +774,14 @@ public abstract class BiomeGenBase
     public static class SpawnListEntry extends WeightedRandom.Item
     {
         public Class <? extends EntityLiving > entityClass;
+        public int mobVariant;
         public int minGroupCount;
         public int maxGroupCount;
 
         public SpawnListEntry(Class <? extends EntityLiving > entityclassIn, int weight, int groupCountMin, int groupCountMax)
         {
             super(weight);
+            this.mobVariant = 0;
             this.entityClass = entityclassIn;
             this.minGroupCount = groupCountMin;
             this.maxGroupCount = groupCountMax;

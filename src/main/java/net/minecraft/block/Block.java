@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -1491,7 +1492,7 @@ public class Block
         registerBlock(208, "detector_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailDetector").setCreativeTab(CreativeTabs.tabTransport));
         registerBlock(209, "activator_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailActivator").setCreativeTab(CreativeTabs.tabTransport));
 
-        registerBlock(210, "soul_soil", (new Block(Material.sand)).setHardness(0.5F).setStepSound(soundTypeSand).setUnlocalizedName("hellSoil"));
+        registerBlock(210, "soul_soil", (new BlockCustomDrop(88,Material.sand).setHardness(0.5F).setStepSound(soundTypeSand).setUnlocalizedName("hellSoil")));
 
 //        registerBlock(210, "compressed_cobblestone", (new BlockDungeon()).setHardness(100.0F).setResistance(1200.0F).setStepSound(soundTypeStone).setUnlocalizedName("cobblestoneCompressed").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(218, "observer", (new BlockObserver()).setHardness(3.0F).setUnlocalizedName("observer"));

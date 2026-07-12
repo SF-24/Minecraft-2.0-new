@@ -38,6 +38,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProviderHell;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.mineshaft.ClimateZone;
 
 public class EntitySkeleton extends EntityMob implements IRangedAttackMob
 {
@@ -73,7 +75,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(13, new Byte((byte)0));
+        this.dataWatcher.addObject(13, (byte)0);
     }
 
     /**
@@ -308,7 +310,9 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
     {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
 
-        if (this.worldObj.provider instanceof WorldProviderHell && this.getRNG().nextInt(5) > 0)
+//        System.out.println("Spawn Biome: " + this.worldObj.getBiomeGenForCoords((int) (this.posX+0.5), (int) (this.posZ+0.5)).biomeID + " | " + BiomeGenBase.soulSandValley.biomeID);
+
+        if (this.worldObj.provider instanceof WorldProviderHell && this.getRNG().nextInt(5) > 0 && this.worldObj.getBiomeGenForCoords((int) (this.posX+0.5), (int) (this.posZ+0.5)).getClimateZone()== ClimateZone.NETHER_SOUL_SAND)
         {
             this.tasks.addTask(4, this.aiAttackOnCollide);
             this.setSkeletonType(1);

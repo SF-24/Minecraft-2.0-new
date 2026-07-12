@@ -1,17 +1,15 @@
 package net.minecraft.world.biome;
 
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.gen.NoiseGeneratorSimplex;
+import net.mineshaft.NetherConfig;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.NoiseGeneratorSimplex;
 
 public class WorldChunkManagerHell extends WorldChunkManager
 {
-    private BiomeGenBase[] biomeList = new BiomeGenBase[] {BiomeGenBase.hell, BiomeGenBase.soulSandValley, BiomeGenBase.hell, BiomeGenBase.soulSandValley};
-
     /** The biome generator object. */
     private BiomeGenBase biomeGenerator;
 
@@ -21,12 +19,12 @@ public class WorldChunkManagerHell extends WorldChunkManager
     private long chunkSeed;
     private long worldGenSeed;
     NoiseGeneratorSimplex simplexNoise;
+    NoiseGeneratorSimplex simplexNoise_second;
     NoiseGeneratorSimplex decoratorNoise;
     private boolean useBiomes = false;
 
     public WorldChunkManagerHell(BiomeGenBase biome, float p_i45374_2_)
     {
-        this.biomeList = new BiomeGenBase[]{};
         this.biomeGenerator = biome;
         decoratorNoise = new NoiseGeneratorSimplex(new Random(109437328979L));
         this.rainfall = p_i45374_2_;
@@ -38,6 +36,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
         this.worldGenSeed=seed;
         this.rainfall = p_i45374_2_;
         simplexNoise = new NoiseGeneratorSimplex(new Random(seed));
+        simplexNoise_second = new NoiseGeneratorSimplex(new Random(seed+1236767));
         decoratorNoise = new NoiseGeneratorSimplex(new Random(109437328979L));
         useBiomes = useNetherBiomes;
     }
@@ -50,8 +49,9 @@ public class WorldChunkManagerHell extends WorldChunkManager
         return this.getBiomeGenerator(pos.getX(),pos.getZ());
     }
 
+    // Made the decorator noise wider.
     public double getDecoratorNoise(int x, int z) {
-        double noise = decoratorNoise.getValue(x / 24.0, z / 24.0);
+        double noise = decoratorNoise.getValue(x / 48.0, z / 48.0);
         double t = (noise + 1.0) * 0.5;
         t = t * t * (3 - 2 * t); // smoothstep
         return t;
@@ -74,12 +74,18 @@ public class WorldChunkManagerHell extends WorldChunkManager
             double warpX = simplexNoise.getValue(x / 128.0, z / 128.0);
             double warpZ = simplexNoise.getValue((x + 1000) / 256.0, (z + 1000) / 256.0);
 
-            double value = simplexNoise.getValue(
-                    (x + warpX * 20) / 128.0,
-                    (z + warpZ * 20) / 128.0
+            double extra = simplexNoise_second.getValue(
+                    (x + warpX * 20) / NetherConfig.netherBiomeScale,
+                    (z + warpZ * 20) / NetherConfig.netherBiomeScale
             );
-            if(value > 0) {
+            double value = simplexNoise.getValue(
+                    (x + warpX * 20) / NetherConfig.netherBiomeScale,
+                    (z + warpZ * 20) / NetherConfig.netherBiomeScale
+            );
+            if((value*0.8 + 0.2*extra)>0.3) { // new generator. Was 0.15
                 return BiomeGenBase.soulSandValley;
+            } else if((value*0.25 + 0.4*extra)<-0.25) { // was 0.25
+                return BiomeGenBase.gravelCrags; // Too common???? ,
             }
             return BiomeGenBase.hell;
         }

@@ -937,6 +937,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.gold_ore, "gold_ore");
         this.registerBlock(Blocks.grass, "grass");
         this.registerBlock(Blocks.stone, BlockStone.EnumType.GRANITE.getMetadata(), "granite");
+        this.registerBlock(Blocks.stone, BlockStone.EnumType.BLACKSTONE.getMetadata(), "blackstone");
         this.registerBlock(Blocks.gravel, "gravel");
         this.registerBlock(Blocks.hardened_clay, "hardened_clay");
         this.registerBlock(Blocks.hay_block, "hay_block");

@@ -48,7 +48,8 @@ public class BlockStone extends Block
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         // made stones drop cobblestone
-        return (state.getValue(VARIANT) == BlockStone.EnumType.STONE||state.getValue(VARIANT) == EnumType.GRANITE||state.getValue(VARIANT) == EnumType.DIORITE||state.getValue(VARIANT) == EnumType.ANDESITE) ? Item.getItemFromBlock(Blocks.cobblestone) : Item.getItemFromBlock(Blocks.stone);
+        return (state.getValue(VARIANT) == BlockStone.EnumType.STONE||state.getValue(VARIANT) == EnumType.GRANITE||state.getValue(VARIANT) == EnumType.DIORITE||state.getValue(VARIANT) == EnumType.ANDESITE ? Item.getItemFromBlock(Blocks.cobblestone) :
+                ((state.getValue(VARIANT)==EnumType.BLACKSTONE)?Item.getItemFromBlock(Blocks.netherrack) : Item.getItemFromBlock(Blocks.stone)));
     }
 
     /**
@@ -57,7 +58,7 @@ public class BlockStone extends Block
      */
     public int damageDropped(IBlockState state)
     {
-        if(state.getValue(VARIANT) == BlockStone.EnumType.STONE||state.getValue(VARIANT) == EnumType.GRANITE||state.getValue(VARIANT) == EnumType.DIORITE||state.getValue(VARIANT) == EnumType.ANDESITE) return 0;
+        if(state.getValue(VARIANT) == BlockStone.EnumType.STONE||state.getValue(VARIANT) == EnumType.GRANITE||state.getValue(VARIANT) == EnumType.DIORITE||state.getValue(VARIANT) == EnumType.ANDESITE||state.getValue(VARIANT)==EnumType.BLACKSTONE) return 0;
         return ((BlockStone.EnumType)state.getValue(VARIANT)).getMetadata();
     }
 
@@ -101,7 +102,8 @@ public class BlockStone extends Block
         DIORITE(3, MapColor.quartzColor, "diorite"),
         DIORITE_SMOOTH(4, MapColor.quartzColor, "smooth_diorite", "dioriteSmooth"),
         ANDESITE(5, MapColor.stoneColor, "andesite"),
-        ANDESITE_SMOOTH(6, MapColor.stoneColor, "smooth_andesite", "andesiteSmooth");
+        ANDESITE_SMOOTH(6, MapColor.stoneColor, "smooth_andesite", "andesiteSmooth"),
+        BLACKSTONE(7, MapColor.obsidianColor, "blackstone");
 
         private static final BlockStone.EnumType[] META_LOOKUP = new BlockStone.EnumType[values().length];
         private final int meta;

@@ -253,6 +253,7 @@ public final class SpawnerAnimals
                             try
                             {
                                 entityliving = (EntityLiving)biomegenbase$spawnlistentry.entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {worldIn});
+
                             }
                             catch (Exception exception)
                             {
