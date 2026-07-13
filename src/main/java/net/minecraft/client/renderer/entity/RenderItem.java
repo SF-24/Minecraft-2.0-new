@@ -936,8 +936,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.gold_block, "gold_block");
         this.registerBlock(Blocks.gold_ore, "gold_ore");
         this.registerBlock(Blocks.grass, "grass");
-        this.registerBlock(Blocks.stone, BlockStone.EnumType.GRANITE.getMetadata(), "granite");
-        this.registerBlock(Blocks.stone, BlockStone.EnumType.BLACKSTONE.getMetadata(), "blackstone");
+//        this.registerBlock(Blocks.stone, BlockStone.EnumType.GRANITE.getMetadata(), "granite");
         this.registerBlock(Blocks.gravel, "gravel");
         this.registerBlock(Blocks.hardened_clay, "hardened_clay");
         this.registerBlock(Blocks.hay_block, "hay_block");
@@ -959,10 +958,10 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.melon_block, "melon_block");
         this.registerBlock(Blocks.mossy_cobblestone, "mossy_cobblestone");
         this.registerBlock(Blocks.mycelium, "mycelium");
-        this.registerBlock(Blocks.netherrack, "netherrack");
         this.registerBlock(Blocks.nether_brick, "nether_brick");
         this.registerBlock(Blocks.nether_brick_fence, "nether_brick_fence");
         this.registerBlock(Blocks.nether_brick_stairs, "nether_brick_stairs");
+        this.registerBlock(Blocks.netherrack,"netherrack");
         this.registerBlock(Blocks.noteblock, "noteblock");
         this.registerBlock(Blocks.oak_stairs, "oak_stairs");
         this.registerBlock(Blocks.obsidian, "obsidian");
@@ -985,6 +984,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.snow_layer, "snow_layer");
         this.registerBlock(Blocks.soul_sand, "soul_sand");
         this.registerBlock(Blocks.soul_soil, "soul_soil");
+        this.registerBlock(Blocks.blackstone, "blackstone");
         this.registerBlock(Blocks.spruce_stairs, "spruce_stairs");
         this.registerBlock(Blocks.sticky_piston, "sticky_piston");
         this.registerBlock(Blocks.stone_brick_stairs, "stone_brick_stairs");
@@ -1004,6 +1004,8 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.chest, "chest");
         this.registerBlock(Blocks.trapped_chest, "trapped_chest");
         this.registerBlock(Blocks.ender_chest, "ender_chest");
+//        this.registerBlock(Blocks.blackstone, "blackstone");
+
         this.registerItem(Items.iron_shovel, "iron_shovel");
         this.registerItem(Items.iron_pickaxe, "iron_pickaxe");
         this.registerItem(Items.iron_axe, "iron_axe");

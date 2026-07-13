@@ -225,6 +225,7 @@ public class Blocks
     public static final BlockAetherPortal aether_portal;
     public static final BlockObserver observer;
     public static final Block soul_soil;
+    public static final Block blackstone;
 
 
 //    public static final BlockFloating gravitite_ore;
@@ -466,6 +467,7 @@ public class Blocks
             aether_portal = (BlockAetherPortal) getRegisteredBlock("aether_portal");
             observer = (BlockObserver) getRegisteredBlock("observer");
             soul_soil = getRegisteredBlock("soul_soil");
+            blackstone = getRegisteredBlock("blackstone");
         }
     }
 }

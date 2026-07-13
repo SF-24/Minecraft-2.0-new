@@ -2768,7 +2768,7 @@ item.bundle.fullness=Fullness: %s/%s
 
 tile.furnace.forge.name=Forge
 
-tile.stone.blackstone.name=Black Netherrack
+tile.blackstone.name=Charred Netherrack
 
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod
