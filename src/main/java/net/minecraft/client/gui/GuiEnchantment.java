@@ -170,7 +170,7 @@ public class GuiEnchantment extends GuiContainer
         RenderHelper.disableStandardItemLighting();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         EnchantmentNameParts.getInstance().reseedRandomGenerator((long)this.container.xpSeed);
-        int k = this.container.getLapisAmount();
+        int lapisAmount = this.container.getLapisAmount();
 
         for (int l = 0; l < 3; ++l)
         {
@@ -193,7 +193,7 @@ public class GuiEnchantment extends GuiContainer
                 FontRenderer fontrenderer = this.mc.standardGalacticFontRenderer;
                 int i2 = 6839882;
 
-                if ((k < l + 1 || this.mc.thePlayer.experienceLevel < l1) && !this.mc.thePlayer.capabilities.isCreativeMode)
+                if ((lapisAmount < l + 1 || this.mc.thePlayer.experienceLevel < l1) && !this.mc.thePlayer.capabilities.isCreativeMode)
                 {
                     this.drawTexturedModalRect(i1, j + 14 + 19 * l, 0, 185, 108, 19);
                     this.drawTexturedModalRect(i1 + 1, j + 15 + 19 * l, 16 * l, 239, 16, 16);
@@ -233,13 +233,14 @@ public class GuiEnchantment extends GuiContainer
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
         boolean flag = this.mc.thePlayer.capabilities.isCreativeMode;
-        int i = this.container.getLapisAmount();
+        int lapisAmount = this.container.getLapisAmount();
 
         for (int j = 0; j < 3; ++j)
         {
             int k = this.container.enchantLevels[j];
             int l = this.container.enchantmentIds[j];
-            int i1 = j + 1;
+            int levelCost = Math.max(j+1,this.container.enchantLevels[j]/3); // was: j + 1;
+            int lapisCost = j+1; // was: j + 1;
 
             if (this.isPointInRegion(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0)
             {
@@ -266,16 +267,16 @@ public class GuiEnchantment extends GuiContainer
                     {
                         String s1 = "";
 
-                        if (i1 == 1)
+                        if (lapisCost == 1)
                         {
                             s1 = I18n.format("container.enchant.lapis.one", new Object[0]);
                         }
                         else
                         {
-                            s1 = I18n.format("container.enchant.lapis.many", new Object[] {Integer.valueOf(i1)});
+                            s1 = I18n.format("container.enchant.lapis.many", new Object[] {lapisCost});
                         }
 
-                        if (i >= i1)
+                        if (lapisAmount >= lapisCost)
                         {
                             list.add(EnumChatFormatting.GRAY.toString() + "" + s1);
                         }
@@ -284,13 +285,13 @@ public class GuiEnchantment extends GuiContainer
                             list.add(EnumChatFormatting.RED.toString() + "" + s1);
                         }
 
-                        if (i1 == 1)
+                        if (levelCost == 1)
                         {
                             s1 = I18n.format("container.enchant.level.one", new Object[0]);
                         }
                         else
                         {
-                            s1 = I18n.format("container.enchant.level.many", new Object[] {Integer.valueOf(i1)});
+                            s1 = I18n.format("container.enchant.level.many", new Object[] {levelCost});
                         }
 
                         list.add(EnumChatFormatting.GRAY.toString() + "" + s1);
