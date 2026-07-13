@@ -2596,6 +2596,8 @@ tile.anvil.diamond_veryDamaged.name=Very Damaged Diamond Anvil
 
 tile.furnace.forge.name=Forge
 
+tile.blackstone.name=Charred Netherrack
+
 item.breadGlowing.name=Glowing Bread
 item.breezeRod.name=Breeze Rod
 item.windCharge.name=Wind Charge

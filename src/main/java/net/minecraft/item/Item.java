@@ -717,6 +717,7 @@ public class Item {
 
         registerItemBlock(Blocks.observer);
         registerItemBlock(Blocks.soul_soil);
+        registerItemBlock(Blocks.blackstone);
 
 //        registerItem(210, "mossy_compressed_cobblestone", (new Item().setUnlocalizedName("test")));
 

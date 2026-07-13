@@ -2062,6 +2062,8 @@ tile.anvil.diamond_veryDamaged.name=Mocno uszkodzone diamentowe kowadło
 
 tile.furnace.forge.name=Piec Hutniczy
 
+tile.blackstone.name=Zwęglony Netherrack
+
 item.breadGlowing.name=Świecący chleb
 item.breezeRod.name=Wietrzysta różdżka
 item.windCharge.name=Wietrzysta kula
