@@ -78,7 +78,7 @@ public class ChunkProviderHell implements IChunkProvider
     double[] noiseData3;
     double[] noiseData4;
     double[] noiseData5;
-    private final ArrayList<Block> blocks = Lists.newArrayList(Blocks.netherrack,Blocks.soul_sand);
+    private final ArrayList<Block> blocks = Lists.newArrayList(Blocks.netherrack,Blocks.soul_sand,Blocks.soul_soil,Blocks.stone);
 
     public ChunkProviderHell(World worldIn, boolean p_i45637_2_, long seed)
     {
@@ -194,9 +194,14 @@ public class ChunkProviderHell implements IChunkProvider
                 // Soul soil generator
                 if(biome==BiomeGenBase.soulSandValley && this.worldObj.getWorldChunkManager() instanceof WorldChunkManagerHell) {
                     double decoratorNoise = ((WorldChunkManagerHell) this.worldObj.getWorldChunkManager()).getDecoratorNoise(chunkX*16+j,chunkZ*16+k);
-                    if(decoratorNoise > 0.75D) {
+                    if(decoratorNoise > 0.75D || decoratorNoise < -0.75D) {
                         topBlock=Blocks.soul_soil.getDefaultState();
                         fillerBlock=Blocks.soul_soil.getDefaultState();
+                    }
+                } else if(biome==BiomeGenBase.gravelCrags && this.worldObj.getWorldChunkManager() instanceof WorldChunkManagerHell) {
+                    double decoratorNoise = ((WorldChunkManagerHell) this.worldObj.getWorldChunkManager()).getDecoratorNoise(chunkX*16+j,chunkZ*16+k);
+                    if(decoratorNoise > 0.75D) {
+                        topBlock=Blocks.gravel.getDefaultState();
                     }
                 }
 
@@ -208,7 +213,8 @@ public class ChunkProviderHell implements IChunkProvider
 
                         if (iblockstate2.getBlock() != null && iblockstate2.getBlock().getMaterial() != Material.air)
                         {
-                            if (iblockstate2.getBlock() == Blocks.netherrack)
+                            // Also replace black netherrack.
+                            if (iblockstate2.getBlock() == Blocks.netherrack || iblockstate2.getBlock() == Blocks.stone)
                             {
                                 if (i1 == -1)
                                 {
@@ -236,6 +242,7 @@ public class ChunkProviderHell implements IChunkProvider
 
                                     if (j1 < i && (topBlock == null || topBlock.getBlock().getMaterial() == Material.air))
                                     {
+                                        // Place lava
                                         topBlock = Blocks.lava.getDefaultState();
                                     }
 

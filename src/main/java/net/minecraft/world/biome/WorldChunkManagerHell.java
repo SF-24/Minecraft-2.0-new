@@ -51,7 +51,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
 
     // Made the decorator noise wider.
     public double getDecoratorNoise(int x, int z) {
-        double noise = decoratorNoise.getValue(x / 48.0, z / 48.0);
+        double noise = decoratorNoise.getValue(x / 36.0, z / 36.0); // was 24 then 48
         double t = (noise + 1.0) * 0.5;
         t = t * t * (3 - 2 * t); // smoothstep
         return t;
@@ -71,21 +71,40 @@ public class WorldChunkManagerHell extends WorldChunkManager
 //                    : BiomeGenBase.soulSandValley;
 ////            return biomeList[nextInt(biomeList.length)];
 
-            double warpX = simplexNoise.getValue(x / 128.0, z / 128.0);
-            double warpZ = simplexNoise.getValue((x + 1000) / 256.0, (z + 1000) / 256.0);
+            double warpedX = x + 20*simplexNoise.getValue(x / 128.0, z / 128.0);
+            double warpedZ = z + 20*simplexNoise.getValue((x + 1000) / 256.0, (z + 1000) / 256.0);
 
-            double extra = simplexNoise_second.getValue(
-                    (x + warpX * 20) / NetherConfig.netherBiomeScale,
-                    (z + warpZ * 20) / NetherConfig.netherBiomeScale
+            double soulSandNoise = simplexNoise_second.getValue(
+                    (warpedX) / NetherConfig.netherBiomeScale / 4,
+                    (warpedZ) / NetherConfig.netherBiomeScale / 4
+            );
+            double cragNoise = simplexNoise_second.getValue(
+                    (warpedX) / NetherConfig.netherBiomeScale,
+                    (warpedZ) / NetherConfig.netherBiomeScale
             );
             double value = simplexNoise.getValue(
-                    (x + warpX * 20) / NetherConfig.netherBiomeScale,
-                    (z + warpZ * 20) / NetherConfig.netherBiomeScale
+                    (warpedX) / NetherConfig.netherBiomeScale,
+                    (warpedZ) / NetherConfig.netherBiomeScale
             );
-            if((value*0.8 + 0.2*extra)>0.3) { // new generator. Was 0.15
+
+            // Small gravel crags
+            if ((value*0.25 + 0.4*cragNoise)<(-0.5)) {
+                return BiomeGenBase.gravelCrags;
+            }
+
+            // Hell override
+            if (soulSandNoise*soulSandNoise<0.1) {
+                return BiomeGenBase.hell;
+            }
+
+            // Gravel crags
+            if((value*0.3 + 0.9*soulSandNoise)<(-0.45)) {
+                return BiomeGenBase.gravelCrags;
+            }
+
+            // New nether biomes
+            if(value*0.2 + 0.8*soulSandNoise > 0.3 || (value*0.8 + 0.2*soulSandNoise)>0.4) { // new generator. Was 0.15
                 return BiomeGenBase.soulSandValley;
-            } else if((value*0.25 + 0.4*extra)<-0.25) { // was 0.25
-                return BiomeGenBase.gravelCrags; // Too common???? ,
             }
             return BiomeGenBase.hell;
         }
