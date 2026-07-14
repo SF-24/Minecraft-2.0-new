@@ -2,6 +2,7 @@ package net.minecraft.block;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -95,7 +96,7 @@ public class BlockStone extends Block
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, VARIANT);
+        return new BlockState(this, new IProperty[] {VARIANT});
     }
 
     public static enum EnumType implements IStringSerializable
@@ -170,5 +171,4 @@ public class BlockStone extends Block
             }
         }
     }
-
 }
