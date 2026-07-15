@@ -51,7 +51,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
 
     // Made the decorator noise wider.
     public double getDecoratorNoise(int x, int z) {
-        double noise = decoratorNoise.getValue(x / 36.0, z / 36.0); // was 24 then 48
+        double noise = decoratorNoise.getValue(x * 0.02778, z * 0.02778); // was div by 24 then 48, then 36
         double t = (noise + 1.0) * 0.5;
         t = t * t * (3 - 2 * t); // smoothstep
         return t;
@@ -79,7 +79,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
             double value;
 
             if(x*x+z*z<NetherConfig.hellBlendRadiusSquared) {
-                float multiplier = (float) (x * x + z * z) /(float) NetherConfig.hellBlendRadiusSquared;
+                float multiplier = (float) (x * x + z * z) * (float) NetherConfig.hellBlendRadiusSquaredReciprocal;
                 soulSandNoise = multiplier * simplexNoise_second.getValue(
                         (warpedX) * NetherConfig.netherBiomeScaleReciprocalQuarter,
                         (warpedZ) * NetherConfig.netherBiomeScaleReciprocalQuarter
