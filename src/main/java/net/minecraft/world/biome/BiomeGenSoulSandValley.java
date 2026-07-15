@@ -39,7 +39,7 @@ public class BiomeGenSoulSandValley extends BiomeGenBase
     public void decorate(World world, Random rand, BlockPos pos) {
         super.decorate(world,rand,pos);
 
-        // Fossils/Pillars
+        // Fossils/Pillars. Not working.
         if (rand.nextInt(8) == 0)
         {
             int i = rand.nextInt(16) + 8;

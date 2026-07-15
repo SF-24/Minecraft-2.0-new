@@ -5,6 +5,10 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BiomeGenHell extends BiomeGenBase
 {
@@ -21,5 +25,10 @@ public class BiomeGenHell extends BiomeGenBase
         this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityMagmaCube.class, 10 /*was 1*/, 4, 4));
         this.topBlock = Blocks.netherrack.getDefaultState();
         this.fillerBlock = Blocks.netherrack.getDefaultState();
+    }
+
+    // Functions placed in all nether biomes.
+    public void decorate(World world, Random rand, BlockPos pos) {
+        super.decorate(world,rand,pos);
     }
 }

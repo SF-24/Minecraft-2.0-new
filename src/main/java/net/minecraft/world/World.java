@@ -269,6 +269,11 @@ public abstract class World implements IBlockAccess
         return this.getBlockState(pos).getBlock().getMaterial() == Material.air;
     }
 
+    public boolean isAirBlock(int x, int y, int z)
+    {
+        return this.getBlockState(x,y,z).getBlock().getMaterial() == Material.air;
+    }
+
     public boolean isBlockLoaded(BlockPos pos)
     {
         return this.isBlockLoaded(pos, true);
@@ -1072,8 +1077,18 @@ public abstract class World implements IBlockAccess
         return this.provider.getLightBrightnessTable()[this.getLightFromNeighbors(pos)];
     }
 
+    // Global coords
     public int getBlockId(int x, int y, int z) {
-        return this.getChunkFromBlockCoords(new BlockPos(x,y,z)).getBlockId(x,y,z);
+        if (!this.isValid(x,y,z))
+        {
+            return 0;
+        }
+        else
+        {
+//            Chunk chunk = this.getChunkFromBlockCoords(pos);
+//            return chunk.getBlockState(pos);
+            return this.getChunkFromBlockCoords(x,z).getBlockId(x,y,z);
+        }
     }
 
 
@@ -1086,8 +1101,7 @@ public abstract class World implements IBlockAccess
         }
         else
         {
-            Chunk chunk = this.getChunkFromBlockCoords(pos);
-            return chunk.getBlockState(pos);
+            return this.getChunkFromBlockCoords(pos).getBlockState(pos);
         }
     }
 

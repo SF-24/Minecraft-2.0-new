@@ -18,8 +18,4 @@ public class NetherConfig {
     public static Block basaltBlock = Blocks.obsidian;
     public static IBlockState blackstoneBlockState = Blocks.blackstone.getDefaultState();
     public static Block smoothBasaltBlock = Blocks.stone;
-
-    public static final WorldGenBasaltDeltas delta = new WorldGenBasaltDeltas(7,9);
-    public static final WorldGenBasaltFlats flat_areas = new WorldGenBasaltFlats(7, 9);
-
 }

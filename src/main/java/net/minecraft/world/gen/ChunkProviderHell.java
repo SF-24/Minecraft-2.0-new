@@ -1,9 +1,5 @@
 package net.minecraft.world.gen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
@@ -23,8 +19,12 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.nether.WorldGenNetherTower;
 import net.minecraft.world.gen.structure.MapGenNetherBridge;
-import net.optifine.BlockPosM;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ChunkProviderHell implements IChunkProvider
 {
@@ -497,9 +497,35 @@ public class ChunkProviderHell implements IChunkProvider
 ////                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down());
 ////                (new WorldGenNetherWells()).generate(worldObj, hellRNG, pos.down(2));
 //            }
-//
 //        }
 
+        if (this.hellRNG.nextInt(50) == 0) {
+            // Pick random X/Z coordinates within the chunk boundaries
+            int xOffset = x * 16 + this.hellRNG.nextInt(16) + 8;
+            int zOffset = z * 16 + this.hellRNG.nextInt(16) + 8;
+            int yOffset = 90;
+
+            // Find the ground. Must be a valid block.
+
+            while ((
+                    worldObj.isAirBlock(xOffset,yOffset,zOffset) ||
+                    worldObj.getBlockId(xOffset,yOffset,zOffset)==816 ||
+                    worldObj.getBlockId(xOffset,yOffset,zOffset)==624 ||
+                    worldObj.getBlockId(xOffset,yOffset,zOffset)==640
+            ) && yOffset > 30) {
+                yOffset--;
+            }
+
+            // Validate ground type
+            if (worldObj.getBlockState(xOffset,yOffset,zOffset).getBlock() == Blocks.netherrack ||
+                    worldObj.getBlockState(xOffset,yOffset,zOffset).getBlock() == Blocks.soul_sand ||
+                    worldObj.getBlockState(xOffset,yOffset,zOffset).getBlock() == Blocks.blackstone ||
+                    worldObj.getBlockState(xOffset,yOffset,zOffset).getBlock() == Blocks.soul_soil) {
+
+                // Run the tower generator.
+                (new WorldGenNetherTower()).generate(this.worldObj, this.hellRNG, new BlockPos(xOffset, yOffset+1, zOffset));
+            }
+        }
         BlockFalling.fallInstantly = false;
     }
 

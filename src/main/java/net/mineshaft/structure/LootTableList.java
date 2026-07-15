@@ -79,15 +79,18 @@ public class LootTableList {
 
         public static final List<WeightedRandomChestContent> NETHER_TOWER = Lists.newArrayList(
                 // Loot
-                new WeightedRandomChestContent(Items.nether_ash, 0, 1, 3, 2),
-                new WeightedRandomChestContent(Items.steel_nugget, 0, 1, 1, 1),
+                new WeightedRandomChestContent(Items.nether_ash, 0, 1, 3, 3),
+                new WeightedRandomChestContent(Items.steel_nugget, 0, 1, 1, 2),
 
                 // Utilities used here
                 new WeightedRandomChestContent(Items.arrow, 0, 2, 9, 5),
-                new WeightedRandomChestContent(Items.golden_pickaxe, 0, 1, 3, 15),
+                new WeightedRandomChestContent(Items.bow, 0, 1, 1, 1),
+                new WeightedRandomChestContent(Items.golden_pickaxe, 0, 1, 1, 2),
+                new WeightedRandomChestContent(Items.golden_shovel, 0, 1, 1, 2),
+                new WeightedRandomChestContent(Items.mushroom_stew, 0, 1, 3, 2),
 
                 // Decorative and other useful items/
-                new WeightedRandomChestContent(Items.flint_and_steel, 0, 1, 1, 5),
+                new WeightedRandomChestContent(Items.flint_and_steel, 0, 1, 1, 3),
                 new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.obsidian), 0, 2, 4, 2));
 
         public static final List<WeightedRandomChestContent> NETHER_BASEMENT = Lists.newArrayList(
@@ -97,7 +100,11 @@ public class LootTableList {
 
                 // Utilities used here
                 new WeightedRandomChestContent(Items.arrow, 0, 2, 9, 5),
-                new WeightedRandomChestContent(Items.golden_pickaxe, 0, 1, 3, 15),
+                new WeightedRandomChestContent(Items.bow, 0, 1, 1, 1),
+                new WeightedRandomChestContent(Items.golden_pickaxe, 0, 1, 1, 2),
+                new WeightedRandomChestContent(Items.golden_shovel, 0, 1, 1, 2),
+                new WeightedRandomChestContent(Items.mushroom_stew, 0, 1, 3, 2),
+
 
                 // Decorative and other useful items/
                 new WeightedRandomChestContent(Items.flint_and_steel, 0, 1, 1, 5),
@@ -117,7 +124,7 @@ public class LootTableList {
         }
 
         public static int getNetherBasementLootCount(Random randomIn) {
-            return 2 + randomIn.nextInt(2);
+            return 2 + randomIn.nextInt(3);
         }
     }
 
