@@ -9,7 +9,12 @@ import net.minecraft.world.gen.feature.nether.WorldGenBasaltFlats;
 
 public class NetherConfig {
 
-    public static int netherBiomeScale = 256; // Was 128
+    public static int hellBlendRadius = 800; // was 224, then 512 then 1024
+
+    public static int hellBlendRadiusSquared = hellBlendRadius*hellBlendRadius;
+
+    public static double netherBiomeScaleReciprocal = (float) 1 /256; // Was 128
+    public static double netherBiomeScaleReciprocalQuarter = (0.25 * netherBiomeScaleReciprocal); // Was 128
 
     public static Block magmaBlock = Blocks.obsidian;
     public static Block basaltBlock = Blocks.obsidian;
