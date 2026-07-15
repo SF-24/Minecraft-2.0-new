@@ -51,7 +51,9 @@ public class ItemHangingEntity extends Item
                         worldIn.spawnEntityInWorld(entityhanging);
                     }
 
-                    --stack.stackSize;
+                    if(!playerIn.capabilities.isCreativeMode) {
+                        --stack.stackSize;
+                    }
                 }
 
                 return true;

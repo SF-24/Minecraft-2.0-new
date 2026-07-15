@@ -116,8 +116,9 @@ public class ItemMinecart extends Item
 
                 worldIn.spawnEntityInWorld(entityminecart);
             }
-
-            --stack.stackSize;
+            if(!playerIn.capabilities.isCreativeMode) {
+                --stack.stackSize;
+            }
             return true;
         }
         else
