@@ -5,12 +5,6 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenDesertWells;
-import net.minecraft.world.gen.feature.WorldGenNetherWells;
-
-import java.util.Random;
 
 public class BiomeGenHell extends BiomeGenBase
 {

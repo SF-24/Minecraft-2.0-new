@@ -8,6 +8,7 @@ import java.util.Random;
 
 public enum EnumLootSource {
 
+    NETHER_TOWER(false, Arrays.asList()),
     NETHER_FORTRESS(true, Arrays.asList(Enchantment.flame, Enchantment.fireAspect, Enchantment.fireProtection, Enchantment.smite)),
     NETHER_BASEMENT(true, Arrays.asList()), // TODO:
     JUNGLE_PYRAMID(false, Arrays.asList(Enchantment.baneOfArthropods,Enchantment.projectileProtection,Enchantment.punch)),
