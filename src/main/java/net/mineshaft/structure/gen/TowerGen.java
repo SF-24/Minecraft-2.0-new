@@ -1,5 +1,6 @@
 package net.mineshaft.structure.gen;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -13,16 +14,25 @@ import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.mineshaft.structure.LootTableList;
 
+import java.util.List;
 import java.util.Random;
 
 public class TowerGen {
 
+    public static int generateFloor(World worldIn, Random rand, int i, int j, int k, int size, int floorHeight, boolean enforceStairs, boolean addStairHole, boolean raiseWindows) {
+        return generateFloor(worldIn, rand, i, j, k, size, floorHeight, enforceStairs, addStairHole, raiseWindows, false, LootTableList.LootNether.NETHER_TOWER_GENERIC,false);
+    }
+
     public static int generateFloor(World worldIn, Random rand, int i, int j, int k, int size, int floorHeight, boolean raiseWindows) {
-        return generateFloor(worldIn,rand,i,j,k,size, floorHeight, false,false,raiseWindows);
+        return generateFloor(worldIn,rand,i,j,k,size, floorHeight, false,false,raiseWindows, false, LootTableList.LootNether.NETHER_TOWER_GENERIC,false);
+    }
+
+    public static int generateFloor(World worldIn, Random rand, int i, int j, int k, int size, int floorHeight, boolean enforceStairs, boolean addStairHole, boolean raiseWindows, boolean addBrazier, List<WeightedRandomChestContent> lootTable) {
+        return generateFloor(worldIn,rand,i,j,k,size, floorHeight, enforceStairs,addStairHole,raiseWindows, addBrazier, LootTableList.LootNether.NETHER_TOWER_GENERIC,false);
     }
 
     // Returns the height at which the next floor will begin to start.
-    public static int generateFloor(World worldIn, Random rand, int i, int j, int k, int size, int floorHeight, boolean enforceStairs, boolean addStairHole, boolean raiseWindows) {
+    public static int generateFloor(World worldIn, Random rand, int i, int j, int k, int size, int floorHeight, boolean enforceStairs, boolean addStairHole, boolean raiseWindows, boolean addBrazier, List<WeightedRandomChestContent> lootTable, boolean raiseMobs) {
         if(floorHeight<7&&enforceStairs) {
             floorHeight = 7;
         } else if(floorHeight>8&&enforceStairs) {
@@ -78,12 +88,17 @@ public class TowerGen {
             worldIn.setBlockPrimitive(i-size+1,j-1,k+2, Blocks.air);
         }
 
+        if(addBrazier) {
+            worldIn.setBlockPrimitive(i,j,k,Blocks.netherrack);
+            worldIn.setBlockPrimitive(i,j+1,k,Blocks.fire);
+        }
+
         // Spawn the chest in a random corner
         BlockPos chestPos = new BlockPos(i+(size-1)*(rand.nextBoolean() ? 1 : -1),j,k+(size-1)*(rand.nextBoolean() ? 1 : -1));
         worldIn.setBlockState(chestPos, Blocks.chest.getDefaultState());
         TileEntity tileEntityChest = worldIn.getTileEntity(chestPos);
         if (tileEntityChest instanceof TileEntityChest) {
-            WeightedRandomChestContent.generateChestContents(rand, LootTableList.LootNether.NETHER_TOWER, (TileEntityChest) tileEntityChest, LootTableList.LootNether.getNetherTowerLootCount(rand));
+            WeightedRandomChestContent.generateChestContents(rand, lootTable, (TileEntityChest) tileEntityChest, LootTableList.LootNether.getNetherTowerLootCount(rand));
         }
 
         // Spawn guard mobs
@@ -98,12 +113,7 @@ public class TowerGen {
                 guard = new EntitySkeleton(worldIn);
             }
 
-            // Set the mob spawn position
-            double spawnX = i + rand.nextInt(size-2)-size*0.5D;
-            double spawnY = j + 0.5D; // Just so it won't glitch into a block.
-            double spawnZ = k + rand.nextInt(size-2)-size*0.5D;
-
-            guard.setLocationAndAngles(spawnX, spawnY, spawnZ, rand.nextFloat() * 360.0F, 0.0F);
+            guard.setLocationAndAngles(i,raiseMobs?j+2:j,k, rand.nextFloat() * 360.0F, 0.0F);
 
             // Initialize mob equipment and attributes (like weapon holding)
             guard.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(guard)), null);
@@ -130,9 +140,41 @@ public class TowerGen {
         return floorHeight+j-1;
     }
 
+    // Returns the height at which the next floor will begin to start.
+    public static void generateBasementFloor(World worldIn, Random rand, int i, int j, int k, int size, int floorHeight, boolean enforceStairs, boolean addStairHole, boolean raiseWindows, boolean addBrazier, List<WeightedRandomChestContent> lootTable) {
+        generateFloor(worldIn,rand,i,j,k,size,floorHeight,enforceStairs,addStairHole,raiseWindows,addBrazier,lootTable,true);
+
+        // Place the window
+        placeWindow(worldIn,i+size,j+(raiseWindows?1:0),k,Blocks.nether_brick);
+        placeWindow(worldIn,i-size,j+(raiseWindows?1:0),k,Blocks.nether_brick);
+        placeWindow(worldIn,i,j+(raiseWindows?1:0),k+size,Blocks.nether_brick);
+        placeWindow(worldIn,i,j+(raiseWindows?1:0),k-size,Blocks.nether_brick);
+
+        for(int x = -1; x<=1; x++) {
+            for(int z = -1; z<=1; z++) {
+                if((z==-1 || z==1) && (x==-1 || x==1)) {
+                    if(rand.nextInt(3)!=0) {
+                        worldIn.setBlockPrimitive(x+i,j,z+k,rand.nextBoolean()?Blocks.nether_ash_ore:Blocks.netherrack);
+                    }
+                } else {
+                    worldIn.setBlockPrimitive(x+i,j,z+k,Blocks.nether_ash_ore);
+                    if(z==0 && x==0) {
+                        worldIn.setBlockPrimitive(x+i,j+1,z+k,Blocks.nether_ash_ore);
+                    } else if(rand.nextInt(4)!=0) {
+                        worldIn.setBlockPrimitive(x+i,j+1,z+k,rand.nextBoolean()?Blocks.nether_ash_ore:Blocks.netherrack);
+                    }
+                }
+            }
+        }
+    }
+
     public static void placeWindow(World world, int k, int j, int l) {
-        world.setBlockPrimitive(k,j,l,Blocks.air);
-        world.setBlockPrimitive(k,j+1,l,Blocks.air);
+        placeWindow(world,k,j,l,Blocks.air);
+    }
+
+    public static void placeWindow(World world, int k, int j, int l, Block block) {
+        world.setBlockPrimitive(k,j,l,block);
+        world.setBlockPrimitive(k,j+1,l,block);
     }
 
     public static void placeLadder(World world, int k, int j, int l, int height) {
