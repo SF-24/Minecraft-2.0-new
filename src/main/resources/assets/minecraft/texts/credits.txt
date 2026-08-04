@@ -5,6 +5,9 @@
 §7Created by:
 §f			Markus Persson
 
+§7Modded and updated by:
+§f      Sebastian Frynas
+
 §7Game design, programming and graphics:
 §f			Markus Persson
 §f			Jens Bergensten

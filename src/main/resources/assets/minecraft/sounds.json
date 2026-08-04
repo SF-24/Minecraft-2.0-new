@@ -1700,6 +1700,10 @@
       {
         "name": "music/menu/menu4",
         "stream": true
+      },
+      {
+        "name": "music/menu/myuu_lament",
+        "stream": true
       }
     ]
   },
@@ -1713,10 +1717,6 @@
       {
         "type": "event",
         "name": "music.intro"
-      },
-      {
-        "type": "event",
-        "name": "music.intro_new"
       }
     ]
   },
@@ -1726,30 +1726,21 @@
       {
         "name": "music/menu/danse_morialta",
         "stream": true
-      }
-    ]
-  },
-  "music.intro_new": {
-    "category": "music",
-    "sounds": [
+      },
+      {
+        "name": "music/menu/danse_morialta",
+        "stream": true
+      },
+      {
+        "name": "music/menu/myuu_lament",
+        "stream": true
+      },
       {
         "name": "music/menu/newmenu1",
         "stream": true
       },
       {
-        "name": "music/menu/newmenu2",
-        "stream": true
-      },
-      {
-        "name": "music/menu/dunock_street",
-        "stream": true
-      },
-      {
-        "name": "music/menu/rebirth",
-        "stream": true
-      },
-      {
-        "name": "music/menu/myuu_lament",
+        "name": "music/game/alpha",
         "stream": true
       }
     ]
@@ -1815,10 +1806,6 @@
       },
       {
         "name": "music/game/key",
-        "stream": true
-      },
-      {
-        "name": "music/game/alpha",
         "stream": true
       },
       {
