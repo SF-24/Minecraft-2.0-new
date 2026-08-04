@@ -499,7 +499,8 @@ public class ChunkProviderHell implements IChunkProvider
 //            }
 //        }
 
-        if (this.hellRNG.nextInt(250) == 0) {
+        // Temp disable.
+        if (false && this.hellRNG.nextInt(250) == 0) {
             // Pick random X/Z coordinates within the chunk boundaries
             int xOffset = x * 16 + this.hellRNG.nextInt(8) + 4;
             int zOffset = z * 16 + this.hellRNG.nextInt(8) + 4;
