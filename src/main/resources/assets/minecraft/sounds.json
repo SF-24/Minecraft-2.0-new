@@ -1590,6 +1590,15 @@
       }
     ]
   },
+  "records.newmenu2": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "records/newmenu2",
+        "stream": true
+      }
+    ]
+  },
   "step.cloth": {
     "category": "neutral",
     "sounds": [
@@ -1728,10 +1737,6 @@
         "stream": true
       },
       {
-        "name": "music/menu/danse_morialta",
-        "stream": true
-      },
-      {
         "name": "music/menu/myuu_lament",
         "stream": true
       },
@@ -1839,6 +1844,10 @@
       },
       {
         "name": "music/game/creative/creative5",
+        "stream": true
+      },
+      {
+        "name": "music/game/creative/creative6",
         "stream": true
       }
     ]
