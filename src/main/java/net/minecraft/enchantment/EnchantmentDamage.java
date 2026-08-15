@@ -64,6 +64,7 @@ public class EnchantmentDamage extends Enchantment
     {
         return 4;
     }
+
     @Override
     public int getMaxExtraLevel() {return 5;}
 

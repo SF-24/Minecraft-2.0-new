@@ -786,5 +786,4 @@ public class EntityDragon extends EntityLiving implements IBossDisplayData, IEnt
     {
         return 5.0F;
     }
-
 }

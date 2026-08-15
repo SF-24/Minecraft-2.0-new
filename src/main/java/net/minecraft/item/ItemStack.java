@@ -30,8 +30,6 @@ import net.minecraft.world.World;
 
 public final class ItemStack
 {
-    private boolean emptyFlag;
-    public static final ItemStack empty = null;
     public static final DecimalFormat DECIMALFORMAT = new DecimalFormat("#.###");
 
     /** Size of the stack. */
@@ -246,7 +244,7 @@ public final class ItemStack
      */
     public boolean isItemStackDamageable()
     {
-        return this.item != null && (this.item.getMaxDamage() > 0 && (!this.hasTagCompound() || !this.getTagCompound().getBoolean("Unbreakable")));
+        return this.item == null ? false : (this.item.getMaxDamage() <= 0 ? false : !this.hasTagCompound() || !this.getTagCompound().getBoolean("Unbreakable"));
     }
 
     public boolean getHasSubtypes()
@@ -1090,35 +1088,34 @@ public final class ItemStack
         }
     }
 
-    @Deprecated
-    public void setEmpty(boolean isEmpty) {
-        this.emptyFlag=true;
-    }
+//    @Deprecated
+//    public void setEmpty(boolean isEmpty) {
+//        this.emptyFlag=true;
+//    }
 
+    @Deprecated
     public boolean isEmpty() {
-        if (this == ItemStack.empty || this.emptyFlag)
-        {
-            return true;
-        }
-        else if (this.item != null && this.item != Item.getItemFromBlock(Blocks.air))
-        {
-            if (this.stackSize <= 0)
-            {
-                return true;
-            }
-            else
-            {
-                return this.itemDamage < -32768 || this.itemDamage > 65535;
-            }
-        }
-        else
-        {
-            return true;
-        }
+//        if (this.item != null && this.item != Item.getItemFromBlock(Blocks.air))
+//        {
+//            if (this.stackSize <= 0)
+//            {
+//                return true;
+//            }
+//            else
+//            {
+//                return this.itemDamage < -32768 || this.itemDamage > 65535;
+//            }
+//        }
+//        else
+//        {
+//            return true;
+//        }
+        // Made obsolete
+        return false;
     }
 
     public int getCount()
     {
-        return this.emptyFlag ? 0 : this.stackSize;
+        return this.stackSize;
     }
 }

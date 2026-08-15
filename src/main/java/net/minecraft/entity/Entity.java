@@ -239,7 +239,7 @@ public abstract class Entity implements ICommandSender
      * A direction related to the position of the last portal the entity was in
      */
     protected EnumFacing teleportDirection;
-    private boolean invulnerable;
+    public boolean invulnerable;
     protected UUID entityUniqueID;
 
     /** The command result statistics for this Entity. */

@@ -240,10 +240,10 @@ public class ItemArmor extends Item
 
     public enum ArmorMaterial
     {
-        LEATHER("leather", 5, new int[]{1, 3, 2, 1}, 15),
+        LEATHER("leather", 7 /*was 5*/, new int[]{1, 3, 2, 1}, 15),
         CHAIN("chainmail", 15, new int[]{2, 5, 4, 1}, 12),
         IRON("iron", 15, new int[]{2, 6, 5, 2}, 9),
-        GOLD("gold", 7, new int[]{2, 5, 3, 1}, 25),
+        GOLD("gold", 10 /*was 7*/, new int[]{2, 5, 3, 1}, 25),
         DIAMOND("diamond", 33, new int[]{3, 8, 6, 3}, 10),
         STEEL("steel", 79, new int[]{2, 6, 5, 2}, 0),
         AMETHYST("amethyst", 264, new int[]{3, 8, 6, 3}, 0);

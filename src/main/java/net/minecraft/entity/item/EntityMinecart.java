@@ -442,11 +442,11 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
     {
         this.motionX = MathHelper.clamp_double(this.motionX, -this.getMaximumSpeed(), this.getMaximumSpeed());
         this.motionZ = MathHelper.clamp_double(this.motionZ, -this.getMaximumSpeed(), this.getMaximumSpeed());
-        while(this.getMaximumSpeedSquared()<this.getSpeedSquared()) {
+        /*while(this.getMaximumSpeedSquared()<this.getSpeedSquared()) {
             this.motionX *=0.95;
             this.motionZ *=0.95;
             System.out.println("Slowing minecart");
-        }
+        }*/
         if (this.onGround)
         {
             this.motionX *= 0.5;
@@ -548,6 +548,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
         if (flag1)
         {
+            // if it rides over an unpowered powered rail
             double d17 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
             if (d17 < 0.03D)
@@ -606,15 +607,15 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
 //        System.out.println(Math.sqrt(getSpeedSquared()));
 
+/*
         if(this.getMaximumSpeedSquared()<(d22*d22+d23*d23)) {
             System.out.println("YAW: " + minecartYaw);
             d22 = Math.signum(d22) * this.getMaximumSpeed()*Math.sin(minecartYaw);
             d23 = Math.signum(d23) *this.getMaximumSpeed()*Math.cos(minecartYaw);
             System.out.println("Slowing minecart");
         }
-
+*/
         this.moveEntity(d22, 0.0D, d23);
-
 
         if (aint[0][1] != 0 && MathHelper.floor_double(this.posX) - p_180460_1_.getX() == aint[0][0] && MathHelper.floor_double(this.posZ) - p_180460_1_.getZ() == aint[0][2])
         {
@@ -652,7 +653,6 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
             this.motionZ = d5 * (double)(i - p_180460_1_.getZ());
         }
 
-        // If powered
         if (flag)
         {
             double d15 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);

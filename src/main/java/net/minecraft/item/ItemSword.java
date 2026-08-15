@@ -35,15 +35,15 @@ public class ItemSword extends Item
         return this.material.getDamageVsEntity();
     }
 
-    public float getStrVsBlock(ItemStack stack, Block state)
+    public float getStrVsBlock(ItemStack stack, Block block)
     {
-        if (state == Blocks.web)
+        if (block == Blocks.web)
         {
             return 15.0F;
         }
         else
         {
-            Material material = state.getMaterial();
+            Material material = block.getMaterial();
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.gourd ? 1.0F : 1.5F;
         }
     }
@@ -54,19 +54,20 @@ public class ItemSword extends Item
      */
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
-        if(this.material.equals(ToolMaterial.SMITE) && target.isEntityUndead()) {
+        if (this.material.equals(ToolMaterial.SMITE) && target.isEntityUndead())
+        {
             target.setFire(5);
             target.addVelocity(0, 1, 0);
             target.setHealth(target.getHealth()-2);
         }
-//        else if(this.material.equals(ToolMaterial.AETHER_LIGHT)) {
+//        else if (this.material.equals(ToolMaterial.AETHER_LIGHT))
+//        {
 //            target.setInWeb();
 //        }
 
         stack.damageItem(1, attacker);
         return true;
     }
-
     /**
      * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
      */
@@ -142,7 +143,7 @@ public class ItemSword extends Item
      */
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return this.material.getRepairItem() == repair.getItem() || super.getIsRepairable(toRepair, repair);
+        return this.material.getRepairItem() == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
     }
 
     public Multimap<String, AttributeModifier> getItemAttributeModifiers()

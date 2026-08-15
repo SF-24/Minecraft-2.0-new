@@ -63,5 +63,4 @@ public class ItemWritableBook extends Item
             return true;
         }
     }
-
 }

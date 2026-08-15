@@ -24,9 +24,9 @@ public class ItemStaff extends Item {
     int variant;
 
     public ItemStaff(int variant, int durability) {
-        this.maxStackSize = 1;
-        this.maxBundleStackSize=4;
         this.setMaxDamage(durability);
+        this.maxBundleStackSize=4;
+        this.maxStackSize=1;
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.variant = variant;
     }
@@ -53,8 +53,6 @@ public class ItemStaff extends Item {
                 }
             }
 
-            worldIn.playSound(playerIn.posX,playerIn.posY,playerIn.posZ, "mob.ghast.shoot",5.0F,1.0F,false);
-
             Random rand = new Random();
             float yaw = playerIn.rotationYaw;
             float pitch = playerIn.rotationPitch;
@@ -64,6 +62,7 @@ public class ItemStaff extends Item {
             float z = (float)Math.cos(Math.toRadians(yaw));
             double y = -Math.sin(Math.toRadians(pitch));
 
+            // Spawn 8 flame particles around the player
             if(worldIn instanceof WorldServer) {
                 WorldServer worldServer = (WorldServer) worldIn;
                 // Spawn 8 flame particles around the player
@@ -76,9 +75,10 @@ public class ItemStaff extends Item {
                 }
             }
 
+            worldIn.playSound(playerIn.posX,playerIn.posY,playerIn.posZ, "mob.ghast.shoot",5.0F,1.0F,false);
+
             // Swing the player's arm
             playerIn.swingItem();
-
         }
 
         playerIn.getCooldownTracker().setCooldown(this, 10);

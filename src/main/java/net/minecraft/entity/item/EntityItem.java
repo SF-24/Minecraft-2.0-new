@@ -425,6 +425,7 @@ public class EntityItem extends Entity
 
     /**
      * Get the name of this object. For players this returns their username
+     * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
     public String getName()
     {
@@ -460,7 +461,7 @@ public class EntityItem extends Entity
     {
         ItemStack itemstack = this.getDataWatcher().getWatchableObjectItemStack(10);
 
-        if (itemstack == null || itemstack.isEmpty())
+        if (itemstack == null)
         {
             if (this.worldObj != null)
             {
@@ -528,6 +529,8 @@ public class EntityItem extends Entity
     {
         this.delayBeforeCanPickup = ticks;
     }
+
+    public void setInvulnerable(boolean value) { this.invulnerable=value; }
 
     public boolean cannotPickup()
     {

@@ -77,9 +77,9 @@ public class ItemBundle extends Item {
 
     public static ItemStack getItem(ItemStack bundle, int slot) {
         NBTTagList list = getItemList(bundle);
-        if (list == null) return ItemStack.empty;
+        if (list == null) return null;
         int count = list.tagCount();
-        if (count <= 0) return ItemStack.empty;
+        if (count <= 0) return null;
 
         slot = checkSlot(bundle, slot);
         return ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(slot));
@@ -126,7 +126,7 @@ public class ItemBundle extends Item {
         }
         else compound.setInteger("Count", countToAdd);
         list.appendTag(compound);
-        MineshaftLogger.logDebug("Tag: " + bundle.getTagCompound().toString());
+        //MineshaftLogger.logDebug("Tag: " + bundle.getTagCompound().toString());
         stack.stackSize=(stack.getCount() - countToAdd);
         if (stack.stackSize <= 0) {
             if(!isBundleCursor) {
@@ -147,7 +147,7 @@ public class ItemBundle extends Item {
             NBTTagCompound compound = bundle.getTagCompound();
             list = new NBTTagList();
             compound.setTag("StoredItems", list);
-            return ItemStack.empty;
+            return null;
         }
 
         slot = checkSlot(bundle, slot);

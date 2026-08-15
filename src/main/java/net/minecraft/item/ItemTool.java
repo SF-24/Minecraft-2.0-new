@@ -26,16 +26,16 @@ public class ItemTool extends Item
         this.toolMaterial = material;
         this.effectiveBlocks = effectiveBlocks;
         this.maxStackSize = 1;
-        this.maxBundleStackSize = 4;
+        this.maxBundleStackSize=4;
         this.setMaxDamage(material.getMaxUses());
         this.efficiencyOnProperMaterial = material.getEfficiencyOnProperMaterial();
         this.damageVsEntity = attackDamage + material.getDamageVsEntity();
         this.setCreativeTab(CreativeTabs.tabTools);
     }
 
-    public float getStrVsBlock(ItemStack stack, Block state)
+    public float getStrVsBlock(ItemStack stack, Block block)
     {
-        return this.effectiveBlocks.contains(state) ? this.efficiencyOnProperMaterial : 1.0F;
+        return this.effectiveBlocks.contains(block) ? this.efficiencyOnProperMaterial : 1.0F;
     }
 
     /**

@@ -37,7 +37,7 @@ public class EntityBoat extends Entity
     {
         super(worldIn);
         this.isBoatEmpty = true;
-        this.speedMultiplier = 0.10D; // from 0.07D;
+        this.speedMultiplier = 0.07D;
         this.preventEntitySpawning = true;
         this.setSize(1.5F, 0.6F);
     }
@@ -50,8 +50,6 @@ public class EntityBoat extends Entity
     {
         return false;
     }
-
-    protected double getMaximumSpeed() {return 0.4D;}
 
     protected void entityInit()
     {
@@ -411,7 +409,7 @@ public class EntityBoat extends Entity
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
-            if (this.isCollidedHorizontally && d9 > getMaximumSpeed()*0.95)
+            if (this.isCollidedHorizontally && d9 > 0.2975D)
             {
                 if (!this.worldObj.isRemote && !this.isDead)
                 {
