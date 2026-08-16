@@ -37,7 +37,7 @@ public class BlockOre extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random random)
+    public int quantityDropped(Random   random)
     {
         // Buffed non-fortune blocks.
         return this == Blocks.lapis_ore ? 4 + random.nextInt(5) : 1;
