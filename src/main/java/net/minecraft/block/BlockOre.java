@@ -40,9 +40,7 @@ public class BlockOre extends Block
     public int quantityDropped(Random random)
     {
         // Buffed non-fortune blocks.
-        return this == Blocks.lapis_ore ? 4 + random.nextInt(5) :
-                this == Blocks.diamond_ore ? 1 + random.nextInt(10)<3?1:0 :
-                this == Blocks.quartz_ore||this == Blocks.coal_ore ? 1 + (random.nextInt()==0?1:0) : 1;
+        return this == Blocks.lapis_ore ? 4 + random.nextInt(5) : 1;
     }
 
     /**
