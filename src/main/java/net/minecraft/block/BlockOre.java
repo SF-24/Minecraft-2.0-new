@@ -50,7 +50,6 @@ public class BlockOre extends Block
      */
     public int quantityDroppedWithBonus(int fortune, Random random)
     {
-
         if (fortune > 0 && Item.getItemFromBlock(this) != this.getItemDropped((IBlockState)this.getBlockState().getValidStates().iterator().next(), random, fortune))
         {
             if(this != Blocks.diamond_ore && this != Blocks.emerald_ore && this != Blocks.quartz_ore) {
