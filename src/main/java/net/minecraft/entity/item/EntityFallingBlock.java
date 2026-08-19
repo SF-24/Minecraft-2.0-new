@@ -222,7 +222,7 @@ public class EntityFallingBlock extends Entity
     protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         Block block = this.fallTile != null ? this.fallTile.getBlock() : Blocks.air;
-        ResourceLocation resourcelocation = (ResourceLocation)Block.blockRegistry.getNameForObject(block);
+        ResourceLocation resourcelocation = (ResourceLocation)Block.BLOCK_REGISTRY.getNameForObject(block);
         tagCompound.setString("Block", resourcelocation == null ? "" : resourcelocation.toString());
         tagCompound.setByte("Data", (byte)block.getMetaFromState(this.fallTile));
         tagCompound.setByte("Time", (byte)this.fallTime);

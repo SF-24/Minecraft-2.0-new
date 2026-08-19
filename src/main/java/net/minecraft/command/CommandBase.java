@@ -519,13 +519,13 @@ public abstract class CommandBase implements ICommand
     {
         ResourceLocation resourcelocation = new ResourceLocation(id);
 
-        if (!Block.blockRegistry.containsKey(resourcelocation))
+        if (!Block.BLOCK_REGISTRY.containsKey(resourcelocation))
         {
             throw new NumberInvalidException("commands.give.block.notFound", new Object[] {resourcelocation});
         }
         else
         {
-            Block block = (Block)Block.blockRegistry.getObject(resourcelocation);
+            Block block = (Block)Block.BLOCK_REGISTRY.getObject(resourcelocation);
 
             if (block == null)
             {

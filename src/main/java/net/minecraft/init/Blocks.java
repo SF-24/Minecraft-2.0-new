@@ -208,6 +208,7 @@ public class Blocks
     public static final Block steel_block;
     public static final Block nether_gold_ore;
     public static final Block nether_gold_ore_deprecated;
+    public static final BlockMagma magma;
 
     public static final Block ruby_ore;
     public static final Block ruby_block;
@@ -239,7 +240,7 @@ public class Blocks
      */
     private static Block getRegisteredBlock(String blockName)
     {
-        return (Block)Block.blockRegistry.getObject(new ResourceLocation(blockName));
+        return (Block)Block.BLOCK_REGISTRY.getObject(new ResourceLocation(blockName));
     }
 
     static
@@ -453,6 +454,7 @@ public class Blocks
             steel_block = getRegisteredBlock("steel_block");
             nether_gold_ore = getRegisteredBlock("nether_gold_ore");
             nether_gold_ore_deprecated = getRegisteredBlock("nether_gold_ore_deprecated");
+            magma = (BlockMagma) getRegisteredBlock("magma");
 
             ruby_block = getRegisteredBlock("ruby_block");
             ruby_ore = getRegisteredBlock("ruby_ore");

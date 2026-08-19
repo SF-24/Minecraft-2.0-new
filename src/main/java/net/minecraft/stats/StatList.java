@@ -173,7 +173,7 @@ public class StatList
 
     private static void initMiningStats()
     {
-        for (Block block : Block.blockRegistry)
+        for (Block block : Block.BLOCK_REGISTRY)
         {
             Item item = Item.getItemFromBlock(block);
 

@@ -29,7 +29,7 @@ public class BlockStateMapper
     {
         Map<IBlockState, ModelResourceLocation> map = Maps.<IBlockState, ModelResourceLocation>newIdentityHashMap();
 
-        for (Block block : Block.blockRegistry)
+        for (Block block : Block.BLOCK_REGISTRY)
         {
             if (!this.setBuiltInBlocks.contains(block))
             {

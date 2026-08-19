@@ -68,7 +68,7 @@ public abstract class BlockStateBase implements IBlockState
     {
         if (this.blockLocation == null)
         {
-            this.blockLocation = (ResourceLocation)Block.blockRegistry.getNameForObject(this.getBlock());
+            this.blockLocation = (ResourceLocation)Block.BLOCK_REGISTRY.getNameForObject(this.getBlock());
         }
 
         return this.blockLocation;
@@ -107,7 +107,7 @@ public abstract class BlockStateBase implements IBlockState
     public String toString()
     {
         StringBuilder stringbuilder = new StringBuilder();
-        stringbuilder.append(Block.blockRegistry.getNameForObject(this.getBlock()));
+        stringbuilder.append(Block.BLOCK_REGISTRY.getNameForObject(this.getBlock()));
 
         if (!this.getProperties().isEmpty())
         {

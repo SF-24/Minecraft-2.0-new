@@ -1277,6 +1277,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.nether_ash_ore, "nether_ash_ore");
         this.registerBlock(Blocks.steel_block, "steel_block");
         this.registerBlock(Blocks.nether_gold_ore, "nether_gold_ore");
+        this.registerBlock(Blocks.magma, "magma");
 
         this.registerItem(Items.ruby, "ruby");
         this.registerBlock(Blocks.ruby_block, "ruby_block");

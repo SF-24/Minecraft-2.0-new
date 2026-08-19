@@ -388,7 +388,7 @@ public class EntityArrow extends Entity implements IProjectile
 
                     if (this.inTile.getMaterial() != Material.air)
                     {
-                        this.inTile.onEntityCollidedWithBlock(this.worldObj, blockpos1, iblockstate1, this);
+                        this.inTile.onEntityWalk(this.worldObj, blockpos1, iblockstate1, this);
                     }
                 }
             }
@@ -466,7 +466,7 @@ public class EntityArrow extends Entity implements IProjectile
         tagCompound.setShort("yTile", (short)this.yTile);
         tagCompound.setShort("zTile", (short)this.zTile);
         tagCompound.setShort("life", (short)this.ticksInGround);
-        ResourceLocation resourcelocation = (ResourceLocation)Block.blockRegistry.getNameForObject(this.inTile);
+        ResourceLocation resourcelocation = (ResourceLocation)Block.BLOCK_REGISTRY.getNameForObject(this.inTile);
         tagCompound.setString("inTile", resourcelocation == null ? "" : resourcelocation.toString());
         tagCompound.setByte("inData", (byte)this.inData);
         tagCompound.setByte("shake", (byte)this.arrowShake);

@@ -2741,6 +2741,11 @@ tile.observer.name=Observer
 item.record.magnetic_circuit.desc=Notch - Magnetic Circuit
 item.record.alpha.desc=C418 - Alpha
 item.record.key.desc=C418 - Key
+item.record.pigstep.desc=Lena Raine - Pigstep
+item.record.relic.desc=Aaron Cherof - Relic
+item.record.precipice.desc=Aaron Cherof - Precipice
+item.record.creator.desc=Aaron Cherof - Creator
+item.record.creator_music_box.desc=Lena Raine - Creator (Music Box)
 
 achievement.portalAether=Hostile Paradise
 achievement.portalAether.desc=Build an Aether Portal by pouring water into a glowstone frame.

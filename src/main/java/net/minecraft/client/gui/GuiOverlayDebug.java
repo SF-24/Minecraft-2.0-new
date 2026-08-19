@@ -294,7 +294,7 @@ public class GuiOverlayDebug extends Gui
                 }
 
                 list.add("");
-                list.add(String.valueOf(Block.blockRegistry.getNameForObject(iblockstate.getBlock())));
+                list.add(String.valueOf(Block.BLOCK_REGISTRY.getNameForObject(iblockstate.getBlock())));
 
                 for (Entry<IProperty, Comparable> entry : iblockstate.getProperties().entrySet())
                 {

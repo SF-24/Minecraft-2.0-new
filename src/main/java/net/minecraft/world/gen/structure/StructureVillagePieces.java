@@ -402,10 +402,10 @@ public abstract class StructureVillagePieces
         protected void writeStructureToNBT(NBTTagCompound tagCompound)
         {
             super.writeStructureToNBT(tagCompound);
-            tagCompound.setInteger("CA", Block.blockRegistry.getIDForObject(this.cropTypeA));
-            tagCompound.setInteger("CB", Block.blockRegistry.getIDForObject(this.cropTypeB));
-            tagCompound.setInteger("CC", Block.blockRegistry.getIDForObject(this.cropTypeC));
-            tagCompound.setInteger("CD", Block.blockRegistry.getIDForObject(this.cropTypeD));
+            tagCompound.setInteger("CA", Block.BLOCK_REGISTRY.getIDForObject(this.cropTypeA));
+            tagCompound.setInteger("CB", Block.BLOCK_REGISTRY.getIDForObject(this.cropTypeB));
+            tagCompound.setInteger("CC", Block.BLOCK_REGISTRY.getIDForObject(this.cropTypeC));
+            tagCompound.setInteger("CD", Block.BLOCK_REGISTRY.getIDForObject(this.cropTypeD));
         }
 
         protected void readStructureFromNBT(NBTTagCompound tagCompound)
@@ -511,8 +511,8 @@ public abstract class StructureVillagePieces
         protected void writeStructureToNBT(NBTTagCompound tagCompound)
         {
             super.writeStructureToNBT(tagCompound);
-            tagCompound.setInteger("CA", Block.blockRegistry.getIDForObject(this.cropTypeA));
-            tagCompound.setInteger("CB", Block.blockRegistry.getIDForObject(this.cropTypeB));
+            tagCompound.setInteger("CA", Block.BLOCK_REGISTRY.getIDForObject(this.cropTypeA));
+            tagCompound.setInteger("CB", Block.BLOCK_REGISTRY.getIDForObject(this.cropTypeB));
         }
 
         protected void readStructureFromNBT(NBTTagCompound tagCompound)

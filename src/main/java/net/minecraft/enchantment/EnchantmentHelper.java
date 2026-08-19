@@ -557,6 +557,9 @@ public class EnchantmentHelper
         void calculateModifier(Enchantment enchantmentIn, int enchantmentLevel);
     }
 
+    // TODO:!!!
+    public static boolean hasFrostWalkerEnchantment(EntityLivingBase entityIn) {return false;}
+
     static final class ModifierDamage implements IModifier
     {
         public int damageModifier;

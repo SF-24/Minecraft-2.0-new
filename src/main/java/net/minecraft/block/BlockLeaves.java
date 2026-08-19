@@ -31,7 +31,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
         this.setCreativeTab(CreativeTabs.tabDecorations);
         this.setHardness(0.2F);
         this.setLightOpacity(1);
-        this.setStepSound(soundTypeGrass);
+        this.setSoundType(soundTypeGrass);
     }
 
     public int getBlockColor()

@@ -176,7 +176,7 @@ public class ChunkProviderDebug implements IChunkProvider
 
     static
     {
-        for (Block block : Block.blockRegistry)
+        for (Block block : Block.BLOCK_REGISTRY)
         {
             field_177464_a.addAll(block.getBlockState().getValidStates());
         }

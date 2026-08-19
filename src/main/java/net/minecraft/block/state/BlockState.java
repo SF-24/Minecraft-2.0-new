@@ -100,7 +100,7 @@ public class BlockState
 
     public String toString()
     {
-        return Objects.toStringHelper(this).add("block", Block.blockRegistry.getNameForObject(this.block)).add("properties", Iterables.transform(this.properties, GET_NAME_FUNC)).toString();
+        return Objects.toStringHelper(this).add("block", Block.BLOCK_REGISTRY.getNameForObject(this.block)).add("properties", Iterables.transform(this.properties, GET_NAME_FUNC)).toString();
     }
 
     static class StateImplementation extends BlockStateBase
@@ -140,7 +140,7 @@ public class BlockState
             }
             else if (!property.getAllowedValues().contains(value))
             {
-                throw new IllegalArgumentException("Cannot set property " + property + " to " + value + " on block " + Block.blockRegistry.getNameForObject(this.block) + ", it is not an allowed value");
+                throw new IllegalArgumentException("Cannot set property " + property + " to " + value + " on block " + Block.BLOCK_REGISTRY.getNameForObject(this.block) + ", it is not an allowed value");
             }
             else
             {

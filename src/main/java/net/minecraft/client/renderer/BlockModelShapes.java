@@ -256,7 +256,7 @@ public class BlockModelShapes
                     map.remove(BlockStem.AGE);
                 }
 
-                return new ModelResourceLocation((ResourceLocation)Block.blockRegistry.getNameForObject(state.getBlock()), this.getPropertyString(map));
+                return new ModelResourceLocation((ResourceLocation)Block.BLOCK_REGISTRY.getNameForObject(state.getBlock()), this.getPropertyString(map));
             }
         });
         this.registerBlockWithStateMapper(Blocks.melon_stem, new StateMapperBase()
@@ -270,7 +270,7 @@ public class BlockModelShapes
                     map.remove(BlockStem.AGE);
                 }
 
-                return new ModelResourceLocation((ResourceLocation)Block.blockRegistry.getNameForObject(state.getBlock()), this.getPropertyString(map));
+                return new ModelResourceLocation((ResourceLocation)Block.BLOCK_REGISTRY.getNameForObject(state.getBlock()), this.getPropertyString(map));
             }
         });
         this.registerBlockWithStateMapper(Blocks.dirt, new StateMapperBase()

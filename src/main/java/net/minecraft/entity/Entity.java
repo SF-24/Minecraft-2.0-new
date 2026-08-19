@@ -874,7 +874,7 @@ public abstract class Entity implements ICommandSender
 
                 if (block1 != null && this.onGround)
                 {
-                    block1.onEntityCollidedWithBlock(this.worldObj, blockpos, this);
+                    block1.onEntityWalk(this.worldObj, blockpos, this);
                 }
 
                 this.distanceWalkedModified = (float)((double)this.distanceWalkedModified + (double)MathHelper.sqrt_double(d12 * d12 + d14 * d14) * 0.6D);
@@ -976,7 +976,7 @@ public abstract class Entity implements ICommandSender
 
                         try
                         {
-                            iblockstate.getBlock().onEntityCollidedWithBlock(this.worldObj, blockpos2, iblockstate, this);
+                            iblockstate.getBlock().onEntityWalk(this.worldObj, blockpos2, iblockstate, this);
                         }
                         catch (Throwable throwable)
                         {

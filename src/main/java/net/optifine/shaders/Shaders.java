@@ -3425,7 +3425,7 @@ public class Shaders
                 if (item != null)
                 {
                     j = Item.itemRegistry.getIDForObject(item);
-                    block = (Block)Block.blockRegistry.getObjectById(j);
+                    block = (Block)Block.BLOCK_REGISTRY.getObjectById(j);
                     j = ItemAliases.getItemAliasId(j);
                 }
 
@@ -3588,10 +3588,10 @@ public class Shaders
 
         if (mapBlockToEntityData.isEmpty())
         {
-            for (ResourceLocation resourcelocation : Block.blockRegistry.getKeys())
+            for (ResourceLocation resourcelocation : Block.BLOCK_REGISTRY.getKeys())
             {
-                Block block = (Block)Block.blockRegistry.getObject(resourcelocation);
-                int i = Block.blockRegistry.getIDForObject(block);
+                Block block = (Block)Block.BLOCK_REGISTRY.getObject(resourcelocation);
+                int i = Block.BLOCK_REGISTRY.getIDForObject(block);
                 mapBlockToEntityData.put(block, Integer.valueOf(i));
             }
         }
@@ -5565,7 +5565,7 @@ public class Shaders
     {
         ++entityDataIndex;
         int i = block.getRenderType();
-        entityData[entityDataIndex * 2] = Block.blockRegistry.getIDForObject(block) & 65535 | i << 16;
+        entityData[entityDataIndex * 2] = Block.BLOCK_REGISTRY.getIDForObject(block) & 65535 | i << 16;
         entityData[entityDataIndex * 2 + 1] = 0;
     }
 
