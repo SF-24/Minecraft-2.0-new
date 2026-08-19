@@ -638,7 +638,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.scale(f, f, f);
         this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
         GlStateManager.popMatrix();
-        String s = "Minecraft 2.0-snapshot-0.4.2l";
+        String s = "Minecraft 2.0-snapshot-0.4.2m";
 
         if (this.mc.isDemo())
         {
