@@ -15,7 +15,6 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3i;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 
@@ -612,11 +611,11 @@ public abstract class StructureComponent
                     {
                         if (i != minY && i != maxY && j != minX && j != maxX && k != minZ && k != maxZ)
                         {
-                            this.setBlockId(worldIn, blockInside, j, i, k, boundingboxIn);
+                            this.setBlockPrimitive(worldIn, blockInside, j, i, k, boundingboxIn);
                         }
                         else
                         {
-                            this.setBlockId(worldIn, block, j, i, k, boundingboxIn);
+                            this.setBlockPrimitive(worldIn, block, j, i, k, boundingboxIn);
                         }
                     }
                 }
@@ -624,7 +623,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void setBlockId(World worldIn, Block block, int x, int y, int z, StructureBoundingBox boundingboxIn)
+    protected void setBlockPrimitive(World worldIn, Block block, int x, int y, int z, StructureBoundingBox boundingboxIn)
     {
         if (boundingboxIn.isVecInside(x,y,z))
         {

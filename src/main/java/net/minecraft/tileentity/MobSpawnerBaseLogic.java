@@ -46,6 +46,12 @@ public abstract class MobSpawnerBaseLogic
     /** The range coefficient for spawning entities around. */
     private int spawnRange = 4;
 
+    private boolean hasLimitedUses = false;
+    private short maximumUses = 1;
+    private short currentUses = 0;
+    private boolean isExhausted = false;
+    private boolean breakOnUse = false;
+
     /**
      * Gets the entity name that should be spawned.
      */
@@ -71,6 +77,16 @@ public abstract class MobSpawnerBaseLogic
         this.mobID = name;
     }
 
+    public void setSpawnCount(int count)
+    {
+        this.spawnCount = count;
+    }
+    public void setActivatingRangeFromPlayer(int range) {this.activatingRangeFromPlayer = range;}
+    public void setMaxSpawnRange(int range) {this.spawnRange=range;}
+    public void setLimitedUses(boolean hasLimitedUses) {this.hasLimitedUses=hasLimitedUses;}
+    public void setLimitedUses(boolean hasLimitedUses, short maxUses) {this.hasLimitedUses=hasLimitedUses; this.maximumUses=maxUses;}
+    public void setBreakOnExhaustion(boolean breakOnExhaustion) {this.breakOnUse=breakOnExhaustion;}
+
     /**
      * Returns true if there's a player close enough to this mob spawner to activate it.
      */
@@ -82,7 +98,7 @@ public abstract class MobSpawnerBaseLogic
 
     public void updateSpawner()
     {
-        if (this.isActivated())
+        if (this.isActivated() && !this.isExhausted)
         {
             BlockPos blockpos = this.getSpawnerPosition();
 
@@ -117,6 +133,8 @@ public abstract class MobSpawnerBaseLogic
 
                 boolean flag = false;
 
+                // Spawning logic
+
                 for (int i = 0; i < this.spawnCount; ++i)
                 {
                     Entity entity = EntityList.createEntityByName(this.getEntityNameToSpawn(), this.getSpawnerWorld());
@@ -131,6 +149,7 @@ public abstract class MobSpawnerBaseLogic
                     if (j >= this.maxNearbyEntities)
                     {
                         this.resetTimer();
+                        recordMobSpawn();
                         return;
                     }
 
@@ -157,8 +176,25 @@ public abstract class MobSpawnerBaseLogic
                 if (flag)
                 {
                     this.resetTimer();
+                    recordMobSpawn();
                 }
             }
+        } else if (this.isExhausted && this.getSpawnerWorld().isRemote)
+        {
+            BlockPos blockpos = this.getSpawnerPosition();
+            double d3 = (double)((float)blockpos.getX() + this.getSpawnerWorld().rand.nextFloat());
+            double d4 = (double)((float)blockpos.getY() + this.getSpawnerWorld().rand.nextFloat());
+            double d5 = (double)((float)blockpos.getZ() + this.getSpawnerWorld().rand.nextFloat());
+            this.getSpawnerWorld().spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d3, d4, d5, 0.0D, 0.0D, 0.0D, new int[0]);
+            this.getSpawnerWorld().spawnParticle(EnumParticleTypes.BARRIER, d3, d4, d5, 0.0D, 0.0D, 0.0D, new int[0]);
+
+            if (this.spawnDelay > 0)
+            {
+                --this.spawnDelay;
+            }
+
+            this.prevMobRotation = this.mobRotation;
+            this.mobRotation = (this.mobRotation + (double)(1000.0F / ((float)this.spawnDelay + 200.0F))) % 360.0D;
         }
     }
 
@@ -227,6 +263,21 @@ public abstract class MobSpawnerBaseLogic
         return entityIn;
     }
 
+    private void recordMobSpawn() {
+        if(this.hasLimitedUses) {
+            this.currentUses++;
+
+            // Exhaust the spawner if the maximum uses have been used.
+            if(this.currentUses>=this.maximumUses) {
+                System.out.println("Spawner exhausted.");
+                this.isExhausted=true;
+                if(this.breakOnUse) {
+                    getSpawnerWorld().setBlockToAir(this.getSpawnerPosition());
+                }
+            }
+        }
+    }
+
     private void resetTimer()
     {
         if (this.maxSpawnDelay <= this.minSpawnDelay)
@@ -290,6 +341,26 @@ public abstract class MobSpawnerBaseLogic
             this.spawnRange = nbt.getShort("SpawnRange");
         }
 
+        if (nbt.hasKey("HasLimitedUses")) {
+            this.hasLimitedUses = nbt.getBoolean("HasLimitedUses");
+        }
+
+        if(nbt.hasKey("MaximumUses", 99)) {
+            this.maximumUses = nbt.getShort("MaximumUses");
+        }
+
+        if(nbt.hasKey("CurrentUses", 99)) {
+            this.currentUses = nbt.getShort("CurrentUses");
+        }
+
+        if(nbt.hasKey("IsExhausted")) {
+            this.isExhausted = nbt.getBoolean("IsExhausted");
+        }
+
+        if(nbt.hasKey("BreakOnExhaustion")) {
+            this.breakOnUse = nbt.getBoolean("BreakOnExhaustion");
+        }
+
         if (this.getSpawnerWorld() != null)
         {
             this.cachedEntity = null;
@@ -310,6 +381,12 @@ public abstract class MobSpawnerBaseLogic
             nbt.setShort("MaxNearbyEntities", (short)this.maxNearbyEntities);
             nbt.setShort("RequiredPlayerRange", (short)this.activatingRangeFromPlayer);
             nbt.setShort("SpawnRange", (short)this.spawnRange);
+            // Custom arguments
+            nbt.setBoolean("HasLimitedUses", this.hasLimitedUses);
+            nbt.setShort("MaximumUses", this.maximumUses);
+            nbt.setShort("CurrentUses", this.currentUses);
+            nbt.setBoolean("IsExhausted", this.isExhausted);
+            nbt.setBoolean("BreakOnExhaustion", this.breakOnUse);
 
             if (this.getRandomEntity() != null)
             {

@@ -1243,6 +1243,10 @@ public class Block
         return this.defaultBlockState;
     }
 
+    public final int getDefaultId() {
+        return this.BLOCK_IDS.get(this);
+    }
+
     /**
      * Get the OffsetType for this Block. Determines if the model is rendered slightly offset.
      */
