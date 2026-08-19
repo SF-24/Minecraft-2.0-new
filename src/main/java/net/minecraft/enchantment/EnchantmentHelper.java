@@ -657,8 +657,4 @@ public class EnchantmentHelper
         }
         return 0;
     }
-
-    public static int getRepairPenalty(Map<Integer, Integer> enchants) {
-        return 1;
-    }
 }
