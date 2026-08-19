@@ -1479,7 +1479,7 @@ public class Block
         registerBlock(197, "dark_oak_door", (new BlockDoor(Material.wood)).setHardness(3.0F).setStepSound(soundTypeWood).setUnlocalizedName("doorDarkOak").disableStats());
 
         //New blocks
-        registerBlock(200, "nether_gold_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreNetherGold"));
+        registerBlock(200, "nether_gold_ore_deprecated", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreNetherGoldOld"));
 //        registerBlock(201, "amethyst_crystal", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypeGlass).setUnlocalizedName("crystalAmethyst").setCreativeTab(CreativeTabs.tabBlock));
 //        registerBlock(202, "amethyst_block", (new Block(Material.iron, MapColor.pinkColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockAmethyst").setCreativeTab(CreativeTabs.tabBlock));
 
@@ -1502,8 +1502,9 @@ public class Block
         registerBlock(224, "ruby_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreRuby"));
         registerBlock(225, "ruby_block", (new Block(Material.iron, MapColor.redColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRuby").setCreativeTab(CreativeTabs.tabBlock));
 
-        registerBlock(226, "nether_ash_ore", (new BlockOre(MapColor.netherrackColor)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreAsh"));
-        registerBlock(227, "steel_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockSteel").setCreativeTab(CreativeTabs.tabBlock));
+        registerBlock(226, "nether_gold_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreNetherGold"));
+        registerBlock(227, "nether_ash_ore", (new BlockOre(MapColor.netherrackColor)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreAsh"));
+        registerBlock(228, "steel_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockSteel").setCreativeTab(CreativeTabs.tabBlock));
 
         // Aether blocks
         registerBlock(301, "aether_portal", (new BlockAetherPortal()).setHardness(-1.0F).setStepSound(soundTypeGlass).setLightLevel(0.75F).setUnlocalizedName("portalAether"));

@@ -207,6 +207,7 @@ public class Blocks
     public static final Block nether_ash_ore;
     public static final Block steel_block;
     public static final Block nether_gold_ore;
+    public static final Block nether_gold_ore_deprecated;
 
     public static final Block ruby_ore;
     public static final Block ruby_block;
@@ -451,6 +452,7 @@ public class Blocks
             nether_ash_ore = getRegisteredBlock("nether_ash_ore");
             steel_block = getRegisteredBlock("steel_block");
             nether_gold_ore = getRegisteredBlock("nether_gold_ore");
+            nether_gold_ore_deprecated = getRegisteredBlock("nether_gold_ore_deprecated");
 
             ruby_block = getRegisteredBlock("ruby_block");
             ruby_ore = getRegisteredBlock("ruby_ore");
