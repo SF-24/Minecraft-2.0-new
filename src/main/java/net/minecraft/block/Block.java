@@ -1486,18 +1486,22 @@ public class Block
 //        registerBlock(202, "amethyst_block", (new Block(Material.iron, MapColor.pinkColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockAmethyst").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(203, "ruby_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreRuby"));
         registerBlock(204, "ruby_block", (new Block(Material.iron, MapColor.redColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRuby").setCreativeTab(CreativeTabs.tabBlock));
-        registerBlock(205, "cobweb_block", (new Block(Material.cloth, MapColor.clothColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeCloth).setUnlocalizedName("blockCobweb").setCreativeTab(CreativeTabs.tabBlock));
-        registerBlock(206, "rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRail").setCreativeTab(CreativeTabs.tabTransport));
-        registerBlock(207, "powered_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailGold").setCreativeTab(CreativeTabs.tabTransport));
-        registerBlock(208, "detector_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailDetector").setCreativeTab(CreativeTabs.tabTransport));
-        registerBlock(209, "activator_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailActivator").setCreativeTab(CreativeTabs.tabTransport));
 
+        // 210-212 are used by default Minecraft for command block types.
         registerBlock(210, "soul_soil", (new BlockCustomDrop(88,Material.sand).setHardness(0.5F).setStepSound(soundTypeSand).setUnlocalizedName("hellSoil")));
         registerBlock(211, "blackstone", (new BlockNetherrack()).setHardness(0.4F).setStepSound(soundTypePiston).setUnlocalizedName("blackstone"));
 
+        // 213: Magma block.
 
-//        registerBlock(210, "compressed_cobblestone", (new BlockDungeon()).setHardness(100.0F).setResistance(1200.0F).setStepSound(soundTypeStone).setUnlocalizedName("cobblestoneCompressed").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(218, "observer", (new BlockObserver()).setHardness(3.0F).setUnlocalizedName("observer"));
+
+       // After 218, Minecraft has shulker boxes, concrete, etc. These will not be used, so we can put anything here.
+
+        registerBlock(219, "cobweb_block", (new Block(Material.cloth, MapColor.clothColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeCloth).setUnlocalizedName("blockCobweb").setCreativeTab(CreativeTabs.tabBlock));
+        registerBlock(220, "rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRail").setCreativeTab(CreativeTabs.tabTransport));
+        registerBlock(221, "powered_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailGold").setCreativeTab(CreativeTabs.tabTransport));
+        registerBlock(222, "detector_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailDetector").setCreativeTab(CreativeTabs.tabTransport));
+        registerBlock(223, "activator_rail_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(5F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRailActivator").setCreativeTab(CreativeTabs.tabTransport));
 
 
         // Aether blocks

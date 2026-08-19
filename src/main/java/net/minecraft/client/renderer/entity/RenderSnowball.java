@@ -35,7 +35,6 @@ public class RenderSnowball<T extends Entity> extends Render<T>
 
         // Scale the model based on whether it's riding an entity
         if(entity instanceof EntitySnowball && ((EntitySnowball) entity).getProjectileType()==10) {
-
             if (entity.riddenByEntity!=null) {
                 if(((EntitySnowball) entity).getRenderOffset() == 0f) {
                     // Cache the values.
@@ -44,7 +43,7 @@ public class RenderSnowball<T extends Entity> extends Render<T>
                 }
                 float renderScale = ((EntitySnowball) entity).getRenderScale();
                 GlStateManager.translate(0, ((EntitySnowball) entity).getRenderOffset(), 0);
-                GlStateManager.scale(renderScale, renderScale, renderScale);
+                GlStateManager.scale(renderScale, renderScale, renderScale); //TODO: FIX!
             } else {
                 GlStateManager.scale(1.0f,1.0f,1.0f);
             }
