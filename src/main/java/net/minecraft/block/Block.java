@@ -1483,10 +1483,9 @@ public class Block
 //        registerBlock(201, "amethyst_crystal", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypeGlass).setUnlocalizedName("crystalAmethyst").setCreativeTab(CreativeTabs.tabBlock));
 //        registerBlock(202, "amethyst_block", (new Block(Material.iron, MapColor.pinkColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockAmethyst").setCreativeTab(CreativeTabs.tabBlock));
 
-        // 210-212 are used by default Minecraft for command block types.
+        // 210-211 are used by default Minecraft for command block types.
         registerBlock(210, "soul_soil", (new BlockCustomDrop(88,Material.sand).setHardness(0.5F).setStepSound(soundTypeSand).setUnlocalizedName("hellSoil")));
         registerBlock(211, "blackstone", (new BlockNetherrack()).setHardness(0.4F).setStepSound(soundTypePiston).setUnlocalizedName("blackstone"));
-        registerBlock(212, "nether_ash_ore", (new BlockOre(MapColor.netherrackColor)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreAsh"));
 
         // 213: Magma block.
 
@@ -1503,7 +1502,8 @@ public class Block
         registerBlock(224, "ruby_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreRuby"));
         registerBlock(225, "ruby_block", (new Block(Material.iron, MapColor.redColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockRuby").setCreativeTab(CreativeTabs.tabBlock));
 
-        registerBlock(226, "steel_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockSteel").setCreativeTab(CreativeTabs.tabBlock));
+        registerBlock(226, "nether_ash_ore", (new BlockOre(MapColor.netherrackColor)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreAsh"));
+        registerBlock(227, "steel_block", (new Block(Material.iron, MapColor.ironColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockSteel").setCreativeTab(CreativeTabs.tabBlock));
 
         // Aether blocks
         registerBlock(301, "aether_portal", (new BlockAetherPortal()).setHardness(-1.0F).setStepSound(soundTypeGlass).setLightLevel(0.75F).setUnlocalizedName("portalAether"));
