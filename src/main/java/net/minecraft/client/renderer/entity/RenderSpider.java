@@ -1,7 +1,5 @@
 package net.minecraft.client.renderer.entity;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
@@ -15,6 +13,7 @@ public class RenderSpider<T extends EntitySpider> extends RenderLiving<T> {
     
     public RenderSpider(RenderManager renderManagerIn) {
         super(renderManagerIn, new ModelSpider(), 1.0F);
+        this.addLayer(new LayerSpiderEyes(this));
     }
 
     /**

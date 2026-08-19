@@ -100,11 +100,11 @@ public class BlockOre extends Block
             {
                 i = MathHelper.getRandomIntegerInRange(worldIn.rand, 0, 2);
             }
-            if (this == Blocks.nether_ash_ore)
-//            {
+            else if (this == Blocks.nether_ash_ore)
+            {
                 i = MathHelper.getRandomIntegerInRange(worldIn.rand, 0, 2);
-//            }
-            if (this == Blocks.ruby_ore)
+            }
+            else if (this == Blocks.ruby_ore)
             {
                 i = MathHelper.getRandomIntegerInRange(worldIn.rand, 0, 2);
             }
