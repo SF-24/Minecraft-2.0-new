@@ -732,6 +732,7 @@ public class Item {
 
         int valueBase = 512-256;
 
+        // Item ids start at 512
         registerItem(valueBase+256, "iron_shovel", (new ItemSpade(Item.ToolMaterial.IRON)).setUnlocalizedName("shovelIron"));
         registerItem(valueBase+257, "iron_pickaxe", (new ItemPickaxe(Item.ToolMaterial.IRON)).setUnlocalizedName("pickaxeIron"));
         registerItem(valueBase+258, "iron_axe", (new ItemAxe(Item.ToolMaterial.IRON)).setUnlocalizedName("hatchetIron"));

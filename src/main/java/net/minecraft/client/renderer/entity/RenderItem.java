@@ -1236,6 +1236,11 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerItem(Items.record_magnetic_circuit, "record_magnetic_circuit");
         this.registerItem(Items.record_key, "record_key");
         this.registerItem(Items.record_alpha, "record_alpha");
+        this.registerItem(Items.record_pigstep, "record_pigstep");
+        this.registerItem(Items.record_creator, "record_creator");
+        this.registerItem(Items.record_creator_music_box, "record_creator_music_box");
+        this.registerItem(Items.record_relic, "record_relic");
+        this.registerItem(Items.record_precipice, "record_precipice");
         this.registerItem(Items.prismarine_shard, "prismarine_shard");
         this.registerItem(Items.prismarine_crystals, "prismarine_crystals");
         this.itemModelMesher.register(Items.enchanted_book, new ItemMeshDefinition()

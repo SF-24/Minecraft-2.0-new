@@ -2772,6 +2772,8 @@ item.bundle.dyed=Dyed
 item.bundle.fullness=Fullness: %s/%s
 
 tile.furnace.forge.name=Forge
+tile.furnace.furnace.name=Furnace
+tile.magma.name=Magma Block
 
 tile.blackstone.name=Charred Netherrack
 

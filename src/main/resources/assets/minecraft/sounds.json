@@ -1903,9 +1903,9 @@
   "records.magnetic_circuit": {"sounds": [{"name": "record/magnetic_circuit","stream": true}]},
   "records.alpha": {"sounds": [{"name":"music/game/alpha","stream": true}]},
   "records.key": {"sounds": [{"name":"music/game/key","stream": true}]},
-  "records.pigstep": {"sounds": [{"name":"music/game/pigstep","stream": true}]},
-  "records.relic": {"sounds": [{"name":"music/game/relic","stream": true}]},
-  "records.creator": {"sounds": [{"name":"music/game/creator","stream": true}]},
-  "records.creator_music_box": {"sounds": [{"name":"music/game/creator_music_box","stream": true}]},
-  "records.precipice": {"sounds": [{"name":"music/game/precipice","stream": true}]}
+  "records.pigstep": {"sounds": [{"name":"record/pigstep","stream": true}]},
+  "records.relic": {"sounds": [{"name":"record/relic","stream": true}]},
+  "records.creator": {"sounds": [{"name":"record/creator","stream": true}]},
+  "records.creator_music_box": {"sounds": [{"name":"record/creator_music_box","stream": true}]},
+  "records.precipice": {"sounds": [{"name":"record/precipice","stream": true}]}
 }
